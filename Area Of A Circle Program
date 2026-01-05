@@ -1,0 +1,30 @@
+//Area Of A Circle
+package com.sub.blc;
+import java.text.DecimalFormat;
+public class AreaOfCircle {
+     public static void getAreaOfCircle(double radius) {
+    	 double area=Math.PI*radius*radius;
+    	 DecimalFormat df= new DecimalFormat("00.00");
+    	 String areaOfCircle=df.format(area);
+    	 System.out.println("Area of circle is"+areaOfCircle);
+     }
+}
+package com.sub.elc;
+
+import java.util.Scanner;
+import java.text.DecimalFormat;
+
+public class AreaOfCircle {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter radius: ");
+        double rad = sc.nextDouble();
+
+        double areaOfCircle = Math.PI * rad * rad;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+        String formattedArea = df.format(areaOfCircle);
+
+        System.out.println("Area is: " + formattedArea);
+    }
+}
