@@ -1,4 +1,4 @@
-<h1 align="center">💙 Java Full Stack & Frontend Notes | Naresh i Technologies</h1>
+<h1 align="center"> Java Full Stack All Notes | Naresh i Technologies</h1>
 
 <p align="center">
   📘 A structured & daily-updated collection of <b>Java Full Stack + Frontend Development Notes</b><br/>
