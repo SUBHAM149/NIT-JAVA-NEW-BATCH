@@ -1,19 +1,25 @@
-<h1 align="center">💙 Java Full Stack Notes | Naresh i Technologies</h1>
+<h1 align="center">💙 Java Full Stack & Frontend Notes | Naresh i Technologies</h1>
 
 <p align="center">
-  📘 A well-organized & regularly updated collection of <b>Java Full Stack Development Notes</b><br/>
-  Prepared during training at <b>Naresh i Technologies</b> under the guidance of <b>Ravi Sankar Sir</b>.
+  📘 A structured & daily-updated collection of <b>Java Full Stack + Frontend Development Notes</b><br/>
+  From <b>Naresh i Technologies</b>, prepared during professional classroom training.
 </p>
 
 <p align="center">
-  🚀 Designed for <b>Students, Beginners & Job Seekers</b> aiming to master <b>Java Full Stack Development</b>.
+  🚀 Covers both <b>Backend (Java Full Stack)</b> and <b>Frontend (HTML, CSS, JavaScript)</b><br/>
+  Ideal for <b>Students, Freshers & Job Seekers</b>.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Core%20Java-blue?style=for-the-badge&logo=java"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-green?style=for-the-badge&logo=springboot"/>
+  <img src="https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5"/>
+  <img src="https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3"/>
+  <img src="https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript"/>
   <img src="https://img.shields.io/badge/Advanced%20Java-darkblue?style=for-the-badge&logo=java"/>
   <img src="https://img.shields.io/badge/Spring%20Boot-green?style=for-the-badge&logo=spring"/>
   <img src="https://img.shields.io/badge/MySQL-orange?style=for-the-badge&logo=mysql"/>
+  
 </p>
 
 <p align="center">
@@ -27,20 +33,30 @@
 <h2>✨ About This Repository</h2>
 
 <p>
-  This repository contains my <b>daily class notes</b> from <b>Naresh i Technologies</b> for
-  <b>Java Full Stack Development</b>.  
-  All notes are written in a <b>simple, clear & interview-oriented</b> manner based on
-  explanations by <b>Ravi Sankar Sir</b>.
+  This repository contains my <b>daily classroom notes</b> from <b>Naresh i Technologies</b>
+  for <b>Java Full Stack Development</b> along with <b>Frontend Web Development</b>.
 </p>
 
 <p>
-  📌 The goal is to create a <b>complete revision-ready resource</b> for Java Full Stack learners.
+  📌 Notes are written in a <b>simple, clear & interview-focused</b> manner,
+  based strictly on real-time explanations by professional trainers.
 </p>
 
 <hr/>
 
 <h2>📚 Course Content Covered</h2>
 
+<h3>🖥️ Frontend Development</h3>
+<ul>
+  <li>✔ HTML5 (Structure & Semantics)</li>
+  <li>✔ CSS3 (Flexbox, Grid, Animations)</li>
+  <li>✔ Responsive Web Design</li>
+  <li>✔ JavaScript (ES6)</li>
+  <li>✔ DOM Manipulation</li>
+  <li>✔ Mini Projects & UI Concepts</li>
+</ul>
+
+<h3>☕ Java Full Stack Development</h3>
 <ul>
   <li>✔ Core Java (Basics to Advanced)</li>
   <li>✔ OOPs Concepts</li>
@@ -53,7 +69,7 @@
   <li>✔ Spring & Spring Boot</li>
   <li>✔ Hibernate (Basics)</li>
   <li>✔ MySQL Database</li>
-  <li>✔ Interview Questions & Notes</li>
+  <li>✔ Interview Questions</li>
 </ul>
 
 <hr/>
@@ -61,9 +77,8 @@
 <h2>🛠️ Tech Stack</h2>
 
 <ul>
-  <li><b>Programming Language:</b> Java</li>
-  <li><b>Frameworks:</b> Spring, Spring Boot</li>
-  <li><b>Web Technologies:</b> HTML, CSS, JavaScript</li>
+  <li><b>Frontend:</b> HTML5, CSS3, JavaScript</li>
+  <li><b>Backend:</b> Java, Spring, Spring Boot</li>
   <li><b>Database:</b> MySQL</li>
   <li><b>Tools:</b> Git, GitHub, VS Code, Eclipse</li>
 </ul>
@@ -73,7 +88,12 @@
 <h2>📁 Repository Structure</h2>
 
 <pre>
-Java-FullStack-Notes/
+Java-FullStack-Frontend-Notes/
+│
+├── Frontend/
+│   ├── HTML/
+│   ├── CSS/
+│   └── JavaScript/
 │
 ├── Core-Java/
 ├── Advanced-Java/
@@ -95,12 +115,12 @@ Java-FullStack-Notes/
 </ol>
 
 <pre>
-git clone https://github.com/SUBHAM149/Java-FullStack-Notes.git
+git clone https://github.com/SUBHAM149/Java-FullStack-Frontend-Notes.git
 </pre>
 
 <ol start="2">
-  <li>Open the folder topic-wise</li>
-  <li>Use notes for daily revision & interview preparation</li>
+  <li>Navigate topic-wise folders</li>
+  <li>Use for daily revision & interview preparation</li>
 </ol>
 
 <hr/>
@@ -109,17 +129,17 @@ git clone https://github.com/SUBHAM149/Java-FullStack-Notes.git
 
 <p>
   📅 Notes are uploaded <b>daily after class</b><br/>
-  🔄 Content will be improved continuously with examples & explanations
+  🔄 Content will be refined with examples & diagrams
 </p>
 
 <hr/>
 
-<h2>👨‍🏫 Trainer</h2>
+<h2>👨‍🏫 Trainers</h2>
 
 <p>
-  🎓 <b>Ravi Sankar Sir</b><br/>
-  🏫 <b>Naresh i Technologies</b><br/>
-  📘 Renowned Java Full Stack Trainer
+  ☕ <b>Java Full Stack Trainer:</b> Ravi Sankar Sir<br/>
+  🖥️ <b>Frontend Trainer:</b> Gagan Sir<br/>
+  🏫 <b>Institute:</b> Naresh i Technologies
 </p>
 
 <hr/>
@@ -137,12 +157,12 @@ git clone https://github.com/SUBHAM149/Java-FullStack-Notes.git
 <h2>📜 License</h2>
 
 <p>
-  This repository is for <b>educational purposes</b>.<br/>
-  Notes are based on classroom explanations from Naresh i Technologies.
+  This repository is maintained for <b>educational purposes only</b>.<br/>
+  Notes are based on classroom training at Naresh i Technologies.
 </p>
 
 <hr/>
 
 <p align="center">
-  ⭐ If these notes help you, don’t forget to <b>STAR</b> the repository!
+  ⭐ If these notes help you, please <b>STAR</b> the repository!
 </p>
