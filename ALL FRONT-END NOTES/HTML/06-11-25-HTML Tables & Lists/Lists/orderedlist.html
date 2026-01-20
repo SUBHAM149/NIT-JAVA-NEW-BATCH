@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+    ! default value : number 
+    ? type attribute : it tells what kind of sequence u want in your list 
+    notes : 1, A, a, i, I 
+    ? start attribute : it tells the starting number /alphabet /roman number of the list 
+    note : value of the start can be 0 , +ve & -ve
+    ? reversed : it reversed the order of the list 
+    -->
+    <!-- <ol type="1" start="10" reversed>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+    </ol> -->
+    <!-- !---------------------------  -->
+    <!-- <ol type="1" start="2" reversed>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+    </ol> -->
+
+    <!-- !================== &&&&&& =============== -->
+
+    <!-- ! important : in type value of a,A,i,I there is no -ve values that means we will get 0, -1,-2 and so on.....  -->
+    <ol type="a" start="0" reversed>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+      <li>this is used to add the items in the list</li>
+    </ol>
+
+
+    <!-- 
+    notes : 
+    1. if type value is a & A ,
+        start value is 27 
+        what will be the output ? : aa & AA 
+        reversed : aa z y x w 
+    2. if type value is a, A ,i & I 
+        start value is less than the count of the list & reversed attribute is used .. 
+        what will be the output : 
+        edge case : when the order goes less than 1 , it follow new order of number with 0 & -ve values 
+    
+    -->
+        <ol type="1" start="-2" reversed>
+            <li>demo</li>
+            <li>demo</li>
+            <li>demo</li>
+        </ol>
+  </body>
+</html>
