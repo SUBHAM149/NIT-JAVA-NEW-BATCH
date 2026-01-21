@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form method="get">
+      <!-- 
+        ? how to create a border of a form : fieldset 
+        ? how to add the heading to the form : legend 
+        -->
+      <fieldset>
+        <legend>heading of the form</legend>
+        <!-- first name -->
+        <section>
+          <label>first Name</label>
+          <input name="fname" type="text" />
+        </section>
+        <br />
+        <!-- last name -->
+        <section>
+          <label>last Name</label>
+          <input name="lname" type="text" />
+        </section>
+        <br />
+        <!-- email id -->
+        <section>
+          <label>email id</label>
+          <input type="email" />
+        </section>
+        <br />
+        <!-- password -->
+        <section>
+          <label>password</label>
+          <input name="password" type="password" />
+        </section>
+        <br />
+        <!-- confirm password -->
+        <section>
+          <label>confirm password</label>
+          <input type="password" />
+        </section>
+        <br />
+        <!-- dob -->
+        <section>
+          <label>DOB</label>
+          <input type="datetime-local" />
+        </section>
+        <br />
+        <!-- Age -->
+        <section>
+          <label>Age</label>
+          <input type="number" />
+        </section>
+        <br />
+        <!-- phone number -->
+        <section>
+          <label>phone number</label>
+          <input type="number" />
+        </section>
+        <br />
+        <!-- tel number -->
+        <section>
+          <label>tel number</label>
+          <input type="tel" />
+        </section>
+        <br />
+        <!-- Resume -->
+        <section>
+          <label>Resume</label>
+          <input type="file" />
+        </section>
+        <br />
+        <!-- documents -->
+        <section>
+          <label>documents</label>
+          <!-- ? multiple attribute : it help use to pick multiple files at a time  -->
+          <input type="file" multiple />
+        </section>
+        <br />
+        <!-- your Fav Color -->
+        <section>
+          <label>your Fav Color</label>
+          <input type="color" />
+        </section>
+        <br />
+        <section>
+          <span>Gender : </span>
+          <input type="radio" name="gender" id="male" />
+          <label for="male">male</label>
+
+          <input type="radio" name="gender" id="female" />
+          <label for="female">female</label>
+
+          <input type="radio" name="gender" id="other" />
+          <label for="other">other</label>
+        </section>
+        <br />
+        <section>
+          <p>skills</p>
+          <input type="checkbox" name="skills" id="html" />
+          <label for="html">html</label>
+          <br />
+          <input type="checkbox" name="skills" id="css" />
+          <label for="css">css</label>
+          <br />
+          <input type="checkbox" name="skills" id="js" />
+          <label for="js">js</label>
+          <br />
+          <!-- 
+            text area vs input field 
+            1. text in input field goes in a single line but in the textarea when the 100% width is occupied it goes in the next line 
+            2. input field size can be changes with height and width but textarea size can be changed by the cols & rows 
+            -->
+          <textarea
+            name="feedback"
+            placeholder="enter your feedback about the html class"
+            cols="40"
+            rows="10"
+          ></textarea>
+        </section>
+        <br />
+        <section>
+          <!-- ? select : we can create drop down menu  -->
+          <select name="" id="">
+            <!-- ? option : we can add option in the drop down menu  -->
+            <!-- todo : why u are using selected & disabled 
+                ? so that if user doesn't want to give any value , no problem  
+                -->
+            <option selected disabled>technology</option>
+            <option>html</option>
+            <option>css</option>
+            <!-- value attribute : adds the value of the option else the text of the option become the value  -->
+            <option value="javascript">js</option>
+          </select>
+        </section>
+        <br />
+
+        <button>Submit</button>
+      </fieldset>
+    </form>
+  </body>
+</html>
