@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Lists Practice — Topic 3</title>
+</head>
+<body>
+
+  <h1>🧱 HTML Lists Practice — Topic 3</h1>
+  <p><strong>Concepts Covered:</strong> &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;, &lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt;, nesting, types, start attribute</p>
+  <hr>
+
+  <!-- 🧩 Task 1: Shopping List (Unordered List) -->
+  <section>
+    <h2>Task 1: My Shopping List</h2>
+    <!-- Using square bullets for better visibility -->
+    <ul type="square">
+      <li>Milk</li>
+      <li>Bread</li>
+      <li>Eggs</li>
+      <li>Butter</li>
+      <li>Apples</li>
+    </ul>
+    <!-- Comment: 'square' bullets look neat and modern -->
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 2: Favorite Movies (Ordered List) -->
+  <section>
+    <h2>Task 2: Top 5 Favorite Movies</h2>
+    <p><em>Goal:</em> Practice ordered lists with numbering types.</p>
+    <ol type="I" start="3">
+      <li>Inception</li>
+      <li>Interstellar</li>
+      <li>Avengers: Endgame</li>
+      <li>Joker</li>
+      <li>The Dark Knight</li>
+    </ol>
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 3: Nested List of Categories -->
+  <section>
+    <h2>Task 3: Categories</h2>
+    <p><em>Goal:</em> Learn nested unordered lists.</p>
+    <ul type="disc">
+      <li>Fruits
+        <ul type="circle">
+          <li>Apple</li>
+          <li>Banana</li>
+          <li>Orange</li>
+        </ul>
+      </li>
+      <li>Vegetables
+        <ul type="square">
+          <li>Carrot</li>
+          <li>Potato</li>
+          <li>Tomato</li>
+        </ul>
+      </li>
+      <li>Snacks
+        <ul>
+          <li>Chips</li>
+          <li>Cookies</li>
+          <li>Popcorn</li>
+        </ul>
+      </li>
+    </ul>
+    <!-- Parent list represents categories; child lists represent subitems -->
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 4: Daily Routine (Ordered + Nested List) -->
+  <section>
+    <h2>Task 4: My Daily Routine</h2>
+    <p><em>Goal:</em> Mix ordered and unordered lists.</p>
+    <ol>
+      <li>Morning
+        <ul>
+          <li>Wake up</li>
+          <li>Brush teeth</li>
+          <li>Exercise</li>
+          <li>Breakfast</li>
+        </ul>
+      </li>
+      <li>Afternoon
+        <ul>
+          <li>Work/Study</li>
+          <li>Lunch</li>
+          <li>Short nap</li>
+        </ul>
+      </li>
+      <li>Evening
+        <ul>
+          <li>Go for a walk</li>
+          <li>Dinner</li>
+          <li>Read a book</li>
+          <li>Sleep</li>
+        </ul>
+      </li>
+    </ol>
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 5: Glossary Page (Description List) -->
+  <section>
+    <h2>Task 5: Glossary of Web Terms</h2>
+    <p><em>Goal:</em> Understand &lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt; for term definitions.</p>
+    <dl>
+      <dt>HTML</dt>
+      <dd>HyperText Markup Language — structure of web pages.</dd>
+      <dt>CSS</dt>
+      <dd>Cascading Style Sheets — used for styling HTML elements.</dd>
+      <hr>
+      <dt>JavaScript</dt>
+      <dd>Programming language for interactivity and logic.</dd>
+      <dt>React</dt>
+      <dd>JavaScript library for building user interfaces.</dd>
+      <hr>
+      <dt>Node.js</dt>
+      <dd>Runtime environment for running JS on the server.</dd>
+    </dl>
+    <!-- <dt> defines term name; <dd> defines its meaning -->
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 6: Course Curriculum -->
+  <section>
+    <h2>Task 6: Web Development Curriculum</h2>
+    <p><em>Goal:</em> Create complex nested lists to show structure.</p>
+    <ol>
+      <li>HTML
+        <ul>
+          <li>Tags</li>
+          <li>Lists</li>
+          <li>Forms</li>
+        </ul>
+      </li>
+      <li>CSS
+        <ul>
+          <li>Selectors</li>
+          <li>Box Model</li>
+          <li>Flexbox & Grid</li>
+        </ul>
+      </li>
+      <li>JavaScript
+        <ul>
+          <li>Variables</li>
+          <li>Functions</li>
+          <li>DOM Manipulation</li>
+        </ul>
+      </li>
+    </ol>
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 7: Recipe Ingredients -->
+  <section>
+    <h2>Task 7: Chocolate Cake Recipe</h2>
+    <p><em>Goal:</em> Create logical list grouping for ingredients and steps.</p>
+
+    <h3>Ingredients</h3>
+    <ul>
+      <li>Flour</li>
+      <li>Sugar</li>
+      <li>Eggs</li>
+      <li>Butter</li>
+      <li>Chocolate powder</li>
+    </ul>
+
+    <h3>Steps</h3>
+    <ol>
+      <li>Preheat the oven.</li>
+      <li>Mix all ingredients.</li>
+      <li><strong>Bake for 30 minutes.</strong></li>
+      <li>Let it cool.</li>
+      <li><em>Decorate and serve!</em></li>
+    </ol>
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 8: Bucket List -->
+  <section>
+    <h2>Task 8: My Life Goals 🌍</h2>
+    <p><em>Goal:</em> Use emojis and nested lists creatively.</p>
+    <ol>
+      <li>✈️ Travel the world
+        <ul>
+          <li>Europe Tour</li>
+          <li>Visit Japan</li>
+        </ul>
+      </li>
+      <li>📘 Write a Book</li>
+      <li>💻 Become a Full-Stack Developer
+        <ul>
+          <li>Master React</li>
+          <li>Learn Node.js</li>
+        </ul>
+      </li>
+      <li>🏠 Build a Dream Home</li>
+      <li>🎸 Learn Guitar</li>
+    </ol>
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 9: Tech Stacks Hierarchical List -->
+  <section>
+    <h2>Task 9: Full Stack Developer Skill Map</h2>
+    <p><em>Goal:</em> Practice multi-level nested lists.</p>
+    <ul>
+      <li>Frontend
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>React</li>
+        </ul>
+      </li>
+      <li>Backend
+        <ul>
+          <li>Node.js</li>
+          <li>Express</li>
+        </ul>
+      </li>
+      <li>Database
+        <ul>
+          <li>MongoDB</li>
+          <li>MySQL</li>
+        </ul>
+      </li>
+      <li>Tools
+        <ul>
+          <li>Git</li>
+          <li>VS Code</li>
+          <li>Postman</li>
+        </ul>
+      </li>
+    </ul>
+    <!-- Level 1: Categories | Level 2: Technologies -->
+    <hr>
+  </section>
+
+  <!-- 🧩 Task 10: Comparison Table using Lists -->
+  <section>
+    <h2>Task 10: Frontend vs Backend Technologies ⚖️</h2>
+    <p><em>Goal:</em> Simulate table data using description lists.</p>
+    <dl>
+      <dt>💻 Frontend</dt>
+      <dd>HTML, CSS, JavaScript, React</dd>
+
+      <dt>🧠 Backend</dt>
+      <dd>Node.js, Express, MongoDB</dd>
+    </dl>
+    <hr>
+  </section>
+
+  <footer>
+    <p><strong>Pro Tip:</strong> Practice viewing nested list indentation in the browser for better understanding of hierarchy.</p>
+  </footer>
+
+</body>
+</html>
