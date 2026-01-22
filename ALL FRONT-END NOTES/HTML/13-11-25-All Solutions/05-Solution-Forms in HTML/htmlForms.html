@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Forms Practice - Topic 7</title>
+</head>
+<body>
+  <h1>🧱 Topic 7 — Forms and Input Elements</h1>
+  <p>All 10 forms are included below as part of the practice set.</p>
+
+  <hr>
+
+  <!-- Task 1 -->
+  <h2>Task 1: Simple Contact Form</h2>
+  <form>
+    <label for="name1">Name:</label>
+    <input type="text" id="name1" name="name" placeholder="Enter your name" required><br><br>
+
+    <label for="email1">Email:</label>
+    <input type="email" id="email1" name="email" placeholder="Enter your email" required><br><br>
+
+    <label for="message1">Message:</label><br>
+    <textarea id="message1" name="message" placeholder="Type your message here..." required></textarea><br><br>
+
+    <input type="submit" value="Send Message">
+  </form>
+
+  <hr>
+
+  <!-- Task 2 -->
+  <h2>Task 2: Sign Up Form</h2>
+  <form>
+    <label for="username2">Username:</label>
+    <input type="text" id="username2" name="username" required><br><br>
+
+    <label for="password2">Password:</label>
+    <input type="password" id="password2" name="password" required><br><br>
+
+    <label for="confirmpassword2">Confirm Password:</label>
+    <input type="password" id="confirmpassword2" name="confirmpassword" required><br><br>
+
+    <label for="email2">Email:</label>
+    <input type="email" id="email2" name="email" required><br><br>
+
+    <label>Gender:</label><br>
+    <input type="radio" id="male2" name="gender" value="male">
+    <label for="male2">Male</label><br>
+    <input type="radio" id="female2" name="gender" value="female">
+    <label for="female2">Female</label><br><br>
+
+    <label for="country2">Country:</label>
+    <select id="country2" name="country">
+      <option value="">Select Country</option>
+      <option value="india">India</option>
+      <option value="usa">USA</option>
+      <option value="uk">UK</option>
+      <option value="spain">Spain</option>
+    </select><br><br>
+
+    <input type="submit" value="Sign Up">
+  </form>
+
+  <hr>
+
+  <!-- Task 3 -->
+  <h2>Task 3: Feedback Form</h2>
+  <form>
+    <fieldset>
+      <legend>Feedback Information</legend>
+
+      <label for="fullname3">Full Name:</label>
+      <input type="text" id="fullname3" name="fullname" required><br><br>
+
+      <label for="email3">Email:</label>
+      <input type="email" id="email3" name="email" required><br><br>
+
+      <label>Feedback Type:</label><br>
+      <input type="radio" id="good3" name="feedback" value="good">
+      <label for="good3">Good</label>
+      <input type="radio" id="average3" name="feedback" value="average">
+      <label for="average3">Average</label>
+      <input type="radio" id="poor3" name="feedback" value="poor">
+      <label for="poor3">Poor</label><br><br>
+
+      <label>Features Liked:</label><br>
+      <input type="checkbox" id="design3" name="feature" value="design">
+      <label for="design3">Design</label>
+      <input type="checkbox" id="speed3" name="feature" value="speed">
+      <label for="speed3">Speed</label>
+      <input type="checkbox" id="content3" name="feature" value="content">
+      <label for="content3">Content</label>
+      <input type="checkbox" id="usability3" name="feature" value="usability">
+      <label for="usability3">Usability</label><br><br>
+
+      <label for="comment3">Comments:</label><br>
+      <textarea id="comment3" name="comment" placeholder="Your feedback here..."></textarea><br><br>
+
+      <input type="submit" value="Submit Feedback">
+    </fieldset>
+  </form>
+
+  <hr>
+
+  <!-- Task 4 -->
+  <h2>Task 4: Login Form</h2>
+  <form>
+    <label for="username4">Username:</label>
+    <input type="text" id="username4" name="username"><br><br>
+
+    <label for="password4">Password:</label>
+    <input type="password" id="password4" name="password"><br><br>
+
+    <input type="checkbox" id="remember4" name="remember">
+    <label for="remember4">Remember Me</label><br><br>
+
+    <a href="#">Forgot Password?</a><br><br>
+
+    <input type="submit" value="Login">
+    <input type="reset" value="Reset">
+  </form>
+
+  <hr>
+
+  <!-- Task 5 -->
+  <h2>Task 5: Job Application Form</h2>
+  <form>
+    <fieldset>
+      <legend>Personal Info</legend>
+      <label for="name5">Full Name:</label>
+      <input type="text" id="name5" name="fullname" required><br><br>
+
+      <label for="email5">Email:</label>
+      <input type="email" id="email5" name="email" required><br><br>
+
+      <label for="contact5">Contact Number:</label>
+      <input type="tel" id="contact5" name="contact" required><br><br>
+    </fieldset>
+
+    <fieldset>
+      <legend>Job Details</legend>
+      <label for="position5">Position Applying For:</label>
+      <select id="position5" name="position">
+        <option value="">Select</option>
+        <option>Frontend Developer</option>
+        <option>Backend Developer</option>
+        <option>Full Stack Developer</option>
+        <option>UI/UX Designer</option>
+      </select><br><br>
+
+      <label for="resume5">Upload Resume:</label>
+      <input type="file" id="resume5" name="resume"><br><br>
+
+      <label for="date5">Availability Date:</label>
+      <input type="date" id="date5" name="availability"><br><br>
+
+      <label>Experience Level:</label><br>
+      <input type="radio" id="junior5" name="exp" value="junior">
+      <label for="junior5">Junior</label>
+      <input type="radio" id="mid5" name="exp" value="mid">
+      <label for="mid5">Mid-Level</label>
+      <input type="radio" id="senior5" name="exp" value="senior">
+      <label for="senior5">Senior</label><br><br>
+
+      <input type="submit" value="Apply Now">
+    </fieldset>
+  </form>
+
+  <hr>
+
+  <!-- Task 6 -->
+  <h2>Task 6: Survey Form</h2>
+  <form>
+    <label for="name6">Name:</label>
+    <input type="text" id="name6" name="name" required><br><br>
+
+    <label for="age6">Age:</label>
+    <input type="number" id="age6" name="age"><br><br>
+
+    <label for="color6">Favorite Color:</label>
+    <input type="color" id="color6" name="color"><br><br>
+
+    <label for="rating6">Rating (1–10):</label>
+    <input type="range" id="rating6" name="rating" min="1" max="10"><br><br>
+
+    <label>Hobbies:</label><br>
+    <input type="checkbox" id="reading6" name="hobby" value="reading">
+    <label for="reading6">Reading</label>
+    <input type="checkbox" id="music6" name="hobby" value="music">
+    <label for="music6">Music</label>
+    <input type="checkbox" id="travel6" name="hobby" value="travel">
+    <label for="travel6">Travel</label><br><br>
+
+    <label for="country6">Country:</label>
+    <select id="country6" name="country">
+      <option>India</option>
+      <option>USA</option>
+      <option>Canada</option>
+      <option>Japan</option>
+    </select><br><br>
+
+    <label for="comments6">Comments:</label><br>
+    <textarea id="comments6" name="comments"></textarea><br><br>
+
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset">
+  </form>
+
+  <hr>
+
+  <!-- Task 7 -->
+  <h2>Task 7: Course Enrollment Form</h2>
+  <form>
+    <label for="name7">Full Name:</label>
+    <input type="text" id="name7" name="fullname" required><br><br>
+
+    <label for="email7">Email:</label>
+    <input type="email" id="email7" name="email" required><br><br>
+
+    <label for="course7">Select Course:</label>
+    <select id="course7" name="course">
+      <option>HTML Basics</option>
+      <option>CSS Mastery</option>
+      <option>JavaScript Advanced</option>
+      <option>React Fundamentals</option>
+      <option>Full Stack Bootcamp</option>
+    </select><br><br>
+
+    <label>Select Timing:</label><br>
+    <input type="radio" id="morning7" name="timing" value="morning">
+    <label for="morning7">Morning</label>
+    <input type="radio" id="afternoon7" name="timing" value="afternoon">
+    <label for="afternoon7">Afternoon</label>
+    <input type="radio" id="evening7" name="timing" value="evening">
+    <label for="evening7">Evening</label><br><br>
+
+    <label for="modules7">Additional Modules:</label><br>
+    <select id="modules7" name="modules" multiple size="4">
+      <option>Git & GitHub</option>
+      <option>Node.js</option>
+      <option>MongoDB</option>
+      <option>Deployment</option>
+    </select><br><br>
+
+    <label for="comments7">Comments:</label><br>
+    <textarea id="comments7" name="comments"></textarea><br><br>
+
+    <input type="submit" value="Enroll Now">
+  </form>
+
+  <hr>
+
+  <!-- Task 8 -->
+  <h2>Task 8: Subscription Form</h2>
+  <form action="#">
+    <label for="email8">Email:</label>
+    <input type="email" id="email8" name="email" placeholder="Enter your email" required>
+    <button type="submit">Subscribe</button><br>
+    <small>We respect your privacy.</small>
+  </form>
+
+  <hr>
+
+  <!-- Task 9 -->
+  <h2>Task 9: Profile Settings Form</h2>
+  <form>
+    <label for="username9">Username:</label>
+    <input type="text" id="username9" name="username" value="GaganBaghel" readonly><br><br>
+
+    <label for="email9">Email:</label>
+    <input type="email" id="email9" name="email" value="gagan@example.com"><br><br>
+
+    <label for="phone9">Phone:</label>
+    <input type="tel" id="phone9" name="phone"><br><br>
+
+    <label for="dob9">Date of Birth:</label>
+    <input type="date" id="dob9" name="dob"><br><br>
+
+    <label>Gender:</label><br>
+    <input type="radio" id="male9" name="gender" value="male">
+    <label for="male9">Male</label>
+    <input type="radio" id="female9" name="gender" value="female">
+    <label for="female9">Female</label><br><br>
+
+    <input type="checkbox" id="newsletter9" name="newsletter" checked>
+    <label for="newsletter9">Subscribe to Newsletter</label><br><br>
+
+    <label for="bio9">Bio (Disabled Field):</label>
+    <input type="text" id="bio9" name="bio" value="Disabled field" disabled><br><br>
+
+    <input type="submit" value="Save">
+    <input type="reset" value="Reset">
+  </form>
+
+  <hr>
+
+  <!-- Task 10 -->
+  <h2>Task 10: Complete Contact Us Page</h2>
+  <form>
+    <fieldset>
+      <legend>Contact Us</legend>
+
+      <label for="name10">Name:</label>
+      <input type="text" id="name10" name="name" placeholder="Your name" required><br><br>
+
+      <label for="email10">Email:</label>
+      <input type="email" id="email10" name="email" placeholder="Your email" required><br><br>
+
+      <label for="subject10">Subject:</label>
+      <input type="text" id="subject10" name="subject" placeholder="Subject" required><br><br>
+
+      <label for="message10">Message:</label><br>
+      <textarea id="message10" name="message" placeholder="Write your message..." required></textarea><br><br>
+
+      <label for="reason10">Reason for Contact:</label>
+      <select id="reason10" name="reason">
+        <option>General Inquiry</option>
+        <option>Support</option>
+        <option>Feedback</option>
+        <option>Collaboration</option>
+      </select><br><br>
+
+      <input type="checkbox" id="subscribe10" name="subscribe">
+      <label for="subscribe10">Subscribe to updates</label><br><br>
+
+      <input type="submit" value="Send Message">
+      <input type="reset" value="Clear Form"><br><br>
+
+      <small>We’ll respond within 24 hours.</small>
+    </fieldset>
+  </form>
+
+  <hr>
+</body>
+</html>
