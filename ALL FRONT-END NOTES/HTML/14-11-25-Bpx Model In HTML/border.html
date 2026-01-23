@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box; */
+      /*
+      ! height & width remain same : 
+          total width = margin + border + padding +  content + padding + border + margin 
+          total height = margin + border + padding + content + padding + border + margin
+          
+          */
+      /* } */
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      p {
+        /* size of the border  */
+        border-width: 2px;
+        /* color of border */
+        border-color: rgb(107, 0, 0);
+        /* type of border */
+        border-style: solid;
+        /* shortcut way */
+        /* border : width style colorValue */
+        /* border: 2px solid #0f0f0f; */
+
+        /* border: 20px solid yellow; */
+
+        border-style: double;
+        border-style: dashed;
+        border-style: dotted;
+        border-style: groove;
+      }
+
+      img {
+        border-width: 10px;
+        border-color: rgb(0, 0, 0);
+        border-style: solid;
+        border-style: double;
+        border-style: dashed;
+        border-style: dotted;
+        border-style: groove;
+        border-style: ridge;
+        border-style: outset;
+        border-style: inset;
+      }
+
+      h3 {
+        width: 80%;
+        text-align: center;
+        border-width: 2px;
+        border-color: rgb(107, 0, 0);
+        border-style: solid;
+
+        /* border-top-width: 10px;
+        border-top-color: aquamarine;
+        border-top-style: dashed;
+
+        border-bottom-width: 10px;
+        border-bottom-color: aquamarine;
+        border-bottom-style: dashed;
+
+        border-left-width: 15px;
+        border-left-color: rgb(107, 0, 0);
+        border-left-style: double;
+
+        border-right-width: 15px;
+        border-right-color: rgb(107, 0, 0);
+        border-right-style: double; */
+
+        /* it work for all 4 sides  */
+        border: 10px dashed black;
+        /* left side */
+        border-left: 10px double rgb(107, 0, 0);
+        /* right side  */
+        border-right: 10px double rgb(107, 0, 0);
+      }
+
+      h4 {
+        border: 5px solid black;
+        width: 80%;
+        height: 200px;
+        /* 
+        ? how to make rounded corners : border-radius 
+        */
+        /* border-radius: 10%; */
+        border-radius: 10px;
+        /* border-bottom-left-radius: 50%;
+        border-top-right-radius: 50%; */
+
+        /* border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 50%; */
+        /*  4 values : if all sides having different values  */
+        border-radius: 0 50% 0 50%;
+
+        /*  2 values  : if top & bottom having same values and left and right having same values  */
+        border-radius: 50% 0%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <p>it is a demo paragraph text.</p> -->
+
+    <!-- <center>
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlbXfG0NBPLEK4LJmIXsy81S80xKztCJ9qA&s"
+        alt=""
+        height="500px"
+      />
+    </center> -->
+
+    <!-- <h3>this is the demo h3 text</h3> -->
+
+    <h4></h4>
+  </body>
+</html>
