@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+
+      section {
+        /* 100% of screen size */
+        width: 50vw;
+        /* 100% of screen size  */
+        height: 100vh;
+        background: #2f2f2f;
+        display: flex;
+        align-items: center;
+      }
+      .leftside,
+      .rightside {
+        /* take the 50% of the parent size {section } */
+        /* section width = 50vw , 50% of 50vw => 25vw */
+        width: 50%;
+        height: 50%;
+      }
+      .leftside {
+        background-color: beige;
+      }
+      .rightside {
+        background-color: #ffdede;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="leftside">left side</div>
+      <div class="rightside">right side</div>
+    </section>
+  </body>
+</html>
