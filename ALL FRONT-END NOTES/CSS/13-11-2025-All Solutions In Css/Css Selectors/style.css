@@ -1,0 +1,65 @@
+/* 
+target {
+property Name : value of the property ; 
+*/
+
+h2 {
+  color: aquamarine;
+  background-color: black;
+}
+/* 
+target element : selector 
+selector : it is way to select the targeted element 
+*/
+
+/* ? simple selectors  */
+/* tag name selector */
+/* ! problem  : select all tags automatically  */
+/* p {
+  color: blue;
+} */
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+/* 
+class selector : syntax ===> .className {}
+*/
+.para1 {
+  color: salmon;
+  background-color: rgb(118, 216, 255);
+}
+
+.para2 {
+  color: black;
+  background-color: yellow;
+}
+
+/* id selector : #idName{} */
+
+#paragraph {
+  color: beige;
+  background-color: black;
+}
+
+/* 
+universal selector : SYNTAX : 
+? *{} 
+
+it select everything of ur website
+
+*/
+
+* {
+  background-color: #ffd4d4;
+}
+
+/* ? group selector   */
+p,
+.para,
+#paragraph {
+  font-size: 30px;
+}
+
