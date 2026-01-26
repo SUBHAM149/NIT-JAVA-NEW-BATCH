@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        /* preserve the container actual height and width */
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      /* internal css */
+      h2 {
+        height: 600px;
+        width: 700px;
+        border: 2px solid black;
+        /* padding: 250px 0px 0px 0px ; */
+        padding-top: 250px;
+        margin: 50px;
+        color: white;
+        font-weight: 900;
+        text-align: center;
+        /* 
+        rem : root element 
+        1 rem = 16 px  
+        16 * 1 = 16 px
+        16 * 2 = 32 px
+     */
+        font-size: 2.5rem;
+
+        /* ----- &&& ----- */
+        /* 
+hex decimal values : 0 to 9 , a to f , start with #
+--->> use 3 values or 6 values
+first 2 : red 
+next 2 : green 
+last 2 : blue  
+
+? how many ways we have to give the color values 
+1. name 
+2. hex decimal 
+3. rgb 
+4. rgba
+5. hsl : hue saturation & luminance
+6. hsla : 
+7. hex + opacity 
+
+*/
+        /* background-color: #aabbcc; */
+        background-color: rgba(10, 112, 214, 0.306);
+
+        background-image: url("./landscape.png");
+
+        background-repeat: repeat;
+        background-repeat: repeat-x;
+        background-repeat: repeat-y;
+        background-repeat: no-repeat;
+
+        /*  size of the bg image  */
+        /* background-size: x-axis y-axis ;  */
+        background-size: 100% 100%;
+
+        /* just preserve the ratio of the image : complete image should be there doesn't matter it occupied the 100% size of the container  */
+        background-size: contain;
+
+        /*
+        main goal is to cover the 100% area of the container.
+        */
+        background-size: cover;
+
+        /* ----- */
+
+        background-position: top;
+        background-position: bottom;
+        background-position: left;
+        background-position: right;
+
+        background-position: center;
+
+        /* background-position: x-axis y-axis ;  */
+        background-position: 100% 50%;
+
+        /* background: url(./apple.png) cover no-repeat center; */
+
+        /* background-image: linear-gradient(); */
+        background: linear-gradient(
+          90deg,
+          rgba(2, 0, 36, 1) 0%,
+          rgba(9, 9, 121, 1) 35%,
+          rgba(0, 212, 255, 1) 100%
+        );
+
+        background: #87dfff;
+        background: radial-gradient(
+          circle,
+          rgba(135, 223, 255, 1) 60%,
+          rgba(0, 212, 255, 1) 100%
+        );
+      }
+    </style>
+  </head>
+  <body>
+    <h2>today we are going to learn background properties in css</h2>
+
+    <!-- <img src="./apple.png" alt=""> -->
+  </body>
+</html>
