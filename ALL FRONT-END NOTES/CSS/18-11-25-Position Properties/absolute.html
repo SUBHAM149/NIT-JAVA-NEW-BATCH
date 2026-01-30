@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      section {
+        width: 700px;
+        height: 400px;
+        border: solid;
+        padding: 20px 0px 0px 20px;
+        position: relative;
+      }
+      div {
+        width: 300px;
+        height: 100px;
+        margin-bottom: 20px;
+        padding-top: 10px;
+        border: solid;
+        font-size: 2rem;
+        text-align: center;
+      }
+      .child1{
+        /* 
+        ? absolute
+        it makes the container at the top such as move in the z-axis
+        it make the space free , and that space is occupied by the nearest html element 
+
+        ? relative 
+        it also make the container at the top , such as move in the z-axis 
+        -> space is still occupied by the container , its not free for other html elements 
+        */
+        position: absolute;
+        left: 200px;
+        background: #efefef;
+        width: 250px;
+        height: 80px;
+      }
+      .child2{
+        background: #ffc0c0;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="child1">1st box</div>
+      <div class="child2">2nd box</div>
+      <div class="child3">3rd box</div>
+    </section>
+  </body>
+</html>
