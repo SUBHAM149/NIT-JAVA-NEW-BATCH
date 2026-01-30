@@ -1,0 +1,623 @@
+ORACLE :-
+----------------
+
+ 1   SQL
+ 2   PL/SQL
+
+Database :-
+----------------
+
+=> a db is a organized collection of interrelated data.For ex a  bank db stores data 
+     related to customers,accounts,transactions etc and a univ db stores data related
+     to students,course and faculty
+
+   
+   Bank DB			UNIV DB
+
+   customers			courses
+   accounts			students
+   transactions			faculty
+   loans
+   employees
+ 
+ Types of Databases :-
+ ------------------------------
+
+ 1 OLTP DB (online transaction processing)
+ 2 OLAP DB (online analytical processing)
+
+ => day-to-day operations on db includes 
+
+   C   create
+   R   read
+   U   update
+   D  delete
+
+DBMS :- 
+-----------
+
+ => Database Management System
+ => DBMS is a software used to work with database.
+ => using DBMS software we can create,read,update,delete data in db
+ => DBMS is an interface between user and database.
+ 
+    USER------------------DBMS--------------------DB
+
+Types of DBMS  (Evolution of DBMS) :-
+-------------------------------------------------------
+
+ 	1960		FMS    (file mgmt system)
+
+	1970		HDBMS (hierarchical dbms)
+			NDBMS (network dbms)
+
+	1980		RDBMS  (relational dbms)
+
+	1990		ORDBMS (object relational dbms)
+
+
+ RDBMS :-
+ --------------
+
+  => Relational DBMS
+  => RDBMS concepts introducedby Edgar Frank CODD
+  => E.F.CODD introduced 12 rules called codd rules
+  => a db software that supports all 12 rules is called perfect rdbms software
+
+ Information Rule :- 
+ --------------------------
+
+ => according to information rule data must be organized in tables i.e. rows and columns
+
+  CUSTOMER
+  cid	cname	city         =>  columns / fields / attributes 
+  10	sachin	mum
+  11	vijay	hyd
+  12	rahul	blr         => row / record / tuple
+
+  DB = collection of tables
+  Table = collection of rows and columns
+  Row = collection of field values
+  Column = collection of values belongs to one field
+
+ => every table must contain primary key to uniquely identify 
+ 
+ ex :-  accno,empid,aadharno,panno,voterid
+
+  => one table related to another table using foreign key
+
+ ex :- 
+
+   projects
+   projid	name	duration	cost	client
+   100  	AAA	4	200	DBS Bank
+   101	BBB	3	100	L&T
+
+  emp
+  empid	ename	job	sal	projid  (fk)
+  1	A	SE	40K	100
+  2	B	SSE	80K	101
+  3	C	SE	30K	100
+
+ RDBMS softwares :-
+ -----------------------------
+
+SQL Databases :-
+------------------------
+
+ORACLE		 oracle corp	
+MYSQL		 oracle corp
+SQL SERVER	 microsoft
+POSTGRESQL	 postgresql 
+DB2		 ibm
+
+NO-SQL Databases :-
+------------------------------
+
+ MongoDB
+ cassandra
+ redis
+
+28-jan-26
+
+ ORDBMS :-  
+ ------------------
+
+  => Object Relational DBMS
+  =>  It is the combination of RDBMS & OOPS
+
+                ORDBMS  =  RDBMS + OOPS (reusability)
+
+  => rdbms doesn't support reusability but ordbms supports reusability
+ 
+ RDBMS :- 
+ -------------
+
+  cust
+  cid	name	hno	street	city	state	pin
+
+  emp
+  empid	ename	hno	street	city	state	pin
+
+  ORDBMS :- 
+  -----------------
+
+  ADDR
+  hno	street	city	state	pin
+
+ CUST
+ cid	cname	addr
+
+ EMP
+ empid	ename	addr
+
+ ORDBMS softwares :- 
+ ------------------------------
+
+  ORACLE
+  POSTGRESQL
+  
+DB Development Life Cycle :- 
+----------------------------------------
+
+Analysis
+Design
+Develop
+Test
+Deploy
+Maintain
+ 
+DB Design :-
+-----------------
+
+  => Designing DB means designing tables
+  => DB is designed by DB Designers / Architects
+  => DB is designed by using
+
+          1   ER Model  (Entity Relationship)
+          2   Normalization
+
+Development :- 
+---------------------
+
+  => DB is developed by DB Developers & DBAs (DB Administrator)
+  => DB is developed by using any rdbms tools like ORACLE.
+
+                  Developer			DBA
+	
+	  creating tables			installation of oracle
+	  creating views			creating database
+	  creating synonyms			creating userids
+	  creating sequences		db backup & restore
+	  creating indexes			db export & import
+	  creating procedures		performance tuning
+	  creating functions
+	  creating triggers
+	  writing queries
+
+  Test :- 
+  -----------
+
+   => DB is tested by QA (Quality Assurance) team by  
+
+               1   manually
+               2   automatically (using selenium)
+ 
+  Deployment :-
+   ------------------
+ 
+ => Deployment means moving db from dev server  to prod server
+ => once db is deployed then end user can use db for day-to-day transactions
+ 
+ summary :- 
+ -----------------
+
+ what is db ?
+ what is dbms ?
+ what is rdbms ?
+ what is ordbms ?
+ what is db development life cycle ?
+
+===============================================================
+
+		   	ORACLE
+		   	========
+
+  => oracle is basically a  rdbms software and also supports features of ordbms
+       and used to manage database.
+
+  => oracle is used for db development & db administration
+
+  versions of oracle :- 
+  ----------------------------
+  
+    2,3,4,5,6,7,8i,9i,10g,11g,12c,18c,19c,21c,23ai,26ai
+
+ 		i    =>   internet
+	                g   =>   grid
+                                 c   =>   cloud
+                                 ai  =>  artificial intelligence
+
+  => before 8 oracle supports only desktop application and 8 onwards
+       oracle supports web applications.
+
+  => grid means collection of server ,  from ver 10  onwards oracle db can be
+       accessed through multiple servers and the advantage of grid is it improves
+       availability
+
+ => from 12c onwards oracle db can be deployed 
+
+         1 on premises
+         2 on cloud
+
+  => in  " on  premises "  db is deployed in the server managed by client
+
+  =>  in  "  on cloud " db is deployed in the server managed by cloud service provide
+        for ex amazon.
+
+29-jan-26
+
+ CLIENT / SERVER :- 
+ -----------------------------
+
+1 SERVER
+2 CLIENT
+
+ SERVER :- 
+ ---------------
+
+ => server is  a system where oracle is installed and running
+ => oracle server manages two memories
+
+  1  DB
+  2  INSTANCE
+
+  => DB is created in hard disk and acts as permanent storage
+  =>  INSTANCE is created in ram and acts as temporary storage
+  => initially data stored in instance and after saving data copied to db.
+
+ CLIENT :-
+ --------------
+   
+ => client is also a system from where users can 
+
+  1 connects to server
+  2 submit requests to server
+  3 receive response from server
+
+ client tools :- 
+ -----------------
+
+ SQLPLUS  (cui)
+ SQL Developer (gui)
+
+ user---------sqlplus-----------------------------------------oracle------------db
+
+ user--------mysqlworkbench-----------------------------mysql------------db
+
+ user--------ssms----------------------------------------------sql server---------db
+
+ user--------pgadmin---------------------------------------postgresql-------------db
+
+ SQL :- 
+------------
+
+  => Structured Query Language
+  => a language used to communicate with oracle
+  => user communicates with oracle by sending commands called queries
+  => a query is a command / question to oracle to perform some operation over db
+  => SQL is introduced by IBM 
+  => SQL is common to all relational db softwares 
+
+  USER------SQLPLUS-----------------------SQL------------------------ORACLE----------DB
+
+  USER-----MYSQLWORKBENCH-----------SQL---------------------MYSQL------------DB
+
+  => based on operations over db SQL is categorized into following sub-languages 
+
+                     DDL (Data Definition Lang)
+                     DML (Data Manipulation Lang)
+                     DRL (Data Retrieval Lang)
+                     TCL  (Transaction Control Lang)
+                     DCL  (Data Control Lang)
+
+			SQL
+
+	DDL	DML	DRL	TCL	DCL
+
+                create	insert        select       commit      grant
+                alter          update                       rollback     revoke
+                drop          delete                        savepoint
+                truncate     merge
+                rename      insert all
+                flashback
+                purge
+
+   
+  Data & Data Definition :-
+ ------------------------------------
+    
+                 empid	ename	sal      => data definition / metadata 
+	100	sachin	6000   => data 
+
+Download :-
+----------------
+ https://www.oracle.com/middleeast/database/technologies/oracle-database-software-downloads.html
+
+Installation :-
+-----------------
+
+https://www.dbaace.com/post/installing-oracle-23ai-on-windows
+
+ SCHEMA :- 
+ ---------------
+
+  => a user in oracle db is called schema
+  => objects created by user are called schema objects 
+
+  SERVER
+          DATABASE 
+                    USER
+                            TABLES
+                                     DATA 
+
+
+  SERVER
+           ORCL
+                 SYS /TIGER                             (DBA)
+                 SYSTEM/TIGER                       (DBA)
+
+ How to connect to oracle :- 
+ -------------------------------------
+
+ => open sqlplus and enter username & password
+
+           USERNAME :-  SYSTEM
+           PASSWORD :-  TIGER
+
+           OR
+
+           USERNAME :-  SYSTEM / TIGER
+
+30-jan-26
+
+ Creating New User/Schema/Account :- 
+ ------------------------------------------------------
+
+ => only DBAs are having permissions to create new user
+
+  step 1 :-  connect as system
+
+           USERNAME :-  SYSTEM/TIGER
+
+  step 2 :-  create user
+
+Syntax :-
+--------------
+
+     CREATE USER <name> IDENTIFIED BY <pwd>
+     DEFAULT TABLESPACE USERS
+     QUOTA UNLIMITED ON USERS ;
+
+ Ex :- 
+
+   CREATE USER BATCH54 IDENTIFIED BY ORACLE
+   DEFAULT TABLESPACE USERS
+   QUOTA UNLIMITED ON USERS ;
+
+step 3 :-  granting permissions to user
+
+   GRANT CONNECT,RESOURCE TO BATCH54 ;
+
+                    connect  => to connect to db
+                    resource => to create tables
+                    dba          =>  all permissions 
+
+Changing password :-
+------------------------------
+
+ => both user & admin can change password 
+
+ By User :-          (BATCH54/ORACLE)
+ ----------------
+
+ SQL>PASSWORD
+Changing password for BATCH54
+Old password: ORACLE
+New password: TIGER
+Retype new password: TIGER
+Password changed
+ 
+By DBA :-       (SYSTEM/TIGER)
+-------------
+
+ SQL> ALTER USER BATCH54 IDENTIFIED BY NARESH ;
+ 
+How to reset system password :-
+----------------------------------------------
+ 
+Enter user-name: / AS SYSDBA
+ 
+SQL> ALTER USER SYSTEM IDENTIFIED BY NARESH ;
+
+Droping User :-
+----------------------
+
+=> only DBAs can drop users
+
+      DROP USER <name> [CASCADE] 
+
+  =>  if user is empty cascade is not required
+  =>  if user is not empty then cascade is required
+
+  Ex :- 
+
+  SQL>DROP USER BATCH54 ;
+
+Datatypes in ORACLE :-
+----------------------------------
+ 
+=>a Datatype specifies 
+
+ 1 type of the data allowed in a column
+ 2 amount of memory allocated for column
+
+		                       DATATYPES
+	
+   CHAR		            NUMERIC		DATE		BINARY
+
+
+ ASCII	UNICODE            number(p)		date		bfile
+                                             number(p,s)		timestamp	blob
+char	  nchar
+varchar2    nvarchar2
+long           nclob
+clob
+
+char(size) :-
+-------------------
+
+ =>  allows character data upto 2000 chars 
+ =>  recommended for fixed length char columns 
+
+     Ex :-     NAME    CHAR(10)
+
+                 sachin - - - -
+                                wasted
+
+                  rahul- - - - -
+                                 wasted
+
+ => In char datatype extra bytes are wasted , so char is not recommended for variable length
+      fields and char is recommended for fixed length fields 
+
+   ex :-            GENDER          CHAR(1)
+
+                       M
+                       F
+
+                       STATE_CODE       CHAR(2)
+
+                       AP
+                      TG
+                      MH
+
+                      COUNTRY_CODE    CHAR(3)
+
+	      IND
+                      USA
+                      ENG
+                      SCO
+
+ VARCHAR2(size) :-
+ ---------------------------
+
+ => allows character data upto 4000 chars 
+ => recommended for variable length char fields 
+ 
+  ex :-            NAME    VARCHAR2(10)
+
+	    sachin - - - -
+                                    released
+
+                    rahul - - - - - 
+                                    released
+
+ => char / varchar2 allows ascii chars (256 chars) that includes a-z,A-Z,0-9,special chars
+
+  ex :-      PANNO         CHAR(10)
+               EMAILID       VARCHAR2(20)
+
+              
+LONG :-
+-----------
+
+   => allows character data upto 2GB
+
+               T        LONG 
+
+CLOB :-  (character large object)
+------------
+
+ => allows character data upto 4GB
+
+ NCHAR / NVARCHAR2 / NCLOB :-    (  N  => National)
+ -------------------------------------------------
+ 
+ => allows unicode chars (65536) that includes all ascii chars and chars belongs to 
+      different languages 
+
+ => unicode char occupies 2 bytes 
+
+   NUMBER(p) :- 
+   --------------------
+
+   => allows numbers  without decimal  (integer)
+   => allows upto 38 digits 
+
+      ex :-       empid     NUMBER(4)
+
+                    10
+                    100
+                    1000
+                    10000  => INVALID
+
+                     aadharno  NUMBER(12)
+                     phone       NUMBER(10)
+                     accno       NUMBER(11)
+
+ NUMBER(P,S) :- 
+ ------------------------
+
+  => allows numbers with decimal (float)
+ 
+   p   =>   precision =>  total no of digits allowed
+   s   =>   scale    =>     no of digits allowed after decimal
+
+       ex :-       salary    NUMBER(7,2)
+
+                     5000
+                     5000.55
+                     50000.55
+                     500000.55 => not allowed 
+          
+                      5000.5678   => accepted  =>  5000.57
+
+                      5000.5638   => accepted  =>  5000.56
+
+                      savg             NUMBER(5,2)
+                  
+                      balance        NUMBER 
+
+ DATE  :-
+ ----------------
+
+  => allows date & time 
+  => time is optional , if not entered  oracle stores 12:00AM
+  => default date foramt in oracle is DD-MON-YY / YYYY
+  
+   ex :-           DOB         DATE
+
+                      15-MAR-05    =>    15-MAR-2005  00:00:00
+        
+                      10-OCT-95     =>   10-OCT-2095
+
+                      10-OCT-1995  =>   10-OCT-1995
+
+ => date occupies 7 bytes 
+
+        input :-   DD-MON-YYYY
+
+        stores  :-   DD  MM   CC YY   HH  MI  SS 
+                          1     1       1    1      1    1    1         
+                     
+Timestamp :- 
+-------------------
+
+ => timestamp allows date, time and also milliseconds
+
+              T                TIMESTAMP
+
+              30-jan-2026 10:43:20.123
+              ----------------  ----------    -------
+                     date       time         ms 
