@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        section{
+            width: 700px;
+            height: 400px;
+            border: solid;
+        }
+        div{
+            width: 300px;
+            height: 100px;
+            margin-bottom: 20px;
+            border: solid;
+            font-size: 2rem;
+            text-align: center;
+        }
+        .child2{
+            background-color: antiquewhite;
+            /* 
+            move the box with respect to their current position
+            but still it preserve the space
+            */
+            position: relative;
+            left: 160px;
+            top: 130px;
+        }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="child1">1st</div>
+      <div class="child2">2nd</div>
+      <div class="child3">3rd</div>
+    </section>
+  </body>
+</html>
