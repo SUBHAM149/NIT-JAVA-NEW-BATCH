@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      section {
+        width: 1080px;
+        min-height: 95vh;
+        background-color: #A5D8FF;
+        margin: auto;
+
+        /* 
+        first step : create the parent container 
+        2nd step : create the children 
+        ! child box/ containers property 
+        3rd step : give gird-area value for giving the name for that box , and make sure u give the name without '' , "".
+        ! parent box/ container properties 
+        4th step : use display grid 
+        5th step : grid-template-columns : create the columns 
+        6th step : grid-template-row : create the rows 
+        7th step : create the layout with grid-template-area row by row within the " ", next row next " " and soo on.....
+        ! grid area that we use in the child is used inside the grid-template-area in short , child name is used inside the grid-template-area ,
+        
+        */
+        display: grid;
+        grid-template-columns: 20% 20% 20% 20% 20%;
+        grid-template-rows: 25% 25% 25% 25%;
+
+        /* designing the custom layout  */
+        grid-template-areas:
+          " box1 box1 box2 box3 box4  "
+          " box5 box6 box7 box7 box4 "
+          " box9 box10 box11 box12 box13"
+          " box14 box14  box15  box15 box16";
+      }
+
+      .child {
+        border: solid red;
+      }
+      #box1 {
+        grid-area: box1;
+        background-color: #FFEC99;
+      }
+      #box2 {
+        grid-area: box2;
+      }
+      #box3 {
+        grid-area: box3;
+      }
+      #box4 {
+        grid-area: box4;
+        background: #7d7d7d;
+      }
+      #box5 {
+        grid-area: box5;
+      }
+      #box6 {
+        grid-area: box6;
+      }
+      #box7 {
+        grid-area: box7;
+        background-color: #FFEC99;
+      }
+      #box8 {
+        grid-area: box8;
+      }
+      #box9 {
+        grid-area: box9;
+      }
+      #box10 {
+        grid-area: box10;
+      }
+      #box11 {
+        grid-area: box11;
+      }
+      #box12 {
+        grid-area: box12;
+      }
+      #box13 {
+        grid-area: box13;
+      }
+      #box14 {
+        grid-area: box14;
+        background-color: #FFEC99;
+      }
+      #box15 {
+        grid-area: box15;
+        background-color: #B2F2BB;
+      }
+      #box16 {
+        grid-area: box16;
+      }
+    </style>
+  <head>
+  <body>
+    <section>
+      <div class="child" id="box1"></div>
+      <div class="child" id="box2"></div>
+      <div class="child" id="box3"></div>
+      <div class="child" id="box4"></div>
+      <div class="child" id="box5"></div>
+      <div class="child" id="box6"></div>
+      <div class="child" id="box7"></div>
+      <div class="child" id="box8"></div>
+      <div class="child" id="box9"></div>
+      <div class="child" id="box10"></div>
+      <div class="child" id="box11"></div>
+      <div class="child" id="box12"></div>
+      <div class="child" id="box13"></div>
+      <div class="child" id="box14"></div>
+      <div class="child" id="box15"></div>
+      <div class="child" id="box16"></div>
+      
+    </section>
+  </body>
+</html>
