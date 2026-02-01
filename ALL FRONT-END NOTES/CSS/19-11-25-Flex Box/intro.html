@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        /* size of the container remain same : doesn't matter u add margin, padding or border with content 
+        
+        width = 200px 
+
+        
+        */
+        box-sizing: border-box;
+      }
+      html,
+      body,
+      main {
+        width: 100%;
+        height: 100%;
+      }
+
+      a{
+        text-decoration: none;
+        color: black;
+      }
+
+      /* ------ &&&&&& ------ */
+      header {
+        width: 85%;
+        height: 15vh;
+        background-color: azure;
+        border: solid;
+        border-radius: 20px;
+        /* ------ */
+        /* todo :   if u use display: flex > browser treats this container as a flex container , and all child of this container treated like a flex items   */
+        display: flex;
+        /* default value is row : 
+        ? tells the direction for the flex items of the flex container  */
+        flex-direction: row;
+
+        /* x-axis space management */
+        /* 
+        ? space b/w the first and last flex item 
+        todo:  such as : first flex item in the LHS & last flex item in the RHS 
+        */
+        justify-content: space-between;
+        /* add the space inside the header in the LHS RHS  */
+        padding: 0px 10px;
+        /* add the space from the top and bottom and make the content in the center in the x-axis  */
+        margin: 20px auto;
+
+        /* y-axis : space management */
+        align-items: center;
+      }
+
+      nav{
+            display: flex;
+            /* gap : short way to add the space b/w the items in the rows & cols */
+            gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p id="logo">LOGO</p>
+        <nav>
+          <a href="#">Home</a>
+          <a href="#">About</a>
+          <a href="#">Services</a>
+          <a href="#">Contact</a>
+        </nav>
+      </header>
+    </main>
+  </body>
+</html>
