@@ -1,0 +1,159 @@
+31-jan-26
+
+ Binary Types :- 
+ ---------------------
+
+  => binary types are used for storing multimedia objects like audio,video,images 
+  
+ 1  BFILE (Binary File)
+ 2  BLOB  (Binary Large Object)
+
+  => BFILE is called external lob  because lob stored outside db but db stores path
+  => BLOB is called internal lob because lob stored inside db
+
+   ex :-        CPHOTO     BFILE
+                  SIGN            BLOB
+
+  Creating Tables in DB :- 
+  ---------------------------------
+
+  CREATE TABLE <tabname>
+  (
+      colname  datatype(size) ,
+      colname  datatype(size),
+      -----------------------
+   );
+
+  Rules :- 
+
+  1   name should start with alphabet
+  2   name should not contain spaces & special chars but allows  _   #  $
+  3   name can be upto 128 chars
+  4   table can have 1000 cols
+  5   no of rows unlimited
+
+                        123emp      invalid
+                        emp 123     invalid
+                        emp*123     invalid
+                        emp_123     valid
+ 
+  Ex :- 
+
+   => create table with following structure ?
+
+       EMP
+       empid   ename    gender      job    sal    hiredate       age
+ 
+       CREATE TABLE emp
+       (
+          empid   NUMBER(4),
+          ename  VARCHAR2(10),
+          gender  CHAR(1),
+          job        VARCHAR2(10),
+          sal        NUMBER(7,2),
+          hiredate DATE,
+          age       NUMBER(2)
+      );
+
+   => above command created table structure / definition / metadata  that includes
+        columns,datatype and size.
+
+  DESC  :-        (DESCRIBE)
+  -------------
+  
+  => command used to see the structure of the table
+
+                       DESC  <tabname>
+
+ Ex :- 
+
+          SQL>DESC  emp
+	
+	 EMPID                        NUMBER(4)
+ 	ENAME                        VARCHAR2(10)
+ 	GENDER                     CHAR(1)
+ 	JOB                              VARCHAR2(10)
+	 SAL                              NUMBER(7,2)
+	 HIREDATE                   DATE
+	 AGE                              NUMBER(2)
+
+  inserting data into table :- 
+  -----------------------------------
+
+   => "insert" command is used to insert data
+   => insert command creates rows
+   => we can insert 
+
+   1  single row
+   2  multiple rows
+
+ inserting single row :- 
+ ------------------------------
+
+    INSERT INTO <tabname> VALUES(v1,v2,v3,-----------);
+
+Ex :- 
+
+  SQL>INSERT INTO emp VALUES(100,'sachin','m','clerk',5000,'31-jan-2026',40);
+  SQL>INSERT INTO emp VALUES(101,'arvind','m','manager',8000,sysdate,25);
+
+ inserting multiple rows :- 
+ ----------------------------------
+ 
+=> insert command can be executed multiple times with different values by using
+     variables prefixed with  "&".
+
+    SQL>IINSERT INTO emp VALUES(&empid,&ename,&gender,&job,&sal,&hiredate,&age);
+
+Enter value for empid: 102
+Enter value for ename: 'sindhu'
+Enter value for gender: 'f'
+Enter value for job: 'analyst'
+Enter value for sal: 9000
+Enter value for hiredate: '20-APR-20'
+Enter value for age: 30
+
+SQL> /   (executes previous command)
+
+Enter value for empid: 103
+Enter value for ename: 'rahul'
+Enter value for gender: 'm'
+Enter value for job: 'clerk'
+Enter value for sal: 4000
+Enter value for hiredate: '10-MAR-18'
+Enter value for age: 20
+ 
+26ai :- 
+
+ SQL>INSERT INTO emp 
+                  VALUES(102,'sindhu','f','analyst',9000,'20-APR-20',30) ,
+                                 (103,'rahul','m','clerk',4000,'10-MAR-18',20)
+
+ Inserting nulls :- 
+ ------------------------
+
+  => a null means blank or empty
+  => it is not equal to 0 or space
+  => nulls are inserted when value doesn't exists 
+  => nulls can be inserted in two ways
+
+  method 1 :- 
+ 
+ SQL>INSERT INTO emp VALUES(104,'vijay','m','',NULL,'05-FEB-21',20);
+
+ method 2 :- 
+
+ SQL>INSERT INTO emp(empid,ename,gender,hiredate,age)
+                                   VALUES(105,'kumar','m','08-JUN-19',35);
+
+  remaining two fields (job,sal) are filled with nulls
+
+ => above insert commands inserted data into instance (ram)  , to save this data execute COMMIT
+
+         SQL>COMMIT ; 
+
+ => In normal exit operations are saved and in abnormal exit operations are not saved
+
+       SQL> EXIT ;    => normal exit
+
+       closing sqlplus window  => abnomral exit
