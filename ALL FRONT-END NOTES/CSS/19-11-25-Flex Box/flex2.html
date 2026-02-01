@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      section {
+        width: 1000px;
+        height: 600px;
+        border: solid;
+        padding: 20px;
+        background-color: bisque;
+        /* ------------- */
+        display: flex;
+
+        /*  make the content in the next line if there is no space available as per requirement of that container  */
+        flex-wrap: wrap;
+
+        /* 
+        ! if u want to align-content flex-wrap : wrap,  u need to use first 
+        */
+
+        /* 
+        align content : manage the space b/w the rows that created by using the flex-wrap : wrap , or manage the alignment of the rows in y-axis 
+        */
+        align-content: center;
+        align-content: end;
+        align-content: start;
+        gap: 20px;
+      }
+      .child {
+        width: 150px;
+        height: 150px;
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="child">box1</div>
+      <div class="child">box2</div>
+      <div class="child">box3</div>
+      <div class="child">box4</div>
+      <div class="child">box5</div>
+      <div class="child">box6</div>
+      <div class="child">box7</div>
+      <div class="child">box8</div>
+      <div class="child">box9</div>
+      <div class="child">box10</div>
+    </section>
+  </body>
+</html>
