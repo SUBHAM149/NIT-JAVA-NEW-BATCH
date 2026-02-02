@@ -1,0 +1,186 @@
+ 02-feb-26
+
+  Operators in oracle :- 
+   ---------------------------
+
+   Arithmetic Operators   =>    +    -     *       /       
+   Relational Operators   =>   >    >=   <    <=    =     <>    != 
+   Logical Operators	      =>   AND  OR   NOT
+   Special Operators	      =>   BETWEEN, IN , LIKE,IS,ANY,ALL,EXISTS,PIVOT
+   Set Operators	      =>   union,union all,interect,minus
+
+ Displaying Data :- 
+ -----------------------
+
+  => "SELECT" command is used to display data  from table
+  => we can display all rows or specific rows
+  => we can display all columns or specific colun
+
+  syn :-      SELECT  columns / *   FROM  tabname
+
+                    SQL	   =	ENGLISH
+	   QUERIES =          SENTENCES
+                    CLAUSES =         WORDS
+        
+                      FROM clause => specify tablename
+                      SELECT clause => specify column names 
+                                      *         =>  all columns
+
+   => display employee names and salaries ?
+
+       SELECT ename,sal FROM emp ; 
+
+  => display names,salaries and hiredates ?
+
+        SELECT ename,sal,hiredate FROM emp ; 
+  
+ => display all the data  ?
+
+       SELECT * FROM emp ; 
+
+WHERE clause :- 
+-----------------------
+
+ => where cause is used to display specific rows from table
+ 
+   SELECT columns / *
+   FROM tabname
+   WHERE  condition ; 
+
+ condition :- 
+ --------------
+
+            COLNAME  OP   VALUE 
+
+  =>  condition is a relational expression that returns TRUE/FALSE
+  => OP must be any relational operator like  >   >=   <   <=   =   <>
+  => if  cond = true row is selected
+  => if cond = false row is not selected
+ 
+Ex :- 
+
+  => display employee details whose id = 103 ?
+  
+      SELECT * FROM emp WHERE empid = 103 ; 
+ 
+ => display male employees list ?
+
+     SELECT * FROM emp WHERE gender='m' ; 
+
+ => employees earning more than 5000 ?
+
+    SELECT * FROM emp WHERE sal > 5000 ; 
+
+ => employees joined after 2020 ?
+
+     SELECT * FROM emp WHERE hiredate > 2020;   => ERROR
+  
+    SELECT * FROM emp WHERE hiredate >  '31-DEC-2020' ; 
+ 
+ => employees joine before 2020 ?
+
+   SELECT * FROM emp WHERE hiredate < '01-JAN-2020'  ; 
+
+ => employees not working as analyst ?
+
+     SELECT * FROM emp WHERE  job <> 'analyst' ; 
+
+ Compound Condition :- 
+ ---------------------------------
+
+  => multiple conditions combined with  AND / OR  operators is called 
+       compound condition
+
+        WHERE  cond1  AND   cond2	 result
+                        T		T	T
+	       T 		F	F
+                        F		T	F
+	       F		F	F
+
+        WHERE cond1 OR  cond2	 result
+                        T	       T		 T
+                        T	       F		 T
+                        F	       T		 T
+                        F	       F		 F
+
+Ex :- 
+
+  => display employees working as clerk,manager ?
+
+      SELECT * FROM emp WHERE job='clerk'  OR job='manager' ; 
+ 
+ => display employees whose id = 100.103.105 ?
+
+    SELECT * FROM emp WHERE empid=100 OR empid=103 OR empid=105 ; 
+
+ => display male employees  age > 30 ?
+
+     SELECT * FROM emp WHERE gender='m' AND  age > 30 ; 
+
+ => display female employees working as manager and earning more than 5000 ?
+
+     SELECT *
+     FROM emp 
+     WHERE gender='f'  AND  job='manager'  AND  sal > 5000; 
+
+ => employees working as clerk,manager and earning more than 5000 ?
+  
+       SELECT *
+       FROM emp
+       WHERE job='clerk' OR  job='manager'  AND  sal > 5000 ; 
+  
+      above query displays clerks earning less than 5000 because
+      sal > 5000 is applied only to manager but not to clerk because
+      operator and has got more priority than opertor or , to overcome this
+      use  (   )
+
+       SELECT *
+       FROM emp
+       WHERE (job='clerk' OR  job='manager')  AND  sal > 5000 ; 
+
+ => 
+
+ student
+ sno	sname	s1	s2	s3  
+ 1	A	80	90	70
+ 2	B	30	60	50
+ 3	C	60	20	10
+ 4	D	10	20	30
+
+ => display list of students who are passed ?
+
+  SELECT * 
+  FROM student
+  WHERE s1>=35 AND s2>=35 AND s3>=35 ;
+   
+ => display list of students who are failed ?
+
+   SELECT *
+   FROM student
+   WHERE s1<35 OR s2<35 OR s3<35 
+
+=> list of students who are failed in exactly 1 subject ?
+
+  SELECT *
+  FROM student
+  WHERE   (s1<35 AND s2>=35 AND s3>=35)
+                   or
+                   (s1>=35 AND s2<35 AND s3>=35)
+                   or
+                  (s1>=35 AND s2>=35 AND s3<35) ; 
+
+ => list of students who are failed in exactly 2 subjects ?
+
+  SELECT *
+  FROM student
+  WHERE   (s1<35 AND s2<35 AND s3>=35)
+                   OR
+                  (s1>=35 AND s2<35 AND s3<35)
+                   OR
+                  (s1<35 AND s2>=35 AND s3<35);
+
+ => list of students who are failed in all 3 subjects ?
+
+  SELECT *
+  FROM student
+  WHERE  s1<35 AND s2<35 AND s3<35 ;
