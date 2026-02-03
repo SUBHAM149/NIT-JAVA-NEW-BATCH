@@ -1,0 +1,284 @@
+03-FEB-26 
+  
+ => employees joined in 2020  ?
+
+   SELECT *
+   FROM emp 
+   WHERE hiredate >= '01-JAN-2020'
+                 AND
+                 hiredate <= '31-DEC-2020' ;
+
+  => employees earning more than 5000 and less than 10000 ?
+
+   SELECT *
+   FROM emp 
+   WHERE sal > 5000  AND  sal < 10000;
+
+BETWEEN operator :-
+-------------------------------
+
+ => use between operator for range comparison
+
+       ex :-  5000 to 10000
+                jan to dec
+
+            WHERE colname BETWEEN v1 AND  v2         (col >= v1 AND col <= v2)
+
+Ex :- 
+
+  => display employees earning between 5000 and 10000 ?
+
+      SELECT * 
+      FROM emp  
+     WHERE sal BETWEEN 5000 AND 10000;
+
+ => employees joined in 2020  ?
+
+   SELECT *
+   FROM emp 
+   WHERE hiredate BETWEEN '01-JAN-2020'  AND  '31-DEC-2020'  ;
+
+=> employees not joined in 2020 ?
+
+   SELECT *
+   FROM emp 
+   WHERE hiredate NOT BETWEEN '01-JAN-2020'  AND  '31-DEC-2020'  ;
+
+Question :- 
+
+ SELECT *
+ FROM emp 
+ WHERE sal BETWEEN 10000 AND 5000;
+
+ A  ERROR
+ B  returns rows 
+ C  returns no rows
+ D  none
+
+ ANS :-  C
+
+    where sal between 5000 and 10000 ;    (sal >= 5000  AND  sal <= 10000)
+
+   where sal between 10000 and 5000 ;   (sal>=10000 and sal<=5000)
+
+ IN operator :- 
+ --------------------
+
+   => use IN operator for list comparison
+   => use IN operator for "=" comparison with multiple values
+
+         ex :-  10,20,30,40,50
+
+       WHERE colname IN (v1,v2,v3,----)
+
+  COL = V1
+   OR
+  COL = V2  =======================>   COL  IN (V1,V2,V3,--)
+  OR
+  COL = V3
+
+  COL >= V1
+  AND                =====================>  COL BETWEEN V1 AND V2
+  COL <= V2
+
+ => display employees whose id = 100,103,105 ?
+
+    SELECT *
+    FROM emp 
+    WHERE empid IN (100,103,105);
+
+=> empoyees working as clerk,manager ?
+
+    SELECT *
+    FROM emp 
+    WHERE job IN ('clerk','manager') ;
+
+ => employees not working as clerk,manager ?
+
+    SELECT *
+    FROM emp 
+    WHERE job NOT IN ('clerk','manager') ;
+
+ => list of male employees ?
+      working as clerk,manager
+      earning between 5000 and 10000
+      not joined in 2020
+      
+      SELECT *
+      FROM emp 
+      WHERE gender='m'
+                    AND
+                    job IN ('clerk','manager')
+                    AND
+                    sal BETWEEN 5000 AND 10000
+                    AND
+                    hiredate NOT BETWEEN '01-JAN-2020' AND '31-DEC-2020'  ;
+
+ => list of samsung,redmi,realme mobile phones price between 10000 and 20000 ?
+
+  PRODUCTS
+  prodid	pname	price	category	brand
+
+ 
+ SELECT *
+ FROM products
+ WHERE  brand IN ('samsung','redmi','realme')
+                 AND
+                 price BETWEEN 10000 AND 20000
+                 AND
+                category='mobiles' ;
+
+ LIKE operator :-
+------------------------
+
+ => use LIKE operator for pattern comparison
+
+  ex :-  name starts with  's'
+           name ends with 'd'
+           name contains 'a'
+
+          WHERE colname LIKE  'pattern'
+
+ => pattern may contain  alphabets,digits,special chars and wildcard chars
+
+  wildcard chars :-
+  ------------------------
+
+                %              =>  0 or many chars
+
+                _               => exactly 1 char
+
+
+  => employees name starts with 's' ?
+
+       SELECT * FROM emp WHERE ename LIKE  's%' ; 
+ 
+  => employees name ends with 'd' ?
+
+       SELECT * FROM emp WHERE ename LIKE  '%d' ;
+
+ => name contains 'n' ?
+
+          SELECT * FROM emp WHERE ename LIKE  '%n%' ;
+
+ => name doesn't contain 'a' ?
+
+          SELECT * FROM emp WHERE ename NOT LIKE  '%a%' ;
+
+  =>  where 'a' is the 4th char in their name ?
+
+     SELECT * FROM emp WHERE ename LIKE '___a%' ; 
+
+ => where 'a' is the 4th char from last ?
+
+    SELECT * FROM emp WHERE ename LIKE '%a___' ;
+
+ => name contains 5 chars ?
+
+   SELECT * FROM emp WHERE ename LIKE '_____'  ; 
+ 
+ => employees joined in apr month ?        DD-MON-YY
+
+      SELECT * FROM emp WHERE  hiredate LIKE '%APR%' ; 
+
+ => employees joined in 2020  ?
+
+      SELECT * FROM emp WHERE  hiredate LIKE '%20' ; 
+
+  => 
+
+   SELECT *
+   FROM emp 
+   WHERE job IN ('clerk','man%') ; 
+
+    A    ERROR
+    B    returns clerks,manager rows
+    C    returns only clerks
+    D     none
+  
+       ans :-  c 
+
+ IS operator :- 
+ -------------------
+
+  => opeator used for NULL comparison
+
+       WHERE colnam IS NULL
+       WHERE colname IS NOT NULL
+
+ Ex :-
+
+  => employees not earning salary ? 
+
+  SELECT * FROM emp WHERE sal IS NULL  ;
+
+ => employees earning salary ?
+
+   SELECT * FROM emp WHERE sal IS NOT NULL  ;
+
+ Summary :- 
+
+  WHERE colname BETWEEN v1 AND v2
+  WHERE colname IN (v1,v2,v3,---)
+  WHERE colname LIKE 'pattern'
+  WHERE colname ISNULL
+
+  ALIAS :- 
+  -------------
+
+  => alias means another name
+  => used to change column heading
+
+             COLNAME / EXPR  [AS]  ALIAS 
+
+ Ex :-
+
+    => display  employee name,annual salary ?
+
+          SELECT ename,sal*12 as annsal
+          FROM emp ; 
+
+         SELECT ename,sal*12 as annual sal
+          FROM emp ; 
+
+  => display  ENAME   EXPERIENCE ?
+
+     SELECT  ename, FLOOR((SYSDATE - hiredate) /365 ) as experience
+     FROM emp ; 
+  
+      SELECT  ename, CEIL((SYSDATE - hiredate) /365 ) as experience
+     FROM emp ; 
+
+ => display  ENAME    SAL    HRA    DA    TAX   TOTSAL   ?
+
+
+           HRA  =  house rent allowance = 20% on sal
+           DA     =  dearness allowance = 30% on sal
+           TAX   = 10% on sal
+           TOTSAL = SAL + HRA + DA - TAX 
+
+     SELECT  ename,sal,
+                     sal*0.2 as hra,
+                     sal*0.3 as da,
+                     sal*0.1 as tax,
+                     sal + (sal*0.2) + (sal*0.3) - (sal*0.1) as totsal
+     FROM emp ; 
+
+    sachin	5000	1000	1500	500	7000	
+
+ How to store query output in a table :- 
+ ----------------------------------------------------
+
+   CREATE TABLE emp_salary_details 
+    AS
+   SELECT  ename,sal,
+                     sal*0.2 as hra,
+                     sal*0.3 as da,
+                     sal*0.1 as tax,
+                     sal + (sal*0.2) + (sal*0.3) - (sal*0.1) as totsal
+     FROM emp ; 
+ ;
+   => after creating table , whenever we want employee salary details then execute the
+        following simple query 
+ 
+   SELECT * FROM emp_salary_details ; 
