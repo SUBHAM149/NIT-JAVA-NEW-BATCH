@@ -1,7 +1,51 @@
+//CREATE TABLE FOR EMPLOYEE
+SQL> CREATE TABLE EMP (
+    EMPID    NUMBER(5),
+    ENAME    VARCHAR2(20),
+    G        CHAR(1),
+    JOB      VARCHAR2(20),
+    SAL      NUMBER(8),
+    HIREDATE DATE,
+    AGE      NUMBER(3)
+);
+TABLE CREATED.
+
+//INSERTING DATA INTO TABLE.
+SQL> INSERT INTO EMP VALUES (100, 'sachin', 'm', 'clerk', 5000,  DATE '2026-01-31', 40);
+SQL> INSERT INTO EMP VALUES (101, 'verri',  'f', 'assistant', 4000, DATE '2022-02-19', 20);
+SQL> INSERT INTO EMP VALUES (103, 'sindhu', 'f', 'lectur', 5000, DATE '2028-04-10', 18);
+SQL> INSERT INTO EMP VALUES (104, 'SUBHAM', 'M', 'DEVLOPER', 2000, DATE '2026-05-02', 21);
+SQL> INSERT INTO EMP VALUES (105, 'RAVI',   'M', 'ASSISTANT', 10000, DATE '2018-01-01', 25);
+SQL> INSERT INTO EMP VALUES (106, 'VEERAA', 'F', 'SUPERVISER', 20000, DATE '2015-03-31', 21);
+SQL> COMMIT;
+
+//IF WANT MULTIPLE VALUE
+SQL> INSERT INTO EMP
+     VALUES (&EMPID, '&ENAME', '&G', '&JOB', &SAL, '&HIREDATE', &AGE);
+
+Enter value for empid: 107
+Enter value for ename: RAM
+Enter value for g: M
+Enter value for job: MANAGER
+Enter value for sal: 15000
+Enter value for hiredate: 15-AUG-2020
+Enter value for age: 30
+//AFTER THE GIVE (/)SLAS AUTO CAME INSET QUERIES
+Enter value for EMPID: 108
+Enter value for ENAME: AMIT
+Enter value for G: M
+Enter value for JOB: VALUNTER
+Enter value for SAL: NULL
+Enter value for HIREDATE: 12-JUN-2021
+Enter value for AGE: 32
+//AND NOW TABE CREATED
+
 SQL> SELECT*FROM EMP;
 
      EMPID ENAME      G JOB               SAL HIREDATE         AGE
 ---------- ---------- - ---------- ---------- --------- ----------
+       107 RAM        M MANAGER         15000 15-AUG-20         30
+       108 AMIT       M VALUNTER              12-JUN-21         32
        100 sachin     m clerk            5000 31-JAN-26         40
        101 verri      f assitant         4000 19-FEB-22         20
        103 sindhu     f lectur           5000 10-APR-28         18
@@ -9,7 +53,33 @@ SQL> SELECT*FROM EMP;
        105 RAVI       M ASSISTANT       10000 01-JAN-18         25
        106 VEERAA     F SUPERVISER      20000 31-MAR-15         21
 
-6 rows selected.
+8 rows selected.
+//=> display employee details whose id = 103 ?
+  
+      SELECT * FROM emp WHERE empid = 103 ; 
+ 
+ //=> display male employees list ?
+
+     SELECT * FROM emp WHERE gender='m' ; 
+
+ //=> employees earning more than 5000 ?
+
+    SELECT * FROM emp WHERE sal > 5000 ; 
+
+ //=> employees joined after 2020 ?
+
+     SELECT * FROM emp WHERE hiredate > 2020;   => ERROR
+  
+    SELECT * FROM emp WHERE hiredate >  '31-DEC-2020' ; 
+ 
+//=> employees joine before 2020 ?
+
+   SELECT * FROM emp WHERE hiredate < '01-JAN-2020'  ; 
+
+ //=> employees not working as analyst ?
+
+     SELECT * FROM emp WHERE  job <> 'analyst' ;
+
 //=> display ENAME  JOB  ?
 SQL> SELECT ENAME,
   2  CASE JOB
