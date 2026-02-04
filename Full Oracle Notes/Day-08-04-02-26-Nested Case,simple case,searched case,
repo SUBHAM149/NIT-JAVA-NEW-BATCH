@@ -1,0 +1,236 @@
+4-feb-26 
+--------------
+ 
+CASE statement :- 
+--------------------------
+
+ => case statement is used to implement IF-ELSE in sql queries
+ => using case statement we can return values based on conditions
+ => case statements are 2 types 
+
+ 1 simple case
+ 2 searched case
+
+ simple case :- 
+ -------------------
+
+ => use simple case when conditions based on "=" operator
+
+  CASE  colname
+  WHEN value1 THEN return expr1
+  WHEN value2 THEN return expr2
+  -------------------------
+ [ ELSE return expr]
+  END
+
+ =>  display  ENAME  GENDER  ?
+
+     if gender='m'  display male
+                     'f'  display female
+
+    SELECT ename,
+                   CASE gender
+                   WHEN 'm' THEN  'male'
+                   WHEN 'f' THEN 'female'
+                   END  as gender
+   FROM emp ;
+ 
+  => display ENAME  JOB  ?
+
+        if job=clerk       display worker
+                  manager             boss
+                  others                 employee
+
+     SELECT ename,
+                    CASE job
+                    WHEN 'clerk' THEN 'worker'
+                    WHEN 'manager' THEN 'boss'
+                    ELSE  'employee'
+                     END as job
+    FROM emp ;
+
+ searched case :- 
+ -----------------------
+
+  => use searched case when conditions not based on "=" operator
+
+  CASE 
+  WHEN cond1 THEN return expr1
+  WHEN cond2 THEN return expr2
+  ------------------
+  ELSE return expr
+  END
+ 
+Ex :- 
+
+ => display  ENAME  SAL   SALRANGE  ?
+
+                 if sal>5000   hisal
+                    sal<5000   losal
+                    other         avgsal
+  
+    SELECT ename,sal,
+                   CASE 
+                   WHEN sal>5000 THEN 'hisal'
+                   WHEN sal<5000 THEN 'losal'
+                   WHEN sal IS NULL THEN 'unknown'
+                   ELSE 'avgsal'
+                   END as salrange
+    FROM emp ;
+
+   => display  SNO   TOTAL  AVG  RESULT  ?
+
+   STUDENT
+   sno	sname	s1	s2	s3
+   1	A	80	90	70
+   2	B	30	60	50
+
+   SELECT sno,
+                  s1+s2+s3 as total,
+                  (s1+s2+s3)/3 as avg,
+                  CASE
+                  WHEN s1>=35 AND s2>=35 AND s3>=35 THEN 'pass'
+                  ELSE 'fail'
+                  END as result
+   FROM student ;
+ 
+Nested Case stmt :-
+----------------------------
+
+ CASE colname
+ WHEN value1 THEN
+          CASE colname 
+          WHEN value1 THEN return expr
+          WHEN value2 THEN return expr
+          --------------
+          ELSE return expr
+          END
+ WHEN value2 THEN
+          CASE colname 
+          WHEN value1 THEN return expr
+          WHEN value2 THEN return expr
+          --------------
+          ELSE return expr
+          END
+ ELES return expr
+ END ;
+ 
+ =>  display electricity bill ?
+
+       display  meterid    name     amount ?
+
+  
+  POWER
+  meterid     consumer_name   type	date      start	 end      units
+                                                 C
+  
+  SELECT meterid,consumer_name,
+                 CASE type
+                 WHEN 'D' THEN
+                     CASE 
+                     WHEN units BETWEEN 0 AND 50 THEN  units*1.95
+                     WHEN units BETWEEN 51 AND 100 THEN units*3.10
+                     ELSE units*4.80
+                     END
+               WHEN 'C' THEN
+                      CASE 
+                     WHEN units BETWEEN 0 AND 100 THEN  units*8.5
+                     WHEN units BETWEEN 101 AND 300 THEN units*9.9
+                     ELSE units*10.40
+                     END             
+               END as amount
+    FROM power
+
+ 0-50 units: ₹1.95 per unit (plus ₹10 fixed charge)
+51-100 units: ₹3.10 per unit
+101-200 units: ₹4.80 per unit
+201-300 units: ₹7.70 per unit
+301-400 units: ₹9.00 per unit
+401-800 units: ₹9.50 per unit
+Above 800 units: ₹10.00 per unit   
+
+0-100 Units: ~₹7.50 - ₹8.50 per unit
+101-300 Units: ~₹8.50 - ₹9.90 per unit
+301-500 Units: ~₹9.00 - ₹10.40 per unit
+Above 500 Units: ~₹9.50 - ₹11.00 per unit
+Advertisement Hoardings: Approximately ₹13.00 per unit 
+
+ ORDER BY clause :- 
+ ---------------------------- 
+
+ => order by clause is used to sort table data
+ => sorting is based on one or more columns
+ => we can sort data either in ascending or descending
+ => default order is ascending
+
+ SELECT columns
+ FROM tabname
+ [WHERE cond]
+ ORDER BY  colname ASC / DESC, -----   ; 
+
+	 	numeric		char		date 
+
+ASC		0-9		A-Z		old - new
+
+DESC		9-0		Z-A		new - old
+
+
+ Ex :- 
+
+   => arrange employee list name wise ascending order ?
+
+    SELECT *
+    FROM emp 
+    ORDER BY  ename  ASC ; 
+
+ => arrange employee list age wise desc order ?
+
+   SELECT *
+   FROM emp 
+   ORDER BY age DESC ; 
+
+ => arrange employee list  hiredate wise  ?
+      employee joined first display first ?
+
+     SELECT *
+     FROM emp 
+     ORDER BY  hiredate  ASC ; 
+
+ NOTE :- 
+
+  => in order by clause we can use column name or column number
+
+   SELECT  *
+   FROM emp 
+   ORDER BY 2 ASC  ;
+ 
+    above query sorts data based on 2nd column in emp table i.e. ename
+
+  => ORDER BY number is not based on table and it is based on select lilst 
+   
+      SELECT empid,ename,sal,hiredate,age
+      FROM emp
+      ORDER BY 5 ASC ;
+
+       above query sorts data based on 5th column in select list i.e. age
+
+  Controlling NULLS :- 
+  -------------------------------
+
+   => in order by nulls treated high
+   => in ascending order displayed last
+   => in descending order displayed first
+   => to control this use NULLS FIRST / LAST option
+
+ Ex :- 
+
+   => arrage employees  list sal wise desc order ?
+        display nulls last ? 
+
+        SELECT * FROM emp ORDER BY sal DESC NULLS LAST ;
+
+  => arrage employees  list sal wise asc order ?
+        display nulls first ?
+
+        SELECT * FROM emp ORDER BY sal ASC NULLS FIRST ;
+ 
