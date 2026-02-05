@@ -1,0 +1,221 @@
+5-feb-26
+ 
+Sorting based on multiple columns :-
+--------------------------------------------------
+
+  => arrange employee list age wise desc ?
+       if age is same then arrange based on empid ?
+
+      SELECT empid,ename,age
+      FROM emp 
+      ORDER BY age DESC,empid ASC ; 
+
+  => arrange student list avg wise desc,m desc,p desc ? 
+
+ CREATE TABLE STUDENT
+   (
+     sno number(2),
+    sname varchar2(10),
+      m number(3),
+      p number(3),
+      c number(3)
+     );
+
+
+SQL> INSERT INTO student VALUES(&sno,'&sname',&m,&p,&c);
+
+  student
+  sno	sname	m	p	c
+  1	A	80	90	70
+  2	B	70	60	50
+  3	C	90	70	80
+  4	D	90	80	70
+
+ SELECT sno,sname,m,p,c, (m+p+c)/3 as avg 
+ FROM student
+ ORDER BY (m+p+c)/3 DESC,m DESC,p DESC ;
+
+  4	D	90	80	70	80
+  3	C	90	70	80	80
+  1	A	80	90	70	80
+  2	B	70	60	50	60
+
+DISTINCT clause :-
+----------------------------
+ 
+=> distinct clause eliminates duplicates from query output
+
+         SELECT  DISTINCT col1,col2,--- / *
+         FROM tabname
+         [WHERE cond]
+         [ORDER BY ---]  ;
+
+Ex :-  
+
+ SELECT DISTINCT JOB FROM EMP ;
+
+JOB
+---------
+CLERK
+SALESMAN
+ANALYST
+MANAGER
+PRESIDENT
+
+SELECT DISTINCT deptno FROM emp ;
+
+    DEPTNO
+      ----------
+        30
+        10
+        20
+ 
+FETCH clause :- 
+==============
+
+  => FETCH clause is used to display top n  rows 
+  
+    SELECT columns
+    FROM tabname
+    [WHERE ]
+    [ORDER BY --]
+    [OFFSET <n> ROWS] FETCH FIRST / NEXT <n> ROW/ROWS ONLY ;
+
+ Ex :- 
+
+   => display first 5 rows from emp ?
+
+      SELECT empno,ename,sal
+      FROM emp
+      FETCH FIRST 3 ROWS ONLY ;
+
+ => display 5th row ? 
+
+       SELECT empno,ename,sal
+       FROM emp
+       OFFSET 4 ROWS FETCH NEXT 1 ROW ONLY ; 
+
+ => display 5th row to 10th row ?
+
+       SELECT empno,ename,sal
+       FROM emp
+       OFFSET 4 ROWS FETCH NEXT  6 ROWS ONLY ; 
+
+ => display 10th to 14th row ?
+
+       SELECT empno,ename,sal
+       FROM emp
+       OFFSET 9 ROWS FETCH NEXT  5 ROWS ONLY ; 
+
+ => display top 5 highest paid employees ?
+
+      SELECT empno,ename,sal
+      FROM emp
+      ORDER BY sal DESC
+      FETCH FIRST 5  ROWS ONLY ;
+ 
+ => display top 3 max salaries ?
+
+      SELECT DISTINCT sal
+      FROM emp
+      ORDER BY sal DESC
+     FETCH FIRST 3 ROWS ONLY ;
+
+       SAL
+    ----------
+      5000
+      3000
+      2975
+
+ =>  display 5th max salary ?
+
+      SELECT DISTINCT sal
+      FROM emp
+      ORDER BY sal DESC
+      OFFSET 4 ROWS FETCH NEXT 1 ROW ONLY ;
+
+=> display top 3 employees based on experience ?
+
+    SELECT empno,ename,hiredate
+    FROM emp
+    ORDER BY hiredate ASC 
+    FETCH FIRST 3 ROWS ONLY ; 
+  
+    SELECT empno,ename,(SYSDATE - hiredate)/365 as expr
+    FROM emp
+    ORDER BY expr  DESC  
+    FETCH FIRST 3 ROWS ONLY ; 
+
+ Order of execution of clauses :- 
+ -------------------------------------------
+
+ FROM
+ WHERE
+ SELECT
+ ORDER BY 
+ FETCH
+
+ SELECT ename,(SYSDATE-hiredate)/365 as expr
+ FROM emp 
+ WHERE expr > 44 ;    => ERROR
+
+ alias cannot be used in WHERE clause because WHERE clause is executed before SELECT
+
+  SELECT ename,(SYSDATE-hiredate)/365 as expr
+  FROM emp 
+  ORDER BY expr ASC ;
+
+ alias can be used in ORDER BY clause because ORDER BY clause is executed after SELECT
+ 
+summary :- 
+		
+WHERE			 =>      To select specific rows
+ORDER BY                                =>       To sort table data
+DISTINCT                                  =>       To eliminate duplicates
+FETCH                                      =>        To select top N rows
+
+DML commands :-        (Data Manipulation Lang)
+---------------------------
+
+ INSERT
+ UPDATE
+ DELETE
+ MERGE
+ INSERT ALL
+
+ => all DML commands acts on table data
+ => all DML commands acts on instance (ram)
+ => To save the operation execute COMMIT
+ => To cancel the operation execute ROLLBACK
+
+UPDATE command :- 
+----------------------------
+
+ => command used to modify table data
+ => using update we can update all rows or specific rows
+ => using update we can update single column or multiple columns
+
+UPDATE tabname
+SET colname = value , colname = value , ------------
+[WHERE cond] ;
+
+Ex :- 
+ 
+ => update all employees comm with 500 ?
+
+   UPDATE emp  SET comm = 500 ;
+   
+  => update comm with 500 whose empno = 7369 ?
+
+   UPDATE emp SET comm = 500 WHERE empno = 7369 ; 
+
+ => update comm with 500 whose comm = null ?
+
+    UPDATE emp SET comm = 500   WHERE comm IS NULL ; 
+
+ => update comm with NULL whose comm is not null ?
+
+    UPDATE emp SET comm = NULL WHERE comm IS NOT NULL ; 
+
+                  NULL assignment   =
+                  NULL comaprison   IS
