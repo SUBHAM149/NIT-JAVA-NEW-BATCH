@@ -1,0 +1,52 @@
+📘 DDL (Data Definition Language)
+DDL is used to define and manage database objects like tables, schemas, indexes.
+Common Commands
+CREATE → Create new database objects
+ALTER → Modify existing objects
+DROP → Delete objects
+
+Example Structure
+sql
+-- Create a table
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Department VARCHAR(50),
+    Email VARCHAR(100) UNIQUE
+);
+-- Alter table (add a new column)
+ALTER TABLE Students
+ADD DateOfBirth DATE;
+
+-- Drop table
+DROP TABLE Students;
+
+
+
+📘 DML (Data Manipulation Language)
+DML is used to manipulate data inside tables.
+
+Common Commands
+INSERT → Add new rows
+UPDATE → Modify existing rows
+DELETE → Remove rows
+SELECT → Retrieve data
+
+Example Structure
+sql
+-- Insert data
+INSERT INTO Students (StudentID, Name, Department, Email)
+VALUES (1, 'Subham', 'Computer Science', 'subham@example.com');
+
+-- Update data
+UPDATE Students
+SET Department = 'Information Technology'
+WHERE StudentID = 1;
+
+-- Delete data
+DELETE FROM Students
+WHERE StudentID = 1;
+
+-- Select data
+SELECT StudentID, Name, Department, Email
+FROM Students;
