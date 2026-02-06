@@ -1,0 +1,266 @@
+6-feb-26
+
+UPDATE command :- 
+----------------------------
+
+ => command used to modify table data
+ => using update we can update all rows or specific rows
+ => using update we can update single column or multiple columns
+
+UPDATE tabname
+SET colname = value , colname = value , ------------
+[WHERE cond] ;
+
+Ex :- 
+ 
+ => update all employees comm with 500 ?
+
+   UPDATE emp  SET comm = 500 ;
+   
+  => update comm with 500 whose empno = 7369 ?
+
+   UPDATE emp SET comm = 500 WHERE empno = 7369 ; 
+
+ => update comm with 500 whose comm = null ?
+
+    UPDATE emp SET comm = 500   WHERE comm IS NULL ; 
+
+ => update comm with NULL whose comm is not null ?
+
+    UPDATE emp SET comm  = NULL WHERE comm IS NOT NULL ; 
+
+                  NULL assignment   =
+                  NULL comaprison   IS
+
+ =>  update sal with 2000 and comm with 500 whose empno = 7369 ?
+
+      UPDATE emp 
+      SET sal = 2000  ,  comm = 1000
+      WHERE empno = 7369 ; 
+
+ => increment sal by 20% and comm by 10%  of employees working as salesman and joined in 1981 year ?
+
+   UPDATE emp 
+   SET sal = sal + (sal*0.2) ,  comm = comm + (comm*0.1)
+   WHERE  job='SALESMAN'
+                  AND
+                  hiredate LIKE  '%81' ; 
+
+ => increment sal as follows ?
+
+      if job=CLERK incr sal by 10%
+                SALESMAN           15%
+                MANAGER             20%
+                 others                    5%
+  
+  UPDATE emp 
+  SET sal = CASE job
+                   WHEN 'CLERK' THEN  sal*1.1
+                   WHEN 'SALESMAN' THEN sal*1.15
+                   WHEN 'MANAGER' THEN sal*1.2
+                   ELSE sal*1.05
+                   END ;
+ 
+ => increase the   samsung,redmi,realme mobile phones price by  10% ? 
+
+  PRODUCTS
+  prodid	pname	price	category	brand
+   
+  UPDATE products 
+  SET price = price * 1.1
+  WHERE brand IN ('samsung','redmi','realme')
+                AND
+                category='mobiles' ;
+
+ => increase the price of mobile phones as follows ?
+
+      if brand = samsung   incr  by 10%
+                      redmi                      15%
+                     realme                      20%
+                      others                      5%
+
+  UPDATE  products 
+  SET price = CASE brand
+                      WHEN 'samsung' THEN price*1.1
+                      WHEN 'redmi' THEN price*1.15
+                      WHEN 'realme' THEN price*1.2
+                      ELSE price*1.05
+                      END 
+  WHERE category='mobiles' ; 
+
+ => 
+
+mobiles phones :-
+
+    if brand = samsung   incr  by 10%
+                      redmi                      15%
+                     realme                      20%
+                      others                      5%
+refrigerator
+
+  if brand = samsung   incr  by 10%
+                  lg                            15%
+                  whirlpool                 20%
+                  others                     5%
+
+ summary :- 
+
+  updating all rows
+  updating specific rows
+  updating multiple columns
+  updating using case stmt
+
+DELETE command :- 
+------------------------------
+
+ => command used to delete row/rows from table
+ => we can delete all rows or specific rows 
+
+     DELETE FROM <tabname>  [WHERE cond ] ; 
+
+Ex :- 
+
+  => delete all rows from emp table ?
+ 
+     DELETE FROM emp ;  
+
+  => delete employees having more than 40 years of expr ? 
+  
+     DELETE FROM emp WHERE (SYSDATE-hiredate)/365 > 40 ; 
+
+ => delete employees whose empno = 7369,7566,7844 ?
+
+    DELETE FROM emp WHERE empno IN (7369,7566,7844);
+
+ FLASHBACK :- 
+ -----------------------
+
+  => using FLASHBACK we can see the data that exists some time back
+  => a normal query returns current data
+  => a flashback query returns past data for ex 5 mins back data in emp table
+  => it is useful to recover data after commit 
+  => by default we can flashback upto 15 mins
+ 
+ syn :-
+ ------- 
+
+  SELECT columns
+  FROM tabname
+  AS OF TIMESTAMP ( SYSDATE - INTERVAL) ; 
+
+Ex :- 
+
+  => the following displays 5 mins back data in emp table ? 
+
+ SELECT empno,ename,sal,comm
+ FROM emp 
+ AS OF TIMESTAMP(SYSDATE - INTERVAL '5' MINUTE);
+
+  Recovering data after commit :-
+  ---------------------------------------------
+
+ step 1 :-  delete rows
+
+  DELETE FROM emp ; 
+
+ step 2 :-  commit the operation 
+
+  COMMIT ;
+
+ step 3 :-  recoverting data after commit using flashback
+
+  INSERT INTO emp 
+  SELECT *
+  FROM emp 
+  AS OF TIMESTAMP(SYSDATE - INTERVAL '5' MINUTE);
+
+ DDL commands :-   (Data Definition Lang)
+ -------------------------
+ 
+ CREATE
+ ALTER
+ DROP
+ TRUNCATE 
+ RENAME
+ FLSHBACK
+ PURGE
+
+                  TABLE  =    COLUMNS  (structure) +  ROWS  (data)
+
+                                        DDL                               DML
+
+ => all DDL commands acts on table structure
+ => all DDL commands are auto committed
+
+          DDL command =  DDL command + COMMIT
+
+ Ex 1 :- 
+ 
+ CREATE TABLE a(a NUMBER(2));
+ INSERT INTO a VALUES(10);
+ INSERT INTO a VALUES(20);
+ INSERT INTO a VALUES(30);
+ INSERT INTO a VALUES(40);
+ ROLLBACK; 
+
+SELECT * FROM a;   => no rows 
+
+ Ex 2 :- 
+
+ CREATE TABLE a(a NUMBER(2));        /*  committed */
+ INSERT INTO a VALUES(10);
+ INSERT INTO a VALUES(20);
+ CREATE TABLE b(b NUMBER(2));       /*  commit */      
+ INSERT INTO a VALUES(30);
+ INSERT INTO a VALUES(40);
+ ROLLBACK;                                          /* cancels uncommitted operations */
+                              
+ 
+ SELECT * FROM a ;
+
+ 10
+ 20
+
+ALTER command :- 
+---------------------------
+
+ => command used to modify table structure
+ => using ALTER we can 
+
+ 1 add columns 
+ 2 drop columns
+ 3 rename column
+ 4 modify a column
+                changing datatype
+                changing size
+
+Adding columns :-
+-------------------------
+
+  ALTER TABLE tabname
+      ADD (colname datatype(size) , -------------) ;
+
+ Ex :- 
+
+ => add column gender to emp table ?
+
+   ALTER TABLE emp 
+            ADD (gender  CHAR(1));
+
+  after adding by default the new column is filled with NULLs , to insert data into the new column
+  use update command
+
+   UPDATE emp  SET gender = 'M'  WHERE empno = 7369 ; 
+
+  Droping column :- 
+  --------------------------
+
+ ALTER TABLE tabname
+         DROP (col1,col2,-------------) ;
+
+Ex :-
+
+ => drop column gender from emp table ?
+
+ ALTER TABLE emp
+              DROP (gender) ; 
