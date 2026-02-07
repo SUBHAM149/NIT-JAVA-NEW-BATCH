@@ -1,0 +1,206 @@
+7-feb-26 
+
+ Renaming a column :- 
+ ------------------------------
+
+    ALTER TABLE <tabname>
+                  RENAME  COLUMN  <oldname> TO <newname> ;
+
+Ex :- 
+
+   => rename column comm to bonus ?
+
+      ALTER TABLE emp 
+            RENAME COLUMN comm TO bonus ; 
+
+   => display  EMPNO  ENAME  HIREDATE ?
+        display hiredate as doj ? 
+
+      SELECT empno,ename,hiredate as doj FROM emp ;
+
+   difference between rename and alias ?
+
+                RENAME                                        ALIAS 
+
+1           permanent                                         not permanent
+
+2           changes column name		  changes column heading in
+             in table			  select stmt output
+
+Modifying a column :-
+-------------------------------
+ 
+1  changing datatype
+2  changing size
+
+  ALTER TABLE  tabname
+          MODIFY (colname datatype(size) );
+
+  => increase the size of ename to 20 ?
+
+    ALTER TABLE emp 
+              MODIFY (ename VARCHAR2(20));
+
+   
+    ALTER TABLE emp 
+              MODIFY (ename VARCHAR2(5));  => ERROR => some names contains more than 5 chars
+
+  NOTE :- 
+ 
+  1   numeric column must be empty to decrease precision or scale
+ 
+ EMP
+ SAL           NUMBER(7,2)
+
+    ALTER TABLE emp 
+              MODIFY (sal  NUMBER(6,2));  => ERROR
+
+ 2   column must be empty to change  datatype
+
+      ALTER TABLE emp 
+             MODIFY (empno  VARCHAR2(10));    =>  ERROR
+
+ How to change datatype of a column :-
+ ----------------------------------------------------
+  
+  => change datatype of empno to VARCHAR2(10)  ?
+
+   step 1 :-  add column empid to emp table
+
+     ALTER TABLE emp 
+              ADD (empid  VARCHAR2(10));
+
+ step 2 :-  copy data from empno to empid 
+
+   UPDATE emp SET empid = 'TCS'||empno  ;
+
+ step 3 :- drop column empno
+
+   ALTER TABLE emp 
+             DROP (empno) ; 
+             
+step 4 :-  rename column empid to empno 
+ 
+   ALTER TABLE emp
+        RENAME  COLUMN  empid TO empno ; 
+
+  DROP command :- 
+  --------------------------
+
+  => command used to drop table from db
+  => drops table structure with data 
+   
+            DROP TABLE <tabname> 
+
+Ex :- 
+ 
+        DROP TABLE emp ;
+
+  => before 10g ver when table is dropped then it is permanenty deleted and cannot be restored
+  => from 10g onwards when table is dropped then it is moved to recyclebin
+
+  How to see the recyclebin :-
+  -------------------------------------
+
+     SQL>SHOW  RECYCLEBIN 
+
+          EMP
+
+ FLASHBACK command :-
+ -----------------------------------
+   
+   => introduced in 10g
+   => command used to restore the table from recyclebin
+   => useful when  tables are dropped accidentally
+
+       FLASHBACK TABLE tabname TO  BEFORE DROP ; 
+ 
+  Ex :- 
+
+     SQL>FLASHBACK TABLE emp TO BEFORE DROP ;
+
+   =>  table is restored with columns and rows that exists before drop
+
+ PURGE command :-
+ ---------------------------
+  
+  => introduced in 10g
+  => command used delete table from recyclebin 
+  => once table is purge we cannot flashback the table
+
+       PURGE TABLE <tabname> 
+
+ EX :-    SQL>PURGE TABLE emp ; 
+
+DROP & PURGE :-
+--------------------------  
+
+   SQL>DROP TABLE STUDENT PURGE ; 
+
+ => drops table and also deletes table from recyclebin
+
+How to empty the Recyclebin :-
+-----------------------------------------
+
+  SQL>PURGE RECYCLEBIN ;
+
+ TRUNCATE command :- 
+ ---------------------------------
+
+ => command  deletes all the data from table but keeps structure (columns)
+ => will empty the table
+ => releases memory allocated for table
+
+          TRUNCATE TABLE <tabname>
+
+ Ex :- 
+
+    SQL>TRUNCATE TABLE emp ; 
+  
+  when truncate command is executed oracle goes to memory and releases all blocks 
+  allocated for tabel and when blocks are released then data stored in blocks are also deleted
+
+ drop vs delete vs truncate :-
+ -----------------------------------
+
+                DROP                                               DELETE / TRUNCATE
+
+         drops structure and also data                 deletes only data but not structure
+
+
+               DELETE				TRUNCATE
+
+  1            DML                                                             DDL
+
+  2            can delete all rows                                      can delete only all rows
+                and specific rows                                        but cannot delete specific rows
+
+ 3              where cond can be                                     where cond cannot be used with truncate
+                  used with delete
+
+  4              delete can be rolledback		  cannot be rolledback
+
+  5              we can flshback after delete                       flashback will not work after truncate
+
+  6                deletes row-by-row                                    deletes all rows at a time
+
+  7                slower                                                        faster
+
+  8                 will not release memory		  releases memory
+
+   
+RENAME :- 
+----------------
+
+ =>command used to change  tablename
+
+     RENAME   oldname TO newname
+
+Ex :- 
+
+ SQL>RENAME emp TO employees ;
+
+ CUSTOMER
+ CID	NAME	CITY
+  1	A	HYD         
+  2	B	MUM       
