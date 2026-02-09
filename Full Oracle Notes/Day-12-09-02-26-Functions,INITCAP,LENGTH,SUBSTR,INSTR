@@ -1,0 +1,187 @@
+9-feb-26
+
+Built-in Functions in ORACLE :-
+-------------------------------------------
+
+ =>  a function accepts some input performs some calculation returns one value
+ 
+ purpose :- 
+ --------------
+
+  1  Data Cleaning
+  2  Data Transformation
+  3  Data Analysis
+  
+ Types of Functions :- 
+ -------------------------------
+ 
+ 1 single row functions
+              character
+              numeric
+              date
+              conversion
+              special
+              analytical
+ 2  multi-row  / group / aggregate  functions 
+
+  Character functions :- 
+  ------------------------------
+
+    UPPER()  & LOWER() :-
+    -----------------------------------
+
+     UPPER(arg)	=>	converts string to uppercase
+     LOWER(arg)	=>	converts string to lowercase
+
+                              arg =>         string value  ex :-   'hello'
+                                                  string column  ex :- ename
+
+ Ex :- 
+
+  SELECT UPPER('hello')  FROM DUAL ;          =>  HELLO
+  SELECT LOWER('HELLO') FROM DUAL;       =>  hello
+
+  what is DUAL  ?
+ 
+  DUAL is a dummy table provided by oracle used to select non db values 
+
+
+ => display  EMPNO  ENAME  SAL ?
+      display names in lowercase ?
+
+    SELECT empno,LOWER(ename) as ename ,sal FROM emp ; 
+
+  => convert names to lowercase in table ?
+ 
+     UPDATE emp SET ename = LOWER(ename) ; 
+  
+ => display employee details whose name = BLAKE  ?
+
+     SELECT *
+     FROM emp
+     WHERE ename = 'BLAKE'  ;  => NO ROWS 
+
+  =>    In oracle string comparison case sensitive i.e. uppercase and lowercase strings are not same
+  =>   To do case insensitive comparison then use UPPER  / LOWER functions 
+
+     SELECT *
+     FROM emp
+     WHERE UPPER(ename) = 'BLAKE'  ; 
+
+    WHERE   LOWER(ename)  = 'blake'
+ 
+  INITCAP() :- 
+  ----------------
+
+  => converts initials into capitals 
+
+                INITCAP(arg) 
+
+ Ex :- 
+
+  SELECT INITCAP('sachin tendulkar')	 FROM DUAL   ;   =>  Sachin Tendulkar
+
+ LENGTH() :- 
+ ------------------
+
+   => returns string length i.e.  no of chars  
+
+            LENGTH(arg) 
+
+ Ex 1 :- 
+
+   SELECT LENGTH('HELLO WELCOME')  FROM DUAL ;    =>    13
+
+Ex 2 :- 
+
+  SELECT ename,LENGTH(ename) as len  FROM emp ; 
+
+           smith	5
+           allen	5
+           ward	4 
+
+ Ex 3 :-
+
+  => display employee list name contains 4  chars ?
+
+       WHERE ename LIKE  '____'   ; 
+
+        SELECT * FROM emp WHERE LENGTH(ename) = 4 ; 
+        
+  SUBSTR() :- 
+  -----------------
+
+   =>  returns part of the string
+
+             SUBSTR(string,start,[no of chars])
+
+ Ex :- 
+   
+    SUBSTR('HELLO WELCOME',1,5)	=>  HELLO	 
+    SUBSTR('HELLO WELCOME',7,4)	=>  WELC
+    SUBSTR('HELLO WELCOME',7)	=>  WELCOME	
+   
+     SUBSTR('HELLO WELCOME',-5,4)	=>  LCOM
+    SUBSTR('HELLO WELCOME',-10,3)	=>  LO 
+    SUBSTR('HELLO WELCOME',-7)	=>  WELCOME
+
+ => employees name starts with 's'  ?
+
+     SELECT * FROM emp WHERE SUBSTR(ename,1,1) = 's' ; 
+ 
+ => name ends with 's'  ? 
+
+      SELECT * FROM emp WHERE SUBSTR(ename,-1,1) = 's' ; 
+
+ => employees name starts and ends with same char ?
+
+           WHERE ename LIKE 'a%a'
+                          OR
+                        ename LIKE  'b%b'
+ 
+     SELECT * FROM emp WHERE SUBSTR(ename,1,1)  =  SUBSTR(ename,-1,1) ; 
+
+ => generate emailids for employees ?
+
+      empno	ename		emailid
+      7369		smith		smi736@tcs.com
+      7499                   allen                          all749@tcs.com
+
+        ||   => string concatenation
+
+       'a'||'b'  => ab
+
+     SELECT empno,ename,
+                    SUBSTR(ename,1,3)||SUBSTR(empno,1,3)||'@tcs.com'  as emailid
+      FROM emp ;
+
+   => store emailids in db ?
+ 
+       step 1 :- add emailid column to emp table
+
+       ALTER TABLE emp
+                 ADD (emailid  VARCHAR2(20));
+
+     step 2 :- update the column with emailids 
+
+    UPDATE emp
+    SET emailid  = SUBSTR(ename,1,3)||SUBSTR(empno,1,3)||'@tcs.com'  ;
+
+ INSTR() :- 
+ ---------------
+
+   =>  returns position of a character in string
+
+                 INSTR(string,char, [start, occurance])
+
+ Ex :- 
+
+  INSTR('HELLO WELCOME','O')	=>	5
+  INSTR('HELLO WELCOME','K')	=>	0
+
+  INSTR('HELLO WELCOME','O' ,1,2)	=>	11
+  INSTR('HELLO WELCOME','E' ,7,2)	=>	13 
+  INSTR('HELLO WELCOME',' ')	=>	6
+
+  INSTR('HELLO WELCOME','O' ,-1,2)	=>	5
+ 
