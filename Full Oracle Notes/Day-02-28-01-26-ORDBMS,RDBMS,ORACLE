@@ -1,0 +1,136 @@
+28-jan-26
+
+ ORDBMS :-  
+ ------------------
+
+  => Object Relational DBMS
+  =>  It is the combination of RDBMS & OOPS
+
+                ORDBMS  =  RDBMS + OOPS (reusability)
+
+  => rdbms doesn't support reusability but ordbms supports reusability
+ 
+ RDBMS :- 
+ -------------
+
+  cust
+  cid	name	hno	street	city	state	pin
+
+  emp
+  empid	ename	hno	street	city	state	pin
+
+  ORDBMS :- 
+  -----------------
+
+  ADDR
+  hno	street	city	state	pin
+
+ CUST
+ cid	cname	addr
+
+ EMP
+ empid	ename	addr
+
+ ORDBMS softwares :- 
+ ------------------------------
+
+  ORACLE
+  POSTGRESQL
+  
+DB Development Life Cycle :- 
+----------------------------------------
+
+Analysis
+Design
+Develop
+Test
+Deploy
+Maintain
+ 
+DB Design :-
+-----------------
+
+  => Designing DB means designing tables
+  => DB is designed by DB Designers / Architects
+  => DB is designed by using
+
+          1   ER Model  (Entity Relationship)
+          2   Normalization
+
+Development :- 
+---------------------
+
+  => DB is developed by DB Developers & DBAs (DB Administrator)
+  => DB is developed by using any rdbms tools like ORACLE.
+
+                  Developer			DBA
+	
+	  creating tables			installation of oracle
+	  creating views			creating database
+	  creating synonyms			creating userids
+	  creating sequences		db backup & restore
+	  creating indexes			db export & import
+	  creating procedures		performance tuning
+	  creating functions
+	  creating triggers
+	  writing queries
+
+  Test :- 
+  -----------
+
+   => DB is tested by QA (Quality Assurance) team by  
+
+               1   manually
+               2   automatically (using selenium)
+ 
+  Deployment :-
+   ------------------
+ 
+ => Deployment means moving db from dev server  to prod server
+ => once db is deployed then end user can use db for day-to-day transactions
+ 
+ summary :- 
+ -----------------
+
+ what is db ?
+ what is dbms ?
+ what is rdbms ?
+ what is ordbms ?
+ what is db development life cycle ?
+
+===============================================================
+
+		   	ORACLE
+		   	========
+
+  => oracle is basically a  rdbms software and also supports features of ordbms
+       and used to manage database.
+
+  => oracle is used for db development & db administration
+
+  versions of oracle :- 
+  ----------------------------
+  
+    2,3,4,5,6,7,8i,9i,10g,11g,12c,18c,19c,21c,23ai,26ai
+
+ 		i    =>   internet
+	                g   =>   grid
+                                 c   =>   cloud
+                                 ai  =>  artificial intelligence
+
+  => before 8 oracle supports only desktop application and 8 onwards
+       oracle supports web applications.
+
+  => grid means collection of server ,  from ver 10  onwards oracle db can be
+       accessed through multiple servers and the advantage of grid is it improves
+       availability
+
+ => from 12c onwards oracle db can be deployed 
+
+         1 on premises
+         2 on cloud
+
+  => in  " on  premises "  db is deployed in the server managed by client
+
+  =>  in  "  on cloud " db is deployed in the server managed by cloud service provide
+        for ex amazon.
