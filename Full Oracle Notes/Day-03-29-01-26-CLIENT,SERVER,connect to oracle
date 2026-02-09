@@ -1,0 +1,151 @@
+29-jan-26
+
+ CLIENT / SERVER :- 
+ -----------------------------
+
+1 SERVER
+2 CLIENT
+
+ SERVER :- 
+ ---------------
+
+ => server is  a system where oracle is installed and running
+ => oracle server manages two memories
+
+  1  DB
+  2  INSTANCE
+
+  => DB is created in hard disk and acts as permanent storage
+  =>  INSTANCE is created in ram and acts as temporary storage
+  => initially data stored in instance and after saving data copied to db.
+
+ CLIENT :-
+ --------------
+   
+ => client is also a system from where users can 
+
+  1 connects to server
+  2 submit requests to server
+  3 receive response from server
+
+ client tools :- 
+ -----------------
+
+ SQLPLUS  (cui)
+ SQL Developer (gui)
+
+ user---------sqlplus-----------------------------------------oracle------------db
+
+ user--------mysqlworkbench-----------------------------mysql------------db
+
+ user--------ssms----------------------------------------------sql server---------db
+
+ user--------pgadmin---------------------------------------postgresql-------------db
+
+ SQL :- 
+------------
+
+  => Structured Query Language
+  => a language used to communicate with oracle
+  => user communicates with oracle by sending commands called queries
+  => a query is a command / question to oracle to perform some operation over db
+  => SQL is introduced by IBM 
+  => SQL is common to all relational db softwares 
+
+  USER------SQLPLUS-----------------------SQL------------------------ORACLE----------DB
+
+  USER-----MYSQLWORKBENCH-----------SQL---------------------MYSQL------------DB
+
+  => based on operations over db SQL is categorized into following sub-languages 
+
+                     DDL (Data Definition Lang)
+                     DML (Data Manipulation Lang)
+                     DRL (Data Retrieval Lang)
+                     TCL  (Transaction Control Lang)
+                     DCL  (Data Control Lang)
+
+			SQL
+
+	DDL	DML	DRL	TCL	DCL
+
+                create	insert        select       commit      grant
+                alter          update                       rollback     revoke
+                drop          delete                        savepoint
+                truncate     merge
+                rename      insert all
+                flashback
+                purge
+
+   
+  Data & Data Definition :-
+ ------------------------------------
+    
+                 empid	ename	sal      => data definition / metadata 
+	100	sachin	6000   => data 
+
+Download :-
+----------------
+ https://www.oracle.com/middleeast/database/technologies/oracle-database-software-downloads.html
+
+Installation :-
+-----------------
+
+https://www.dbaace.com/post/installing-oracle-23ai-on-windows
+
+ SCHEMA :- 
+ ---------------
+
+  => a user in oracle db is called schema
+  => objects created by user are called schema objects 
+
+  SERVER
+          DATABASE 
+                    USER
+                            TABLES
+                                     DATA 
+
+
+  SERVER
+           ORCL
+                 SYS /TIGER                             (DBA)
+                 SYSTEM/TIGER                       (DBA)
+
+ How to connect to oracle :- 
+ -------------------------------------
+
+ => open sqlplus and enter username & password
+
+           USERNAME :-  SYSTEM
+           PASSWORD :-  TIGER
+
+           OR
+
+           USERNAME :-  SYSTEM / TIGER
+
+ Creating New User/Schema/Account :- 
+ ------------------------------------------------------
+
+ => only DBAs are having permissions to create new user
+
+  step 1 :-  connect as system
+
+           USERNAME :-  SYSTEM/TIGER
+
+  step 2 :-  create user
+
+Syntax :-
+--------------
+
+     CREATE USER <name> IDENTIFIED BY <pwd>
+     DEFAULT TABLESPACE USERS
+     QUOTA UNLIMITED ON USERS 
+
+ Ex :- 
+
+   CREATE USER BATCH54 DENTIFIEDBY ORACLE
+   DEFAULT TABLESPACE USERS
+   QUOTA UNLIMITED ON USERS ;
+
+step 3 :-  granting permissions to user
+
+   GRANT CONNECT,RESOURCE TO BATCH54 ;
