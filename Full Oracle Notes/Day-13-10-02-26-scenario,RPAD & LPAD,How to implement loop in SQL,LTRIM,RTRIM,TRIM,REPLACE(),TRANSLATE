@@ -1,0 +1,239 @@
+scenario :-
+----------------
+
+ CUST
+ cid	cname
+ 10	sachin tendulkar
+ 11	virat kohli
+
+ output :-
+
+ CID	 FNAME	    LNAME	?
+
+       SUBSTR(string,start, [no of chars])
+
+       INSTR(string,char,[start,occurance])
+
+ 
+   fname =  SUBSTR(cname,1,INSTR(cname,' ')-1)
+  
+    lname  = SUBSTR(cname,INSTR(cname,' ')+1)
+
+  SELECT cid,
+                  SUBSTR(cname,1,INSTR(cname,' ')-1) as fname,
+                  SUBSTR(cname,INSTR(cname,' ')+1) as lname
+  FROM cust ;
+
+=>
+
+  CUST
+ cid	cname
+ 10	sachin ramesh tendulkar
+ 11	mahendra singh dhoni
+
+  display	CID	FNAME	MNAME	LNAME	?
+
+   fname  = start from 1st char select upto space - 1 
+   lname  = start from 2nd space + 1 and select all chars
+  mname  = start from 1st space + 1 and select chars between 2nd space and 1st space
+
+ RPAD & LPAD :- 
+ ----------------------
+ 
+  => these functions are used to fill string with a character
+
+     RPAD(string,length,char)       =>   fills on right side
+     LPAD(string,length,char)        =>   fills  on left side
+
+Ex :- 
+
+    RPAD('HELLO',10,'*')	 =>	HELLO*****
+    LPAD('HELLO',10,'*')	 =>	*****HELLO
+    RPAD('*',10,'*')                       =>             **********
+
+ => display  ENAME   SAL   ?
+                                   ****
+   SELECT ename,RPAD('*',LENGTH(sal),'*') as sal FROM emp ;
+
+scenario :-
+
+ ACCOUNTS
+ accno		actype	bal
+ 123456789264	s	10000
+
+ your a/c no  XXXX9264 debited --- ?
+
+ 
+method 1 :-     LPAD('X',4,'X')||SUBSTR(accno , -4,4)
+ 
+ method 2 :-    LPAD(SUBSTR(accno , -4,4) , 8 , 'X')
+
+ How to implement loop in SQL :-
+ ---------------------------------------------
+   
+   SELECT  level
+   FROM DUAL
+   CONNECT BY  level <= 10 ; 
+
+ => level is a system variable
+ => level initialized with 1
+ => by default level is incremented by 1
+ => if cond = true  level is printed 
+ => if cond = false loop ends
+
+  level = 1 ;				level=1;
+  CONNECT BY (level<=10)                                       WHILE(level <= 10)
+  {                                                                                 {
+      select level                                                                print level
+      level = level + 1                                                         level = level + 1
+  )                                                                                  }
+
+ 
+ => waq to print  even numbers  upto 20 ?
+
+   SELECT  level
+   FROM DUAL
+   WHERE MOD(level,2) = 0
+   CONNECT BY  level <= 20 ; 
+
+ level = 1 ;				 
+  CONNECT BY (level<=20)                                        
+  {           
+      IF  mod(level,2) = 0                                                                      
+              select level                                                                 
+      level = level + 1                                                         
+  )       
+
+ =>  waq to print following pattern ?
+
+      input :- NARESH
+
+     output :- 
+
+   N
+   A
+   R
+   E
+   S
+   H
+
+  SELECT  SUBSTR('NARESH',level,1)
+  FROM DUAL
+  CONNECT BY  level <=  LENGTH('NARESH')  ;
+
+ =>  waq to print following pattern ?
+
+      input :- NARESH
+
+     output :- 
+
+    N
+    NA
+    NAR
+    NARE
+    NARES
+    NARESH
+
+  SELECT  SUBSTR('NARESH',1,level)
+  FROM DUAL
+  CONNECT BY  level <=  LENGTH('NARESH')  ;
+
+ => 
+
+  SELECT  LPAD('*',level,'*')
+  FROM DUAL
+  CONNECT BY  level <=  10;
+
+*
+**
+***
+****
+*****
+******
+*******
+********
+*********
+**********
+
+ => 
+  
+   SELECT  LPAD(' ',10-level,' ')||
+                   LPAD('*',level,'*')||
+                   LPAD('*',level-1,'*')
+  FROM DUAL
+  CONNECT BY  level <=  10;
+  
+         *
+        ***
+       *****
+      *******
+
+ LTRIM,RTRIM,TRIM :- 
+ -------------------------------
+
+  => functions used to remove spaces and unwanted chars
+
+           LTRIM(str1,[str2]) 	=>  removes on left side
+           RTRIM(str2,[str2])             =>  removes on right side
+           TRIM(str)                        => removes on both sides 
+
+  Ex :- 
+
+        LTRIM('      HELLO      ')       =>    'HELLO     '
+        RTRIM('      HELLO     ')       =>    '      HELLO'
+        TRIM('        HELLO    ')         =>   'HELLO'
+
+        LTRIM('@@HELLO@@' , '@')    =>     HELLO@@
+        RTRIM('@@HELLO@@','@')     =>     @@HELLO
+
+        TRIM(both '@' from '@@HELLO@@')    =>  HELLO
+
+REPLACE() :- 
+-------------------
+
+ => function used to replace one string with another string
+
+       REPLACE(str1,str2,str3)
+
+Ex :- 
+         REPLACE('HELLO','ELL','ABC')	=>    HABCO	
+         REPLACE('HELLO','L','ABC')	=>    HEABCABCO
+         REPLACE('HELLO','ELO','ABC')	=>    HELLO	
+         REPLACE('HELLO','ELL','')	=>    HO
+
+         REPLACE('@@HE@@LL@@O@@','@','')    =>  HELLO
+
+ TRANSLATE :-
+ -------------------
+
+  => function used to translate one char to another char
+
+                       TRANSLATE(str1,str2,str3)
+
+  Ex :- 
+
+               TRANSLATE('HELLO','ELO','ABC')	=>  HABBC
+
+                                 E  => A
+                                 L  => B
+                                 O  => C
+       
+             TRANSLATE('HELLO','ELO','')		=>   NULL
+
+  => translate function can be used to encrypt data i.e. converting plain text to cipher text 
+
+        display  ENAME   SAL  ?  encrypt salaries ?
+
+       SELECT ename,
+                      TRANSLATE(sal , '0123456789', '$bT*g@M#^!') as sal 
+        FROM emp ;
+
+             jones   2975        T!#@
+
+ =>   remove  all special chars from  '@#HE*$LL%!O*@' ?
+
+       TRANSLATE( '@#HE*$LL%!O*@' , '@#*$%!','******')   =>  **HE**LL**O**
+
+   SELECT
+   REPLACE(  TRANSLATE( '@#HE*$LL%!O*@' , '@#*$%!','******') , '*','')
+   FROM DUAL ; 
