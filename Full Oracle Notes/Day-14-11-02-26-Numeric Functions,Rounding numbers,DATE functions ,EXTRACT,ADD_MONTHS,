@@ -1,0 +1,264 @@
+11-FEB-26
+
+   Numeric Functions :-
+   -----------------------------
+ 
+   MOD() :- 
+   ------------
+
+   => returns remainder
+
+             MOD(num1,num2)
+
+ Ex :-
+
+          MOD(10,2)	=>	0
+
+  => employees earning multiple of 100 ?
+
+    SELECT *
+    FROM emp 
+    WHERE MOD(sal,100) = 0 ; 
+
+Rounding numbers :- 
+-----------------------------
+
+  ROUND
+  TRUNC
+  CEIL
+  FLOOR
+
+ ROUND() :- 
+ -----------------
+
+  => function used to round number to integer or to decimal places
+  => ROUND function acts according to average
+
+                       ROUND(number,[decimal places])
+
+ Ex :- 
+
+            ROUND(38.5678)	=>	39
+
+            38----------------------------------38.5-------------------------------------39
+
+                     number >= avg   => rounded to highest
+                     number < avg     => rounded to lowest
+
+            ROUND(38.4678)	=>	38
+
+
+            ROUND(38.5678,2)	=>	38.57
+
+            ROUND(38.5648,2)	=>	38.56
+
+            ROUND(38.5648,1)	=>	38.6
+
+            ROUND(38.5648,3)	=>	38.565
+
+            ROUND(386,-1)	=>	390
+
+	380----------------------385-----------------------390
+
+            ROUND(386,-2)	=>	400
+
+               300-----------------------350--------------------------400
+
+           ROUND(386,-3)	=>	0	
+ 
+            0-----------------------------500--------------------------1000
+=>
+
+  SELECT ROUND(4567,-1),ROUND(4567,-2) , ROUND(4567,-3) FROM DUAL ;
+
+  output :-
+
+          4570           4600           5000
+
+ => round sal to hundreds in table ?
+ 
+     UPDATE emp SET sal = ROUND(sal , -2) ; 
+
+=> display  ENAME EXPERIENCE ?
+     round experience to integer ?
+
+   SELECT  ename,   ROUND((SYSDATE-hiredate)/365) as expr   FROM emp ; 
+     
+TRUNC() :-
+ ------------------
+ 
+  => rounds number always to lowest
+
+               TRUNC(number , [decimal places])
+
+ Ex :- 
+
+   TRUNC(38.5678)		=>	38
+   TRUNC(38.5678,2)	=>	38.56
+   TRUNC(386,-1)		=>	380
+   TRUNC(386,-2)		=>	300
+   TRUNC(999,-3)		=>	0
+
+=> SELECT  ROUND(TRUNC(386,-1),-2)   FROM DUAL ; 
+
+      o/p :-   400
+
+CEIL() :-
+-------------
+
+  => rounds number always to highest 
+
+        CEIL(number) 
+
+Ex :- 
+
+ SELECT CEIL(3.1)  FROM DUAL ;  =>    4
+
+FLOOR() :-
+-----------
+
+  => rounds number always to lowest
+
+         FLOOR(number) 
+
+Ex :- 
+
+    SELECT FLOOR(3.9)  FROM DUAL ;   =>  3
+
+ DATE functions :- 
+ -------------------------
+ 
+ SYSDATE + 10		=>	adds 10 days to sysdate
+ SYSDATE - 10		=>	subtracts 10 days from sysdate
+ SYSDATE - HIREDATE 	=>	returns difference in days
+ SYSDATE + HIREDATE	=>	invalid
+
+ EXTRACT() :- 
+ -------------------
+
+  => used to extract part of the date
+
+        EXTRACT(interval from date) 
+
+Ex :- 
+
+   EXTRACT(year from sysdate)  	=>	2026
+   EXTRACT(month from sysdate)  	=>	2
+   EXTRACT(day from sysdate)  	=>	11
+
+ => display employees joined in 1980 ?
+
+       WHERE hiredate BETWEEN '01-jan-1980'  AND '31-dec-1980'
+       WHERE hiredate LIKE  '%80'
+  
+      SELECT *
+      FROM emp
+      WHERE EXTRACT(year FROM hiredate) = 1980 ; 
+
+  => display employees joined in 1980,1983,1985 ?
+ 
+     SELECT *
+      FROM emp
+      WHERE EXTRACT(year FROM hiredate) IN (1980,1983,1985);
+
+ => list of employees joined in leap year ?
+
+       SELECT *
+      FROM emp
+      WHERE   MOD( EXTRACT(year from hiredate) , 4) = 0 ; 
+
+ => list of employees joined in jan,apr,dec months ?
+
+       SELECT *
+      FROM emp
+      WHERE   EXTRACT(month from hiredate)  IN  (1,4,12) ; 
+
+  Rounding Dates :-
+  --------------------------
+
+   => dates can be rounded to year / month / day 
+
+                ROUND(date , 'year / month / day')
+                TRUNC(date, 'year / month / day')
+
+Ex :- 
+
+   ROUND(SYSDATE,'year')		=>	01-JAN-26 
+
+   01-JAN-26--------------------------------30-JUN-------------------------------01-JAN-27
+ 
+   ROUND(SYSDATE,'month')		=>	01-FEB-26 
+
+   01-FEB-26---------------------------------15-FEB---------------------------------01-MAR-26
+
+   ROUND(SYSDATE,'day')		=>	8-FEB-26
+
+  8-FEB-26------------------------------------THU------------------------------------------15-FEB-26
+
+  ROUND(SYSDATE)		=>	11-FEB-26
+
+ 11-FEB-26-------------------------------------12PM----------------------------------12-FEB-26
+
+
+   TRUNC(SYSDATE,'year')		=>	01-JAN-26
+   TRUNC(SYSDATE,'month')		=.	01-FEB-26
+   TRUNC(SYSDATE,'day')		=>	8-FEB-26
+    TRUNC(SYSDATE)		=>	11-FEB-26 00:00:00
+
+scenario :-
+----------------
+
+ INSERT INTO emp(empno,ename,sal,hiredate) VALUES(100,'A',3000,SYSDATE) ; 
+
+ => list of employees joined today  ?
+
+   SELECT *
+   FROM emp 
+   WHERE  hiredate =  SYSDATE ; 
+  
+        11-FEB-2026 02:21:47  =  11-FEB-2026  02:27:10
+
+ =>  "="  comparison with SYSDATE always fails because oracle not only compares
+       date but also time , to overcome this use apply TRUNC function on both sides.
+ 
+   SELECT *
+   FROM emp 
+   WHERE  TRUNC(hiredate) =  TRUNC(SYSDATE) ;
+ 
+           11-FEB-2026 00:00:00 =  11-FEB-2026 00:00:00
+
+ADD_MONTHS() :-
+------------------------
+ 
+ => function used to add / subtract   months  to/from a date
+
+               ADD_MONTHS(DATE,MONTHS)
+
+ Ex :- 
+
+	  ADD_MONTHS(SYSDATE,2)		=>	11-APR-26	
+	  ADD_MONTHS(SYSDATE,-2)		=>	11-DEC-25
+
+  => list of employees joined in last 5 years ?
+ 
+     SELECT *
+     FROM emp 
+     WHERE hiredate  BETWEEN  ADD_MONTHS(SYSDATE,-60)  AND   SYSDATE ; 
+
+     WHERE  hiredate >=  ADD_MONTHS(SYSDATE,-60) ; 
+ 
+  => 
+
+  GOLD_RATES
+  dateid		rate
+  01-JAN-20	?
+  02-JAN-20	?
+  
+
+  11-FEB-26	?
+
+ =>  display todays's gold rate ?
+  => display yesterday's gold rate ?
+  => display last month same day gold rate ?
+  => display last year same day gold rate ?
+  => display last 1 month gold rates ?
