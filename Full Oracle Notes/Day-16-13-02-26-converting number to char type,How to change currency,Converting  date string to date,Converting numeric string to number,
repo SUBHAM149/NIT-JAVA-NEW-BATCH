@@ -1,0 +1,154 @@
+13-FEB-26
+
+  =>display  employees joined on sunday ?
+
+   SELECT  * 
+   FROM emp 
+   WHERE  TO_CHAR(hiredate,'day')  =  'sunday'  ;   => no rows 
+  
+                   sunday--- 
+
+   SELECT  * 
+   FROM emp 
+   WHERE  TO_CHAR(hiredate,'fmday')  =  'sunday'  
+
+   SELECT  * 
+   FROM emp 
+   WHERE  TO_CHAR(hiredate,'dy')  =  'sun' ; 
+
+ 
+   WHERE  TO_CHAR(hiredate,'d')  = 1 ;
+
+  => employees joined in 2nd quarter of 1981 year ?
+
+      SELECT  *
+      FROM emp
+      WHERE  TO_CHAR(hiredate,'yyyy') = 1981
+                      AND
+                     TO_CHAR(hiredate,'q') = 2;
+
+     WHERE TO_CHAR(hiredate,'yyyy-q') =  '1981-2' ; 
+
+ => employees joined in jan,apr,dec months ?
+
+      SELECT *
+      FROM emp 
+      WHERE TO_CHAR(hiredate,'mm')  IN (1,4,12) ; 
+
+ converting number to char type :-
+ ---------------------------------------------
+
+  => To display numbers in different formats 
+
+                        TO_CHAR(number,'format')
+
+ Formats :- 
+ -----------------
+
+       9			represents a digit
+       0			represents a digit
+       G			thousand seperator
+       D			decimal seperator
+       C			currency
+       L			currency symbol
+
+ Ex :- 
+
+            TO_CHAR(1234,'99999')	=>	1234
+            TO_CHAR(1234,'00000')	=>	01234	
+            TO_CHAR(1234,'000000')	=>	001234
+            TO_CHAR(1234,'9G999')	=>	1,234
+            TO_CHAR(50000,'99G999')	=>	50,000
+            TO_CHAR(100000,'9G99G999')	=>	1,00,000
+            TO_CHAR(1234,'9G999D99')	=>	1,234.00
+            TO_CHAR(1234,'C9G999')	=>	USD1,234
+            TO_CHAR(1234,'L9G999')	=>	$1,234
+             
+  => display  ENAME    SAL    ?
+        display salaries with thousand seperator and currency symbol ?
+
+       SELECT ename,TO_CHAR(sal , 'L99G999') as sal FROM emp ; 
+
+	smith                   $800
+	allen                 $1,600
+                     
+  How to change currency :- 
+  --------------------------------------
+
+   ALTER SESSION SET NLS_TERRITORY='INDIA' ;
+
+          NLS => National Language Specification
+ 
+ Converting  date string to date  :- 
+ -----------------------------------------------
+
+                 Date String  =>  '13-feb-26'
+                                            '02/13/26'
+
+                          TO_DATE(date string,'format')
+ 
+
+Ex :- 
+
+   SQL>SELECT   SYSDATE + 10   FROM DUAL ;    =>   23-FEB-26
+
+   SQL>SELECT   '01-JAN-26' + 100 FROM DUAL ;   => ERROR
+
+    number + number => valid
+    date  + number  => valid
+   string + number => invalid
+
+  SQL>SELECT TO_DATE('01-JAN-26','DD-MON-YY') + 100 FROM DUAL ;  => 11-APR-26
+
+  SQL>SELECT TO_DATE ('02/01/26','MM/DD/YY') + 50 FROM DUAL ;  => 23-MAR-26
+  
+  => waq to display on which day india got independence ?
+
+    SELECT TO_CHAR(TO_DATE('15-AUG-1947','DD-MON-YYYY'),'DAY') FROM DUAL
+
+  	 INPUT		OUTPUT		FUNCTION
+
+	SYSDATE		'02/13/2026'	TO_CHAR		
+
+	`'02/13/2026'	13-FEB-26	TO_DATE
+
+	 DEFAULT	OTHER		TO_CHAR
+
+	OTHER		DEFAULT		TO_DATE
+
+Converting numeric string to number :- 
+ -----------------------------------------------------
+
+         numeric string  =>  '5000'
+                                        '$5,000'
+
+                     TO_NUMBER(numeric string,'format')
+
+   Ex :- 
+
+     SQL>SELECT  5000 +  '$1,000'  FROM DUAL ;    => ERROR
+
+    SQL>SELECT 5000 + TO_NUMBER('$1,000' ,'L9G999')  FROM DUAL ;  => 6000
+
+   => calculate  'USD5,000' +  '$1,000'  ? 
+
+     SELECT TO_NUMBER( 'USD5,000','C9G999') + 
+                    TO_NUMBER('$1,000','L9G999')
+     FROM DUAL ; 
+ 
+   		INPUT		OUTPUT		FUNCTION
+
+		5000		$5,000		TO_CHAR
+		$5,000		5000		TO_NUMBER
+ 
+   => display 2026 calendar ?
+
+            01-jan-2026		?
+            02-jan-2026		?
+
+           31-dec-2026		?
+ 
+     SELECT  TO_DATE('31-DEC-2025','DD-MON-YYYY') + LEVEL  AS  DT,
+                     TO_CHAR(TO_DATE('31-DEC-2025','DD-MON-YYYY') + LEVEL,'DAY') AS DY
+     FROM DUAL
+     CONNECT BY LEVEL  <= 365  ;
