@@ -1,0 +1,186 @@
+12-feb-26
+
+ MONTHS_BETWEEN() :- 
+ ------------------------------------
+
+  => returns no of months between two dates 
+
+		MONTHS_BETWEEN(DATE1,DATE2)
+
+Ex :- 
+
+   SELECT  MONTHS_BETWEEN(SYSDATE,'12-FEB-2025') FROM DUAL ;    =>   12
+              
+ 
+  => display  ENAME   EXPERIENCE  in months ?
+
+       SELECT  ename, FLOOR(MONTHS_BETWEEN(SYSDATE,hiredate))  as expr  FROM emp ; 
+    
+	smith             541
+	allen             539
+
+   => display   ENAME   EXPERIENCE  ?
+                                      M  YEARS  N MONTHS 
+
+          experience =  40  months  = 3 years 4 months 
+ 
+          years   =   months / 12   = FLOOR( 40 / 12 )  = 3
+           
+          months =  MOD(months,12) = MOD(40,12) = 4 
+
+          SELECT  ename, 
+                          FLOOR ( MONTHS_BETWEEN(SYSDATE,hiredate)/12)  as years,
+                          MOD(FLOOR(MONTHS_BETWEEN(SYSDATE,hiredate)) , 12)  as months
+          FROM emp ; 
+    
+ 
+          smith    17-DEC-80                    17-DEC-2025          45 YEARS   
+                                                             17-JAN-2026           1  MONTH
+
+ LAST_DAY() :- 
+ -------------------
+
+   => returns last day of the month 
+
+                         LAST_DAY(date)
+
+ Ex :- 
+
+  SELECT LAST_DAY(SYSDATE)  FROM  DUAL  ; 	=>  28-FEB-26
+            
+ => waq to display first day of the next month ?
+
+ SELECT LAST_DAY(SYSDATE)  + 1  FROM  DUAL  ;    =>  01-MAR-26	
+
+  => waq to display current month 1st day ? 
+
+   SELECT ADD_MONTHS ( LAST_DAY(SYSDATE)  + 1 ,-1)  FROM  DUAL  ;  => 01-FEB-26 
+
+ NEXT_DAY() :- 
+ --------------------
+
+  => returns next day from given date
+
+             NEXT_DAY(DATE, DAY)
+
+Ex :- 
+
+ SELECT NEXT_DAY(SYSDATE,'SUNDAY')  FROM DUAL ;    =>   15-FEB-26 
+
+ => waq to print next month 1st sunday ?
+
+     SELECT     NEXT_DAY ( LAST_DAY(SYSDATE) , 'SUNDAY')   FROM DUAL ; 
+    
+  => waq to print current month last sunday ?
+
+   SELECT     NEXT_DAY ( LAST_DAY(SYSDATE) , 'SUNDAY')  - 7  FROM DUAL ; 
+
+Queries :- 
+
+ 1  waq to print 1st day of the next month ?
+ 2  waq to print last day of the current month ?
+ 3  waq to print 1st day of the current year  ?
+ 4  waq to print 1st day of the next year ?
+ 5  waq to print last day of the current year ?
+
+Conversion :- 
+--------------------
+
+ => conversion means converting one datatype to another datatype
+ => conversion is 2 types 
+
+ 1  implicit conversion
+ 2  explicit conversion
+
+ implicit conversion :- 
+ -----------------------------
+
+  =>  conversion performed by oracle then it is called implicit conversion
+
+Ex 1 :- 
+
+  SQL>SELECT   5000 +  '1000'     FROM DUAL ;      =>      6000
+
+   for the above query string  '1000'  converted to number by oracle
+
+Ex 2 :- 
+
+  SQL>CREATE TABLE   D(D    DATE);
+
+   SQL>INSERT INTO D VALUES('01-JAN-26');
+
+   for the above query string '01-JAN-26' converted to date by oracle
+
+  NOTE :- 
+
+   => some times implicit conversion fails 
+
+Ex :-
+
+  SQL>SELECT  5000 + '1,000'  FROM DUAL ;  => ERROR
+
+  SQL>INSERT INTO D VALUES('01/12/26') ;  => ERROR
+
+ Explicit Conversion :-
+ ------------------------------
+
+ =>  if conversion performed by user then it is called explicit conversion
+ =>  the following functions provided by oracle to do explicit conversion
+ 
+  1  TO_CHAR	=>  converts date / number to char  
+  2  TO_DATE           =>  convers string to date
+  3  TO_NUMBER     =>  convers string to number
+
+  converting date to char type :-
+  -----------------------------------------
+  
+ => dates converted to char type to display dates in different formats 
+ 
+                TO_CHAR(DATE , 'format')  
+
+   FORMATS :-           TO_CHAR(SYSDATE,'format')
+   ------------------
+ 
+     YYYY				2026			
+     YY				26
+     YEAR				TWNETY-TWENTY SIX
+     CC				21  (centuary)
+     AD/BC				
+     
+                   AD  => Anno Domini
+   
+    MM				02
+    MON				FEB
+    MONTH			FEBRUARY
+
+    DDD				43  (day of the year)    (1-365)
+    DD				12  (day of the month)  (1-31)
+    D				 5   (day of the week)    (1-7)
+    DY				 THU
+    DAY				 THURSDAY
+   
+    HH				hour part
+    HH24				hour part in 24hrs format
+    MI				minutes
+    SS				seconds
+    AM/PM				
+
+    Q				1  (quarter)   (1-4)
+
+    W				week of the month
+
+    WW				week of the year
+
+    fm				format mask  => removes extra spaces 
+ 
+ => display  ENAME   HIREDATE  ?
+      display hiredates in  YYYY-MM-DD format ?
+ 
+    SELECT  ename, TO_CHAR(hiredate,'fmyyyy-mon-dd  day')  as hiredate  FROM emp ; 
+
+  smith      1980-dec-17  wednesday
+  allen      1981-feb-20    friday
+
+ => display  ENAME    DAY   ? 
+    
+     SELECT  ename ,  TO_CHAR(hiredate,'day') as day  FROM emp ; 
