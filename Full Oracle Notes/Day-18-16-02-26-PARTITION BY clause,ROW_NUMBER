@@ -1,0 +1,188 @@
+16-feb-26
+
+ PARTITION BY clause :- 
+ ====================
+
+  => partition by claue is used to divide the based on one or more columns.
+
+  => used to find ranks with in group.
+
+  => for ex to find ranks with in dept first divide the table dep wise and apply 
+       rank / dense_rank function on each dept
+
+  Ex :- 
+ 
+  SQL>BREAK ON DEPTNO SKIP 1 
+
+ SQL> SELECT deptno,ename,sal,
+                DENSE_RANK() OVER (PARTITION BY deptno ORDER BY sal DESC)  as rnk
+          FROM emp ;
+
+ 	 DEPTNO 	ENAME             	SAL        	RNK
+	---------- 		----------		 ---------- 	----------
+        	10		 king            	 5000          1
+         			 clark          	 2450          2
+           			 miller           	1300           3
+
+       	 20 		 scott            	3000          1
+           			 ford             	3000          1
+          			 jones           	2975          2
+          			 adams          	1100          3
+          			 smith            	 800           4
+
+        	30 		blake          	 2850         1
+          			 allen           	1600          2
+          			 turner           	1500          3
+           			martin           	1250          4
+           			ward             	1250          4
+          			 james          	  950          5
+
+ROW_NUMBER() :-
+-------------------------
+ 
+ => row_number returns record numbers 
+ => row_number is also based on one or more fields
+ => for row_number also data must be sorted 
+
+     ROW_NUMBER() OVER (ORDER BY colname ASC/DESC , -----------)
+
+Ex 1  :-  row_number based on sal 
+
+ SELECT  empno,ename,sal,
+                 ROW_NUMBER() OVER (ORDER BY sal DESC) as rno
+ FROM emp ;
+
+ 
+      7839 king             5000          1
+      7902 ford             3000          2
+      7788 scott           3000          3
+      7566 jones          2975          4
+      7698 blake          2850          5
+      7782 clark           2450          6
+
+  SAL		RNK		DRNK		RNO
+  5000		1		1		1
+  4000		2		2		2
+  3000		3		3		3
+  3000		3		3		4
+  3000		3		3		5
+  2000		6		4		6
+  2000		6		4		7
+  1000		8		5		8		
+ 
+Ex 2 :- row_number based on empno
+
+   SELECT  empno,ename,sal,
+                 ROW_NUMBER() OVER (ORDER BY empno ASC) as rno
+   FROM emp ;
+ 
+ LAG / LEAD :- 
+ -------------------
+
+    LAG(colname,INT)  OVER (ORDER BY ---)     => returns previous row value
+    LEAD(colname,INT) OVER (ORDER BY ---)   => returns prevous row value
+
+ Ex 1 :- 
+
+ SELECT empno,ename,sal,
+               LAG(sal,1) OVER (ORDER BY empno ASC) as prev_sal
+ FROM emp ; 
+ 
+      7369 smith             800          
+      7499 allen            1600         800
+      7521 ward             1250       1600
+      7566 jones            2975       1250
+      7654 martin           1250       2975
+      7698 blake            2850       1250
+
+ Ex 2 :- 
+
+ CREATE TABLE population
+   (  
+     year  NUMBER(4),
+     population NUMBER
+  ) ;
+
+  INSERT INTO population VALUES  (2020,1328024498) ;
+  INSERT INTO population VALUES  (2021,1402617695) ;
+  INSERT INTO population VALUES  (2022,1425423212) ;
+  INSERT INTO population VALUES  (2023,1438069596) ;
+  INSERT INTO population VALUES  (2024,1450935791);
+
+=> display  YEAR    POPULATION     GROWTH   ? 
+
+     SELECT year,population,
+                  population - LAG(population,1) OVER (ORDER BY year ASC)  as  growth
+    FROM population ;
+
+      YEAR  	POPULATION     	 GROWTH
+     ---------- 	------------------            	  --------------
+      2020 		1328024498
+      2021 		1402617695  	  74593197
+      2022 		1425423212   	  22805517
+      2023 		1438069596   	 12646384
+      2024 		1450935791  	 12866195
+
+  => display  YEAR    POPULATION          GROWTH_PCT ?
+   
+   SELECT  year,population , 
+                 ( ( population - LAG(population,1) OVER (ORDER BY year ASC)) /
+                  (LAG(population,1) OVER (ORDER BY year ASC)))*100 as growth_pct
+   FROM population ; 
+
+  OR
+
+ WITH  P
+ AS
+ ( SELECT year,population,
+                   LAG(population,1) OVER (ORDER BY year ASC) as prev_population ,
+                  population - LAG(population,1) OVER (ORDER BY year ASC)  as  growth
+    FROM population )
+SELECT year,population,growth,
+                (growth / prev_population) * 100 as pct
+FROM P ;
+   
+ Multi-row / Group / Aggregate Functions :-
+----------------------------------------------------------
+
+  => These functions process multiple rows and returns one value 
+  
+  MAX
+  MIN
+  SUM
+  AVG
+  COUNT
+  COUNT(*)
+
+  MAX() :- 
+  ------------
+
+  => returns maximum value 
+
+                   MAX(arg) 
+
+Ex :- 
+
+   SELECT MAX(sal) FROM emp ; 		=>	5000
+   SELECT MAX(hiredate) FROM emp ; 		=>	12-JAN-83	.	
+   SELECT MAX(ename) FROM emp ; 		=>	ward 
+
+ MIN() :- 
+ -------------
+
+   => returns minimum value
+
+      SELECT MIN(sal) FROM emp ; 		=>	800
+      SELECT MIN(hiredate) FROM emp ; 		=>	17-DEC-80	
+      SELECT MIN(ename) FROM emp ; 		=>	adams
+
+ SUM() :- 
+ -------------
+
+  => returns total
+
+                  SUM(arg) 
+
+     SELECT SUM(sal) FROM emp  ; 		=>	29025
+     SELECT SUM(hiredate) FROM emp  ; 		=>	ERROR
+     SELECT SUM(ename) FROM emp  ; 		=>	ERROR
