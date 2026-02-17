@@ -1,0 +1,151 @@
+17-feb-26
+
+ SUM() :- 
+ -------------
+
+  => returns total
+
+                  SUM(arg) 
+
+     SELECT SUM(sal) FROM emp  ; 		=>	29025
+     SELECT SUM(hiredate) FROM emp  ; 		=>	ERROR
+     SELECT SUM(ename) FROM emp  ; 		=>	ERROR
+
+ => round total sal to hundreds ?
+
+     SELECT  ROUND(SUM(sal) , -2)  FROM emp ;        => 29000
+
+     29000---------------------29050-------------------------------29100
+    
+   => round total sal to thousands ?
+
+     SELECT  ROUND(SUM(sal) , -3)  FROM emp ;        =>  29000
+ 
+    29000----------------------29500-------------------------------30000
+
+  => after rounding to hundreds display total sal with thousand seperator and currency symbol ?
+
+    SELECT  TO_CHAR( ROUND(SUM(sal) , -2)  ,   'L99G999')   FROM emp  => $29,000
+
+   step 1 :-        SUM(sal)  =>  29025
+   step 2 :-        ROUND(29025,-2)   =>   29000
+   step 3 :-       TO_CHAR(29000,'L99G999')   =>  $29,000
+ 
+ => calculate total sal including comm ?
+ 
+        SELECT SUM(sal+comm)  FROM emp ;     =>  7800
+
+        SELECT SUM(sal+NVL(comm,0))  FROM emp ;   => 31225
+
+ => display total sal paid to managers ?
+    
+     SELECT SUM(sal) FROM emp WHERE job='MANAGER' ;   => 8275
+
+AVG() :- 
+-----------
+
+  => returns average value
+
+                  AVG(arg) 
+
+ Ex :- 
+
+   SELECT  AVG(sal) FROM emp ; 	=>	2073.21429
+   SELECT AVG(hiredate) FROM emp ;	=>	ERROR
+   SELECT AVG(ename) FROM emp ;       =>             ERROR
+
+ =>  round avg sal to lowest integer ?
+
+     SELECT FLOOR(AVG(sal)) FROM emp ;   =>  2073
+ 
+  COUNT() :- 
+  -----------------
+
+   => returns no of values present in a column
+
+                     COUNT(arg) 
+
+Ex :- 
+
+   SELECT COUNT(empno)  FROM emp ; 	=>	14
+   SELECT COUNT(comm)  FROM emp ; 		=>	4  =>  nulls are not counted 
+
+  COUNT(*) :- 
+  -----------------
+
+  => returns no of rows in a table
+  
+    SELECT COUNT(*) FROM emp ; 	=>	14
+
+=> difference between COUNT & COUNT(*)  ?
+
+	T1
+	F1
+	10
+	NULL
+	20
+	NULL
+	30
+                                COUNT(F1)	=>	3     => nulls are not counted
+	               COUNT(*)		=>	5     => nulls are counted 
+
+   => display no of employees joined in 1981 year ?
+
+    SELECT  COUNT(*) 
+    FROM emp 
+    WHERE  TO_CHAR(hiredate,'yyyy') = 1981 ; 
+
+    WHERE  hiredate BETWEEN '01-JAN-1981'  AND  '31-DEC-1981'
+
+    WHERE  hiredate  LIKE  '%81' 
+
+   => display no of employees joined on sunday ?
+ 
+    SELECT  COUNT(*)
+    FROM emp 
+    WHERE  TO_CHAR(hiredate,'d')  =  1  ;
+
+    WHERE  TO_CHAR(hiredate,'dy')  =  'sun' 
+
+   WHERE  TO_CHAR(hiredate,'fmday')   = 'sunday'
+
+   => display no of employees joined in 2nd quarter of 1981 year ?
+ 
+    SELECT  COUNT(*)
+    FROM emp 
+    WHERE  TO_CHAR(hiredate,'yyyy') = 1981
+                   AND
+                   TO_CHAR(hiredate,'q') = 2 ; 
+
+  NOTE :- 
+  -------------
+
+   => all group functions are not allowed in where clause  and they are allowed only in 
+        select,having clauses 
+
+      SELECT ename
+      FROM emp 
+      WHERE sal  = MAX(sal) ;    => ERROR
+
+      SELECT deptno
+      FROM emp 
+      WHERE COUNT(*) > 3 ;    => ERROR
+   
+ summary :- 
+ ---------------
+
+  CHAR		 :-   upper,lower,initcap,length,substr,instr,lpad,rpad,ltrim,rtrim,trim,replace,translate
+  NUMERIC	 :-   mod,round,trunc,ceil,floor
+  DATE 		 :-   add_months,months_between,last_day,next_day
+  CONVERSION	 :-   to_char,to_date,to_number
+  SPECIAL  	 :-   nvl,coalesce,ascii,chr
+  ANALYTICAL 	 :-   rank,dense_rank,row_number,lag,lead
+  AGGREGATE       	 :-   max,min,sum,avg,count,count(*)
+ 
+ 
+  GROUP BY clause :- 
+  =================
+
+   => group by clause groups rows based on one or more columns to calculate
+         min,max,sum,avg,count for each group , for ex to calculate dept wise
+         total sal  first group the rows based on dept and apply sum function on each group
