@@ -1,0 +1,878 @@
+      FIRST DEMO DAY   DDL & DML TASK
+                 ===========-----============
+
+
+AFTER LOGIN FIRST DO IT FOR FORMAT
+----------------------------------
+SET PAGESIZE 1000
+SET LINESIZE 300
+SET WRAP OFF
+SET TRIMSPOOL ON
+SET TAB OFF
+SET FEEDBACK ON
+SET HEADING ON
+SET VERIFY OFF
+
+
+
+1.Create a STUDENT table with the following columns
+
+-----> SID
+
+-----> SNAME
+
+-----> GENDER
+
+-----> FEE
+
+-----> DOB
+
+
+2.What is the command to view the structure of the STUDENT table?
+-DESC STUDENT;
+
+3.insert records into the STUDENT table.
+-INSERT STUDENT VALUES();
+
+4.Write a query to add a new student record with the NAME 'SURYA' 
+  and a FEE of 30000 into the STUDENT table.
+
+
+5.Write a query to display all the records from the STUDENT table.
+
+
+
+6.Create a table named PRODUCT with PID,PNAME,CATEGORY,PRICE and insert the
+  records as below.
+
+
+     PID        PNAME	       CATEGORY	        PRICE
+    -----   -------------    --------------    --------
+      1	      LED TV	      ELECTRONICS       25000
+      2	      MOBILE	      ELECTRONICS       15000
+      3       FRIDGE          APPLIANCES	30000
+      4	    WASHING MACHINE   APPLIANCES	20000
+      5	    OFFICE CHAIR      FURNITURE	        5000
+
+
+
+7.Write a query to display product names and categories from PRODUCT table?
+
+
+8.Write a query to display product names,categories and price from PRODUCT
+  table?
+
+-----------------------------------------------------------------------------------------------------
+1.What is DATABASE ?
+
+ Database is a place where we can store structured collection
+ of inter related data.
+
+----------------------------------------------------------------------------------
+
+2.What is SQL ?
+
+  SQL is structured query language.in sql we are writing queries.
+with the help of queries we are communicating with the database.
+
+  SQL language was introduced by E.F Codd. He was a mathematician that's
+why he was represented data in the format of matrix(rows and columns).
+
+
+-----------------------------------------------------------------------------------
+
+3.What are DDL commands ? What is the purpose of create command ?
+
+• DDL stands for Data Definition Language
+
+• DDL command are used to define structure of the 
+  table.
+
+• The following are the DDL commands.
+
+1)Create                   
+2)Alter
+3)Drop                     
+4)Flashback                
+5)Truncate
+6)Purge
+7)Rename (oracle 9i)
+
+1)Create:- create command is used to create database objects like 
+=========  tables, views, sequences, indexes,views, 
+           procedures,functions.....etc 
+
+
+Creating a table:-
+=================
+syntax:-
+========
+create table tablename(columnname1 datatype(size),columnname2 datatype(size).... );
+
+NOTE:-By default DDL commands are auto committed.No need to give any commit
+===== command explicitly.
+
+-----------------------------------------------------------------------------------
+4.What are DML commands
+
+• DML stands for Data Manipulation Language.
+
+• DML commands are used to manipulate data in a table.
+
+• Simply in DML all operations we are performing on data.
+
+• The following are the DML commands.
+
+1.Insert
+2.Update
+3.Delete
+4.Merge (oracle 9i)
+
+1)insert: It is used to insert data into a table.
+========
+
+Method1:-
+========
+insert into tablename values(value1,value2,.......);
+
+
+Method2:-(Using Substitutional operator)
+========
+
+    &------>Enter value for
+
+Same like scanf function in C language.i.e is used to read
+the values from the keyboard.
+
+Here also '&' it is used to read the values from the keyboard.INT PRIMARY KEY,
+
+
+syntax:-
+=======
+insert into tablename values(&col1,&col2.....);
+
+
+Method3(Skipping columns):-in first 2 methods we need to provide values
+=========================  for all the columns then only record is
+                           inserted.
+
+•For EG 10 columns are there i am interested to give values for only 3
+ columns then we are using Skipping column method.
+
+syntax:-
+=======
+insert into tablename(col1,col2....)values(value1,value2....);
+
+NOTE:-DML commands are not auto commit commands.after inserting data use commit
+====  command then only data is saved permanently in database.
+
+ANS--------------------------------------------------------------------------------------------------------------------------------------
+SQL> CREATE TABLE STUDENT (
+  2      SID     NUMBER,
+  3      SNAME   VARCHAR2(20),
+  4      GENDER  VARCHAR2(10),
+  5      FEE     NUMBER,
+  6      DOB     DATE
+  7  );
+
+Table created.
+
+SQL> DESC STUDENT;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER
+ SNAME                                              VARCHAR2(20)
+ GENDER                                             VARCHAR2(10)
+ FEE                                                NUMBER
+ DOB                                                DATE
+
+SQL> INSERT INTO STUDENT VALUES
+  2  (1, 'RAHUL', 'MALE', 25000, TO_DATE('10-05-2002','DD-MM-YYYY'));
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO STUDENT VALUES
+  2  (2, 'ANITA', 'FEMALE', 28000, TO_DATE('15-08-2001','DD-MM-YYYY'));
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> INSERT INTO STUDENT (SID, SNAME, FEE)
+  2  VALUES (3, 'SURYA', 30000);
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM STUDENT;
+
+       SID SNAME                GENDER            FEE DOB
+---------- -------------------- ---------- ---------- ----------
+         1 RAHUL                MALE            25000 2002-05-10
+         2 ANITA                FEMALE          28000 2001-08-15
+         3 SURYA                                30000
+SQL> CREATE TABLE PRODUCT (
+  2      PID       NUMBER,
+  3      PNAME     VARCHAR2(30),
+  4      CATEGORY  VARCHAR2(20),
+  5      PRICE     NUMBER
+  6  );
+
+Table created.
+
+SQL> INSERT INTO PRODUCT VALUES (1, 'LED TV', 'ELECTRONICS', 25000);
+
+1 row created.
+
+SQL> INSERT INTO PRODUCT VALUES (2, 'MOBILE', 'ELECTRONICS', 15000);
+
+1 row created.
+
+SQL> INSERT INTO PRODUCT VALUES (3, 'FRIDGE', 'APPLIANCES', 30000);
+
+1 row created.
+
+SQL> INSERT INTO PRODUCT VALUES (4, 'WASHING MACHINE', 'APPLIANCES', 20000);
+
+1 row created.
+
+SQL> INSERT INTO PRODUCT VALUES (5, 'OFFICE CHAIR', 'FURNITURE', 5000);
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT PNAME, CATEGORY
+  2  FROM PRODUCT;
+
+PNAME                          CATEGORY
+------------------------------ --------------------
+LED TV                         ELECTRONICS
+MOBILE                         ELECTRONICS
+FRIDGE                         APPLIANCES
+WASHING MACHINE                APPLIANCES
+OFFICE CHAIR                   FURNITURE
+
+SQL> SELECT PNAME, CATEGORY, PRICE
+  2  FROM PRODUCT;
+
+PNAME                          CATEGORY                  PRICE
+------------------------------ -------------------- ----------
+LED TV                         ELECTRONICS               25000
+MOBILE                         ELECTRONICS               15000
+FRIDGE                         APPLIANCES                30000
+WASHING MACHINE                APPLIANCES                20000
+OFFICE CHAIR                   FURNITURE                  5000
+
+SQL> SELECT *FROM PRODUCT;
+
+       PID PNAME                          CATEGORY                  PRICE
+---------- ------------------------------ -------------------- ----------
+         1 LED TV                         ELECTRONICS               25000
+         2 MOBILE                         ELECTRONICS               15000
+         3 FRIDGE                         APPLIANCES                30000
+         4 WASHING MACHINE                APPLIANCES                20000
+         5 OFFICE CHAIR                   FURNITURE                  5000
+
+
+
+
+Day-1 lab task
+------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+OPERATORS TASK
+==========================
+
+2. RELATIONAL OPERATORS
+--------------------------
+Relational operators are also called comparison operators.
+Used in WHERE clause.
+Operators: =, <, <=, >, >=, <> , !=
+
+1. Display all MANAGERS
+SELECT * FROM emp WHERE job = 'MANAGER';
+
+2. Salary = 3000
+SELECT * FROM emp WHERE sal = 3000;
+
+3. Salary > 2000
+SELECT * FROM emp WHERE sal > 2000;
+
+4. Salary >= 3000
+SELECT * FROM emp WHERE sal >= 3000;
+
+5. Department 10
+SELECT * FROM emp WHERE deptno = 10;
+
+6. Employee name SMITH
+SELECT * FROM emp WHERE ename = 'SMITH';
+
+7. Except CLERK
+SELECT * FROM emp WHERE job <> 'CLERK';
+
+8. Customers from Kolar
+SELECT customer_id, name, gender, phone 
+FROM customer123 
+WHERE district = 'Kolar';
+
+9. Joined on 17-DEC-1980
+SELECT * FROM emp 
+WHERE hiredate = TO_DATE('17-DEC-1980','DD-MON-YYYY');
+
+10. Joined after 1981
+SELECT * FROM emp 
+WHERE hiredate > TO_DATE('31-DEC-1981','DD-MON-YYYY');
+
+11. Joined before 1981
+SELECT * FROM emp 
+WHERE hiredate < TO_DATE('01-JAN-1981','DD-MON-YYYY');
+
+12. Annual salary > 30000
+SELECT ename, sal, sal*12 AS "ANN SAL"
+FROM emp 
+WHERE sal*12 > 30000;
+
+
+3. LOGICAL OPERATORS
+--------------------------
+
+1. Clerks with salary > 1000
+SELECT * FROM emp 
+WHERE job = 'CLERK' AND sal > 1000;
+
+2. Clerks in dept 20
+SELECT * FROM emp 
+WHERE job = 'CLERK' AND deptno = 20;
+
+3. Job CLERK / SALESMAN / MANAGER
+SELECT * FROM emp 
+WHERE job = 'CLERK' OR job = 'SALESMAN' OR job = 'MANAGER';
+
+4. Departments 20,30,50,70,90
+SELECT * FROM emp 
+WHERE deptno IN (20,30,50,70,90);
+
+5. Salary between 2450 and 3000
+SELECT * FROM emp 
+WHERE Sal BETWEEN 2450 AND 3000;
+
+6. Joined in 1981
+SELECT * FROM emp 
+WHERE hiredate BETWEEN 
+TO_DATE('01-JAN-1981','DD-MON-YYYY') 
+AND TO_DATE('31-DEC-1981','DD-MON-YYYY');
+
+7. Passed students
+SELECT * FROM student1 
+WHERE sub1 >= 35 AND sub2 >= 35 AND sub3 >= 35;
+
+8. Failed students
+SELECT * FROM student1 
+WHERE sub1 < 35 OR sub2 < 35 OR sub3 < 35;
+
+
+1. ARITHMETIC OPERATORS
+--------------------------
+
+1. Annual Salary
+SELECT ename, sal, sal*12 AS "ANN SAL" FROM emp;
+
+2. Experience
+SELECT ename,
+ROUND((SYSDATE - hiredate)/365) AS EXPERIENCE
+FROM emp;
+
+3. TA, HRA, TAX, NETSAL
+SELECT ename, sal,
+sal*0.10 AS TA,
+sal*0.20 AS HRA,
+sal*0.05 AS TAX,
+(sal + sal*0.10 + sal*0.20 - sal*0.05) AS NETSAL
+FROM emp;
+
+4. Salary after adding 1200
+SELECT ename, sal, sal+1200 AS UPDATED_SAL FROM emp;
+
+
+
+
+Day-2 lab task
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                          SPECIAL OPERATORS
+                         ====================
+
+TASK: SPECIAL OPERATORS (IN ,NOT IN ,BETWEEN ,NOT BETWEEN,IS NULL, IS NOT NULL OPERATORS)
+
+
+1.In:- It is used to pick the values one by one
+=====        from list of values.
+ 
+
+        We can also use in operator in place of OR operator.
+when we are retrieving multiple values from the same column.
+in this case In operator performance is very high compare to
+OR operator.
+ 
+
+•it avoids writing multiple equality conditions using OR operator.
+
+
+Syntax:- 
+=======
+select * from table name
+where columnname in(list of values);
+
+
+
+1.Write a query to display the employees who are working in 20,30,50,70,90 departments
+  from emp table by using in operator?  
+
+SELECT * FROM EM
+
+
+2.Write a query to display whose employee names are SMITH,JONES,KING from emp table?
+
+
+
+
+3.Write a query to display the employee records whose employee numbers
+  are 7902,7788,7900 from emp table ?
+
+
+
+
+4.Write a query to display the employee records whose salary is 1250,3000,5000
+  from emp table?
+
+
+
+
+5.Write a query to display the employee records except MANAGER and CLERK 
+  from emp table by using not in operator?
+
+
+
+
+6.Write a query to display the employees who are working in other than 10,20
+  departments from emp table by using not in operator?
+
+
+------------------------------------------------------------------------------------------------------
+                    2.Between And operator
+                    ======================
+2)Between:-This operator is used to retrieve range of values from a table column.
+========== This operator is also called as between.... and operator.
+
+
+Syntax:- 
+========
+Select * from tablename 
+where columnname between lowvalue and highvalue.
+
+
+
+1.Write a query to display the employees who are getting salary 
+         between 2000 to 5000 from emp table? 
+-SELECT * FROM EMP
+  2  WHERE SAL BETWEEN 2000 AND 5000;
+
+
+
+2.Write a query to display the employees who are getting salary 
+        not between 2000 - 5000 from emp table?
+
+- SELECT * FROM EMP
+  2  WHERE SAL NOT BETWEEN 2000 AND 5000;
+
+ 
+3.Write a query to display the employee records who joined in 1982 from emp table?
+-SELECT * FROM EMP
+  2  WHERE HIREDATE BETWEEN '01-JAN-1982' AND '31-DEC-1982';
+
+
+4.Write a query to display the employee records except joined in 1981 from emp table?
+- SELECT * FROM EMP
+  2  WHERE HIREDATE BETWEEN '01-JAN-1981' AND '31-DEC-1981';
+
+
+
+ *
+*5* What is the output of the following statement?
+ *
+    SQL>select * from emp where sal between 4000 and 2000;
+
+a) it returns who are getting the salaries from 4000 to 2000
+
+b) it returns who are getting the salaries from 2000 to 4000
+
+c) No rows selected
+
+d) both A and B
+
+
+Answer: D
+
+-----------------------------------------------------------------------------------
+
+                   3.is null and is not null
+                   =========================
+
+3) Is null, is not null:- These two operators used in where clause only.
+========================= These two operators are used to test weather a column
+                          having null values or not.
+
+
+•For null comparision we must use is null or is not null operators. 
+ don't use = operator.
+
+
+Syntax:-
+========
+ select * from tablename where columnname is null;
+
+
+Syntax:-
+=======
+ select * from tablename where columnname is not null;
+
+
+   
+1.Write a query to display the employees who are not getting commission
+  from emp table? 
+-SELECT * FROM EMP
+  2  WHERE COMM IS NULL;
+
+2.Write a query to display the employees who are getting commission
+   from emp table? 
+-SELECT * FROM EMP
+  2  WHERE COMM IS NOT NULL;
+
+3.Write a query to display the employee record who are not having the manager
+  from emp table?
+- SELECT * FROM
+  2  EMP WHERE MGR IS NULL;
+
+4..What is the output of the given Query ?
+
+Select * from emp where COMM=NULL;
+Ans- no rows selected
+
+
+Day-3 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                           Like operator
+                        ================
+
+4.like operator:-like operator is used to retrieve data from database based on 
+================ specified pattern in where clause.
+
+   Along with like operator oracle provided 2 special wild card characters.
+These are having special meaning.
+ 
+1)% ---> string or group of characters matching(replaces 0 or 
+                                                any no of characters)
+
+2)_ ---> single character matching purpose(replaces 1 char)
+
+
+Syntax:-
+=======
+ select * from tablename where columnname like 'character pattern';
+
+
+------------------------------------------------------------------------------------------------------
+1.Write a query to display the employees whose ename start with 'S' 
+  from emp table using like operator?
+
+-SELECT * FROM EMP WHERE ENAME LIKE 'S%';
+
+
+2.Write a query to display the employees whose ename end with 'S'
+  from emp table using like operator?
+
+- SELECT * FROM EMP WHERE ENAME LIKE '%S';
+
+
+3.Write a query to display the employees whose empno start with '76' 
+  from emp table by using like operator?
+
+-SELECT * FROM EMP WHERE EMPNO LIKE '76%';
+
+
+4.Write a query to display the employees whose ename contains 'M' in any position 
+  from emp table by using like operator?
+
+-SELECT * FROM EMP WHERE ENAME LIKE '%M%';
+
+5.Write a query to display the employee records whose name 2nd character is 'A' 
+  from emp table by using like operator?
+
+-SELECT * FROM EMP WHERE ENAME LIKE '_A%';
+
+
+6.Write a query to display the employee records whose name 3rd character is 'M'
+  from emp table by using like operator?
+
+-SELECT * FROM EMP WHERE ENAME LIKE '__M%';
+
+
+7.Write a query to display the employee records whose names having 4 letters
+  from emp table by using like operator?
+
+-SELECT * FROM EMP WHERE ENAME LIKE '____';
+
+
+8.Write a query to display the employees who are getting 3 digit salary
+  from emp table by using like operator?
+
+-SELECT * FROM EMP WHERE SAL LIKE '___';
+
+
+9.Write a query to display the employees who are joining in the year '81' 
+  from emp table using like operator?
+
+-SELECT * FROM EMP WHERE HIREDATE LIKE '%81';
+
+
+10.Write a query to display the employees who are joining in the month 'DECEMBER'
+   from the emp table using like operator?
+
+-SELECT * FROM EMP WHERE HIREDATE LIKE '%DEC%';
+
+
+11.Write a query to display the employees whose name contain either 'AM' or 'AR' strings
+   from emp table by using like operator
+
+-SELECT * FROM EMP
+  2  WHERE ENAME LIKE '%AM%'
+  3  OR ENAME LIKE '%AR%';
+
+ 
+12.Write a query to display the employee records whose name starts and end with 'S'
+   from emp table by using like operator?
+- SELECT * FROM EMP
+  2  WHERE ENAME LIKE 'S%'
+  3  OR ENAME LIKE '%S';
+
+- SELECT *
+  2  FROM emp
+  3  WHERE Ename LIKE 'S%S';
+
+13.Write a query to display the employee records whose names starting with VOWEL
+   from emp table by using like operator?
+
+-SELECT *
+FROM emp
+WHERE ename LIKE 'A%'
+   OR ename LIKE 'E%'
+   OR ename LIKE 'I%'
+   OR ename LIKE 'O%'
+   OR ename LIKE 'U%';
+
+
+
+14.Write an SQL query to retrieve all employee names from the table 
+   EMP555 that contain the word 'SIRISHA' ?[FACE TO FACE INTERVIEW ROUND QUESTION]
+
+
+SQL>SELECT * FROM EMP555;
+
+           ENAME
+     ----------------
+      SIRISHA GAYATRI
+      GAYATRI SIRISHA
+      ANUSHKA SHETTY
+      ANU SIRISHA RAI
+      SURYA SURYA
+
+
+------------------------------------------------------------------------------------------------------
+Mixed Query:-
+===========
+NOTE:-Where clause is used to filters the records in a table. And there
+===== can be only one WHERE clause in every relational databases. if we
+      want filter the data after where then we must use AND operator. 
+
+
+
+
+1.Write a query to display employees who are working as either 'MANAGER' or 'CLERK' 
+   and earning salary between 1500 and 3000 and joined in the year 1981 
+   and are not working in departments 10 , 20 from EMP table ?
+
+- SELECT *
+  2  FROM emp
+  3  WHERE job IN ('MANAGER', 'CLERK')
+  4    AND sal BETWEEN 1500 AND 3000
+  5    AND hiredate LIKE '%81'
+  6    AND deptno NOT IN (10, 20);
+
+------------------------------------------------------------------------------------------------------
+alias names
+===========
+
+1.Write a query to display ENAME as (use aliasname EMP_NAME),SAL,JOB
+  from EMP table and whose salary is greater than 2000
+
+-SELECT ename AS emp_name, sal, job
+FROM emp
+WHERE sal > 2000;
+
+
+
+2.Write an sql query to display the first name(use alias name staff first name ),position and
+  salary of staff members where salary is greater than 50000 ?[TECHNICAL ROUND INTERVIEW QUESTION] 
+
+ 
+
+ Your output should have three columns as given below
+
+   STAFF FIRST NAME    POSITION       SALARY
+
+
+
+SQL> SELECT * FROM STAFF;
+
+     STAFF_ID     FIRST_NAME      LAST_NAME      POSITION        SALARY
+    ----------  -------------   ------------    -----------     ---------
+         1         ANUSHKA          SHETTY        MANAGER         60000
+         2         KIRAN            KUMAR         DEVELOPER       48000
+         3         GOWTHAM          RAJ           TEAM LEAD       75000
+         4         KAVYA            PAPA          HR              51000
+         5         PREETI           ZINTA         CLERK           30000
+
+
+
+
+
+
+3.Write an SQL query to display the NAME(use alias USERNAME) and their email (use alias EMAILID) 
+  of users who have a phone number ending with '29' 
+  from the USERS table?[COGNIZANT TECHNICAL ROUND INTERVIEW QUESTION]                                                                                         
+
+
+ Your output should have 2 columns as given below
+
+   USERNAME      EMAILD
+
+
+SQL> SELECT * FROM USERS;
+
+      USER_ID       NAME               EMAIL             PHONE_NUMBER
+     ---------  ------------    --------------------    --------------
+         1       ANUSHKA         anushka@gmail.com        9876526229
+         2       GOWTHAM         gowtham@gmail.com        9912347810
+         3       SURYA           surya@gmail.com          9988776629
+         4       KAVYA PAPA      kavya@gmail.com          9988776655
+
+------------------------------------------------------------------------------------------------------
+                   Concatenation Operator(|| double pipe)
+                   --------------------------------------   
+
+ in relational databases if we want to display strings along with column data
+then we must use concatenation operator.
+
+    it is not a special operator rarely used in SQL and regularly
+used in PL/SQL. 
+
+Ex:-
+===
+SQL> select 'GOWTHAM'||' '||'RAJ' from dual;
+
+'GOWTHAM'||
+-----------
+GOWTHAM RAJ
+
+
+1.Display the output as following from emp table by using 
+  concatenation operator 
+
+
+EXPECTED OUTPUT:-
+================
+
+   7369  SMITH   earns   800
+   7499  ALLEN   earns   1600
+   .
+   .
+   7902  FORD    earns   3000
+   7934  MILLER  earns   1300
+
+
+
+2.Display the output as following from emp table by using 
+  concatenation operator 
+
+
+   SMITH   works as  CLERK
+   ALLEN   works as  SALESMAN
+   .
+   .
+   FORD    works as  ANALYST
+   MILLER  works as  CLERK
+
+
+3.Combine the two strings NARESH,IT
+
+------------------------------------------------------------------------------------------------------
+CREATE TABLE EMP555
+(
+ENAME VARCHAR2(20)
+);
+
+
+INSERT INTO EMP555 VALUES('SIRISHA GAYATRI');
+INSERT INTO EMP555 VALUES('GAYATRI SIRISHA');
+INSERT INTO EMP555 VALUES('ANUSHKA SHETTY');
+INSERT INTO EMP555 VALUES('ANU SIRISHA RAI');
+INSERT INTO EMP555 VALUES('SURYA SURYA');
+
+
+
+CREATE TABLE STAFF
+(
+    STAFF_ID NUMBER(10),
+    FIRST_NAME VARCHAR2(20),
+    LAST_NAME VARCHAR2(20),
+    POSITION VARCHAR2(10),
+    SALARY NUMBER(10)
+);
+
+
+INSERT INTO STAFF VALUES(1, 'ANUSHKA', 'SHETTY', 'MANAGER', 60000);
+INSERT INTO STAFF VALUES(2, 'KIRAN', 'KUMAR', 'DEVELOPER', 48000);
+INSERT INTO STAFF VALUES(3, 'GOWTHAM', 'RAJ', 'TEAM LEAD', 75000);
+INSERT INTO STAFF VALUES(4, 'KAVYA', 'PAPA', 'HR', 51000);
+INSERT INTO STAFF VALUES(5, 'PREETI', 'ZINTA', 'CLERK', 30000);
+
+
+
+
+CREATE TABLE USERS
+(
+    USER_ID NUMBER(10),
+    NAME VARCHAR2(15),
+    EMAIL VARCHAR2(20),
+    PHONE_NUMBER VARCHAR2(15)
+);
+
+
+INSERT INTO USERS VALUES(1, 'ANUSHKA', 'anushka@gmail.com', '9876526229');         
+INSERT INTO USERS VALUES(2, 'GOWTHAM', 'gowtham@gmail.com', '9912347810');
+INSERT INTO USERS VALUES(3, 'SURYA',   'surya@gmail.com',   '9988776629'); 
+INSERT INTO USERS VALUES(4, 'KAVYA PAPA','kavya@gmail.com', '9988776655');
+
+
+COMMIT;
