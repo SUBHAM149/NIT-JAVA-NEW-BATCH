@@ -1,0 +1,161 @@
+ 18-feb-26
+
+  GROUP BY clause :- 
+  =================
+
+   => group by clause groups rows based on one or more columns to calculate
+         min,max,sum,avg,count for each group , for ex to calculate dept wise
+         total sal  first group the rows based on dept and apply sum function on each group
+        
+       EMP
+       empno    ename   sal 	deptno
+       100         A	  5000        10	
+       101         B           3000	  20	   group by	10	8000
+       102	     C	  4000	  30	=============?	20	9000
+       103	     D	  6000 	  20			30	4000
+       104         E           3000        10
+  
+       detailed  data 					summarized data				
+
+ 
+ => GROUP BY clause converts detailed data into summarized data which is useful for analysis
+
+syntax :-
+
+   SELECT columns
+   FROM tabname
+   [WHERE cond]
+   GROUP BY col1,col2,---
+   [HAVING cond]
+   [ORDER BY col ASC/DESC,---]
+
+ Execution :-
+ 
+  FROM
+  WHERE
+  GROUP BY
+  HAVING
+  SELECT
+  ORDER BY 
+
+ Ex :- 
+
+ => display dept wise total salary ?
+
+      SELECT deptno,SUM(sal)
+      FROM emp
+      GROUP BY deptno ;
+
+ FROM emp :-
+-------------------
+
+      EMP
+       empno    ename   sal 	deptno
+       100         A	  5000        10	
+       101         B           3000	  20	  
+       102	     C	  4000	  30	 
+       103	     D	  6000 	  20			 
+       104         E           3000        10
+
+GROUP BY deptno :-
+ -----------------------------
+
+10	100	A	5000	 
+	104	E	3000
+
+ 20	101	B	3000	 
+	103	D	6000		
+ 
+ 30	102	C	4000
+
+SELECT deptno,SUM(sal) :-
+-----------------------------------------
+
+10	8000
+20	9000
+30	4000
+
+ => display job wise summary ?
+
+    SELECT job,MIN(sal) as minsal,
+                         MAX(sal) as maxsal,
+                         SUM(sal) as totsal,
+                         AVG(sal) as avgsal,
+                         COUNT(*) as cnt
+    FROM emp
+    GROUP BY job ;
+
+CLERK            	 800         1300       4150       1037.5          	4
+SALESMAN      	 1250       1600       5600       1400            		 4
+ANALYST        	 3000       3000       6000       3000            		 2
+MANAGER        	 2450       2975       8275       2758.33333         	 3
+PRESIDENT     	 5000       5000       5000       5000         		 1
+
+ => display year wise no of employees joined ?
+
+  SELECT TO_CHAR(hiredate,'yyyy') as year,COUNT(*)
+  FROM emp 
+  GROUP BY TO_CHAR(hiredate,'yyyy')
+  ORDER BY year ASC ; 
+
+           GROUP BY   year      INVALID
+           ORDER BY   year      VALID
+
+  NOTE :- 
+
+   => column alias cannot be used in group by clause because group by  is executed
+        before select.
+
+   => column alias can be used in order by clause because order by is executed after select
+
+ => display day wise no of employees ?
+
+  SELECT   TO_CHAR(hiredate,'day') as day,COUNT(*)
+  FROM emp 
+  GROUP BY  TO_CHAR(hiredate,'day')
+  ORDER BY  day ASC ; 
+ 
+ => display months wise no of employees joined in the year  1981 ? 
+
+  SELECT TO_CHAR(hiredate,'mon') as  month,COUNT(*)
+  FROM emp 
+  WHERE TO_CHAR(hiredate,'yyyy') = 1981 
+  GROUP BY TO_CHAR(hiredate,'mon')
+  ORDER BY month ASC ; 
+
+ => find the departments having more than 3 employees ? 
+  
+      SELECT deptno,COUNT(*) as cnt
+      FROM emp 
+      WHERE COUNT(*) > 3 
+      GROUP BY deptno  ;           => ERROR
+
+    => oracle cannot calculate dept wise count before group by and it can calculate
+         only after group by , so apply the condition COUNT(*) > 3 after group by 
+         using HAVING clause.
+
+      SELECT deptno,COUNT(*) as cnt
+      FROM emp 
+      GROUP BY deptno       
+      HAVING COUNT(*) > 3  ;
+
+	20	5
+	30	6
+
+ WHERE VS HAVING :-
+ -------------------------------
+
+	WHERE				HAVING
+
+ 1    selects specific rows			selects specific groups 
+
+2     conditions applied before group by		conditions applied after group by 
+
+3     use where clause if cond			use having clause if cond
+       doesn't contain aggregate 			contains aggregate function
+       function
+
+ =>  find southern states having more than 5cr persons ?
+
+  persons
+  aadharno     name   gender   dob    addr	  city   state 
