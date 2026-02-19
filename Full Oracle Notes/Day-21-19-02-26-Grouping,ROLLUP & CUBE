@@ -1,0 +1,134 @@
+19-feb-26
+
+ => display dept wise total salaries ?
+      display only 10 & 20 dept ?
+      display the departments where total sal > 10000 ?
+
+     SELECT deptno,SUM(sal)
+     FROM emp
+     WHERE  deptno IN (10,20)
+     GROUP BY deptno 
+     HAVING   SUM(sal) > 10000 ;
+
+ =>  find southern states having more than 5cr persons ?
+
+  persons
+  aadharno     name   gender   dob    addr	  city   state     
+ 
+ SELECT state,COUNT(*)
+ FROM persons
+ WHERE state  IN ('AP','TG','KA','TN','KL')
+ GROUP BY state 
+ HAVING COUNT(*) > 50000000 ;
+ 
+ Grouping based on multiple columns :-
+ --------------------------------------------------------
+
+  => display dept wise and with in dept job wise total salary ?
+ 
+   SELECT deptno,job,SUM(sal)
+   FROM emp
+   GROUP BY deptno,job 
+   ORDER BY deptno ASC ; 
+
+
+	10	CLERK		1300
+		MANAGER	2450
+		PRESIDENT	5000
+
+	20	ANALYST		6000
+		CLERK		1900
+		MANAGER	2975
+
+	30	CLERK		950
+		MANAGER	2850
+		SALESMAN	5600
+
+  =>  display state wise and with in state gender wise population ?
+
+  persons
+  aadharno     name   gender   dob    addr	  city   state     
+ 
+  SELECT state,gender,COUNT(*)  as population
+  FROM persons
+  GROUP BY state,gender
+  ORDER BY state ASC ; 
+ 
+ 
+ AP	MALE	?
+	FEMALE	?
+
+AR	MALE	?
+	FEMALE	?
+
+AS	MALE	?
+	FEMALE	?
+
+ => display year wise and with in year quarter wise no of employees joined ?
+
+   SELECT  TO_CHAR(hiredate,'yyyy') as year,
+                   TO_CHAR(hiredate,'q') as qrt,
+                   COUNT(*) as cnt
+   FROM emp 
+   GROUP BY  TO_CHAR(hiredate,'yyyy') , TO_CHAR(hiredate,'q')
+   ORDER BY year ASC ; 
+
+     	YEAR 	Q        CNT
+
+	1980 	4          1
+	1981 	1          2
+	1981 	2          3
+	1981 	3          2
+	1981 	4          3
+	1982 	1          1
+	1982	4          1
+	1983 	1          1
+ 
+ROLLUP & CUBE :- 
+----------------------------
+
+  => functions used to display subtotals and grand total
+
+                 GROUP BY ROLLUP(col1,col2,--)
+                 GROUP BY CUBE(col1,col2,------)
+ 
+ROLLUP :-
+---------------
+ 
+=> ROLLUP displays subtotals for each group  and also display grand total 
+
+   SELECT deptno,job,SUM(sal)
+   FROM emp
+   GROUP BY ROLLUP(deptno,job)
+   ORDER BY deptno ASC ; 
+  
+      10	CLERK           	1300
+           	MANAGER         	2450
+          	 PRESIDENT      	 5000
+                          		 8750   => dept subtotal
+
+
+        20	 ANALYST       	  6000
+           	CLERK          	 1900
+          	 MANAGER         	  2975
+                          		  10875   => dept subtotal
+
+
+        30 	CLERK          	  950
+          	 MANAGER         	 2850
+          	 SALESMAN       	 5600
+                          		 9400   => dept subtotal
+
+                          		29025   => grand total
+
+CUBE :-
+--------------
+
+=> CUBE displays subtotals for each group by column (deptno,job)  
+      and also displays grand total.
+
+   SELECT deptno,job,SUM(sal)
+   FROM emp
+   GROUP BY CUBE(deptno,job)
+   ORDER BY deptno ASC ; 
+ 
