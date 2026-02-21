@@ -1,0 +1,183 @@
+20-feb-26 
+
+Integrity Constraints :- 
+=================
+
+ => Integrity constraints are rules to maintain data quality or date consistency
+ => using Constraints we can gurantee data quality
+ => used to prevent  users from entering invalid data.
+ => used to enforce rules like min bal must be 1000
+
+   Types of Constraints :- 
+  -----------------------------
+
+  1 NOT NULL
+  2 UNIQUE
+  3 PRIMARY KEY
+  4 CHECK
+  5 FOREIGN KEY
+  6 DEFAULT
+ 
+  => above constraints can be declared in two ways 
+
+  1  column level
+  2  table level
+
+column level :-
+---------------------
+
+  => if constraints are declared immediately after declaring column then it is called
+        column level
+
+    CREATE TABLE <tabname>
+   (
+       colname datatype(size)  constraint,
+       colname datatype(size)  constraint ,
+       ------------------------------
+   );
+
+NOT NULL :-
+-----------------
+
+ => not null constraint doesn't accept null values 
+ => column declared with NOT NULL is called mandatory column
+
+ Ex :- 
+
+    CREATE TABLE emp11
+    (
+         empno NUMBER(4) ,
+         ename VARCHAR2(10) NOT NULL
+    );
+
+  INSERT INTO emp11 VALUES(100, '');    => ERROR
+  INSERT INTO emp11 VALUES(101, 'sachin') ;
+
+UNIQUE :-
+-------------
+
+ =>  unique constraint doesn't accept duplicates 
+
+  Ex :- 
+
+   CREATE TABLE cust
+   (
+      cid  NUMBER(2),
+      cname VARCHAR2(10) NOT NULL,
+      emailid  VARCHAR2(20)  UNIQUE
+   );
+
+ INSERT INTO cust VALUES(10,'A','abc@gmail.com');
+ INSERT INTO cust VALUES(11,'B','abc@gmail.com');  =>  ERROR
+ INSERT INTO cust VALUES(12,'C','');
+ INSERT INTO cust VALUES(13,'C','');   
+ 
+ note :- unique constraint allows nulls
+
+ PRIMARY KEY :-
+ -------------------------
+
+  => primary key doesn't accept duplicates and nulls 
+  =>  it is the combination of unique & not null
+        
+             primary key = unique + not null
+
+  => In tables  one column must be there to uniquely identify and into that column 
+       duplicates and nulls are not allowed , so declare that column with primary key
+
+   ex :- 
+
+  CREATE TABLE emp12
+  (
+     empid  NUMBER(4)  PRIMARY KEY,
+     ename VARCHAR2(10) NOT NULL
+  );
+
+   INSERT INTO emp12 VALUES(100,'sachin');
+   INSERT INTO emp12 VALUES(100,'rahul');  => ERROR 
+   INSERT INTO emp12 VALUES(null,'rahul');  => ERROR
+
+NOTE :- 
+
+  => only one primary key is allowed per table , if we want multiple primary keys then
+       declare one column with primary key and other columns with UNIQUE NOT NULL.
+ 
+ CREATE TABLE customer
+ (
+      cid  NUMBER(6)  PRIMARY KEY,
+      cname VARCHAR2(10) NOT NULL,
+      aadharno  NUMBER(12)   UNIQUE NOT NULL,
+      panno      CHAR(10)  UNIQUE NOT NULL
+   );
+
+ candidate key :-
+ ----------------------
+
+  => a field eligible for primary key is called candidate key
+
+      ex :-    VEHICLES
+                  vehno     vname     model      cost     chassisno
+
+                 candidate keys  :-   vehno,chassisno
+                 primary key        :-  vehno
+                 secondary key   :-   chassisno
+ 
+  => difference between  UNIQUE & PRIMARY KEY  ?
+
+	  UNIQUE			PRIMARY KEY 
+
+1	allows nulls		doesn't allow nulls
+
+2	table can have 		table can have only one
+                multiple unique		primary key
+                constraints
+
+ CHECK :- 
+ -------------
+
+  => use check constraint when rule based on condition
+
+              CHECK(condition) 
+
+Ex 1 :-    sal must be min 3000
+
+  CREATE TABLE emp15
+  (
+      empid NUMBER(4) PRIMARY KEY,
+      ename VARCHAR2(10) NOT NULL,
+      sal     NUMBER(7)  CHECK(sal>=3000)  
+  );
+
+  INSERT INTO emp15 VALUES(100,'A',1000);  => ERROR
+  INSERT INTO emp15 VALUES(101,'B',5000);
+  INSERT INTO emp15 VALUES(102,'C',NULL);
+  
+Ex 2 :-   gender   must  be   'M','F'  ?
+
+            gender   char(1)  CHECK(gender IN ('m','f'))
+
+Ex 3 :-  amount  must be multiple of 100
+
+            amount  NUMBER(6)  CHECK(MOD(amount,100)=0)
+  
+Ex 4 :-  pwd   must be min 6 chars 
+   
+            pwd   VARCHAR2(12)  CHECK(LENGTH(pwd) >= 6)
+
+ Ex 4 :-  emailid must contain  '@'
+                          must end with '.com'  or  '.co'  or  '.in' 
+             
+             emailid  VARCHAR2(20) CHECK( emailid LIKE '%@%'
+                                                                    AND
+                                                                    (
+                                                                     emailid LIKE '%.com'
+                                                                     OR
+                                                                     emailid LIKE '%.co'
+                                                                      OR
+                                                                      emailid LIKE '%.in'
+                                                                     ))
+
+ NOTE :- 
+
+  => system variables like sysdate not allowed in check constraint
+
