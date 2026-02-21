@@ -1,0 +1,180 @@
+21-FEB-26
+
+FOREIGN KEY :-
+-----------------------
+
+ =>  foreign key is used to establish relationship between two tables
+ 
+ => To establish relationship between two tables , take primary key of one
+       table and add it to another table as foreign key and declare with
+       references constraint.
+
+ex :- 
+
+ DEPT
+ dno	dname	
+10	HR
+20	IT
+30	SALES
+
+EMP
+empno	ename	sal	dno     REFERENCES  dept(dno)
+1	A	4000	10
+2	B	5000         20
+3	C	3000         90  => invalid
+4	D	4000	10
+5	E	2000	NULL
+
+=> values entered in fk column should match with values entered in pk column 
+=> fk allows duplicates and nulls
+=> after declaring fk a relationship is created between two tables called parent / child
+     relationship 
+=> pk table is parent and fk table is child
+
+CREATE TABLE dept55
+(
+  dno  NUMBER(2) PRIMARY KEY,
+  dname VARCHAR2(10) NOT NULL
+);
+ INSERT INTO dept55 VALUES(10,'HR');
+ INSERT INTO dept55 VALUES(20,'IT');
+
+CREATE TABLE emp55
+(
+  empno NUMBER(4) PRIMARY KEY,
+  ename VARCHAR2(10) NOT NULL,
+  sal  NUMBER(7)  CHECK(sal>=3000),
+  dno  NUMBER(2)  REFERENCES dept55(dno)
+);
+
+INSERT INTO emp55 VALUES(1,'A',3000,10);
+ INSERT INTO emp55 VALUES(2,'B',4000,90); => ERROR
+ INSERT INTO emp55 VALUES(3,'C',54000,10);
+ INSERT INTO emp55 VALUES(4,'D',3000,NULL);
+
+=> 
+ 
+ACCOUNTS
+accno	actype	bal
+
+ Rules :-
+ ----------
+
+  1  accno should not be duplicate & null
+  2  actype must be 'S' OR 'C'
+  3  bal must be min 1000
+
+TRANSACTIONS
+trid	ttype	tdate	tamt	accno
+
+Rules :-
+-----------
+
+1 trid should not be duplicate & null
+2 ttype must be 'W' OR 'D'
+3 tamt must be multiple of 100
+4  accno should match with accounts table accno
+
+ CREATE TABLE accounts
+(
+  accno  NUMBER(4)  PRIMARY KEY ,
+  actype  CHAR(1) CHECK(actype IN ('S','C')) ,
+  bal  NUMBER(7)  CHECK(bal >= 1000)
+ );
+
+CREATE TABLE transactions
+(
+   trid NUMBER(5)  PRIMARY KEY,
+   ttype CHAR(1)  CHECK(ttype IN ('W','D')) ,
+   tdate  DATE ,
+   tamt  NUMBER(5) CHECK(MOD(tamt,100)=0) ,
+   accno  NUMBER(4)  REFERENCES accounts(accno)
+  );
+
+  Relationship Types :-   (cardinality ratio)
+  -------------------------------
+
+1 one to one
+2 one to many
+3 many to one
+4 many to many 
+
+=> by default oracle creates one to many relationship between two tables 
+ 
+How to  establish one to one relationship :-
+-----------------------------------------------------------
+
+=> To establish one to one relationship declare fk with unique constraint 
+
+ Ex :-  only one accounts is allowed per one customer
+
+ cust
+ custid (pk) 	name	addr	phone	emailid	aadharno
+100
+101
+102
+
+ accounts
+ accno (pk)      actype     bal	custid	REFERENCES cust(custid) 	UNIQUE
+1000			100
+1001			100  => ERROR
+
+How to establish many to many relationship :-
+----------------------------------------------------------------
+
+=> To establish many to many relationship create 3rd table and in 3rd table 
+      add primary keys of both  tables as foreign keys.
+			
+  COURSE			STUDENT
+  cid	cname			sid	sname	 
+10	java			1	A
+11	oracle			2	B
+
+  REGISTRATIONS
+  sid	cid	dor	fee
+ 1	10	?	?
+ 1	11	?	?
+ 2	10	?	?
+ 2	11	?	?
+
+ 	  ER model			Relational Model
+
+1	 model used in desigh phase		used in development phase
+ 
+2	 Entities				Tables
+ 
+3	Attributes				Fields / Columns
+
+4	Relationship			foreign key
+
+
+Relational Model for the above ER model :-
+-----------------------------------------------------------
+
+BANK
+code	name	address
+---------
+
+BRANCH
+branch_id     name	address	  code (fk)
+--------------
+
+ACCOUNT
+accno	actype	bal       branch_id  (fk)         custid(fk)
+---------
+
+LOAN
+loan_id	loan_type		amount       branch_id (fk)       custid(fk)
+-----------
+
+CUSTOMER
+custid	name	addr	phone
+----------
+
+  note :- 
+  ----------
+
+  => if relationship is one to one then we can add fk to any table
+  => if relationship is one to many then add fk to many side table
+  => if relationship is many to many then create 3rd table add pks of both tables as fk
+ 
