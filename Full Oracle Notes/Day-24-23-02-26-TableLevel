@@ -1,0 +1,177 @@
+23-feb-26 
+
+ DEFAULT :- 
+ ------------------
+
+ =>   a column can be declared with default value as follows 
+
+                hiredate   DATE   default   sysdate
+
+ => while inserting if we skip hiredate then oracle inserts default value
+
+ Ex :- 
+
+   CREATE TABLE emp15
+   (
+        empno  NUMBER(4) PRIMARY KEY,
+        ename  VARCHAR2(10) NOT NULL,
+        hiredate  DATE   DEFAULT  SYSDATE
+   );
+
+ INSERT INTO emp15(empno,ename)  VALUES(100,'A') ; 
+ INSERT INTO emp15  VALUES(101,'B','01-JAN-26');
+ INSERT INTO emp15  VALUES(102,'C','');
+
+ SELECT * FROM emp15 ;
+
+ empno	ename	hiredate
+ 100	A	23-FEB-26
+ 101	B	01-JAN-26
+ 102	C	
+
+ TABLE LEVEL :- 
+ ------------------------
+
+  => if constraints are declared after declaring all columns then it is called table level
+  => use table level to declare constraints for multiple or combination of columns 
+
+    CREATE TABLE <tabname>
+    (
+            col1   datatype(size) ,
+            col2   datatype(size),
+            ------------------------,
+                    constraint (col1,col2,--)
+    );
+
+ Declaring check constraint at table level :- 
+ --------------------------------------------------------
+
+ products
+ prodid	pname	price	mfd_dt		exp_dt
+ 100	A	40	01-FEB-26	01-JAN-26      invalid
+
+            rule :-   exp_dt  >  mfd_dt 
+
+ => above rule is based on multiple columns , so declare this rule at table level
+
+ CREATE TABLE products
+  (
+    prodid  NUMBER(2)  PRIMARY KEY,
+    pname  VARCHAR2(10) NOT NULL,
+    mfd_dt	 DATE  ,
+    exp_dt   DATE ,
+          CHECK(exp_dt > mfd_dt)
+   );
+
+ INSERT INTO products VALUES(10,'A',sysdate,'01-FEB-26'); => error
+ INSERT INTO products VALUES(10,'A',sysdate,sysdate+10) ; 
+
+ Composite primary key :- 
+ -----------------------------------
+
+  => if combination of columns declared primary key then it is called composite primary key.
+
+  => In composite primary key combination of should not be duplicate.
+
+  => In some tables it is not possible to uniquely identify by using single column
+       and we need combination of columns to uniquely idenfity and that
+       combination should be declared primary key at table level.
+
+Ex :- 
+
+  COURSE			STUDENT
+  cid	cname			sid	sname	 
+ 10	java			1	A
+ 11	oracle			2	B
+
+  REGISTRATIONS
+ sid	cid	dor	fee
+ 1	10	?	?
+ 1	11	?	?
+ 2	10	?	?
+ 2	11	?	?
+
+CREATE TABLE course
+( 
+  cid NUMBER(2) PRIMARY KEY,
+   cname VARCHAR2(10) NOT NULL
+ );
+INSERT INTO course VALUES(10,'java');
+INSERT INTO course VALUES(11,'oracle');
+
+CREATE TABLE student
+(
+  sid NUMBER(2) PRIMARY KEY, 
+ sname VARCHAR2(10) NOT NULL
+ );
+INSERT INTO student VALUES(1,'A');
+INSERT INTO student VALUES(2,'B');
+
+CREATE TABLE registrations
+(
+    sid  NUMBER(2) REFERENCES student(sid) ,
+    cid  NUMBER(2)  REFERENCES course(cid),
+    dor  DATE,
+    fee  NUMBER(5),
+                  PRIMARY KEY(sid,cid)
+   );
+
+INSERT INTO registrations VALUES(1,10,sysdate,5000);
+INSERT INTO registrations VALUES(1,11,sysdate,3000);
+INSERT INTO registrations VALUES(2,10,sysdate,5000);
+INSERT INTO registrations VALUES(1,10,sysdate,5000); => ERROR
+
+ => identify pks & fks and wite create table script ? 
+
+cust				products
+cid	cname	phone		prodid	pname	price
+
+sales
+dateid		prodid	cid	qty	amount
+22-feb-26		100	10	1	2000
+22-feb-26		100	11	1	2000
+22-feb-26		101	10	1	1000
+23-feb-26		100	10	1	2000
+
+ which of the following constraint cannot be declared at table level ? 
+
+ A   UNIQUE
+ B  CHECK
+ C  NOT NULL
+ D  PRIMARY KEY
+ E  FOREIGN KEY
+ 
+ANS :- C 
+
+  Which statements are true regarding constraints ?
+
+A  a foreign key cannot contain NULL value         F
+B  a column with UNIQUE constraint can contain NULL value    T
+C  a constraint is enforced only for the INSERT operation on a table   F
+D all constraints can be defined at column level and table level.  F
+
+ Which CREATE TABLE statement is valid?
+
+A. CREATE TABLE ord_details
+(ord_no NUMBER(2) PRIMARY KEY,
+item_no NUMBER(3) PRIMARY KEY,
+ord_date DATE NOT NULL);
+
+B. CREATE TABLE ord_details
+(ord_no NUMBER(2) UNIQUE, NOT NULL,
+item_no NUMBER(3),
+ord_date DATE DEFAULT SYSDATE NOT NULL);
+
+C. CREATE TABLE ord_details
+(ord_no NUMBER(2) ,
+item_no NUMBER(3),
+ord_date DATE DEFAULT NOT NULL,
+  UNIQUE (ord_no),
+ PRIMARY KEY (ord_no));
+
+D. CREATE TABLE ord_details
+(ord_no NUMBER(2),
+item_no NUMBER(3),
+ord_date DATE DEFAULT SYSDATE NOT NULL,
+  PRIMARY KEY (ord_no, item_no));
+-----
