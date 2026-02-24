@@ -1,0 +1,243 @@
+24-FEB-26 
+
+Adding constraints to existing table :-
+--------------------------------------------------- 
+
+ => "ALTER"  command is used to add constraints to existing table
+
+ CREATE TABLE emp77
+ (
+  empno NUMBER(4),
+  ename VARCHAR2(10), 
+  sal  NUMBER(7,2),
+  dno  NUMBER(2)
+ );
+
+Adding primary key :-
+-----------------------------
+
+ => add pk to empno ?
+
+   ALTER TABLE emp77
+            ADD  PRIMARY KEY(empno) ;
+
+ note :-
+
+  => pk cannot be added to the column that already contains duplicates 
+
+ Adding check constraint :-
+ -------------------------------------
+ 
+ => add check constraint with cond  sal >= 3000 ?
+   
+     ALTER TABLE emp77
+             ADD CHECK(sal >= 3000);
+
+ => add check constraint to emp table ? 
+
+   ALTER TABLE emp 
+             ADD CHECK(sal >= 3000);   => ERROR
+
+ while adding constraint oracle also validates existing data , if all the  data in table satisfies the
+ condition then constraint is added otherwise command returns error
+
+NOVALIDATE option :-
+------------------------------
+
+ => if constraint is added with NOVALIDATE then oracle will not validate existing data and
+      it validates only new data.
+
+ 
+  ALTER TABLE emp 
+             ADD CHECK(sal >= 3000)  NOVALIDATE ; 
+
+Adding foreign key :-
+---------------------------
+
+ => add foreign key to dno  that refers dept table primary key i.e. deptno ?
+
+   ALTER TABLE emp77
+          ADD FOREIGN KEY(dno)  REFERENCES dept(deptno) ; 
+
+Changing from NULL to NOT NULL :-
+-------------------------------------------------
+
+ => modify column ename to NOT NULL ?
+
+  ALTER TABLE emp77 
+          MODIFY (ename NOT NULL) ; 
+
+Data Dictionary Tables / System Tables :-
+--------------------------------------------------------
+
+ => oracle not only stores data  , it also stores metadata i.e. information about users , tables,constraints etc
+ => this metadata stored in some tables called data dictionary tables 
+
+ ALL_USERS :- 
+ ---------------------
+
+ => stores information about users created in db.
+
+   list of users created in db ?
+ 
+   SELECT USERNAME FROM ALL_USERS ;
+
+ USER_TABLES :-
+ ------------------------
+
+  => stores information about tables created by user 
+ 
+    List of tables created by user ?
+  
+     SELECT TABLE_NAME FROM USER_TABLES ;
+
+USER_CONSTRAINTS :-
+----------------------------------
+
+=> stores constraints declared in a table
+
+   display constraints declared in emp77 table ?
+
+   SELECT CONSTRAINT_NAME , 
+                  CONSTRAINT_TYPE,
+                  SEARCH_CONDITION
+   FROM USER_CONSTRAINTS
+   WHERE TABLE_NAME='EMP77' ; 
+
+  CONSTRAINT_NAME      C	 SEARCH_CONDITION
+---------------------------------     - 	------------------------------
+SYS_C0010793               C 	sal >= 3000
+SYS_C0010795               R
+SYS_C0010797               C	 "ENAME" IS NOT NULL
+SYS_C0010792               P
+
+Droping constraints :-
+------------------------------
+
+ ALTER TABLE <tabname>
+          DROP CONSTRAINT <name>; 
+
+ Ex :- 
+ 
+ => drop check constraint in emp77 table ?
+
+     ALTER TABLE emp77
+            DROP CONSTRAINT  SYS_C0010793  ;
+
+  => drop primary key in emp77 table ?
+ 
+    ALTER TABLE emp77
+            DROP PRIMARY KEY ; 
+
+  => drop primary key in dept table ?
+
+    ALTER TABLE dept
+            DROP PRIMARY KEY ;    => ERROR
+
+     DROP TABLE dept ;  => ERROR
+
+  => pk cannot be dropped if referenced by some fk
+  => pk table cannot be dropped if referenced by some fk
+
+ CASCADE option :- 
+ ---------------------------
+
+  ALTER TABLE dept
+      DROP PRIMARY KEY CASCADE ;   => drops pk with dependent fk 
+
+ DROP TABLE dept  CASCADE CONSTRAINTS ;  => drops table along with foreign key
+
+DELETE rules :-
+--------------------
+
+ 1 on delete no action  (default)
+ 2 on delete cascade
+ 3 on delete set null 
+
+ => these rules are declared with foreign key
+ => these rule specifies how child rows are affected if parent row is deleted 
+
+ ON DELETE NO ACTION :-
+ ---------------------------------------
+
+ => parent row cannot be deleted if associated with child rows 
+
+ CREATE TABLE dept88
+(
+   dno NUMBER(2) PRIMARY KEY,
+   dname VARCHAR2(10)
+ ); 
+ 
+INSERT INTO dept88 VALUES(10,'HR');
+INSERT INTO dept88 VALUES(20,'IT');
+
+CREATE TABLE emp88
+(
+ empno NUMBER(4) PRIMARY KEY,
+ ename VARCHAR2(10) NOT NULL,
+ dno  NUMBER(2) REFERENCES dept88(dno)
+ );
+
+ INSERT INTO emp88 VALUES(1,'A',10);
+ INSERT INTO emp88 VALUES(2,'B',10);
+
+ DELETE FROM dept88 WHERE dno = 10 ;   => ERROR
+
+ DELETE FROM dept88 WHERE dno = 20 ;  => 1 row deleted 
+ 
+scenario :- 
+ 
+ACCOUNTS
+accno	actype	bal
+100
+101
+
+LOANS
+id	type	amt	accno
+1	H	30	100
+2	C	10	100
+
+ Rule :- account closing is not possible if associated with loans 
+
+
+ ON DELETE CASCADE :- 
+ -----------------------------------
+ 
+ =>  if parent row is deleted then it is deleted along with child rows 
+
+ CREATE TABLE dept88
+(
+   dno NUMBER(2) PRIMARY KEY,
+   dname VARCHAR2(10)
+ ); 
+ 
+INSERT INTO dept88 VALUES(10,'HR');
+INSERT INTO dept88 VALUES(20,'IT');
+
+CREATE TABLE emp88
+(
+ empno NUMBER(4) PRIMARY KEY,
+ ename VARCHAR2(10) NOT NULL,
+ dno  NUMBER(2) REFERENCES dept88(dno)   
+                              ON DELETE CASCADE 
+ );
+
+ INSERT INTO emp88 VALUES(1,'A',10);
+ INSERT INTO emp88 VALUES(2,'B',10);
+
+  DELETE FROM DEPT88 WHERE DNO=10 ;  => 1 row deleted
+ 
+  SELECT * FROM EMP88 ;   => no rows 
+
+scenario :-
+--------------
+
+ ACCOUNTS
+ accno	actype	bal 
+ 100
+ 101
+
+TRANSACTIONS
+ id	ttype	tdate	tamt	accno    REFERENCES accounts(accno)
+1				100        ON DELETE CASCADE 
+2				100
