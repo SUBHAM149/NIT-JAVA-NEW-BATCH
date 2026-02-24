@@ -1425,10 +1425,11 @@ SET SAL=SAL*1.15
 WHERE SAL *12 >30000;
 
 12.increase 20% on salary for the employee whose name starts with
-'A' and ends with 'S' from emp1 table?
+'S' and ends with 'H' from emp1 table?
 UPDATE emp1
-SET SAL = SAL * 1.20
-WHERE SAL LIKE 'A%S';
+SET SAL = SAL +SAL* 0.2
+WHERE ENAME LIKE 'S%H';
+
 
 13.Delete an employee record whose employee number is 7934 from emp1 table?
 DELETE FROM EMP1 
