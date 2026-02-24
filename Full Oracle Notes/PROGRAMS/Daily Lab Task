@@ -1175,8 +1175,6 @@ INSERT INTO EMP6 VALUES (108, 'NITISH', 12000, 'SALESMAN', 'SALES');
 
 commit;
 
-
-
 SQL> SELECT * FROM EMP6;
 
    EMPNO      ENAME       SAL        JOB           DEPARTMENT
@@ -1190,8 +1188,6 @@ SQL> SELECT * FROM EMP6;
    107      ANUSHKA      15000      DEVELOPER        IT 
    108      NITISH       12000      SALESMAN        SALES       
 
-
-
 syntax:-
 =======
  update tablename set columnname=newvalue 
@@ -1199,24 +1195,22 @@ syntax:-
 
 1.Set salary as 7500 to an employee whose employee no is 103 from emp6 table
 SQL> UPDATE EMP6 SET SAL=7500
-   WHERE EMPNO=103;
+WHERE EMPNO=103;
 
 2.Update the job to MANAGER and increase the salary by 3000 rupees for the employee
-  whose employee name starts with A and ends with A from emp6 table.
+whose employee name starts with A and ends with A from emp6 table.
 --UPDATE emp6
 SET job = 'MANAGER',
-    sal = sal + 3000
+sal = sal + 3000
 WHERE ename LIKE 'A%A';
 
-
 3.Increase the salary of all employees in the IT department by 2000 
-  in the emp6 table.
+in the emp6 table.
 UPDATE emp6
 SET sal = sal + 2000
 WHERE department = 'IT';
 
 4.increase 1000 salary to all employees in emp6 table
-
 UPDATE EMP6
 SET SAL=SAL+1000;
 
@@ -1225,21 +1219,17 @@ UPDATE EMP6
 SET SAL=9500
 WHERE ENAME='KAVYA';
 
-
 6.Increase the salary of all employees whose job is salesman by 20% in the emp6 table.
-
 UPDATE EMP6
 SET SAL= SAL*1.2
 WHERE JOB='SALESMAN';
 
 7.increase salary by 10% only for employees whose salary is less than 10000.
-
 UPDATE EMP6
 SET SAL=SAL*1.10
 WHERE SAL<10000;
 
 8.Add an ADDRESS COLUMN TO THE EMP6 TABLE ?
-
 ALTER TABLE emp6
 ADD address VARCHAR2(20);
 
@@ -1292,8 +1282,6 @@ DELETE FROM emp6;
 
 ROLLBACK;
 
-
-
 16.Write an SQL query to change "Thomas" into "Michel" in the LastName column
    in the USERS table?[SECURESPUNK Technologies Technical Round Question]
 
@@ -1337,4 +1325,129 @@ NOTE:-2 and 3 point is very important.
                                   |
 ===============================*********===========================================
 
+Day-7
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+                                      DML TASK
+                                   =============
+
+NOTE:-Before we performing all these update and delete operations.
+====      better to create one more copy of emp table as follows
+CREATE TABLE emp1 (
+    empno   NUMBER(4) PRIMARY KEY,
+    ename   VARCHAR2(20),
+    job     VARCHAR2(20),
+    mgr     NUMBER(4),
+    hiredate DATE,
+    sal     NUMBER(8,2),
+    comm    NUMBER(8,2),
+    deptno  NUMBER(2)
+);
+INSERT INTO emp1 VALUES (7369,'SMITH','CLERK',7902,DATE '1980-12-17',5000,NULL,20);
+INSERT INTO emp1 VALUES (7499,'ALLEN','SALESMAN',7698,DATE '1981-02-20',8000,300,30);
+INSERT INTO emp1 VALUES (7521,'WARD','SALESMAN',7698,DATE '1981-02-22',5000,500,30);
+INSERT INTO emp1 VALUES (7566,'JONES','MANAGER',7839,DATE '1981-04-02',12000,NULL,20);
+INSERT INTO emp1 VALUES (7698,'BLAKE','MANAGER',7839,DATE '1981-05-01',15000,NULL,30);
+INSERT INTO emp1 VALUES (7782,'CLARK','MANAGER',7839,DATE '1981-06-09',14000,NULL,10);
+INSERT INTO emp1 VALUES (7839,'KING','PRESIDENT',NULL,DATE '1981-11-17',20000,NULL,10);
+INSERT INTO emp1 VALUES (7900,'JAMES','CLERK',7698,DATE '1981-12-03',3000,NULL,30);
+INSERT INTO emp1 VALUES (7934,'MILLER','CLERK',7782,DATE '1982-01-23',2500,NULL,10);
+
+create table emp1
+as
+select * from emp1;
+
+1.Set salary to 3500 for the employee whose employee number is 7934 
+from emp1 table?
+UPDATE emp1
+SET sal = 3500
+WHERE empno = 7934;
+
+2.Set job to 'MANAGER' and increase the salary by 2000 rupees to an employee whose
+employee no is 7369 in the emp1 table?
+UPDATE emp1
+SET job = 'MANAGER',
+sal = sal + 2000
+WHERE empno = 7369;
+
+
+3.Increase the salary by 20% for the employees whose job title is 'MANAGER' 
+in the emp1 table?
+UPDATE EMP1
+SET SAL=SAL*1.2
+WHERE JOB='MANAGER';
+
+4.Update the employees salary to 12000 whose current salary is 5000 
+in the emp1 table? 
+UPDATE EMP1
+SET SAL=12000
+WHERE SAL=5000;
+
+5.Increase the salary by 1000 rupees for all employees in the emp1 table?
+UPDATE EMP1
+SET SAL=SAL+1000;
+
+6.increase 20% on salary, 15% on commission to the employees
+who are getting commission in the emp1 table?
+UPDATE emp1
+SET sal  = sal * 1.20,
+comm = comm * 1.15
+WHERE comm IS NOT NULL;
+
+7.Set commission to 800 to the employees who are not getting 
+commission in the emp1 table?
+UPDATE EMP1
+SET COMM = 800
+WHERE COMM IS NULL;
+
+8.Write a query to delete 7521,7698,7900 employees commission  
+                      (OR)
+Set comm has null whose empno are 7521,7698,7900 from emp1 table?
+UPDATE EMP1
+SET COMM=NULL
+WHERE EMPNO IN (7521,7698,7900);
+
+9.increase 10% on salary who joined in the year 1982 in the emp1 table?
+UPDATE emp1
+SET sal = sal * 1.10
+WHERE EXTRACT(YEAR FROM hiredate) = 1982;
+
+10.increase 20% on salary who have more than 44 years of experience
+in the emp1 table?
+UPDATE emp1
+SET sal = sal * 1.20
+WHERE (SYSDATE - hiredate) / 365 > 44;
+
+11.increase 15% on salary to the employees whose annual salary is
+more than 30000 in the emp1 table?
+UPDATE EMP1
+SET SAL=SAL*1.15
+WHERE SAL *12 >30000;
+
+12.increase 20% on salary for the employee whose name starts with
+'A' and ends with 'S' from emp1 table?
+UPDATE emp1
+SET SAL = SAL * 1.20
+WHERE SAL LIKE 'A%S';
+
+13.Delete an employee record whose employee number is 7934 from emp1 table?
+DELETE FROM EMP1 
+WHERE EMPNO=7934;
+
+14.Write a query to delete the employee records whose experience is more than
+44 years from emp1 table?
+DELETE FROM EMP1
+WHERE (SYSDATE - hiredate) / 365 > 44;
+
+15.delete all the managers records from emp1 table?
+DELETE FROM emp1
+WHERE job = 'MANAGER';
+
+16.delete all 10 , 30 department records from emp1 table?
+DELETE FROM emp1
+WHERE deptno IN (10,30);
+
+17.delete all records from emp1 table, And get it back the all    
+the records by using rollback command ?
+DELETE FROM emp1;
+ROLLBACK;
