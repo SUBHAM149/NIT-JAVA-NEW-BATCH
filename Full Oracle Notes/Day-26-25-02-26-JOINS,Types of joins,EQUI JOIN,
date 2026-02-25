@@ -1,0 +1,111 @@
+25-feb-26			JOINS
+			=====
+
+   => join is an operation performed to display data from two or more tables.
+
+   => To display data from 2 tables we must join those two tables.
+
+   => In DB  related data stored in multiple tables , to combine or to gather data 
+        stored in multiple tables we need to join those tables.
+
+Ex :- 
+ 
+    orders					 customer 
+    orddid	orddt	deldt	amt   	cid	cid	cname	addr
+    1000	20-feb	25-feb	1000	10	10	A	HYD
+    1001	22-feb	26-feb	2000	11	11	B	HYD
+    1002	24-feb	28-feb	1500	12 	12	C	HYD
+
+   output :- 
+ 
+   ordid	orddt	deldt	amt	cname	addr
+  1000	20-	25-	1000	A	HYD
+ 
+ Types of joins :- 
+ ----------------------
+
+ 1  Inner join
+          equi join
+          non equi join
+          self join
+ 2  outer join
+          left outer join
+          right outer  join
+          full outer join
+ 3  cross / cartesian join
+
+
+ EQUI JOIN :- 
+ -------------------
+
+ =>  To perform equi join   between the two tables there must be a common field and 
+        name of the common field need not to be same and pk-fk relationship is not compulsory
+
+  => Equi join is performed between the two tables sharing a common field with same datatype.
+
+       SELECT columns
+       FROM  tab1 INNER JOIN tab2 
+       ON join condition ;
+
+  join condition :- 
+  ----------------------
+
+   => join condition specifies which record of 1st table joined with which record of 2nd table
+   => based on the given join condition oracle joins the records of two tables 
+
+               table1.commonfield  =  table2.commonfield
+
+   Ex :- 
+
+     EMP					DEPT
+     empno	   ename	  sal	deptno		deptno	dname		loc
+      1	    A	  3000	10		10	ACCOUNTS	NEW YORK
+      2	   B	  4000	20		20	RESEARCH	??
+      3	   C	  5000	30		30	SALES		?
+      4	   D	  3000	20		40	OPERATIONS	?
+      5	   E	  4000	10
+      6	   F	  2000	NULL
+ 
+  => display   EMPNO   ENAME   SAL   DNAME   LOC   ? 
+                      --------------------------------   ----------------------
+                                    EMP                           DEPT
+
+        SELECT empno,ename,sal,dname,loc
+        FROM emp INNER JOIN dept
+        ON emp.deptno = dept.deptno ;
+
+ ON emp.deptno = dept.deptno :-
+ ------------------------------------------------
+
+       1	    A	  3000	10	10	ACCOUNTS	NEW YORK
+       2	   B	  4000	20	20	RESEARCH
+       3	   C	  5000	30	30	SALES
+       4	   D	  3000	20	20	RESEARCH
+       5	   E	  4000	10	10	ACCOUNTS	NEW YORK	
+
+SELECT empno,ename,sal,dname,loc :-
+---------------------------------------------------------
+
+1	A	3000	ACCOUNTS	NEW YORK
+2	B	4000	RESEARCH	?
+3	C	5000	SALES		?
+4	D	3000	RESEARCH	?
+5	E	4000	ACCOUNTS	NEW YORK
+
+
+ => display  EMPNO  ENAME  SAL  DEPTNO  DNAME   LOC  ?
+
+    SELECT empno,ename,sal,deptno,dname,loc
+    FROM emp INNER JOIN dept
+     ON emp.deptno = dept.deptno ;  => ERROR
+ 
+   In join queries  declare table alias and prefix column names with table alias 
+   for two reasons 
+
+      1   to avoid ambiguity
+      2   for faster execution
+
+        SELECT e.empno,e.ename,e.sal,
+                       d.deptno,d.dname,d.loc as city
+        FROM emp  e INNER JOIN dept   d
+        ON e.deptno = d.deptno ; 
