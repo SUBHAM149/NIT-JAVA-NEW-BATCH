@@ -167,6 +167,12 @@ Ex 2 :-
     UPDATE emp
     SET emailid  = SUBSTR(ename,1,3)||SUBSTR(empno,1,3)||'@tcs.com'  ;
 
+   =>Write a query to display employee records whose names start with vowel 
+   from emp table by using substr() function?
+
+SELECT ENAME FROM EMP1 WHERE SUBSTR(ENAME,1,1) IN ('A', 'E', 'I', 'O', 'U');
+
+
  INSTR() :- 
  ---------------
 
