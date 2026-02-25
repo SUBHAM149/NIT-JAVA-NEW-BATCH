@@ -1452,3 +1452,209 @@ WHERE deptno IN (10,30);
 the records by using rollback command ?
 DELETE FROM emp1;
 ROLLBACK;
+Day-8
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                               Functions Task
+                             =================
+
+TOPIC:CHARACTER FUNCTIONS(upper,lower,initcap,length,substr,lpad,rpad)
+                         
+
+1.Write a query to display all employee names to uppercase in emp table 
+ SELECT UPPER(ENAME) AS NAME FROM EMP1;
+
+2.Write a query to display all employee names in lowercase from emp table
+SELECT EMPNO,LOWER(ENAME) AS NAME FROM EMP1;
+
+3.Update all item names in the ITEM table to upper case
+ UPDATE EMP1 SET ENAME = UPPER(ENAME) ; 
+
+
+4.What is the output of the following query
+
+SQL> SELECT INITCAP('ab cd ef') from dual;
+
+a) AB CD EF
+b) Ab Cd Ef
+c) Ab cd ef
+d) ab cd ef
+Answer:-b) Ab Cd Ef
+
+5.Write a query to display the employee records whose employee names having
+  4 characters from emp table by using length function?
+ SELECT * FROM EMP1
+  2  WHERE LENGTH(ENAME)=4;
+
+6.Write a query to display the employee name and the length of each name
+  from the emp table by using appropriate character function ?
+  SELECT ENAME,LENGTH(ENAME) AS LEN FROM EMP1;
+
+7.Write a query to display the employees records whose ename length
+  is more than 5 characters from emp table by using length() function?
+SQL> SELECT * FROM EMP1
+  2  WHERE LENGTH(ENAME)=5;
+
+NOTE:-length function returns total length of string including 
+=====       spaces.
+
+8.What the o/p of the following
+
+SQL> select length('AB CD') from dual;
+
+a) 4
+b) 5
+c) 6
+d) None of the above
+
+Answer:-5
+
+ *
+***Substr():- It will extract portion of the string within given
+ * ========        string based on last two parameters.
+
+Syntax:-
+========
+substr(columnname,substring position,no of characters from position);
+          (or)           |->where to start          |->how many characters
+      string name                                      from that position onwards             
+
+Starting position-> can be +ve or –ve
+Starting position and no of characters position-> must be numbers
+
+9.Check the following substr() queries output
+
+SQL> select substr('ABCDEFGH',2,3) from dual;
+-BCD
+SQL> select substr('ABCDEFGH',-2,3) from dual; 
+-GH
+SQL> select substr('ABCDEFGH',-5,1) from dual;
+-D
+SQL> select substr('GOWTHAM RAJ',1,7) from dual;
+-GOWTHAM
+SQL> select substr('GOWTHAM RAJ',9) from dual;
+-RAJ        
+SQL> select substr('GOWTHAM RAJ',4,4) from dual;
+-THAM
+SQL> select substr('GOWTHAM RAJ',-1) from dual;
+-J
+SQL> select substr('GOWTHAM RAJ',-3,4) from dual;
+-RAJ
+SQL> select substr('GOWTHAM RAJ',-8) from dual;
+-THAM RAJ
+10.Write a query to display employee name and MAILID. and MAILID should be created by using the 
+   first 4 characters of employee's name ,last 2 digits of their joining year,and appending
+   '@tcs.com' at the end,from EMP table ?[FACE TO FACE INTERVIEW QUESTION]
+
+SELECT 
+    ename AS Employee_Name,
+    SUBSTR(ename, 1, 4) 
+    || SUBSTR(TO_CHAR(joining_date, 'YYYY'), 3, 2) 
+    || '@tcs.com' AS MAILID
+FROM EMP;
+
+
+11.Write a query to display the employees whose ename 2nd letter would be 'LA'
+   from emp table using substr() function?
+SELECT ENAME
+FROM EMP1
+WHERE SUBSTR(ENAME, 2, 2) = 'LA';
+
+12.Write a query to display employee records whose names start with 'M' 
+   from emp table by using substr() function ?
+SELECT ENAME FROM EMP1 WHERE SUBSTR(ENAME,1,1)='M';
+
+13.Write a query to display employee records whose names start with vowel 
+   from emp table by using substr() function?
+
+SELECT ENAME FROM EMP1 WHERE SUBSTR(ENAME,1,1) IN ('A', 'E', 'I', 'O', 'U');
+
+14.Write a query to display employee records whose names start and end with
+   same letter from emp table by using substr() function?
+SELECT ENAME
+FROM EMP1
+WHERE SUBSTR(ENAME, 1, 1) = SUBSTR(ENAME, LENGTH(ENAME), 1);
+
+15.Write a query to display employee records whose names start and end with vowel  
+   from emp table by using substring function ?
+
+SELECT ename
+FROM emp1
+WHERE SUBSTR(ename, 1, 1) IN ('A','E','I','O','U')
+  AND SUBSTR(ename, LENGTH(ename), 1) IN ('A','E','I','O','U');
+
+16.Write a query to display AMEERPET from 'AMEERPET HYDERABAD' string.
+SELECT SUBSTR('AMEERPET HYDERABAD', 1, INSTR('AMEERPET HYDERABAD', ' ') - 1) AS extracted_word;
+
+17.Select substr('NARESHIT',7,8) FROM DUAL;
+a) NARESH	b) IT			c) NARESHIT	d) ESHIT
+Answer:IT
+
+18.Check the following lpad() and rpad() queries output
+SQL> select lpad('kiran',10,'#') from dual;
+LPAD('KIRA
+----------
+#####kiran
+
+SQL> select lpad('gowtham',10,'$@') from dual;
+LPAD('GOWT
+----------
+$@$gowtham
+
+SQL> select rpad('ABCD',10,'#')from dual;
+RPAD('ABCD
+----------
+ABCD######
+
+18.Create the table person123 as below
+    pname                 dob           
+  -------------       ----------       
+  kiran kumar         30-JUN-96
+  anushka shetty      12-DEC-88
+  gowtham raj         01-JAN-97
+  abishek sharma      16-APR-99
+  shreyas iyer        22-SEP-94
+
+--->After inserting the records. add a new column password
+    by using alter with add
+ 
+--->Set the password as first 3 letters of the person's name concatenated with
+    last 2 digits of the year from the databirth column by using substr() function
+
+
+EXPECTED OUTPUT:-
+===============
+
+      PASSWORD
+    -----------
+      kir96
+      anu88
+      gow97
+      abi99
+      shr94
+20.Generate the message if the account number is 1234567473 
+
+EXPECTED OUTPUT:
+================
+Amount debited from XXXXXX7473
+
+ANS-
+CREATE TABLE person123 (
+    pname VARCHAR(30),
+    dob   DATE
+);
+
+INSERT INTO person123 VALUES ('kiran kumar', TO_DATE('30-JUN-96','DD-MON-RR'));
+INSERT INTO person123 VALUES ('anushka shetty', TO_DATE('12-DEC-88','DD-MON-RR'));
+INSERT INTO person123 VALUES ('gowtham raj', TO_DATE('01-JAN-97','DD-MON-RR'));
+INSERT INTO person123 VALUES ('abishek sharma', TO_DATE('16-APR-99','DD-MON-RR'));
+INSERT INTO person123 VALUES ('shreyas iyer', TO_DATE('22-SEP-94','DD-MON-RR'));
+
+
+-ALTER TABLE person123 ADD password VARCHAR(10);
+-UPDATE person123
+SET password = SUBSTR(pname, 1, 3) || SUBSTR(TO_CHAR(dob, 'YYYY'), 3, 2);
+-SELECT pname, dob, password FROM person123;
+-SELECT 'Amount debited from ' ||
+       RPAD('X', LENGTH('1234567473')-4, 'X') ||
+       SUBSTR('1234567473', -4) AS message
+FROM dual;
