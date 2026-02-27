@@ -1,0 +1,124 @@
+FULL OUTER JOIN :- 
+ -------------------------------
+
+  => returns all rows from both tables 
+
+     SELECT  e.ename,d.dname
+     FROM emp e  FULL OUTER JOIN dept d
+     ON e.deptno = d.deptno ;
+
+  	 A	ACCOUNTS
+  	 B	RESEARCH
+   	 C	SALES
+    	 D	ACCOUNTS
+    	 E	ACCOUNTS        
+                  F	NULL                => unmatched from emp 
+                  NULL      OPERATIONS  =>  unmatched from dept
+
+Displaying only unmatched records :-
+-------------------------------------------------
+
+LEFT SIDE TABLE :-
+-----------------------------
+
+ SELECT e.ename,d.dname
+ FROM emp e LEFT OUTER JOIN dept d 
+ ON e.deptno = d.deptno 
+ WHERE d.dname IS NULL ; 
+
+RIGHT SIDE TABLE :-
+-------------------------------
+
+ SELECT e.ename,d.dname
+ FROM emp e RIGHT OUTER JOIN dept d 
+ ON e.deptno = d.deptno 
+ WHERE e.ename IS NULL ; 
+
+ BOTH TABLES :-
+-------------------------
+
+ SELECT e.ename,d.dname
+ FROM emp e FULL OUTER JOIN dept d 
+ ON e.deptno = d.deptno 
+ WHERE d.dname IS NULL
+                OR
+               e.ename IS NULL ; 
+
+scenario :-
+---------------
+
+  PROJECTS
+  projid	pname	duration	cost	client
+ 100		5	400	bank
+ 101		3	200	Airlines
+ 102			
+
+ EMP
+ empid	ename	job	sal	projid
+ 1				100
+ 2				101
+ 3				null
+
+ => display employee details with project details ?
+ 
+ => display employee details with project details and also display employees not assigned to
+      any project ?
+
+ => display only the projects where no employee assigned to it ? 	
+
+  GROUP BY & JOIN :- 
+  ------------------------------
+
+ SELECT columns
+ FROM tab1  JOIN  tab2
+ ON join cond
+ [WHERE COND]
+ GROUP BY colname
+ [HAVING cond]  ; 
+
+=> display dept wise total sal ? display dept names ?
+
+    SELECT d.dname,SUM(e.sal) as totsal
+    FROM emp e  INNER JOIN dept d
+    ON e.deptno = d.deptno
+    GROUP BY d.dname ; 
+
+FROM :-
+=======
+
+    EMP					DEPT
+  empno	ename	sal	deptno		deptno	dname		loc
+  1	A	4000	10		10	ACCOUNTS	NEW YORK
+  2	B	3000	20		20	RESEARCH
+  3	C	5000	30		30	SALES
+  4	D	3000	10		40	OPERATIONS  
+  5	E	2000	20
+
+ ON e.deptno = d.deptno :-
+ =====================
+
+ 1	A	4000	10	10	ACCOUNTS
+ 2	B	3000	20	20	RESEARCH
+ 3	C	5000	30	30	SALES
+ 4	D	3000	10	10	ACCOUNTS
+ 5	E	2000	20	20	RESEARCH
+ 
+GROUP BY d.dname :-
+===================
+
+ ACCOUNTS	1	A	4000
+		4	D	3000
+
+ RESEARCH	2	B	3000
+		5	E	2000
+
+ SALES		3	C	5000
+
+SELECT d.dname,SUM(e.sal) as totsal :-
+==================================
+
+ ACCOUNTS	7000
+ RESEARCH	5000
+ SALES		5000
+
+
