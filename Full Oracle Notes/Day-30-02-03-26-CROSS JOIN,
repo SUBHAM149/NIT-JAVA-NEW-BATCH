@@ -1,0 +1,226 @@
+2-MAR-26 
+
+=> display  ENAME  DNAME  GRADE   MNAME   ?
+
+  SELECT e.ename,
+                 d.dname,
+                 s.grade,
+                 m.ename
+  FROM emp e 
+  INNER JOIN dept d
+  ON e.deptno = d.deptno 
+  JOIN salgrade s
+  ON e.sal BETWEEN s.losal AND s.hisal
+  JOIN emp m
+  ON e.mgr = m.empno ;
+
+ => display no of employees working under each manager ?
+
+      SELECT y.ename as manager , COUNT( x.ename ) as cnt
+      FROM emp x INNER JOIN emp y
+      ON x.mgr = y.empno
+      GROUP BY y.ename ;
+      
+ => 
+ 
+ TEAMS
+ id	country
+ 1	IND
+ 2	AUS
+ 3	ENG
+
+ output :- 
+
+  IND   VS	      AUS
+  IND   VS      ENG
+  AUS  VS	     ENG
+
+TEAMS A				TEAMS B
+ ID	COUNTRY		ID 	COUNTRY
+1	IND			1	IND
+2	AUS			2	AUS
+3	ENG			3	ENG
+
+ CROSS JOIN :- 
+ ============
+
+  => cross join returns cross product or cartesian product of two tables 
+
+     A = 1,2
+     B = 3,4
+ 
+  AXB  = (1,3) (1,4) (2,3) (2,4) 
+
+ => if we cross performed between two tables then all records of 1st table joined with
+      all records of 2nd table
+      
+ => join condition is not required to perform cross join
+
+ Ex  1  :- 
+
+ SELECT  e.ename,d.dname
+ FROM  emp e CROSS JOIN dept d ;
+
+Ex 2 :- 
+
+   T1				T2
+   id	name	  price		 id	name		price 
+  1	BURGER   80		1	Thumsup		40
+  2	PIZZA	120		2	juice		60
+
+ output :-
+
+   BURGER + Thumsup	120
+   BURGER + juice		140
+   PIZZA +  Thumsup		160
+   PIZZA + juice		180
+
+ SELECT T1.name|| ' + ' ||T2.name  as name , T1.price + T2.price as total
+ FROM T1 CROSS JOIN T2
+ 
+Assignment :- 
+
+ SALES
+ dateid		prodid	custid	qty	amount
+ 01-mar-26	100	10	1	2000
+ 
+ PRODUCTS
+ prodid	pname	price	category		brand
+ 100	----	2000	ELECTRONICS	SAMSUNG
+
+ CUST
+ custid	cname	addr	city	state	country
+ 10	KKK	XXX	HYD	TG	IND
+
+ => display sales details with customer details ?
+ => display sales details with product details ?
+ => display sales details with product details with customer details ?
+ => display  category wise total amount ?
+ => display brand wise total quantity ?
+ => display country wise total amount in the year 2025 ?
+ => dislay  country wise , category wise total amount ?
+
+===========================================================================
+  -- =========================================
+-- 1️⃣ CREATE TABLES
+-- =========================================
+
+CREATE TABLE PRODUCTS (
+    prodid NUMBER PRIMARY KEY,
+    pname VARCHAR2(50),
+    price NUMBER,
+    category VARCHAR2(50),
+    brand VARCHAR2(50)
+);
+
+CREATE TABLE CUST (
+    custid NUMBER PRIMARY KEY,
+    cname VARCHAR2(50),
+    addr VARCHAR2(100),
+    city VARCHAR2(50),
+    state VARCHAR2(50),
+    country VARCHAR2(50)
+);
+
+CREATE TABLE SALES (
+    dateid DATE,
+    prodid NUMBER,
+    custid NUMBER,
+    qty NUMBER,
+    amount NUMBER,
+    FOREIGN KEY (prodid) REFERENCES PRODUCTS(prodid),
+    FOREIGN KEY (custid) REFERENCES CUST(custid)
+);
+
+
+-- =========================================
+-- 2️⃣ INSERT SAMPLE DATA
+-- =========================================
+
+INSERT INTO PRODUCTS VALUES (100, 'MOBILE', 2000, 'ELECTRONICS', 'SAMSUNG');
+
+INSERT INTO CUST VALUES (10, 'KKK', 'XXX', 'HYD', 'TG', 'IND');
+
+INSERT INTO SALES VALUES (TO_DATE('01-MAR-2026','DD-MON-YYYY'), 100, 10, 1, 2000);
+
+COMMIT;
+
+
+-- =========================================
+-- 3️⃣ QUERIES
+-- =========================================
+
+
+-- ✅ 1. Display sales details with customer details
+
+SELECT s.dateid, s.prodid, s.custid, s.qty, s.amount,
+       c.cname, c.city, c.state, c.country
+FROM SALES s
+JOIN CUST c
+ON s.custid = c.custid;
+
+
+
+-- ✅ 2. Display sales details with product details
+
+SELECT s.dateid, s.prodid, s.custid, s.qty, s.amount,
+       p.pname, p.category, p.brand
+FROM SALES s
+JOIN PRODUCTS p
+ON s.prodid = p.prodid;
+
+
+
+-- ✅ 3. Display sales details with product details with customer details
+
+SELECT s.dateid, s.qty, s.amount,
+       p.pname, p.category, p.brand,
+       c.cname, c.city, c.country
+FROM SALES s
+JOIN PRODUCTS p
+ON s.prodid = p.prodid
+JOIN CUST c
+ON s.custid = c.custid;
+
+
+
+-- ✅ 4. Display category wise total amount
+
+SELECT p.category, SUM(s.amount) AS total_amount
+FROM SALES s
+JOIN PRODUCTS p
+ON s.prodid = p.prodid
+GROUP BY p.category;
+
+
+
+-- ✅ 5. Display brand wise total quantity
+
+SELECT p.brand, SUM(s.qty) AS total_quantity
+FROM SALES s
+JOIN PRODUCTS p
+ON s.prodid = p.prodid
+GROUP BY p.brand;
+
+
+
+-- ✅ 6. Display country wise total amount in the year 2025
+
+SELECT c.country, SUM(s.amount) AS total_amount
+FROM SALES s
+JOIN CUST c
+ON s.custid = c.custid
+WHERE EXTRACT(YEAR FROM s.dateid) = 2025
+GROUP BY c.country;
+
+
+
+-- ✅ 7. Display country wise, category wise total amount
+
+SELECT c.country, p.category, SUM(s.amount) AS total_amount
+FROM SALES s
+JOIN CUST c
+ON s.custid = c.custid
+JOIN PRODUCTS p
+ON s.prodid = p.prodid
+GROUP BY c.country, p.category;
