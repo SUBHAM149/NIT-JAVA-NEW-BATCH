@@ -2127,13 +2127,7 @@ WARD       22-FEB-81
 SCOTT      19-APR-87
 
 
-12.Write a query to display the employees who are joining before 15th of every month 
-   from emp table using to_char()?
-Note:Format DD means day of the month in number
--SELECT ENAME,HIREDATE FROM EMP WHERE 
-OUTPUT:-
-
-13.Write a query to display the employee records who are joined in leap year from emp table?
+-- 12) Employees who joined before 15th of month
 SQL> SELECT ENAME,HIREDATE FROM EMP WHERE TO_CHAR(HIREDATE,'DD')<'15';
 OUTPUT:-
 ENAME      HIREDATE
@@ -2145,6 +2139,16 @@ TURNER     08-SEP-81
 JAMES      03-DEC-81
 FORD       03-DEC-81
 
+
+13.Write a query to display the employee records who are joined in leap year from emp table?
+SELECT ename, hiredate
+FROM emp
+WHERE MOD(TO_CHAR(hiredate, 'YYYY'), 4) = 0;
+OUTPUT-
+ENAME      HIREDATE
+---------- ---------
+SMITH      17-DEC-80
+
 14.Write a query to find which day india got independence
 SQL> SELECT TO_CHAR(TO_DATE('15-AUG-1947','DD-MON-YYYY'),'DAY') AS independence_day
   2  FROM dual;
@@ -2152,7 +2156,6 @@ SQL> SELECT TO_CHAR(TO_DATE('15-AUG-1947','DD-MON-YYYY'),'DAY') AS independence_
 INDEPENDE
 ---------
 FRIDAY
-
 
 15.Write a query which is used to add 5 days to the given date
   '09-feb-05'
@@ -2163,7 +2166,6 @@ NEW_DATE
 ---------
 14-FEB-05
 
-
 16.Write a query which is used to add 5 days to the given date
   '09-02-05'
 SQL> SELECT TO_DATE('09-02-05','DD-MM-YY') + 5 AS new_date
@@ -2173,7 +2175,7 @@ NEW_DATE
 ---------
 14-FEB-05
 
-- ============================================================
+-- ============================================================
 -- DATE FUNCTIONS
 -- ============================================================
 
@@ -2192,5 +2194,9 @@ FROM emp;
 -- 1) Employee name, sal, comm, and total salary
 SELECT ename, sal, comm, (sal + NVL(comm,0)) AS total_salary
 FROM emp;
+
+
+
+
 
 
