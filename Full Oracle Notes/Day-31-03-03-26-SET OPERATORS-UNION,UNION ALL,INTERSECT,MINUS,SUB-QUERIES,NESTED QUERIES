@@ -1,0 +1,301 @@
+ 3-MAR-26 
+
+ SET OPERATORS :- 
+ ================
+
+ 1  UNION
+ 2  UNION ALL
+ 3  INTERSECT
+ 4  MINUS
+
+  A = 1,2,3,4
+  B = 1,2,5,6
+ 
+  A  UNION B	=>	1,2,3,4,5,6
+  A UNION ALL B	=>	1,2,3,4,1,2,5,6
+  A INTERSECT B	=>	1,2
+  A MINUS B	=>	3,4
+  B MINUS A	=>	5,6
+
+ => In SQL set operations performed between rows return by two queries 
+
+  SELECT statement 1 
+  UNION / UNION ALL / INTERSECT / MINUS
+  SELECT statement 2 ; 
+
+ Rules :-
+ ----------
+
+ 1  both queries must return same no of columns
+ 2  corresponding columns datatype must be same
+
+Query 1 :-
+-------------
+
+ SELECT job FROM emp WHERE deptno = 20 ; 
+
+CLERK
+MANAGER
+ANALYST
+CLERK
+ANALYST
+
+Query 2:-
+--------------
+
+ SELECT job FROM emp WHERE deptno = 30 ;
+
+SALESMAN
+SALESMAN
+SALESMAN
+MANAGER
+SALESMAN
+CLERK
+
+UNION :-
+-------------
+
+  =>  combines rows return by two queries
+  =>  duplicates are eliminated
+  =>  result is sorted 
+
+  SELECT job FROM emp WHERE deptno = 20 
+  UNION
+  SELECT job FROM emp WHERE deptno = 30 ;
+
+ANALYST
+CLERK
+MANAGER
+SALESMAN 
+  
+  SELECT job,sal FROM emp WHERE deptno = 20 
+  UNION
+  SELECT job,sal FROM emp WHERE deptno = 30 ;
+
+ANALYST            3000
+CLERK                800
+CLERK                950
+CLERK               1100
+MANAGER         2850
+MANAGER         2975
+SALESMAN        1250
+SALESMAN        1500
+SALESMAN        1600
+
+=> difference between UNION & JOIN ?
+
+	UNION				    JOIN
+ 
+1	combines rows return by two queries	    combines columns of two tables 
+
+ 2	horizontal  merge			     vertical merge 
+
+ 3             performed between two similar structures       can be performed between two dissimilar structures 
+
+
+ Ex 1 :- 
+ 
+ T1		T2
+ F1		F1
+ 10		40
+ 20		50
+ 30		60
+
+UNION :-		JOIN :-
+-----------		----------
+ 
+10		10	40		
+20		20	50
+30		30	60
+40
+50
+60
+
+Ex 2 :- 
+
+ EMP_US
+ empno	ename	sal	dno
+ 100			10
+ 101			20
+					DEPT
+ EMP_IND				dno	dname	loc
+ empno	ename	sal	dno		10	HR
+ 200			10		20	IT
+ 201			20		30	SALES
+
+=> total employees in the company ?
+
+   SELECT * FROM EMP_US
+   UNION
+   SELECT * FROM EMP_IND 
+
+   100		10
+   101		20
+   200		10
+   201		20
+ 
+=> employees working at US loc with dept details ?
+  
+    SELECT e.* , d.*
+    FROM emp_us e INNER JOIN dept d
+    ON e.dno = d.dno 
+
+  100			10	10	HR
+  101			20	20	IT
+
+ 
+ => total employees with dept details ?
+
+     SELECT e.* , d.*
+    FROM emp_us e INNER JOIN dept d
+    ON e.dno = d.dno 
+     UNION
+     SELECT e.* , d.*
+    FROM emp_ind e INNER JOIN dept d
+    ON e.dno = d.dno ; 
+
+     100		10	10	HR
+     101		20	20	IT
+     200		10	10	HR
+     201		20	20	IT
+
+UNION ALL :- 
+-------------------
+
+ => combines rows return by two queries
+ => duplicates are not eliminated
+ => result is not sorted 
+
+ SELECT job FROM emp WHERE deptno = 20 
+ UNION ALL
+ SELECT job FROM emp WHERE deptno = 30 ;
+
+CLERK
+MANAGER
+ANALYST
+CLERK
+ANALYST
+SALESMAN
+SALESMAN
+SALESMAN
+MANAGER
+SALESMAN
+CLERK
+
+=> difference between UNION & UNION ALL ?
+	
+	union			union all
+
+1	duplicates are eliminated	duplicate are not eliminated
+
+2	result is sorted		result is not sorted 
+
+3	slower			faster
+
+INTERSECT :-
+-----------------------
+
+ => returns common values from the output of two queries
+ 
+  SELECT job FROM emp WHERE deptno = 20 
+  INTERSECT
+  SELECT job FROM emp WHERE deptno = 30  ; 
+ 
+   CLERK
+   MANAGER
+  
+MINUS :-
+--------------
+
+  => returns values present in 1st query output and not present in 2nd query output 
+
+  SELECT job FROM emp WHERE deptno = 20 
+  MINUS
+  SELECT job FROM emp WHERE deptno = 30  ; 
+
+  ANALYST
+
+  SELECT job FROM emp WHERE deptno = 30 
+  MINUS
+  SELECT job FROM emp WHERE deptno = 20  ; 
+
+  SALESMAN
+
+ =>
+
+ T1		T2
+ F1		F1
+ 1		1
+ 2		2
+ 3		3
+10		40
+20		50
+30		60
+
+=> write output for  the following operations ?
+
+ 1 equi join
+ 2 left outer join
+ 3 right outer join 
+ 4 full outer join
+ 5 union
+ 6 union all
+ 7 intersect
+ 8 minus
+
+ Equi join :- 
+ --------------
+
+1	1
+2	2
+3	3
+
+Left outer join :-		Right outer join :-		full outer join :-
+----------------------                        ----------------------		-------------------
+
+1	1		1	1		1	1
+2	2		2	2		2	2
+3	3		3	3		3	3
+10				40		10 	
+20				50		20
+30				60		30
+							40
+							50
+							60
+
+Union :-		union all :-	intersect :-	minus :-
+-------------		-------------		-------------		-----------
+		
+1		1		1		10
+2		2		2		20
+3		3		3		30
+10		10
+20		20
+30		30
+40		1
+50		2
+60		3
+		40
+		50
+		60
+
+=====================================================================
+
+ SUB-QUERIES / NESTED QUERIES :-
+ --------------------------------------------------------
+
+ => a query in another query is called sub-query or nested query
+ => one query is called inner / child / sub-query
+=> other query is called outer / parent / main query
+=> first oracle executes inner query and next it executes outer query
+=> output of inner query is input to outer query
+=> use sub-query when where cond based on uknown value
+ 
+Types of sub-queries :-
+-------------------------------
+
+1  single-row sub-queries
+2  multi-row sub-queries
+3  co-realted sub-queries
+4  INLINE views and CTEs 
+5  scalar sub-queries
