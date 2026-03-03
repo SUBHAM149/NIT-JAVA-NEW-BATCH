@@ -2194,6 +2194,420 @@ FROM emp;
 -- 1) Employee name, sal, comm, and total salary
 SELECT ename, sal, comm, (sal + NVL(comm,0)) AS total_salary
 FROM emp;
+DAY-13
+--------------------------------------------------------------------------------------------------------------------------------------
+                   GROUP FUNCTIONS Task
+                 =========================
+
+     oracle having following group functions.
+These are
+
+1)max()
+2)min()
+3)avg()
+4)sum()
+5)count(*)
+6)count(columnname)
+
+       all group functions are operate over no of values in a 
+table column and then returns single value.
+
+------------------------------------------------------------------------------------------------------
+-- GROUP FUNCTIONS TASK
+-- ====================
+
+-- 1. Display total salary from emp table
+ SELECT SUM(SAL) AS TOTAL_SALARY FROM EMP;
+
+TOTAL_SALARY
+------------
+    30045
+-- 2. Display total salaries of all managers
+SELECT SUM(SAL) AS TOTAL_MANAGER_SALARY FROM EMP WHERE JOB='MANAGER';
+
+TOTAL_MANAGER_SALARY
+--------------------
+        8275
+
+-- 3. Display total salaries of departments 10 and 30
+ SELECT SUM(SAL) AS TOTAL_SALARY_DEPT_10_30 FROM EMP WHERE DEPTNO IN (10,30);
+
+TOTAL_SALARY_DEPT_10_30
+-----------------------
+         17970
+
+-- 4. Display average salary of all employees
+ SELECT AVG(SAL) AS AVG_SAL FROM EMP;
+
+ AVG_SAL
+----------
+2311.15385
+
+-- 5. Display average salary of all clerks
+ SELECT AVG(SAL) AS AVG_CLERK_SALARY FROM EMP WHERE JOB='CLERK';
+
+AVG_CLERK_SALARY
+----------------
+      1350
+
+-- 6. Display minimum salary
+ SELECT MIN(SAL) FROM EMP;
+
+  MIN(SAL)
+----------
+    950
+
+-- 7. Display maximum salary
+ SELECT MAX(SAL) AS MAX_SALARY FROM EMP;
+
+MAX_SALARY
+----------
+    5000
+
+-- 8. Display maximum, minimum and average salary
+SELECT MAX(SAL) AS MAX_SALARY,
+  2         MIN(SAL) AS MIN_SALARY,
+  3         AVG(SAL) AS AVG_SALARY
+  4  FROM EMP;
+
+MAX_SALARY MIN_SALARY AVG_SALARY
+---------- ---------- ----------
+    5000       950    2311.15385
+
+-- 9. Display total number of employees
+ SELECT COUNT(*) AS TOTAL_EMPLOYEES FROM EMP;
+
+TOTAL_EMPLOYEES
+---------------
+       13
+-- 10. Display number of managers
+ SELECT COUNT(*) AS TOTAL_MANAGERS FROM EMP WHERE JOB='MANAGER';
+
+TOTAL_MANAGERS
+--------------
+      3
+
+-- 11. Display number of employees in departments 10 and 30
+ SELECT COUNT(*) AS EMPLOYESS_DEPT_10_30 FROM EMP WHERE DEPTNO IN (10,30);
+
+EMPLOYESS_DEPT_10_30
+--------------------
+         8
+-- 12. Display number of employees in 4th quarter?
+ SELECT COUNT(*) AS EMPLOYEES_Q4 FROM EMP WHERE TO_CHAR(HIREDATE,'Q') ='4';
+EMPLOYEES_Q4
+------------
+      4
+-- 13. Display number of employees joined in 1981
+ SELECT COUNT(*) AS EMPLOYESS_1981 FROM EMP WHERE TO_CHAR(HIREDATE,'YYYY')='1981';
+
+EMPLOYESS_1981
+--------------
+      10
+
+-- 14. Display how many employees are getting commission
+SELECT COUNT(COMM) AS EMP_COMMISION FROM EMP;
+
+EMP_COMMISION
+-------------
+       5
+
+
+Count(column name):- It counts number of not null values within
+==================      a column. 
+
+
+
+15.Write a SQL query to display
+
+   Count the number of shows(use alias NUMBER_OF_SHOWS) Scheduled after 1st February 2023.
+
+Your output should have a column as given below
+
+  NUMBER_OF_SHOWS
+
+SELECT COUNT(*) AS NUMBER_OF_SHOWS
+FROM flight
+WHERE DEPATURE_DATE> '01-FEB-2023';
+
+NUMBER_OF_SHOWS
+---------------
+       2
+
+
+NOTE:If a flight is scheduled on perticular date i.e considered as one show
+
+Number of shows=how many flights are scheduled after 01-feb-2023 
+
+
+CREATE TABLE FLIGHT 
+(
+FLIGHT_ID NUMBER(10),
+DEPATURE_DATE DATE
+);
+
+INSERT INTO FLIGHT VALUES (101, '10-JAN-2023');
+INSERT INTO FLIGHT VALUES (102, '25-JAN-2023');
+INSERT INTO FLIGHT VALUES (103, '02-FEB-2023');
+INSERT INTO FLIGHT VALUES (104, '10-JAN-2023');
+INSERT INTO FLIGHT VALUES (105, '05-MAR-2023');
+
+COMMIT;
+16.What is the output of the following statement
+
+select Max(100,200) from dual;
+
+A. 100   
+B. 100,200
+C. 200         
+D. Error
+Answer:Error
+17.A table T_COUNT has 12 number values as 1,2,3,32,1,1,null,
+   24,12,null,null,32
+
+predict the output of the below query
+
+select count(*) from T_count;
+
+A. 6
+
+B. 12            
+    
+C. 9
+
+D. Throws exception because COUNT function doesn't work with null values
+Answer:12
+18.What result will the following query return [Cognitus Company Technical Round MCQ]
+SELECT COUNT(*) FROM ORDERS WHERE DISCOUNT=NULL;
+
+
+------------------------------------------------------------------------------------------------------            
+                                NUMBER FUNCTIONS
+                               ====================                        
+Round(m,n):- It rounds given floated valued number 'm' 
+==========                based on 'n'.
+Eg:-
+====
+SQL> select round(1.8) from dual;
+                    |--->checking above 50% or below 50%
+
+ROUND(1.8)
+----------
+     2
+SQL> select round(1.23456,3) from dual;
+
+ROUND(1.23456,3)
+----------------
+      1.235
+    
+   round(1.23456,3) -->+ve number checks left to right up to 
+                         3 decimal      
+Execution:-
+==========
+      
+Step1:- 1.234  ---->(Here remaining number 56 is above 50% (out of 100))
+  
+step2:- 1.234               
+            1
+        =====
+        1.235
+        =====   
+Note:- Round function always checks remaining number. if remaining
+=====     number is above 50% then automatically 1 is added
+               to the rounded number.
+Eg:-
+===
+ SQL> select round(1285.765,-1) from dual;
+
+ROUND(1285.765,-1)
+------------------
+       1290
+           1285.765,-1  ------>-ve sign take decimal right to left
+          <----    
+Execution:-
+=========
+step1:-1280 (-1 position replaced with 0.5 is above 
+                 50%(out of 10))
+                                 
+
+
+step2:-    1280
+             1    (1 is added to other than zero)
+          ======
+           1290
+          ======   
+
+
+SQL>select round(1285,-2) from dual;
+ROUND(1285,-2)
+--------------
+     1300
+
+Execution:-
+==========
+Step1: 1285   ( Here 85 is replace with 00 and also
+                85 is above 50%(out of 100)) 
+
+
+Step2: 1200
+        1
+      ======
+       1300
+      ======
+
+Trunc(m,n):- It truncates given floated valued number 'm' 
+==========            based on 'n'.
+
+This function doesn't check remaing numbers.
+
+Eg:-
+====
+SQL>select trunc(1.8) from dual;
+      
+TRUNC(1.8)
+----------
+     1
+
+SQL> select trunc(1.23456,3) from dual;
+TRUNC(1.23456,3)
+----------------
+      1.234
+
+
+Greatest(exp1,exp2,…. expn), Least(exp1,exp2,…. expn):-
+======================================================
+      Greatest returns maximum value among given expressions.
+Where as Least returns minimum value among given expressions.
+
+
+Eg:-
+===
+SQL> select greatest(3,5,8,9) from dual ;
+
+select greatest(3,5,8,9)as GREAT_NUMBER from dual ;
+
+GREAT_NUMBER
+------------
+      9
+
+Ceil() and Floor():- These two functions always return integers.
+===================
+
+           Ceil() returns nearest,greatest integer.where as floor()
+returns nearest ,lowest integer.
+
+
+Eg:-
+===
+SQL>select ceil(1.3) from dual;
+
+        2
+
+
+SQL>select floor(1.9) from dual;
+
+        1
+
+
+
+          | 
+          |
+          |        1.4 near to 1,but ceil() returns greatest
+          |              integer is 2
+          |                |
+       ---|----------------|-----------------------------
+         1|1.1  1.2  1.3  1.4  1.5  1.6  1.7  1.8  1.9  2
+          |
+
+------------------------------------------------------------------------------------------------------
+1.What is the output of following
+SQL>select mod(10,2) from dual;
+
+a) 1
+
+b) error
+
+c) 0
+
+d) none
+
+Answer:0
+
+------------------------------------------------------------------------------------------------------ 
+2.select round(89.4),trunc(89.8) from dual;
+   Which values are displayed
+
+a) 89,90
+
+b) 90,90
+
+c) 90,89
+
+d) 89,89
+
+Answer:89,89
+
+-----------------------------------------------------------------------------------------------------
+3.select round(45.95),trunc(45.95) from dual;
+  Which values are displayed
+
+a) 46 and 45
+
+b) 45 and 46
+
+c) 46 and 46
+
+d) none
+
+Answer:45,45
+
+------------------------------------------------------------------------------------------------------
+4.select greatest(500,800,100,150,200) from dual;
+
+a) 100
+
+b) 800
+
+c) 200
+
+d) error
+
+Answer:800
+
+------------------------------------------------------------------------------------------------------
+5.select ceil(7.2),floor(7.8) from dual;
+
+a) 7,8
+
+b) none
+
+c) 8,8
+
+d) 8,7
+
+Answer:87
+
+------------------------------------------------------------------------------------------------------
+6.Write an SQL query to round the SALARY column to the nearest
+   thousand in the EMP table.
+SELECT ROUND(sal, -3) AS rounded_salary
+FROM emp;
+     ROUNDED_SALARY
+     --------------
+          2000
+          2000
+          2000
+          3000
+          2000
+          3000
+          2000
+          3000
+          5000
+          2000
+          1000
+          1000
+          3000
+
 
 
 
