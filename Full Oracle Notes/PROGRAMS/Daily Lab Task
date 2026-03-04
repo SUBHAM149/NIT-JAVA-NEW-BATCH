@@ -2607,6 +2607,442 @@ FROM emp;
           1000
           1000
           3000
+Day-14
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                 CLAUSES TASK
+                                ==============
+
+
+GROUP BY:- Group by clause is used to divide similar data items
+=========  into set of logical groups. And also group by clause    
+           reduces no of rows in each group.
+
+Syntax:-select columnname.......
+======  from tablename 
+        group by columnname;
+
+Execution order:-
+==============
+1.FROM 
+2.WHERE
+3.GROUP BY 
+4.HAVING
+5.SELECT
+6.ORDER BY
+
+
+RULE:- Other than group function columns specified after select
+=====  then those all columns must be specified after group by.
+       Otherwise oracle server returns an error not a GROUP BY 
+       expression.
+
+EX1:-
+==== 
+    SQL>select deptno,job
+        from emp
+        group by deptno,job;
+
+      DEPTNO          JOB
+    ----------     ---------
+        20          MANAGER
+        20          ANALYST
+        10         PRESIDENT
+        10           CLERK
+        30         SALESMAN
+        10          MANAGER
+        20           CLERK
+        30          MANAGER
+        30           CLERK
+
+EX2:-
+====
+
+     SQL> select deptno,job,sum(sal)
+          from emp
+          group by deptno,job;
+
+
+    DEPTNO JOB         SUM(SAL)
+---------- --------- ----------
+        20 MANAGER         4175
+        20 ANALYST         8400
+        10 PRESIDENT       6300
+        10 CLERK           2600
+        30 SALESMAN       10900
+        10 MANAGER         3750
+        20 CLERK           4300
+        30 MANAGER         3950
+        30 CLERK           2050
+
+
+Note:- In all relational databases we can also use group by clause
+=====   without using group functions.
+
+EX:-
+==    
+
+    SQL>select deptno from emp
+        group by deptno;
+
+        DEPTNO
+      ----------
+          30
+          10
+          20
+
+step1:-group by deptno;
+
+deptno                                                  Resultset table    
+------                                                  ----------------
+10                         10 it reduces into '1' 10      deptno
+20                         10--------------------->         10                                         30                         10
+10 similar data items into 20 it reduces into '1' 20
+20  set of logical groups  20---------------------->        20
+30-----------------------> 20
+10                         30 it reduces into '1' 30
+20                         30 ---------------------->       30
+30                         30
+
+
+step2:-select deptno from....
+=====          | 
+               |-------->This deptno is selected from result set table
+                         not from the original table.
+
+
+        DEPTNO
+      ----------
+          30
+          10
+          20
+
+
+HAVING Clause:- After group by clause we are not allowed to use where
+=============   clause. In place of this one ANSI/ISO SQL provided
+                another clause having.
+               
+Generally if we want to restrict the rows in a table then we are using 
+where clause whereas if we want to restrict groups after group by
+then we must use having clause.
+
+Generally we are not allowed to use group functions in where clause 
+whereas we can also use group functions in having clause.
+
+-----------------------------------------------------------------------------------------------------
+1.Write a query to display no of employees in each state 
+  from the following PERSON table
+SELECT state, COUNT(*) AS state_count
+FROM person
+GROUP BY state;
+-->simply i want state wise count
+
+                                 group by
+EG:    Detailed data-------------------------------------->Summarized data
+
+
+       EMPID       ENAME        STATE                     STATE      COUNT(*)      
+     ---------    -------      --------                  -------    ---------         
+         1         SUBBARAO      AP                         AP          4       
+         2         KIRAN         TS                         TS          2           
+         3         NITISH        TS                         MP          1           
+         4         ADITYA        MP                         MH          1           
+         5         GOWTHAM       AP                                     
+         6         VISWAJITH     MH 
+         7         SURYA         AP
+         8         SHREYAS       AP
+
+
+
+
+
+
+
+2.Write a query to display the state wise gender wise no of employees 
+  from the following PERSONS table?[FRAGMA DATA INTERVIEW QUESTION]
+-SELECT state, gender, COUNT(*) AS total_employees
+  2  FROM persons
+  3  GROUP BY state, gender;
+
+STATE      GENDER     TOTAL_EMPLOYEES
+---------- ---------- ---------------
+AP         M                        3
+TS         F                        1
+TS         M                        2
+AP         F                        2
+
+
+
+
+
+3.Write a query to display number of employees in each department 
+  from emp table ?[Vertex Solutions company Technical Round Interview Question]
+
+SELECT DEPTNO,COUNT(*) AS TOTAL_EMPLOYEES FROM EMP GROUP BY DEPTNO;
+    DEPTNO TOTAL_EMPLOYEES
+---------- ---------------
+        20               5
+        30               6
+        10               2
+
+4.Write a query to display number of employees in each job from emp
+   table using group by?
+
+SELECT JOB,COUNT(*) AS TOTAL_EMPLOYESS FROM EMP GROUP BY JOB;
+
+JOB       TOTAL_EMPLOYESS
+--------- ---------------
+CLERK                   3
+SALESMAN                4
+MANAGER                 3
+ANALYST                 2
+PRESIDENT               1
+
+
+5.Write a query to display department wise and job wise number of employees 
+  from emp table using group by ?
+SELECT DEPTNO,JOB, COUNT(*) AS TOTAL_EMPLOYESS FROM EMP GROUP BY DEPTNO,JOB;
+
+    DEPTNO JOB       TOTAL_EMPLOYESS
+---------- --------- ---------------
+        20 CLERK                   2
+        30 SALESMAN                4
+        20 MANAGER                 1
+        30 MANAGER                 1
+        10 MANAGER                 1
+        20 ANALYST                 2
+        10 PRESIDENT               1
+        30 CLERK                   1
+
+6.Write a query to display department wise average salary from emp table 
+  by using group by ?
+ SELECT DEPTNO,AVG(SAL) AS AVG_SALARY FROM EMP GROUP BY DEPTNO;
+
+    DEPTNO AVG_SALARY
+---------- ----------
+        20       2415
+        30 1753.33333
+        10       3725
+
+7.Write a query to display department wise minimum and maximum salary
+  from emp using group by?
+SELECT DEPTNO,
+  2  MIN(SAL) AS MIN_SALARY,
+  3  MAX(SAL) AS MAX_SALARY
+  4  FROM EMP
+  5  GROUP BY DEPTNO;
+
+    DEPTNO MIN_SALARY MAX_SALARY
+---------- ---------- ----------
+        20       1100       3000
+        30        950       2850
+        10       2450       5000
+
+8.Write a query to display Department Number,Number of Employees,Total Salary,
+  Average Salary from emp table
+SQL> SELECT DEPTNO,
+  2  COUNT(*) AS NO_OF_EMPLOYEES,
+  3  SUM(SAL) AS TOTAL_SALARY,
+  4  AVG(SAL) AS AVG_SALARY
+  5  FROM EMP GROUP BY DEPTNO;
+
+    DEPTNO NO_OF_EMPLOYEES TOTAL_SALARY AVG_SALARY
+---------- --------------- ------------ ----------
+        20               5        12075       2415
+        30               6        10520 1753.33333
+        10               2         7450       3725
+
+
+
+9.Write a query to display each department no of employees, but show only
+  those departments no of employees having more than 3 employees from emp table?
+SQL> SELECT deptno, COUNT(*) AS total_employees
+  2  FROM emp
+  3  GROUP BY deptno
+  4  HAVING COUNT(*) > 3;
+
+    DEPTNO TOTAL_EMPLOYEES
+---------- ---------------
+        20               5
+        30               6
+
+
+
+
+10.Write a query to display the state from PERSON table which are having
+   more than 3 employees ?[Technical Round INTERVIEW QUESTION]
+ SELECT state, COUNT(*) AS total_employees
+  2  FROM person
+  3  GROUP BY state
+  4  HAVING COUNT(*) > 3;
+
+STATE      TOTAL_EMPLOYEES
+---------- ---------------
+AP                       4
+
+
+11.Write a query to display each department total salary, but show only 
+     those departments whose total salary is more than 9000
+SELECT deptno, SUM(sal) AS total_salary
+  2  FROM emp
+  3  GROUP BY deptno
+  4  HAVING SUM(sal) > 9000;
+
+    DEPTNO TOTAL_SALARY
+---------- ------------
+        20        12075
+        30        10520
+
+
+ **
+*12*Write a query to display duplicate records from the
+ ** following EMP111 table ?(V.V.I.M.P)
+SELECT empno, ename, COUNT(*)
+FROM emp111
+GROUP BY empno, ename
+HAVING COUNT(*) > 1;
+
+SQL>select * from EMP111;
+
+       EMPNO        ENAME
+    ---------    ----------
+         1         SURYA
+         2         ANUSHKA
+         3         ANUSHKA
+         4         GOWTHAM
+         5         SURYA
+         6         SATYA
+
+
+  *
+*13*.Write a query to display year, no of employees per year 
+  *  in which year more than one employee was hired from 
+            emp table using group by?
+SELECT EXTRACT(YEAR FROM hiredate) AS hire_year,
+       COUNT(*) AS total_employees
+FROM emp
+GROUP BY EXTRACT(YEAR FROM hiredate)
+HAVING COUNT(*) > 1;
+HIRE_YEAR TOTAL_EMPLOYEES
+---------- ---------------
+      1981              10
+      1987               2
+
+14.Write a query to display no of employees joined in each QUARTER 
+   from emp table using group by?
+SELECT TO_CHAR(hiredate, 'Q') AS quarter,
+       COUNT(*) AS total_employees
+FROM emp
+GROUP BY TO_CHAR(hiredate, 'Q');
+Q TOTAL_EMPLOYEES
+- ---------------
+4               4
+1               2
+2               5
+3               2
+
+
+15.Write a query to display state wise, region wise no of employees
+   from the following EMP222 table ?[MOCK INTERVIEW QUESTION]
+SELECT state, region, COUNT(*) AS total_employees
+FROM emp222
+GROUP BY state, region;
+
+STATE                REGION     TOTAL_EMPLOYEES
+-------------------- ---------- ---------------
+ANDHRA PRADESH       SOUTH                    2
+TELANGANA            SOUTH                    1
+MAHARASHTRA          WEST                     1
+MADHYA PRADESH       CENTRAL                  1
+BIHAR                EAST                     1
+
+-- 16. Departments whose average salary > 2000
+SELECT deptno, AVG(sal) AS avg_salary
+FROM emp
+GROUP BY deptno
+HAVING AVG(sal) > 2000;
+
+    DEPTNO AVG_SALARY
+---------- ----------
+        20       2415
+        10       3725
+
+-- 17. Employees joined in January & September
+SELECT TO_CHAR(hiredate, 'Month') AS month,
+       COUNT(*) AS total_employees
+FROM emp
+WHERE TO_CHAR(hiredate, 'Month') IN ('January  ', 'September')
+GROUP BY TO_CHAR(hiredate, 'Month');
+MONTH                                TOTAL_EMPLOYEES
+------------------------------------ ---------------
+September                                          2
+
+-- 18. Total salary in departments 10 & 30
+SELECT deptno, SUM(sal) AS total_salary
+FROM emp
+WHERE deptno IN (10, 30)
+GROUP BY deptno;
+ DEPTNO TOTAL_SALARY
+---------- ------------
+        30        10520
+        10         7450
+
+-- 19. Sum of Age for LastName = 'Smith'
+SELECT lastname,
+       SUM(age) AS SUMAGE
+FROM emp333
+WHERE lastname = 'Smith'
+GROUP BY lastname;
+
+LASTN     SUMAGE
+----- ----------
+Smith         47
+
+-- 20. Number of territories in each region (Increasing order)
+SELECT regionid,
+       COUNT(*) AS number_of_territories
+FROM territory
+GROUP BY regionid
+ORDER BY regionid;
+REGIONID NUMBER_OF_TERRITORIES
+---------- ---------------------
+         1                     3
+         2                     3
+         3                     2
+         4                     2
+
+Sample Output:
+=============
+
+ regionid          number_of_territories
+----------        -----------------------
+   1                       3
+   2                       3
+   3                       2
+   4                       2
+
+
+-----------------------------------------------------------------------------------------------------
+ *
+***What are the differences b/w Where and Having clause?(V.V.I.M.P)
+ *
+-----------------------------------------------------------------------------------
+               Where                   |                  Having
+-----------------------------------------------------------------------------------
+1.Where clause is used to restricting  |1.Having clause is used to restricting 
+  the rows in a table                  |  the groups after group by.
+                                       |
+2.It filters the rows                  |2.It filters the groups
+                                       |
+3.We are not allowed to use group      |3.We can also use group functions in
+  functions in where clause.           |  having clause.
+                                       | 
+4.Where clause is executed before      |4.Having clause executed after
+  group by.                            |  group by.
+                                       |
+5.We can also use Where clause         |5.We can not use Having clause
+  with out group by                    |  with out group by
+                                       |    
+-----------------------------------***END***---------------------------------------
 
 
 
