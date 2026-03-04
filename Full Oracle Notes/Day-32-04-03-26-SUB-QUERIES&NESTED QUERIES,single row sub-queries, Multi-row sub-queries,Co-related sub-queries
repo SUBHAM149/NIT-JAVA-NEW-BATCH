@@ -1,0 +1,230 @@
+ 4-mar-26
+
+ SUB-QUERIES / NESTED QUERIES :-
+ --------------------------------------------------------
+
+ => a query in another query is called sub-query or nested query
+ => one query is called inner / child / sub-query
+=> other query is called outer / parent / main query
+=> first oracle executes inner query and next it executes outer query
+=> output of inner query is input to outer query
+=> use sub-query when where cond based on uknown value
+ 
+Types of sub-queries :-
+-------------------------------
+
+1  single-row sub-queries
+2  multi-row sub-queries
+3  co-realted sub-queries
+4  INLINE views and CTEs 
+5  scalar sub-queries
+ 
+single row sub-queries :-
+---------------------------------
+
+  => if sub-query returns one value then it is called single row sub-query
+
+     SELECT columns
+     FROM tabname
+     WHERE colname  OP  (SELECT statement) ;
+  
+ => sub-query output acts as a value for outer query where cond
+ => OP must be any relational operator like  =   >   >=   <    <=    <>
+
+Ex :- 
+
+ => employee list earning more than blake ?
+
+     SELECT *
+     FROM emp 
+     WHERE  sal >  (SELECT sal FROM emp WHERE ename='blake') ;
+                              ----------------------------------------------------------------------
+				2850
+
+  => employees who are senior to king ?
+  
+     SELECT *
+     FROM emp 
+     WHERE  hiredate <   ( SELECT hiredate FROM emp WHERE ename='king') ; 
+		        ---------------------------------------------------------------------------
+   			     17-nov-81
+
+ => name of the employee earning max salary ?
+
+      SELECT ename
+      FROM emp 
+      WHERE sal =  MAX(sal)  ;    => ERROR  => group functions like max,min,sum,avg,count
+				           not allowed in where clause and allowed only
+				           in select,having clauses
+
+      SELECT ename
+      FROM emp 
+      WHERE sal =  (SELECT MAX(sal) FROM emp) ; 
+                               --------------------------------------------
+			5000
+
+ => name of the employee having max experience ?
+
+     SELECT ename
+     FROM emp
+     WHERE hiredate = (SELECT MIN(hiredate) FROM emp) ;
+	                    -----------------------------------------------------
+			17-DEC-80 
+                                      
+ => display 2nd max salary ?
+ 
+      SAL
+      5000
+      1000
+     3000
+     2500
+     2975
+
+     SELECT MAX(sal)
+     FROM emp 
+     WHERE  sal <>  (SELECT MAX(sal) FROM emp) ;    
+                                 ---------------------------------------------
+			5000
+     o/p :-   3000
+
+ => name of the employee earning 2nd max salary ?
+
+   SELECT ename,sal
+   FROM emp 
+   WHERE sal =  ( SELECT MAX(sal)
+                             FROM emp 
+                             WHERE  sal <>  (SELECT MAX(sal) FROM emp));
+                                                          -------------------------------------------
+				     5000
+                             -----------------------------------------------------------------------
+                                           3000
+
+   => display names of the employee working at NEW YORK loc ?
+
+ sub-query :-
+ ----------------
+
+     SELECT ename
+     FROM emp
+     WHERE deptno = (SELECT deptno FROM dept WHERE loc='NEW YORK') ;
+ 
+ join :-
+ -----------
+
+      SELECT e.ename
+      FROM emp e INNER JOIN dept d
+      ON e.deptno = d.deptno
+      WHERE d.loc = 'NEW YORK' ; 
+    
+ => display  employee names and dept names working at NEW YORK loc ?
+
+  join :-
+ -----------
+
+      SELECT e.ename , d.dname
+      FROM emp e INNER JOIN dept d
+      ON e.deptno = d.deptno
+      WHERE d.loc = 'NEW YORK' ; 
+
+ sub-query :-
+ ----------------
+ 
+         not possible
+
+ => difference between join and sub-query  ?
+
+  1 to display data from one table and condition based on different table then we can use
+     join or sub-query.
+ 
+  2 to display data from two tables then use join operation.
+
+NOTE :- 
+
+  => outer query can be SELECT / INSERT / UPDATE / DELETE but inner query must be
+       always SELECT.
+
+
+ Ex :- 
+
+   => increase sal of employee by 10% having max experience ?
+
+       UPDATE emp
+       SET sal = sal + (sal*0.1)
+       WHERE hiredate = (SELECT MIN(hiredate) FROM emp);
+
+ => swap employee salaries whose empno = 7369,7499 ?
+
+       before swap			after swap
+      
+       empno	sal		empno	sal
+        7369		800		7369	1600
+        7499		1600		7499	800
+
+ Multi-row sub-queries :-
+ --------------------------------
+
+  => if sub-query returns more than one value then it is called multi-row sub-query
+ 
+   SELECT columns
+   FROM tabname
+   WHERE  colname  OP   (SELECT statement) ;
+
+ => OP must be IN , NOT IN,ANY ,ALL 
+
+	 single			multi
+
+	  =			IN
+
+	  <>			NOT IN
+
+	   >			>ANY   >ALL
+
+	   <			<ANY   <ALL
+
+  =>  names of the employees working at NEW YORK,CHICAGO locations ?
+
+       SELECT  ename
+       FROM emp 
+       WHERE deptno IN  (SELECT deptno FROM dept WHERE loc IN ('NEW YORK','CHICAGO'));
+
+     ANY  &  ALL :- 
+     --------------------
+
+    =>  operators used for  >   <  comparision with multiple values 
+
+ WHERE sal > ANY(1000,2000,3000) 		WHERE sal < ANY(1000,2000,3000)		
+ 
+  if  sal  = 800    FALSE			IF  sal = 800    TRUE
+             1500  TRUE                                                                1500   TRUE
+             3500   TRUE                                                                3500   FALSE
+
+ WHERE sal > ALL(1000,2000,3000)                         WHERE sal < ALL (1000,2000,3000)
+
+  IF  sal = 800      FALSE			 if sal = 800   TRUE
+                1500    FALSE                                                         1500 FALSE
+                3500    TRUE                                                           3500  FALSE
+
+=> employees earning more than all managers ?
+
+   SELECT *
+   FROM emp
+   WHERE sal >    ALL(SELECT sal FROM emp WHERE job='MANAGER');
+			   2975
+   			   2850
+    			   2450
+
+ =>=> employees earning more than atleast one managers ?
+
+   SELECT *
+   FROM emp
+   WHERE sal >   ANY(SELECT sal FROM emp WHERE job='MANAGER');
+
+Co-related sub-queries :-
+----------------------------------
+
+ => if inner query references values of outer query then it is called co-related sub-query
+ 
+  => execution starts from outer query and inner query is executed no of times depends
+        on no of rows return by outer query.
+
+   => use co-related sub-query to execute the sub-query for each row return by outer query.
