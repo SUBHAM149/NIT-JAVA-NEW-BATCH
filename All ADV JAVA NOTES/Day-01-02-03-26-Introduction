@@ -1,0 +1,111 @@
+Introduction to Advanced Java
+
+-Advanced Java is the part of Java programming used to develop web-based and enterprise applications. It provides technologies and APIs that allow Java programs to interact with databases, web servers, and network applications.
+-Advanced Java is mainly used to build dynamic web applications. It works on top of Core Java and uses server-side technologies to create powerful and scalable applications.
+-Some important technologies in Advanced Java include JDBC (Java Database Connectivity), Servlets, JSP (Java Server Pages), and frameworks that help in developing web applications.
+-With the help of Advanced Java, developers can perform tasks such as database connectivity, web application development, session management, and server-side programming.
+
+  In simple words, Core Java is used to build basic programs, while Advanced Java is used to build web and enterprise applications.
+### ADVANCED JAVA – LEARNING ROADMAP
+
+**Advanced Java** is used to develop **web applications, enterprise applications, and database-driven systems**. It is built on top of **Core Java** and mainly focuses on **server-side programming**.
+---
+
+## 1. Prerequisites (Before Advanced Java)
+Before learning Advanced Java, we should know:
+
+• Core Java basics
+• OOP Concepts (Class, Object, Inheritance, Polymorphism, Abstraction, Encapsulation)
+• Exception Handling
+• Collections Framework
+• File Handling
+• Multithreading
+---
+
+## 2. Advanced Java Roadmap
+### Step 1: JDBC (Java Database Connectivity)
+JDBC is used to connect Java applications with databases.
+Topics to learn:
+• JDBC Architecture
+• JDBC Drivers Types
+• Steps to connect Java with Database
+• Statement
+• PreparedStatement
+• CallableStatement
+• ResultSet
+• CRUD Operations (Insert, Update, Delete, Select)
+---
+
+### Step 2: Servlets
+Servlets are Java programs that run on a **web server** and handle client requests.
+Topics to learn:
+• Servlet Architecture
+• Servlet Life Cycle
+• GenericServlet
+• HttpServlet
+• doGet() method
+• doPost() method
+• Request and Response objects
+• ServletConfig
+• ServletContext
+• Session Management
+---
+
+### Step 3: JSP (Java Server Pages)
+JSP is used to create **dynamic web pages**.
+Topics to learn:
+• JSP Life Cycle
+• JSP Elements
+• JSP Scriptlet
+• JSP Expression
+• JSP Declaration
+• JSP Directives
+• JSP Implicit Objects
+• JSP Action Tags
+---
+
+### Step 4: Session Management
+Session management is used to maintain user data between requests.
+Types:
+• Cookies
+• URL Rewriting
+• Hidden Fields
+• HttpSession
+---
+
+### Step 5: MVC Architecture
+MVC stands for:
+• Model
+• View
+• Controller
+This architecture is used to separate **business logic, presentation, and control logic** in web applications.
+---
+### Step 6: Frameworks (Next Level)
+After Advanced Java basics, developers learn frameworks such as:
+• Spring
+• Spring Boot
+• Hibernate
+• REST API Development
+---
+
+## Simple Advanced Java Learning Flow
+Core Java
+↓
+JDBC
+↓
+Servlets
+↓
+JSP
+↓
+Session Management
+↓
+MVC Architecture
+↓
+Spring / Spring Boot / Hibernate
+↓
+Full Stack Java Development
+
+---
+
+**Conclusion:**
+Advanced Java helps developers build **dynamic, secure, and database-driven web applications** using technologies like **JDBC, Servlets, JSP, and modern frameworks**.
