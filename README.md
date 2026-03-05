@@ -1,90 +1,88 @@
 <h1 align="center"> Java Full Stack All Notes | Naresh i Technologies</h1>
 
 <p align="center">
-  📘 A structured & daily-updated collection of <b>Java Full Stack + Frontend Development Notes</b><br/>
-  From <b>Naresh i Technologies</b>, prepared during professional classroom training.
+  <strong>🎓 Daily-Updated Classroom Notes for Java Full Stack + Frontend Development</strong><br/>
+  Prepared during professional training at <b>Naresh i Technologies</b>
 </p>
 
 <p align="center">
-  🚀 Covers both <b>Backend (Java Full Stack)</b> and <b>Frontend (HTML, CSS, JavaScript)</b><br/>
-  Ideal for <b>Students, Freshers & Job Seekers</b>.
+  <a href="#-course-content">📚 Course Content</a> •
+  <a href="#-how-to-use">🚀 How to Use</a> •
+  <a href="#-connect">📬 Connect</a> •
+  <a href="#-license">📜 License</a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Core%20Java-blue?style=for-the-badge&logo=java"/>
-  <img src="https://img.shields.io/badge/Spring%20Boot-green?style=for-the-badge&logo=springboot"/>
-  <img src="https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5"/>
-  <img src="https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3"/>
-  <img src="https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript"/>
-  <img src="https://img.shields.io/badge/Advanced%20Java-darkblue?style=for-the-badge&logo=java"/>
-  <img src="https://img.shields.io/badge/Spring%20Boot-green?style=for-the-badge&logo=spring"/>
-  <img src="https://img.shields.io/badge/MySQL-orange?style=for-the-badge&logo=mysql"/>
-  
+  <img src="https://img.shields.io/badge/Core%20Java-blue?style=for-the-badge&logo=java" />
+  <img src="https://img.shields.io/badge/Spring%20Boot-green?style=for-the-badge&logo=springboot" />
+  <img src="https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5" />
+  <img src="https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3" />
+  <img src="https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript" />
+  <img src="https://img.shields.io/badge/MySQL-orange?style=for-the-badge&logo=mysql" />
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/stars/SUBHAM149/java-fullstack-notes?style=social"/>
-  <img src="https://img.shields.io/github/forks/SUBHAM149/java-fullstack-notes?style=social"/>
-  <img src="https://img.shields.io/github/watchers/SUBHAM149/java-fullstack-notes?style=social"/>
+  <img src="https://img.shields.io/github/stars/SUBHAM149/Java-FullStack-Frontend-Notes?style=social" />
+  <img src="https://img.shields.io/github/forks/SUBHAM149/Java-FullStack-Frontend-Notes?style=social" />
+  <img src="https://img.shields.io/github/last-commit/SUBHAM149/Java-FullStack-Frontend-Notes?style=social" />
 </p>
 
-<hr/>
+---
 
-<h2>✨ About This Repository</h2>
+## ✨ About This Repository
 
-<p>
-  This repository contains my <b>daily classroom notes</b> from <b>Naresh i Technologies</b>
-  for <b>Java Full Stack Development</b> along with <b>Frontend Web Development</b>.
-</p>
+> 📌 **Purpose**: A structured collection of **daily classroom notes** from **Naresh i Technologies** for **Java Full Stack Development** + **Frontend Web Development**.
 
-<p>
-  📌 Notes are written in a <b>simple, clear & interview-focused</b> manner,
-  based strictly on real-time explanations by professional trainers.
-</p>
+✅ **Simple & Clear**: Written in easy-to-understand language  
+✅ **Interview-Focused**: Includes important questions & quick revisions  
+✅ **Real-Time Content**: Based on live explanations by professional trainers  
+✅ **Daily Updates**: New notes uploaded after every class session  
 
-<hr/>
+🎯 **Ideal For**: Students • Freshers • Job Seekers • Self-Learners
 
-<h2>📚 Course Content Covered</h2>
+---
 
-<h3>🖥️ Frontend Development</h3>
-<ul>
-  <li>✔ HTML5 (Structure & Semantics)</li>
-  <li>✔ CSS3 (Flexbox, Grid, Animations)</li>
-  <li>✔ Responsive Web Design</li>
-  <li>✔ JavaScript (ES6)</li>
-  <li>✔ DOM Manipulation</li>
-  <li>✔ Mini Projects & UI Concepts</li>
-</ul>
+## 📚 Course Content Covered
 
-<h3>☕ Java Full Stack Development</h3>
-<ul>
-  <li>✔ Core Java (Basics to Advanced)</li>
-  <li>✔ OOPs Concepts</li>
-  <li>✔ Exception Handling</li>
-  <li>✔ Multithreading</li>
-  <li>✔ Collections Framework</li>
-  <li>✔ JDBC</li>
-  <li>✔ Advanced Java</li>
-  <li>✔ Servlets & JSP</li>
-  <li>✔ Spring & Spring Boot</li>
-  <li>✔ Hibernate (Basics)</li>
-  <li>✔ MySQL Database</li>
-  <li>✔ Interview Questions</li>
-</ul>
+### 🖥️ Frontend Development
+| Topic | Concepts Covered |
+|-------|-----------------|
+| **HTML5** | Semantic tags, Forms, Multimedia, SEO basics |
+| **CSS3** | Flexbox, Grid, Animations, Variables, Responsive Design |
+| **JavaScript (ES6+)** | Arrow functions, Promises, Async/Await, DOM Manipulation |
+| **Mini Projects** | Calculator, To-Do List, Weather App UI, Portfolio Page |
 
-<hr/>
+### ☕ Java Full Stack Development
+| Topic | Concepts Covered |
+|-------|-----------------|
+| **Core Java** | Syntax, OOPs, Exception Handling, Collections, Multithreading |
+| **Advanced Java** | Servlets, JSP, JDBC, JavaBeans, MVC Architecture |
+| **Spring Framework** | IoC, DI, AOP, Spring MVC, Spring Security (Basics) |
+| **Spring Boot** | Auto-configuration, Starter Dependencies, REST APIs, Actuator |
+| **Hibernate** | ORM Concepts, HQL, Criteria API, Caching (Intro) |
+| **MySQL** | DDL, DML, Joins, Subqueries, Indexing, Stored Procedures |
+| **Interview Prep** | 100+ Q&A, Coding Problems, System Design Basics |
 
-<h2>🛠️ Tech Stack</h2>
+---
 
-<ul>
-  <li><b>Frontend:</b> HTML5, CSS3, JavaScript</li>
-  <li><b>Backend:</b> Java, Spring, Spring Boot</li>
-  <li><b>Database:</b> MySQL</li>
-  <li><b>Tools:</b> Git, GitHub, VS Code, Eclipse</li>
-</ul>
+## 🛠️ Tech Stack
 
-<hr/>
+```yaml
+Frontend:
+  - HTML5 • CSS3 • JavaScript (ES6+)
+  - Responsive Design • DOM Manipulation
 
+Backend:
+  - Java 8/11/17 • Spring Framework • Spring Boot
+  - Servlets • JSP • Hibernate (Basics)
+
+Database:
+  - MySQL • JDBC • SQL Queries
+
+Tools & DevOps:
+  - Git • GitHub • VS Code • Eclipse
+  - Maven • Postman • Tomcat Server
+```
 <h2>📁 Repository Structure</h2>
 
 <pre>
@@ -166,3 +164,7 @@ git clone https://github.com/SUBHAM149/Java-FullStack-Frontend-Notes.git
 <p align="center">
   ⭐ If these notes help you, please <b>STAR</b> the repository!
 </p>
+
+
+
+
