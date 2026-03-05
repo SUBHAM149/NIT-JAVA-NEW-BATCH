@@ -1,0 +1,132 @@
+5-mar-26
+
+Co-related sub-queries :-
+----------------------------------
+
+ => if inner query references values of outer query then it is called co-related sub-query
+ 
+  => execution starts from outer query and inner query is executed no of times depends
+        on no of rows return by outer query.
+
+   => use co-related sub-query to execute the sub-query for each row return by outer query.
+
+ Ex :- 
+
+   EMP
+   empno	ename	sal	deptno
+   1	A	4000	10
+   2	B	5000	20
+   3	C	3000	30
+   4	D	6000	10
+   5	E	3000	20
+
+ => display employees earning more than avg sal of the organization ?
+
+     SELECT *
+     FROM emp 
+    WHERE sal >  (SELECT AVG(sal) FROM emp) ; 
+                              -----------------------------------------
+			4200
+
+  => display employees earning more than avg sal of their dept ?
+
+       SELECT *
+       FROM emp  e
+       WHERE sal  > ( SELECT AVG(sal) FROM emp WHERE deptno =  e.deptno) ;
+
+   EMP
+   empno	ename	sal	deptno
+   1	A	4000	10                  4000 >  (WHERE deptno = 10)  5000  FALSE
+   2	B	5000	20                  5000 >  (WHERE deptno =  20)  4000  TRUE        
+   3	C	3000	30                  3000 >  (WHERE deptno = 30)   3000   FALSE
+   4	D	6000	10                  6000 >  (WHERE deptno = 10)    5000   TRUE
+   5	E	3000	20                   3000 > (WHERE deptno=20)      4000   FALSE
+
+ => display employees earning max sal in their dept ?
+      who is the highest paid employee each dept ?
+
+       SELECT *
+       FROM emp  e
+       WHERE sal  = ( SELECT  MAX(sal) FROM emp WHERE deptno = e.deptno)
+
+    EMP
+   empno	ename	sal	deptno
+   1	A	4000	10                4000 = (6000)    FALSE
+   2	B	5000	20                5000 = (5000)     TRUE
+   3	C	3000	30                3000 = (3000)      TRUE
+   4	D	6000	10                6000 = (6000)      TRUE
+   5	E	3000	20                3000 = (5000)      FALSE
+
+=> display top 3 max salaries ? 
+
+    SELECT DISTINCT a.sal
+    FROM emp a 
+    WHERE 3  >  (SELECT COUNT(DISTINCT b.sal)
+                           FROM emp b
+                           WHERE a.sal < b.sal) 
+   ORDER BY a.sal DESC ; 
+
+  
+   EMP  a		 EMP  b
+    sal		sal
+   5000		5000	3 > (0)	TRUE
+   1000		1000	3 > (4)	FALSE
+   3000		3000         3 > (1)     TRUE
+   2000		2000         3 > (3)      FALSE
+   2975		2975         3 > (2)      TRUE
+
+ => display 3rd max salary ?
+
+    SELECT DISTINCT a.sal
+    FROM emp a 
+    WHERE (3-1)  =   (SELECT COUNT(DISTINCT b.sal)
+                                 FROM emp b
+                                 WHERE a.sal < b.sal) 
+   ORDER BY a.sal DESC ; 
+
+  => display Nth max salary ?
+
+    SELECT DISTINCT a.sal
+    FROM emp a 
+    WHERE (&N-1)  =   (SELECT COUNT(DISTINCT b.sal)
+                                 FROM emp b
+                                 WHERE a.sal < b.sal) 
+   ORDER BY a.sal DESC ; 
+
+ ROWID :- 
+ -------------
+
+  => returns physical address of a row
+  => ROWID is called psuedo column because it  is not a column but acts like a column
+
+ psuedo columns :-
+ -------------------------
+
+ rowid
+ rownum
+ level
+ sysdate
+ systimestamp
+ user
+
+  => display rowids of employee records ?
+ 
+    SELECT rowid,empno,ename,sal FROM emp ; 
+
+   AAAfXlAAHAAACaMAAA       7369 smith             800
+  
+  => ROWIDS are used to delete duplicate records 
+
+Ex :- 
+
+  EMP
+  empno	ename	sal 	ROWID
+ 100	A	5000          AAA
+ 101	B	6000          AAB
+ 102	C	4000          AAC
+ 100	A	5000          AAD                  
+ 101	B	6000          AAE
+
+    DELETE FROM EMP ROWID LIKE  '%AAD'  ;
+
+    DELETE FROM EMP WHERE ROWID LIKE '%AAE' ;
