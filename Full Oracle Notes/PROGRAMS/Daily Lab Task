@@ -3045,7 +3045,264 @@ Sample Output:
 -----------------------------------***END***---------------------------------------
 
 
+Day-15
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                 ORDER BY CLAUSE
+                                =================
 
+Order by:-order by clause is used to sorting data either ascending 
+========  order or descending order.
+     
+order by clause having two keywords.
+1)asc
+2)desc
+
+syntax:-
+=======
+    select * from tablename
+    order by columnname[asc/desc];
+
+
+
+1.Write a query to display employee names and salaries,sorted by salary 
+    in descending order from EMP table?
+
+Answer:-
+--------
+select ename,sal
+from emp
+order by sal desc;
+
+
+
+2.Write a query to display all employee names in alphabetical order ?
+
+Answer:-
+--------
+select ename
+from emp
+order by ename asc;
+
+
+
+3.Write a query to display the all employee records and arrange them according to
+  seniority ?
+
+Answer:-
+--------
+select *
+from emp
+order by hiredate asc;
+
+
+
+4.Display employee records in ascending order by department number. 
+  If multiple employees belong to the same department, sort them
+  by salary in descending order within the department.
+
+Answer:-
+--------
+select *
+from emp
+order by deptno asc, sal desc;
+
+
+
+5.Write a query to display FirstName,LastName and Age from the 
+  emp333 table for all users who are above the age of 25 
+  order by ID in ascending order,your output should look like
+  the following[HELICAL SOLUTIONS PVT.LTD COMPANY TECHNICAL ROUND INTERVIEW QUESTION]                             
+
+
+SQL> select * from emp333;
+
+        ID     FIRSTNAME     LASTNAME       AGE
+      ------  -----------   ----------    --------
+         1       John         Smith          20
+         2       Jenny        Richards       28
+         3       Alice        Smith          15
+         4       Noah         Fritz          30
+         5       Mark         Smith          12
+
+
+EXPECTED OUTPUT:-
+================
+
+       FIRSTNAME       LASTNAME         AGE
+      ----------      -----------     ------
+         Jenny          Richards        28
+         Noah           Fritz           30
+
+
+Answer:-
+--------
+select firstname,lastname,age
+from emp333
+where age>25
+order by id asc;
+
+
+
+
+
+
+6.Show all the job Roles from the EMP table?
+
+              (or)
+
+  Show all the job ROLES in the company?[VERTEX SOLUTIONS COMPANY TECHNICAL ROUND QUESTION]
+
+Answer:-
+--------
+select distinct job
+from emp;
+
+
+
+
+7.Write a query to list all unique departments numbers from EMP table ?
+
+Answer:-
+--------
+select distinct deptno
+from emp;
+
+----------------------------------------------------------------------------------------------------
+                                  SELECT CLAUSE
+                                 ===============
+
+1.Write a complete syntax of select statement?
+
+syntax:-
+=======
+        select col,col2 ........
+        from tablename
+        where condition
+        group by columnname
+        having condition
+        order by columnname[asc/desc];
+
+Eg:-
+===
+   select deptno,count(*)
+   from emp
+   where sal>1000
+   group by deptno
+   having count(*)>3
+   order by deptno;
+
+     DEPTNO         COUNT(*)
+    ----------     ----------
+        20             5
+        30             6
+
+
+------------------------------------------------------------------------------------------------------
+
+
+ *
+*1*Which of the following is the correct order of execution of following clauses
+ *   in a SELECT statement[V.V.I.M.P]
+
+a) FROM → SELECT → WHERE → GROUP BY → HAVING → ORDER BY
+
+b) WHERE → FROM → GROUP BY → HAVING → SELECT → ORDER BY
+
+c) FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
+
+d) SELECT → HAVING → GROUP BY → WHERE → ORDER BY → FROM
+
+
+Answer:  
+-------
+c) FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
+
+ *
+*2*Which of the following order is valid in writing SELECT query[V.V.I.M.P]
+ *
+a) SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY
+
+b) SELECT → FROM → GROUP BY → WHERE → HAVING → ORDER BY
+
+c) SELECT → FROM → WHERE → HAVING → GROUP BY → ORDER BY
+
+d) SELECT → FROM → HAVING → GROUP BY → WHERE → ORDER BY
+
+Answer: 
+-------
+a) SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY
+
+
+------------------------------------------------------------------------------------------------------
+                              offset & fetch clauses
+                             =======================
+ 
+ Oracle 12c introduced fetch first/next clauses for filtering data in a table
+and also these clauses are used in top-n analysis
+
+
+1.Write a query to display first 5 rows from emp table by using fetch first clause?
+
+Answer:-
+--------
+select *
+from emp
+fetch first 5 rows only;
+
+
+
+ *
+*2*Write a query to display top 3 highest paid salaries 
+ * from emp table?V.V.I.M.P[FACE TO FACE INTERVIEW QUESTION]
+
+Answer:-
+--------
+select *
+from emp
+order by sal desc
+fetch first 3 rows only;
+
+
+
+3.Write an SQL query to sort the salaries in descending order,
+  skip the top 4 highest salaries, and then display the next 5 salaries 
+  from the emp table?[FACE TO FACE INTERVIEW QUESTION]
+
+Answer:-
+--------
+select sal
+from emp
+order by sal desc
+offset 4 rows
+fetch next 5 rows only;
+
+------------------------------------------------------------------------------------------------------
+
+
+COGNIZANT Technical Round Interview Question
+============================================
+
+Answer:-
+--------
+select extract(month from submit_date) as mth,
+       product_id as product,
+       round(avg(stars),2) as avg_stars
+from reviews
+group by extract(month from submit_date), product_id
+order by mth, product_id;
+
+
+
+Q.Write the query to display the emp_first_name and emp_last_name 
+   as emp_fullname and year of birth and sort them based on their
+   desending age.[INTERVIEW QUESTION]
+
+Answer:-
+--------
+select emp_first_name||' '||emp_last_name as emp_fullname,
+       extract(year from birthdate) as year_of_birth
+from emp444
+order by birthdate asc;
 
 
 
