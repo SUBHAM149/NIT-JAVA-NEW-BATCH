@@ -1,0 +1,211 @@
+6-MAR-26
+
+ ROWID :- 
+ -------------
+
+  => returns physical address of a row
+  => ROWID is called psuedo column because it  is not a column but acts like a column
+
+ psuedo columns :-
+ -------------------------
+
+ rowid
+ rownum
+ level
+ sysdate
+ systimestamp
+ user
+
+  => display rowids of employee records ?
+ 
+    SELECT rowid,empno,ename,sal FROM emp ; 
+
+   AAAfXlAAHAAACaMAAA       7369 smith             800
+  
+  => ROWIDS are used to delete duplicate records 
+
+Ex :- 
+
+  EMP44
+  empno	ename	sal 	ROWID
+ 100	A	5000          AAA
+ 101	B	6000          AAB
+ 102	C	4000          AAC
+ 100	A	5000          AAD                  
+ 101	B	6000          AAE
+
+    SQL>DELETE FROM EMP ROWID LIKE  '%AAD'  ;
+
+    SQL>DELETE FROM EMP WHERE ROWID LIKE '%AAE' ;
+
+    => deleting duplicates row-by-row is difficult if table contains  huge 
+         number of duplicate rows , so execute the following query to delete 
+         all duplicate rows from table.
+
+         DELETE
+         FROM emp44 a
+         WHERE rowid <>  (SELECT MIN(rowid)
+                                        FROM emp44
+                                        WHERE empno = a.empno
+                                                       AND
+                                                       ename = a.ename
+                                                       AND
+                                                       sal = a.sal);
+ EMP44
+  empno	ename	sal 	ROWID
+ 100	A	5000          AAA      <>  (AAA)         FALSE
+ 101	B	6000          AAB     <>  ( AAB)         FALSE   
+ 102	C	4000          AAC    <>   (AAC)         FALSE
+ 100	A	5000          AAD    <>   ( AAA)         TRUE  => DELETED              
+ 101	B	6000          AAE    <>   (AAB)          TRUE  => DELETED
+
+ INLINE views :- 
+=============
+
+  =>  sub-queries in FROM clause are called INLINE views 
+  
+        SELECT columns
+        FROM  (SELECT statement)   <alias>
+        [WHERE cond] ; 
+
+  => sub-query output acts like a table for outer query
+
+  => INLINE views are used in following scenarios
+
+   1   To control order of execution of clauses 
+   2   To use result of one operation in another operation
+   3   To join two query outputs 
+
+  Controlling order of execution of clauses :- 
+  ----------------------------------------------------------
+
+  Default order :-
+  --------------------- 
+ 
+FROM
+WHERE
+GROUP BY
+HAVING
+SELECT
+ORDER BY 
+
+ SELECT					         SELECT
+ FROM       ===============================>       FROM (SELECT
+ WHERE						     FROM
+ ORDER BY 					     ORDER BY)
+					         WHERE									
+				
+Ex 1  :- 
+
+  => display ranks of the employees based on sal and highest paid should get 1st rank ?
+
+      SELECT empno,ename,sal,
+                     DENSE_RANK() OVER (ORDER BY sal DESC) as rnk
+      FROM emp ;
+
+     above query displays ranks of all the employees but to display top 5 employees 
+
+       SELECT empno,ename,sal,
+                     DENSE_RANK() OVER (ORDER BY sal DESC) as rnk
+      FROM emp 
+      WHERE  rnk <= 5 ;    => ERROR
+
+      column alias cannot be used in where clause because where clause is executed
+      before select , To overcome this use INLINE views
+   
+      SELECT *
+      FROM (SELECT empno,ename,sal,
+                                 DENSE_RANK() OVER (ORDER BY sal DESC) as rnk
+                  FROM emp)  e
+      WHERE e.rnk <= 5 
+  
+     outquery is executed as follows 
+ 
+    SELECT *
+    FROM e
+    WHERE e.rnk <= 5 ; 
+
+ => display top 3 max salaries ? 
+
+method 1 :-  using dense_rank & inline view
+
+      SELECT DISTINCT *
+      FROM (SELECT sal,
+                                 DENSE_RANK() OVER (ORDER BY sal DESC) as rnk
+                  FROM emp)  e
+      WHERE e.rnk <= 3 
+      ORDER BY sal DESC  ;
+
+method 2 :-  using co-related sub-query
+
+ SELECT DISTINCT a.sal
+ FROM emp a
+ WHERE 3 > (SELECT COUNT(DISTINCT b.sal)
+                       FROM emp b
+                      WHERE a.sal < b.sal) 
+ORDER BY a.sal DESC ;
+
+method 3 :- 
+ 
+SELECT DISTINCT sal
+FROM emp
+ORDER BY sal DESC
+FETCH FIRST 3 ROWS ONLY ;
+
+Question :- 
+
+  => display top 3 max salaries in each dept ? 
+
+ROWNUM :-
+----------------
+
+ => returns record numbers for the records return by select query
+ => rownum is also a psuedo column like rowid
+
+   SELECT rownum,empno,ename,sal FROM emp ;       
+
+        	  9       7839 king             5000
+
+    SELECT rownum,empno,ename,sal FROM emp WHERE sal >= 2000;
+
+      	   5       7839 king             5000
+
+      SELECT rownum,empno,ename,sal FROM emp WHERE sal >= 3000; 
+
+  	   2       7839 king             5000
+
+  note :- rownum is not baesd on table and it is based on select stmt output ,
+             if select stmt output changes rownum also changes 
+
+  => display first 5 rows from emp ?
+
+      SELECT empno,ename,sal
+      FROM emp 
+      WHERE rownum <= 5 ; 
+
+ => display 5th row ?
+
+      SELECT empno,ename,sal
+      FROM emp 
+      WHERE rownum = 5 ;   => no rows 
+
+  with rownum   =    >    >=  will not work  only    <     <=  will work , to overcome this
+  use INLINE views 
+
+      SELECT *
+      FROM  (SELECT rownum as rno,empno,ename,sal FROM emp)  e
+      WHERE rno = 5 ; 
+
+      WHERE rno  IN (5,10,15)       
+
+      WHERE rno BETWEEN 5 AND 10 
+
+      WHERE MOD(rno,2) = 0 
+
+      WHERE MOD(rno,5) = 0
+
+     => display last 3 rows ?
+
+      SELECT *
+      FROM  (SELECT rownum as rno,empno,ename,sal FROM emp)  e
+      WHERE  rno >= (SELECT COUNT(*)-2 FROM emp)  ; 
