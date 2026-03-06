@@ -3304,6 +3304,291 @@ select emp_first_name||' '||emp_last_name as emp_fullname,
 from emp444
 order by birthdate asc;
 
+Day-16
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                           CONSTRAINTS
+                         ==============
+
+                        Data integrity(To Maintaine proper data)or
+                           /      \    (To Maintaine valid data)
+                          /        \
+                        SQL        PL/SQL
+                    CONSTRAINTS   TRIGGERS    
+
+     Constraints are used to prevents or stops invalid data
+entry into our tables. Generally constraints are created on
+table columns.
+
+ Oracle having following types of constraints.
+These are
+
+1. Not null
+2. Unique
+3. Primary key
+4. Foreign key
+5. Check
+6. Default
+  
+   in database if we want to maintain proper data or valid data 
+according to client requirement then we are using SQL language
+constraints, Procedure language triggers.
+
+
+1)NOT NULL:- Not null constraint doesn't support table level.
+==========   This constraint doesn't accepts null values. 
+             But it will accepts duplicate values.
+
+
+
+
+2.UNIQUE:-This constraint is created on column level, table level.
+========  This constraint doesn't accepts duplicate values. But 
+          it will accepts null values.
+
+
+
+
+3.Primary Key:- Primary key is Uniquely identifying a record in a 
+=============   table. There can be only one primary key in a table. 
+                primary key doesn't accepts duplicate, null values. 
+
+
+
+
+5.CHECK:-Check constraint is used to define logical conditions
+=======  according to client business rules.
+
+
+
+
+------------------------------------------------------------------------------------------------------
+1.Create a student123 table with constraints based on the following
+  conditions.
+
+---->after creating the table insert valid, invalid records 
+     and observe the outputs.
+
+SID          does not accept nulls values and duplicate values
+SNAME        does not accept nulls
+MARKS        Marks must be between 0 and 100
+MAILID       Must be unique
+
+1) STUDENT123 TABLE
+
+CREATE TABLE STUDENT123 (
+  SID    NUMBER(4) PRIMARY KEY,
+  SNAME  VARCHAR2(20)NOT NULL,
+  MARKS  NUMBER(3) CHECK (MARKS BETWEEN 0 AND 100),
+  MAILID VARCHAR2(50) UNIQUE
+);
+
+-- Insert valid record
+INSERT INTO STUDENT123 VALUES (1, 'RAJ', 85, 'raj@gmail.com');
+
+-- Insert invalid record (MARKS > 100)
+INSERT INTO STUDENT123 VALUES (2, 'SAM', 120, 'sam@gmail.com');
+------------------------------------------------------------------------------------------------------
+2.Create the emp4 table with constraints based on the following
+  conditions.
+
+--->after creating the table insert valid, invalid records 
+     and observe the outputs.
+
+EMPNO      should not be NULL and should not allow duplicate values
+ENAME      should not be NULL
+GENDER     Must be M or F
+SAL        Minimum 5000 (means 5000 or above it will accept)
+
+EMP4 TABLE
+CREATE TABLE EMP4 (
+  EMPNO  NUMBER(4) PRIMARY KEY,
+  ENAME  VARCHAR2(20) NOT NULL,
+  GENDER CHAR(1)  CHECK (GENDER IN ('M','F')),
+  SAL    NUMBER(8) CHECK (SAL >= 5000)
+);
+
+-- Valid
+INSERT INTO EMP4 VALUES (101, 'RAMESH', 'M', 6000);
+
+-- Invalid (SAL < 5000)
+INSERT INTO EMP4 VALUES (102, 'SURESH', 'M', 4000);
+
+
+------------------------------------------------------------------------------------------------------
+3.Create the ACCOUNTS table with constraints based on the following
+  conditions.
+
+--->after creating the table insert valid, invalid records 
+     and observe the outputs.
+
+
+ACCNO       should not be NULL and should not allow duplicate values
+ACCTYPE     Must be 'S' OR 'C'
+BAL         Must be minimum 1000
+------------------------------------------------------------
+3) ACCOUNTS TABLE
+------------------------------------------------------------
+CREATE TABLE ACCOUNTS (
+  ACCNO   NUMBER(6)  PRIMARY KEY,
+  ACCTYPE CHAR(1)  CHECK (ACCTYPE IN ('S','C')),
+  BAL     NUMBER(10) CHECK (BAL >= 10000)
+);
+
+-- Valid
+INSERT INTO ACCOUNTS VALUES (1001, 'S', 2000);
+
+-- Invalid (BAL < 1000)
+INSERT INTO ACCOUNTS VALUES (1002, 'C', 500);
+------------------------------------------------------------------------------------------------------
+4.Create a emp3 table with constraints based on the following
+  conditions.
+
+---->after creating the table insert valid, invalid records 
+     and observe the outputs.
+
+
+USERID       does not accept null values and duplicate values
+
+USERNAME     does not accept null values and duplicate values
+
+PWD          Password minimum 8 characters
+------------------------------------------------------------
+4) EMP3 TABLE
+------------------------------------------------------------
+CREATE TABLE EMP3 (
+  USERID   NUMBER(4)  PRIMARY KEY,
+  USERNAME VARCHAR2(20)  UNIQUE NOT NULL,
+  PWD      VARCHAR2(20)  CHECK (LENGTH(PWD) >= 8)
+);
+
+-- Valid
+INSERT INTO EMP3 VALUES (1, 'ADMIN', 'PASSWORD123');
+
+-- Invalid (PWD < 8 chars)
+INSERT INTO EMP3 VALUES (2, 'USER', 'PASS');
+
+------------------------------------------------------------------------------------------------------ 
+Default: in all relational databases if we want to provide
+=======  default values into a table column then we are using
+         default clause.
+
+• It is used to apply default value to table column.
+
+• If we pass the value, it takes that value. if we don't pass the value
+  it takes default value.
+
+
+syntax:-
+======
+columnname datatype(size) default defaultvalue
+
+EG:-
+===
+
+SQL>create table test4(name varchar2(10), sal number(10) default 3000);
+
+SQL>insert into test4(name)values('SURYA');---->NULL values overrides the default values,then we must       use Skipping columns method to apply default values.
+
+SQL>insert into test4 values('ANUSHKA',5000);
+
+SQL>select * from test4;
+   
+    NAME         SAL
+  -------     ---------
+  SURYA          3000
+  ANUSHKA        5000
+------------------------------------------------------------
+DEFAULT CONSTRAINT
+------------------------------------------------------------
+CREATE TABLE TEST4 (
+  NAME VARCHAR2(10),
+  SAL  NUMBER(10) DEFAULT 3000
+);
+
+INSERT INTO TEST4 (NAME) VALUES ('SURYA'); -- SAL defaults to 3000
+INSERT INTO TEST4 VALUES ('ANUSHKA', 5000);
+
+------------------------------------------------------------------------------------------------------
+5.Create a student10 table with 4 columns and apply following constraints.
+
+--->after creating the table insert the records and observe
+    the outputs.
+
+SID           should not accept duplicate values and null values
+SNAME         should not accept null values
+INAME         by default INAME is 'NARESH IT'
+CITY          by default CITY is 'AMMERPET' 
+FEE           by default FEE is 30000
+
+------------------------------------------------------------
+5) STUDENT10 TABLE
+------------------------------------------------------------
+CREATE TABLE STUDENT10 (
+  SID    NUMBER(4)  PRIMARY KEY,
+  SNAME  VARCHAR2(20) NOT NULL,
+  INAME  VARCHAR2(20) DEFAULT 'NARESH IT',
+  CITY   VARCHAR2(20) DEFAULT 'AMMERPET',
+  FEE    NUMBER(8) DEFAULT 30000
+);
+
+INSERT INTO STUDENT10 (SID, SNAME) VALUES (1, 'RAJ'); -- Defaults apply
+
+------------------------------------------------------------------------------------------------------
+6.Create a table named test123 using table level constraints with the following conditions
+Table level:-in this method we are creating constraints on group of columns.
+============ i.e in this method first we are defining all columns and then
+             last only we must specify constraintype along with group of columns.
+
+
+SID        should not accept NULL values and duplicate values
+
+SNAME      should contain only capital letters
+
+SAL        more than 9000
+
+ANSWER:-
+======
+
+CREATE TABLE TEST3
+(
+SID NUMBER(4),
+SNAME VARCHAR2(10),
+SAL NUMBER(6),
+PRIMARY KEY(SID),
+CHECK(SNAME=UPPER(SNAME) AND SAL>9000)
+);
+    
+
+SQL> insert into test3 values(1,'INDIA',5000);
+Error:check constraint (SURYA.SYS_C008690) violated
+SQL> insert into test3 values(1,'SUBBARAO',12000);
+
+1 row created.
+SQL> SELECT * FROM TEST3; 
+   
+      SID        SNAME           SAL
+    -------   -----------    ----------
+       1        SUBBARAO        12000
+
+
+------------------------------------------------------------
+6) TEST123 TABLE (Table-level constraints)
+------------------------------------------------------------
+CREATE TABLE TEST123 (
+  SID   NUMBER(4),
+  SNAME VARCHAR2(10),
+  SAL   NUMBER(6), 
+  PRIMARY KEY (SID),
+   CHECK (SNAME = UPPER(SNAME) AND SAL > 9000)
+);
+
+-- Invalid (SAL < 9000)
+INSERT INTO TEST123 VALUES (1, 'INDIA', 5000);
+
+-- Valid
+INSERT INTO TEST123 VALUES (2, 'SUBBARAO', 12000);
+
+------------------------------------------------------------
 
 
 
