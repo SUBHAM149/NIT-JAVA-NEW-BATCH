@@ -1,0 +1,180 @@
+07-mar-26
+
+ CTE :- 
+ ---------
+  
+ => Common Table Expression
+ => using CTE also we can give name to the query output and we can use that name in another query
+ => CTE simplifies complex queries
+ => using CTE we can break a complex query into multiple queries and later combine outputs 
+
+syntax :-
+-------------
+
+  WITH <CTE1>
+   AS
+      (SELECT statement1) ,
+   <CTE2>
+   AS
+      (SELECT statement2)
+   -----------------------------------
+   
+   SELECT statement ;
+
+ Ex 1  :-   display first 5th row from emp table ?
+ ---------
+ 
+ WITH E
+  AS
+      (SELECT  rownum as rno,empno,ename,sal FROM emp)
+ SELECT * FROM E WHERE rno = 5 ; 
+                                 WHERE rno IN (5,10,15) ;
+                                 WHERE rno BETWEEN 5 AND 10;
+                                 WHERE MOD(rno,2) = 0;
+                                 WHERE  MOD(rno,2) = 1 ;
+                                    
+ Ex 2 :- 
+ 
+T1		T2
+F1		F1
+10		A
+20		B
+30		C
+
+ output :- 
+ 
+10	A
+20	B
+30	C
+
+WITH A
+ AS
+ ( SELECT ROWNUM as rno,F1 FROM T1 ) ,
+B
+ AS
+ (SELECT ROWNUM as rno,F1 FROM T2)
+SELECT A.F1 , B.F1
+FROM A INNER JOIN B
+ON  A.RNO = B.RNO  ;
+		
+ A			B
+ RNO	F1		RNO	F1
+1	10		1	A
+2	20		2	B
+3	30		3	C
+
+
+Ex 3  :- 
+ 
+T1
+AMT
+1000
+-200
+4000
+-500
+3000
+-800
+
+   output :- 
+
+	pos		neg
+	1000		-200
+	4000		-500
+	3000		-800
+
+scalar sub-querie :-
+----------------------------
+
+  =>  sub-queries in  SELECT clause are called scalar sub-queries 
+
+     SELECT  (select stmt) ,  (select stmt) ,----------
+     FROM tabname
+     WHERE cond
+
+ =>  sub-query output acts like a column for outer query
+=>  use scalar sub-query to show the query output in seperate column
+    
+Ex 1  :- 
+ 
+   SELECT (SELECT COUNT(*) FROM emp)  as emp ,
+                  (SELECT COUNT(*) FROM dept) as dept
+   FROM DUAL ; 
+
+   emp		dept 
+   14		4
+ 
+
+Ex 2  :-
+
+ display dept wise total sal  ? 
+ 
+ SELECT deptno,SUM(sal) as dept_totsal
+ FROM emp 
+ GROUP BY deptno  ;
+
+ DEPTNO   DEPT_TOTSAL
+----------       ----------------------
+        30       9400
+        10       8750
+        20      10875
+
+display DEPTNO      DEPT_TOTSAL 	TOTSAL    ?
+
+   SELECT deptno,SUM(sal) as dept_totsal ,
+                             (SELECT SUM(sal) FROM emp) as totsal
+   FROM emp 
+   GROUP BY deptno  ;
+
+     DEPTNO   DEPT_TOTSAL     TOTSAL
+    ---------        ----------------------     ----------
+        30          9400                        29025
+        10          8750                        29025
+        20         10875                       29025
+
+ => display  DEPTNO    DEPT_TOTSAL     TOTSAL      PCT   ? 
+
+                      PCT   =   ( DEPT_TOTSAL  /  TOTSAL ) * 100
+
+    SELECT deptno,SUM(sal) as dept_totsal ,
+                   (SELECT SUM(sal) FROM emp) as totsal ,
+                  ROUND(( SUM(sal) / (SELECT SUM(sal) FROM emp)) * 100 ,1)  as pct
+   FROM emp 
+   GROUP BY deptno  ;
+
+    DEPTNO DEPT_TOTSAL     TOTSAL        PCT
+   ----------     ---------------------      ----------     ----------
+        30        9400                      29025       32.4
+        10        8750                      29025       30.1
+        20       10875                     29025       37.5
+  
+
+ WITH E
+ AS
+( 
+   SELECT  deptno,SUM(sal) as dept_totsal,
+                               (SELECT SUM(sal) FROM emp) as totsal
+   FROM emp 
+  GROUP BY deptno
+ )
+  SELECT deptno,
+                dept_totsal,
+                totsal,
+                ROUND( (dept_totsal/totsal)*100,1) as pct
+  FROM E  ;
+
+ ===========================================================================
+
+ PIVOT operator :-
+ -----------------------
+
+  => operator used to convert rows into columns 
+  => operator used to display data in matrix form
+  => operator used for cross tabulation 
+
+ SELECT *
+ FROM (SELECT required data)  <alias>
+ PIVOT
+ (
+     aggr-expr  FOR  colname IN (v1,v2,v3,---)
+ )
+ ORDER BY colname ASC/DESC ;
