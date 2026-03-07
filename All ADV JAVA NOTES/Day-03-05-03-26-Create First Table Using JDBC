@@ -201,7 +201,6 @@ public class Program1 {
 		//2.establish the connection
         Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc_db_54", "root", "Subham@123");
         //3.Create Statement
-        conn.createStatement();
         Statement s=conn.createStatement();
         //4.execute the query
         s.execute("INSERT INTO STUDENT VALUES(101,'Subham','CSE',768200)");
