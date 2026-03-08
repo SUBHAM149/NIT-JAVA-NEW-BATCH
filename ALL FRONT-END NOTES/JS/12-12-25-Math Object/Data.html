@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Data Object in js</h2>
+    <script>
+      console.log("working");
+
+      console.log(Date());
+      console.log(new Date());
+      console.log(Date.now()); // 1st jan 1970 to today in millisecond
+      console.clear();
+
+      console.log(2025 - 1970);
+      let milliseconds = Date.now();
+      console.log("seconds : ", milliseconds / 1000);
+      console.log(" minutes : ", milliseconds / 1000 / 60);
+      console.log(" hours : ", milliseconds / 1000 / 60 / 60);
+      console.log(" days : ", milliseconds / 1000 / 60 / 60 / 24);
+      console.log(" days : ", milliseconds / 1000 / 60 / 60 / 24 / 365);
+
+      /*
+    let Day ; 
+    let hours ; 
+    let minutes ; 
+    let sec;
+
+    1 to 60 : one loop is there -> if second == 60 , second = 0 , minutes + 1, if minutes == 60 , minutes = 0 , hours += 1, if hours ==24 hours =0 , minutes = 0 , second = 0, day += 1
+    
+    get & set methods 
+    */
+
+      console.clear();
+      let __ID = Date.now();
+      console.log(__ID);
+    </script>
+  </body>
+</html>
