@@ -3588,7 +3588,173 @@ INSERT INTO TEST123 VALUES (1, 'INDIA', 5000);
 -- Valid
 INSERT INTO TEST123 VALUES (2, 'SUBBARAO', 12000);
 
+
+Day-17
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                              CONSTRAINTS TASK
+                            ====================
+
+4.Foreign Key:-If we want to establishes relationship between tables then we are
+============== using referential integrity constraint Foreign Key.
+
+
+    Generally One table foreign key must belongs to another table
+primary key. And also these primary key, foreign key columns must
+belong to same datatype.
+
+
+   Always foreign key values based on related primary key values only.
+Generally primary key doesn't accepts duplicate, null values where as
+foreign key accepts duplicate, null values.
+
+
+Column level:-(References)
+=============
+Syntax:-
+=======
+create table tablename(col1 datatype(size) references mastertablename(primarycolumnname).....);
+
+
+Table Level: (Foreign key, references)
+===========
+Syntax:-
+========
+create table tablename(col1 datatype(size),col2 datatype(size),.........., foreign
+                       key(col1,col2,.......) references mastertablename(primarykeycolnames));
+
+-----------------------------------------------------------------------------------------------------
+
 ------------------------------------------------------------
+-- 1. COURSES123 and STUDENTS123
+------------------------------------------------------------
+CREATE TABLE COURSES123 (
+    cid   NUMBER PRIMARY KEY,       -- no nulls, no duplicates
+    cname VARCHAR2(50) NOT NULL     -- no nulls
+);
+
+CREATE TABLE STUDENTS123 (
+    sid   NUMBER PRIMARY KEY,       -- no nulls, no duplicates
+    sname VARCHAR2(50) NOT NULL,    -- no nulls
+    cid   NUMBER,
+    CONSTRAINT fk_students_courses FOREIGN KEY (cid) REFERENCES COURSES123(cid)
+);
+
+-- Insert sample data
+INSERT INTO COURSES123 VALUES (101, 'SQL');
+INSERT INTO COURSES123 VALUES (102, 'Java');
+
+INSERT INTO STUDENTS123 VALUES (1, 'Ravi', 101);
+INSERT INTO STUDENTS123 VALUES (2, 'Anita', 102);
+
+------------------------------------------------------------
+-- 2. DOCTORS and PATIENTS
+------------------------------------------------------------
+CREATE TABLE DOCTORS (
+    DOCTORID NUMBER PRIMARY KEY,
+    DNAME    VARCHAR2(10) NOT NULL,
+    SPECIALTY VARCHAR2(10)
+);
+
+CREATE TABLE PATIENTS (
+    PATIENTID NUMBER PRIMARY KEY,
+    PNAME     VARCHAR2(50) NOT NULL,
+    DOCTORID  NUMBER,
+    CONSTRAINT fk_patients_doctors FOREIGN KEY (DOCTORID) REFERENCES DOCTORS(DOCTORID)
+);
+
+------------------------------------------------------------
+-- 3. AUTHORS and BOOKS
+------------------------------------------------------------
+CREATE TABLE AUTHORS (
+    author_id   NUMBER PRIMARY KEY,
+    author_name VARCHAR2(10) NOT NULL
+);
+
+CREATE TABLE BOOKS (
+    book_id   NUMBER PRIMARY KEY,
+    book_name VARCHAR2(50) NOT NULL,
+    author_id NUMBER,
+    CONSTRAINT fk_books_authors FOREIGN KEY (author_id) REFERENCES AUTHORS(author_id)
+);
+
+------------------------------------------------------------
+-- 4. ACCOUNTS and TRANSACTIONS
+------------------------------------------------------------
+CREATE TABLE ACCOUNTS (
+    ACCNO  NUMBER PRIMARY KEY, 
+    ACTYPE CHAR(1) CHECK (ACTYPE IN ('S','C')),
+    BAL    NUMBER CHECK (BAL >= 1000)
+);
+ 
+
+CREATE TABLE TRANSACTIONS (
+    TRID   NUMBER PRIMARY KEY,
+    TTYPE  CHAR(1) CHECK (TTYPE IN ('W','D')),
+    TDATE  DATE DEFAULT SYSDATE,
+    AMT    NUMBER CHECK (MOD(AMT,100) = 0),
+    ACCNO  NUMBER,
+    CONSTRAINT fk_transactions_accounts FOREIGN KEY (ACCNO) REFERENCES ACCOUNTS(ACCNO)
+);
+
+------------------------------------------------------------
+-- THEORY QUESTIONS (Answers as comments)
+------------------------------------------------------------
+-- 1. Constraint: Rule enforced on data in a table.
+--    Types: PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK, NOT NULL, DEFAULT.
+-- 2. Primary Key: Uniquely identifies each row. Only ONE per table.
+-- 3. Foreign Key: Column referencing PK of another table.
+-- 4. PK vs FK: PK uniquely identifies; FK enforces referential integrity.
+-- 5. Check Constraint: Ensures values meet a condition (e.g., salary > 0).
+-- 6. PK vs UNIQUE: Both enforce uniqueness; PK also disallows NULLs.
+-- 7. NOT NULL constraint does not support table-level definition.
+
+------------------------------------------------------------
+-- 5. CUSTOMER123 and ORDERS123
+------------------------------------------------------------
+CREATE TABLE CUSTOMER123 (
+    CUSTID NUMBER PRIMARY KEY,
+    CNAME  VARCHAR2(50) NOT NULL,
+    CITY   VARCHAR2(20) CHECK (CITY IN ('GUNTUR','VJD','HYD'))
+);
+
+CREATE TABLE ORDERS123 (
+    ORDERID NUMBER PRIMARY KEY,
+    ODATE   DATE DEFAULT SYSDATE,
+    AMOUNT  NUMBER CHECK (AMOUNT > 0),
+    CUSTID  NUMBER,
+    CONSTRAINT fk_orders_customer FOREIGN KEY (CUSTID) REFERENCES CUSTOMER123(CUSTID)
+);
+
+------------------------------------------------------------
+-- 6. EMP5 Table (SQL Server Mock Interview style, adapted for Oracle)
+------------------------------------------------------------
+CREATE TABLE EMP5 (
+    EMPNO   NUMBER PRIMARY KEY,              -- unique, not null
+    ENAME   VARCHAR2(50) NOT NULL,           -- not null
+    SAL     NUMBER CHECK (SAL > 0),          -- positive salary
+    MGRNO   NUMBER NULL,                     -- can be null
+    AGE     NUMBER CHECK (AGE >= 18),        -- must be adult
+    ADDRESS VARCHAR2(100),
+    PHONO   VARCHAR2(15) UNIQUE              -- unique phone number
+);
+
+------------------------------------------------------------
+-- SAMPLE INSERTS for testing (optional)
+------------------------------------------------------------
+INSERT INTO DOCTORS VALUES (1, 'Dr. Rao', 'Cardiology');
+INSERT INTO PATIENTS VALUES (101, 'Suresh', 1);
+
+INSERT INTO AUTHORS VALUES (1, 'Kiran');
+INSERT INTO BOOKS VALUES (1001, 'Oracle Basics', 1);
+
+INSERT INTO ACCOUNTS VALUES (5001, 'S', 2000);
+INSERT INTO TRANSACTIONS VALUES (9001, 'D', DEFAULT, 1000, 5001);
+
+INSERT INTO CUSTOMER123 VALUES (1, 'Ramesh', 'HYD');
+INSERT INTO ORDERS123 VALUES (101, DEFAULT, 5000, 1);
+
+INSERT INTO EMP5 VALUES (10, 'Anil', 25000, NULL, 30, 'Hyderabad', '9876543210');
+
 
 
 
