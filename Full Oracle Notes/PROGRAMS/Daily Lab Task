@@ -4078,5 +4078,500 @@ SELECT * FROM PASSENGER;
 
 SELECT * FROM BOARDINGPASS; 
 
+Day-19
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                  JOINS TASK
+                                ===============
+
+left outer join:-This join returns all rows from left side table and 
+================ matching rows from right side table. And also this join 
+                 returns null values in place of non matching rows in another table.
+
+Execution:-
+==========
+left outer join=====>inner join + left side table remaining
+                                  records(Here left side table
+                                               is main table)
+
+
+
+Right outer join:-This join returns all rows from right side table and 
+================  matching rows from left side table and also returns 
+                  null values in place of non matching rows in another table.
+
+
+Execution:-
+==========
+Right outer join=====>inner join + right side table remaining
+                                   records(Here right side table
+                                           is main table)
+
+
+
+Full outer join:-This join returns all rows from both the tables
+================ because it is combination of left and right outer
+                 joins.this join also returns null values in place 
+                 of non matching rows in another table.
+
+
+full outer join ---->inner join + left side table remaining rows +right
+                                  side table remaining rows
+
+
+------------------------------------------------------------------------------------------------------
+SQL> SELECT * FROM EMPLOYEES;
+
+       EMPNO    ENAME         DEPTNO
+     -------  ----------      --------
+         1      KIRAN           10
+         2      GOWTHAM         20
+         3      SURYA
+         4      ANUSHKA         20
+        
+        
+
+
+SQL> SELECT * FROM DEPARTMENTS;
+
+      DEPTNO      DNAME      
+     -------    ----------
+        10         HR
+        20         IT
+        40      FINANCE
+
+
+1) Employee names with their department names
+----------------------------------------------
+
+Query:
+SELECT E.ENAME, D.DNAME
+FROM EMPLOYEES E
+INNER JOIN DEPARTMENTS D
+ON E.DEPTNO = D.DEPTNO;
+
+Output:
+
+ENAME     DNAME
+--------  -------
+KIRAN     HR
+GOWTHAM   IT
+ANUSHKA   IT
+
+
+
+2) Employee details along with department details including employees without department
+------------------------------------------------------------------------------------------
+
+Query:
+SELECT E.EMPNO, E.ENAME, E.DEPTNO, D.DNAME
+FROM EMPLOYEES E
+LEFT OUTER JOIN DEPARTMENTS D
+ON E.DEPTNO = D.DEPTNO;
+
+Output:
+
+EMPNO   ENAME     DEPTNO   DNAME
+-----   --------  ------   -------
+1       KIRAN     10       HR
+2       GOWTHAM   20       IT
+3       SURYA     NULL     NULL
+4       ANUSHKA   20       IT
+
+
+
+3) Employee details along with department details including departments without employees
+-------------------------------------------------------------------------------------------
+
+Query:
+SELECT E.EMPNO, E.ENAME, D.DEPTNO, D.DNAME
+FROM EMPLOYEES E
+RIGHT OUTER JOIN DEPARTMENTS D
+ON E.DEPTNO = D.DEPTNO;
+
+Output:
+
+EMPNO   ENAME     DEPTNO   DNAME
+-----   --------  ------   --------
+1       KIRAN     10       HR
+2       GOWTHAM   20       IT
+4       ANUSHKA   20       IT
+NULL    NULL      40       FINANCE
+
+
+
+4) Employee details with department details including employees without department and departments without employees
+---------------------------------------------------------------------------------------------------------------------
+
+Query:
+SELECT E.EMPNO, E.ENAME, D.DEPTNO, D.DNAME
+FROM EMPLOYEES E
+FULL OUTER JOIN DEPARTMENTS D
+ON E.DEPTNO = D.DEPTNO;
+
+Output:
+
+EMPNO   ENAME     DEPTNO   DNAME
+-----   --------  ------   --------
+1       KIRAN     10       HR
+2       GOWTHAM   20       IT
+4       ANUSHKA   20       IT
+3       SURYA     NULL     NULL
+NULL    NULL      40       FINANCE
+
+
+
+5) Employees who have salary records
+------------------------------------
+
+Query:
+SELECT ED.*
+FROM EMPLOYEE_DETAILS ED
+INNER JOIN EMPLOYEE_SALARY ES
+ON ED.EMPID = ES.ID;
+
+Output:
+
+EMPID   NAME      DOB         STATE
+-----   --------  ---------   -----
+1       JOHN      23-APR-95   NY
+2       SMITH     15-AUG-90   CA
+3       ROHAN     27-APR-96   TX
+4       JOHNSON   12-FEB-75   CA
+5       BROWN     05-NOV-00   AL
+6       JILL      15-JUN-99   CA
+7       JAMES     12-SEP-83   WA
+
+EMPLOYEE_DETAILS TABLE:-
+======================
+
+  EMPID     NAME          DOB          STATE
+ ------   --------    -----------     -------
+   1       JOHN        23-APR-95        NY
+   2       SMITH       15-AUG-90        CA
+   3       ROHAN       27-APR-96        TX
+   4       JOHNSON     12-FEB-75        CA
+   5       BROWN       05-NOV-00        AL
+   6       JILL        15-JUN-99        CA
+   7       JAMES       12-SEP-83        WA
+   8       JACK        25-SEP-82        CA
+
+
+
+
+EMPLOYEE_SALARY TABLE:-
+======================
+
+  ID          SALARY
+------      ----------
+   1           15000
+   2           20000
+   3           25000
+   4           18000
+   5           35000
+   6           40000
+   7           45000
+              
+6) Courier details delivered in JANUARY sorted by TO_ADDRESS
+-------------------------------------------------------------
+
+Query:
+SELECT C.COURIER_ID,
+       C.FROM_ADDRESS,
+       C.TO_ADDRESS,
+       CS.STATUS
+FROM COURIER C
+INNER JOIN COURIER_STATUS CS
+ON C.COURIER_ID = CS.COURIER_ID
+WHERE CS.STATUS = 'Delivered'
+AND TO_CHAR(CS.ACTUAL_DELIVERED_DATE,'MON')='JAN'
+ORDER BY C.TO_ADDRESS ASC;
+
+Output:
+
+COURIER_ID   FROM_ADDRESS   TO_ADDRESS   STATUS
+----------   ------------   ----------   ---------
+C103         Chennai        Bangalore    Delivered
+C101         Hyderabad      Chennai      Delivered
+
+
+
+7) Output of joins for TEST tables
+----------------------------------
+
+TABLE test10
+SNO
+---
+1
+1
+
+TABLE test20
+SNO
+---
+1
+1
+1
+
+
+INNER JOIN
+
+Query:
+SELECT * FROM test10 t1
+INNER JOIN test20 t2
+ON t1.SNO = t2.SNO;
+
+Output rows = 6
+
+SNO   SNO
+---   ---
+1     1
+1     1
+1     1
+1     1
+1     1
+1     1
+
+
+
+LEFT OUTER JOIN
+
+Output rows = 6
+
+SNO   SNO
+---   ---
+1     1
+1     1
+1     1
+1     1
+1     1
+1     1
+
+
+
+RIGHT OUTER JOIN
+
+Output rows = 6
+
+SNO   SNO
+---   ---
+1     1
+1     1
+1     1
+1     1
+1     1
+1     1
+
+
+
+FULL OUTER JOIN
+
+Output rows = 6
+
+SNO   SNO
+---   ---
+1     1
+1     1
+1     1
+1     1
+1     1
+1     1
+
+
+
+---------------------------------------------------------------
+
+V.V.I.M.P QUESTION
+How many rows returned in INNER JOIN
+---------------------------------------------------------------
+
+TABLE t1
+
+SNO
+---
+1
+1
+2
+2
+3
+4
+
+
+TABLE t2
+
+SNO
+---
+1
+2
+3
+4
+5
+
+
+Query:
+SELECT *
+FROM t1
+INNER JOIN t2
+ON t1.SNO = t2.SNO;
+
+
+Calculation:
+
+1 appears 2 times in t1 and 1 time in t2 → 2 rows  
+2 appears 2 times in t1 and 1 time in t2 → 2 rows  
+3 appears 1 time in t1 and 1 time in t2 → 1 row  
+4 appears 1 time in t1 and 1 time in t2 → 1 row  
+
+
+Total Rows Returned = 6
+
+
+
+
+------------------------------------------------------------------------------------------------------
+ *
+***When ever we performing inner join on t1 and t2 tables how many
+ * rows are returned fastly tell me (V.V.I.M.P)
+
+SQL>select * from t1;
+
+      SNO
+     -----
+       1
+       1
+       2
+       2
+       3
+       4
+
+SQL>select * from t2;
+
+     SNO
+    -----
+      1
+      2
+      3
+      4
+      5
+
+------------------------------------------------------------------------------------------------------
+DROP TABLE  EMPLOYEES;
+DROP TABLE DEPARTMENTS;
+
+DROP TABLE EMPLOYEE_DETAILS;
+DROP TABLE EMPLOYEE_SALARY;
+
+DROP TABLE COURIER_STATUS;
+DROP TABLE COURIER;
+
+
+
+
+
+CREATE TABLE DEPARTMENTS
+(
+DEPTNO NUMBER(10) PRIMARY KEY,
+DNAME VARCHAR2(10) 
+);
+
+
+
+INSERT INTO DEPARTMENTS VALUES(10,'HR');
+INSERT INTO DEPARTMENTS VALUES(20,'IT');
+INSERT INTO DEPARTMENTS VALUES(40,'FINANCE');
+
+
+CREATE TABLE EMPLOYEES
+(
+EMPNO NUMBER(10),
+ENAME VARCHAR2(10),
+DEPTNO NUMBER(10) REFERENCES DEPARTMENTS(DEPTNO)
+);
+
+
+
+INSERT INTO  EMPLOYEES  VALUES(1,'KIRAN',10);
+INSERT INTO  EMPLOYEES  VALUES(2,'GOWTHAM',20);
+INSERT INTO  EMPLOYEES  VALUES(3,'SURYA',NULL);
+INSERT INTO  EMPLOYEES  VALUES(4,'ANUSHKA',20);
+
+
+
+
+CREATE TABLE EMPLOYEE_DETAILS (
+        EMPID NUMBER(4) PRIMARY KEY,
+        NAME VARCHAR2(10) ,
+        DOB DATE,
+        STATE VARCHAR2(10)
+   );
+
+
+
+
+INSERT INTO EMPLOYEE_DETAILS VALUES(1, 'JOHN', '23-APR-95', 'NY');
+INSERT INTO EMPLOYEE_DETAILS VALUES(2, 'SMITH', '15-AUG-90', 'CA');
+INSERT INTO EMPLOYEE_DETAILS VALUES(3, 'ROHAN', '27-APR-96', 'TX');
+INSERT INTO EMPLOYEE_DETAILS VALUES(4, 'JOHNSON', '12-FEB-75', 'CA');
+INSERT INTO EMPLOYEE_DETAILS VALUES(5, 'BROWN', '05-NOV-00', 'AL');
+INSERT INTO EMPLOYEE_DETAILS VALUES(6, 'JILL', '15-JUN-99', 'CA');
+INSERT INTO EMPLOYEE_DETAILS VALUES(7, 'JAMES', '12-SEP-83', 'WA');
+INSERT INTO EMPLOYEE_DETAILS VALUES(8, 'JACK', '25-OCT-82', 'CA');
+
+
+CREATE TABLE EMPLOYEE_SALARY (
+        ID NUMBER(4) PRIMARY KEY,
+        SALARY NUMBER(10, 2)
+   );
+
+
+INSERT INTO EMPLOYEE_SALARY VALUES(1, 15000);
+INSERT INTO EMPLOYEE_SALARY VALUES(2, 20000);
+INSERT INTO EMPLOYEE_SALARY VALUES(3, 25000);
+INSERT INTO EMPLOYEE_SALARY VALUES(4, 18000);
+INSERT INTO EMPLOYEE_SALARY VALUES(5, 35000);
+INSERT INTO EMPLOYEE_SALARY VALUES(6, 40000);
+INSERT INTO EMPLOYEE_SALARY VALUES(7, 45000);
+
+
+
+CREATE TABLE COURIER (
+    COURIER_ID VARCHAR2(10) PRIMARY KEY,
+    FROM_ADDRESS VARCHAR2(15),
+    TO_ADDRESS VARCHAR2(10),
+    BOOKING_DATE DATE
+);
+
+
+
+INSERT INTO COURIER VALUES ('C101','Hyderabad','Chennai','05-JAN-24');
+INSERT INTO COURIER VALUES ('C102','Bangalore','Hyderabad','02-JAN-24');
+INSERT INTO COURIER VALUES ('C103','Chennai','Bangalore','15-JAN-24');
+INSERT INTO COURIER VALUES ('C104','Pune','Mumbai','18-FEB-24');
+
+
+
+CREATE TABLE COURIER_STATUS (
+    COURIER_ID VARCHAR2(10),
+    STATUS VARCHAR2(10),
+    ACTUAL_DELIVERED_DATE DATE,
+    FOREIGN KEY (COURIER_ID) REFERENCES COURIER(COURIER_ID)
+);
+
+
+INSERT INTO COURIER_STATUS VALUES ('C101','Delivered','10-JAN-24');
+INSERT INTO COURIER_STATUS VALUES ('C102','In Transit',NULL);
+INSERT INTO COURIER_STATUS VALUES ('C103','Delivered','20-JAN-24');
+INSERT INTO COURIER_STATUS VALUES ('C104','Delivered','22-FEB-24');
+
+
+commit;
+
+
+
+
+
+
+
+
+
+
 
 
