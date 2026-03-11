@@ -1,0 +1,171 @@
+  CUSTS					CUSTT
+  CID	NAME	CITY			CID	NAME	CITY
+  10	A	MUM => U		10	A	HYD
+  11	B	BLR			11	B	BLR
+  12	C	DEL => I
+   
+  MERGE INTO <TARGET-TABLE> <ALIAS>
+  USING <SOURCE-TABLE> <ALIAS>
+  ON (CONDITION)
+  WHEN MATCHED THEN
+        UPDATE
+  WHEN NOT MATCHED THEN
+        INSERT;
+
+ Ex :- 
+ 
+step 1 :- create source table
+
+ CREATE TABLE custs
+ (
+   cid  NUMBER(2),
+   cname VARCHAR2(10),
+   city  VARCHAR2(10)
+  );
+
+ INSERT INTO custs VALUES(10,'A','HYD');
+ INSERT INTO custs VALUES(11,'B','BLR');
+
+step 2 :- create replica
+
+ CREATE TABLE custt
+ AS
+ SELECT * FROM custs ; 
+
+step 3 :- modify source table
+
+ INSERT INTO custs VALUES(12,'C','DEL');
+ UPDATE custs SET city = 'MUM' WHERE cid=10 ;
+
+ CUSTS				CUSTT
+ CID	NAME	CITY		CID	NAME	CITY
+ 10	A	MUM		10	A	HYD
+ 11	B	BLR		11	B	BLR
+ 12	C	DEL
+
+step 4 :- use MERGE command to apply changes made to custs to custt
+
+ MERGE INTO CUSTT  T
+ USING CUSTS S
+ ON (S.CID = T.CID)
+ WHEN MATCHED THEN
+   UPDATE SET T.CITY = S.CITY 
+ WHEN NOT MATCHED THEN
+   INSERT VALUES(S.CID,S.NAME,S.CITY) ;
+
+Question 1 :- 
+
+ EMPS				EMPT
+ EMPID	ENAME	SAL		EMPID	ENAME	SAL
+ 100	A	5000		100	A
+ 101	B	6000		101	B
+ 102	C	7000		102	C
+
+ => copy salaries from EMPS to EMPT ?
+  
+   1 using UPDATE command
+   2 using MERGE command
+
+========================================================================
+
+DB Transactions :-
+==================
+
+=> a transaction is a unit of work that contains one or more dmls
+   and must be saved as a whole or must be cancelled as a whole.
+
+   ex :-  money transfer
+
+	  acct1-------------1000----------------------acct2
+ 
+          update1				      update2
+          (bal=bal-1000)			      (bal = bal + 1000)
+
+          successful					failed      invalid
+ 
+          failed                                        successful  invalid
+
+          successful					successful  valid
+
+	  failed					failed	    valid
+
+  => every txn must gurantee a property called atomocity i.e. all or none
+     if txn contains multiple operations (i,u,d) if all are successful
+     then it must be saved, if one of the operation fails then entire
+     txn must be cancelled.
+  
+  => the following commands provided by oracle to handle transactions
+
+    1 COMMIT		=> To save txn
+    2 ROLLBACK		=> To cancel txn
+    3 SAVEPOINT		=> To cancel part of the txn
+ 
+ => every txn has a begin point and an end point
+ 
+ => a txn begins implicitly with dml command and ends with any of the
+    following commands
+
+      1 COMMIT / ROLLBACK
+      2 DDL txn ends with COMMIT
+
+Ex 1 :- 
+
+   create table a(a number(2)); => COMMIT;
+   insert into a values(10);    => txn begins T1
+   insert into a values(20);    
+   insert into a values(30);
+   insert into a values(40);
+   commit;                      => txn ends 
+
+  => if txn ends with commit then it is called successful txn and
+     operations are saved
+
+Ex 2 :- 
+
+   create table a(a number(2));  => implicitly committed
+   insert into a values(10);     => txn begins T1
+   insert into a values(20);   
+   commit;                       => txn ends 
+   insert into a values(30);     => txn begins T2
+   insert into a values(40);
+   rollback;                     => txn ends 
+
+  => if txn ends with rollback then it is called aborted txn 
+     and operations are cancelled
+
+SAVEPOINT :-
+===========
+
+ => we can declare savepoint and we can rollback upto the savepoint
+ => using savepoint we can cancel part of the txn
+
+ Ex :- 
+
+   create table a(a number(2));   
+   insert into a values(10);      
+   insert into a values(20);  
+   savepoint sp1;                   
+   insert into a values(30);      
+   insert into a values(40);
+   savepoint sp2;
+   insert into a values(50);
+   insert into a values(60);
+   rollback to sp2;
+
+ =========================================================================
+
+ DB Security :-
+ ==============
+
+ 1 USERS		=> provides security at db level
+ 2 PRIVILEGES		=> provides security at table level
+ 3 VIEWS                => provide security at row & col level
+
+system :-
+-----------
+
+ SQL>CREATE USER NARESH IDENTIFIED BY ORACLE     
+     DEFAULT TABLESPACE USERS
+     QUOTA UNLIMITED ON USERS ;
+
+ SQL>GRANT CONNECT,RESOURCE TO NARESH;
