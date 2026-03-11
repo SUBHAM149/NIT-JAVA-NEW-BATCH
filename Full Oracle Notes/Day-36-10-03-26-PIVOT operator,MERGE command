@@ -1,0 +1,150 @@
+10-mar-25
+
+ PIVOT operator :-
+ -----------------------
+
+  => operator used to convert rows into columns 
+  => operator used to display data in matrix form
+  => operator used for cross tabulation 
+
+ SELECT *
+ FROM (SELECT required data)  <alias>
+ PIVOT
+ (
+     aggr-expr  FOR  colname IN (v1,v2,v3,---)
+ )
+ ORDER BY colname ASC/DESC ;
+
+Ex 1  :-
+
+ SELECT *
+ FROM (SELECT deptno,job,sal FROM emp)  e
+ PIVOT
+ (
+   SUM(sal)   FOR deptno IN (10,20,30)
+ )
+ORDER BY job ASC ; 
+
+			10		20		30
+
+	ANALYST		sum(sal)
+
+	CLERK
+
+	MANAGER
+
+	SALESMAN
+
+Ex 2 :- 
+
+ 			1	2	3	4
+ 
+		1980	?	?	?	?
+
+		1981	?	?	?	?
+
+		1982
+
+		1983
+
+     
+   SELECT  *
+   FROM  (SELECT  TO_CHAR(hiredate,'yyyy') as year,
+                                 TO_CHAR(hiredate,'q') as qrt,
+                                 empno
+                FROM emp)  e
+ PIVOT
+ (
+       COUNT(empno)   FOR   qrt IN (1,2,3,4)
+ )
+ORDER BY year ASC ; 
+
+Ex 3 :- 
+
+ STUDENT
+ sno	sname	subject	marks
+  1	A	MAT	80
+  1	A	PHY	60
+  1	A	CHE	90
+  2	B	MAT	50
+  2	B	PHY	60
+  2	B	CHE	40
+
+ outptut :-
+ 
+ SNO	MAT	PHY	CHE
+ 1	80	60	90
+ 2	50	60	40
+
+creating new table from existing table (creating replica) :-
+============================================
+
+  CREATE TABLE <new-tabname>
+  AS
+ SELECT columns
+ FROM <old-tabname>
+  [WHERE cond] ; 
+
+  Ex 1 :-  copying all rows & all columns
+
+  CREATE TABLE emp11 
+  AS
+  SELECT * FROM emp ; 
+
+ Ex 2 :-  copying specific rows & cols
+
+  CREATE TABLE emp12
+  AS
+  SELECT  empno,ename,job,sal,deptno 
+  FROM emp
+  WHERE job IN ('CLERK','MANAGER') ;
+
+Ex 3 :-  copy only structure (columns) but not data (rows)
+
+  CREATE TABLE emp13
+  AS
+  SELECT *
+  FROM emp
+  WHERE 1=2 ;
+
+Ex 4  :-  copying table from one user to another user
+
+    copy emp table from user batch54 to  user batch5253  ?
+
+     SYSTEM :-
+    ----------------
+
+    CREATE TABLE BATCH5253.emp
+    AS
+    SELECT * FROM BATCH54.emp ;
+
+ copying data from one table to another table :-
+ ---------------------------------------------------------------
+
+   INSERT INTO <target-table>
+   SELECT columns FROM <source-table> [WHERE cond] ; 
+
+ ex :- 
+
+   => copy data from emp to emp13 ?
+
+       INSERT INTO emp13
+       SELECT * FROM emp ; 
+ 
+MERGE command :-
+---------------------------
+
+  =>  merge is  DML command
+  =>  command used to merge data into a table
+  => merge is the combination of insert & update
+  => using merge command we can apply changes made to one table to another table (replica)
+  
+ MERGE INTO <target-table>  <alias>
+ USING <source-table> <alias> 
+ ON (condition)
+ WHEN MATCHED THEN
+         update  
+ WHEN NOT MATCHED THEN 
+         insert;
+ 
+ 
