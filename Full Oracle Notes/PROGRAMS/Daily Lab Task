@@ -4560,9 +4560,180 @@ INSERT INTO COURIER_STATUS VALUES ('C101','Delivered','10-JAN-24');
 INSERT INTO COURIER_STATUS VALUES ('C102','In Transit',NULL);
 INSERT INTO COURIER_STATUS VALUES ('C103','Delivered','20-JAN-24');
 INSERT INTO COURIER_STATUS VALUES ('C104','Delivered','22-FEB-24');
-
-
 commit;
+
+Day-20
+-----------------------------------------------------------------------------------
+                                 Self Join
+                               ============
+
+Self join:-Joining a table to itself is called self join. Here joining
+=========  conditional columns must belongs to same data type.
+
+
+  Generally in all relational databases self joins are used in
+following 2 senarios. These are
+
+1)Compare one table one column any value with all other values
+  in same column.
+
+2)Compare 2 different column values(same datatype) in a same table
+
+
+
+   Whenever we are using self join then we must create table aliasnames in from clause.
+These aliasnames must be different names. These aliasnames internally behaves like
+exact tables when query execution time.
+
+------------------------------------------------------------------------------------------------------
+ - 1. Display employee names and their manager names
+SELECT E1.ename AS Employee_Name,
+       E2.ename AS Manager_Name
+FROM emp E1
+JOIN emp E2 ON E1.mgr = E2.empno;
+EMPLOYEE   MANAGER
+---------- ----------
+SCOTT      JONES
+FORD       JONES
+ALLEN      BLAKE
+WARD       BLAKE
+MARTIN     BLAKE
+TURNER     BLAKE
+JAMES      BLAKE
+ADAMS      SCOTT
+JONES      KING
+BLAKE      KING
+CLARK      KING
+SMITH      FORD
+
+-- 2. Display employees who are reporting to BLAKE
+SELECT E1.ename AS Employee_Name
+FROM emp E1
+JOIN emp E2 ON E1.mgr = E2.empno
+WHERE E2.ename = 'BLAKE';
+EMPLOYEE_N
+----------
+ALLEN
+WARD
+MARTIN
+TURNER
+JAMES
+
+-- 3. Display employees who are getting more salary than their manager
+SELECT E1.ename AS Employee_Name,
+       E1.sal AS Employee_Salary,
+       E2.ename AS Manager_Name,
+       E2.sal AS Manager_Salary
+FROM emp E1
+JOIN emp E2 ON E1.mgr = E2.empno
+WHERE E1.sal > E2.sal;
+EMPLOYEE_N EMPLOYEE_SALARY MANAGER_NA MANAGER_SALARY
+---------- --------------- ---------- --------------
+SCOTT                 3000 JONES                2975
+FORD                  3000 JONES                2975
+
+
+-- 4. Display BLAKE's manager name
+SELECT E2.ename AS Manager_Name
+FROM emp E1
+JOIN emp E2 ON E1.mgr = E2.empno
+WHERE E1.ename = 'BLAKE';
+MANAGER
+----------
+KING
+
+-- 5. Display employees who are joining before their managers
+
+SELECT E1.ename AS Employee_Name,
+       E1.hiredate AS Employee_HireDate,
+       E2.ename AS Manager_Name,
+       E2.hiredate AS Manager_HireDate
+FROM emp E1
+JOIN emp E2 ON E1.mgr = E2.empno
+WHERE E1.hiredate < E2.hiredate;
+------------------------------------------------------------
+-- NON-EQUI JOIN EXAMPLE
+------------------------------------------------------------
+
+-- Tables:
+-- test3: deptno = 10, 20
+-- test4: deptno = 10, 20, 30
+
+-- Non-equi join using >
+SELECT *
+FROM test3
+JOIN test4
+ON test3.deptno > test4.deptno;
+
+-- Output (guessed):
+-- test3.deptno=20 joins with test4.deptno=10,20
+-- test3.deptno=10 has no match
+-- Result:
+-- (20,10)
+-- (20,20)
+
+------------------------------------------------------------
+-- CROSS JOIN EXAMPLE
+------------------------------------------------------------
+
+-- Cartesian product of emp and dept
+SELECT ename, sal, dname, loc
+FROM emp, dept;
+
+-- or explicitly
+SELECT ename, sal, dname, loc
+FROM emp CROSS JOIN dept;
+
+-- Output: 56 rows (emp rows × dept rows)
+
+------------------------------------------------------------
+-- JOIN OUTPUTS (q1 vs q2)
+------------------------------------------------------------
+
+-- q1: 1,2,3,4,5,6,8
+-- q2: 1,2,3,3,4,7,9
+
+-- INNER JOIN
+-- Common values only (duplicates preserved)
+-- Output:
+-- 1-1, 2-2, 3-3, 3-3, 4-4
+
+-- LEFT OUTER JOIN
+-- All q1 + matches, unmatched → NULL
+-- Output:
+-- 1-1, 2-2, 3-3, 3-3, 4-4, 5-NULL, 6-NULL, 8-NULL
+
+-- RIGHT OUTER JOIN
+-- All q2 + matches, unmatched → NULL
+-- Output:
+-- 1-1, 2-2, 3-3, 3-3, 4-4, NULL-7, NULL-9
+
+-- FULL OUTER JOIN
+-- All from both sides
+-- Output:
+-- 1-1, 2-2, 3-3, 3-3, 4-4, 5-NULL, 6-NULL, 8-NULL, NULL-7, NULL-9
+
+------------------------------------------------------------
+-- MCQ: INNER JOIN on TEST01, TEST02
+------------------------------------------------------------
+
+-- Tables (simplified):
+-- TEST01: 1, null, null, 2
+-- TEST02: 1,2,3
+
+-- INNER JOIN matches only common non-null values.
+-- Common: 1,2
+-- Multiple 1’s in TEST01 × 1 in TEST02 → 3 rows of (1,1)
+-- 2 matches once → (2,2)
+-- Nulls never match.
+
+-- Correct Answer: (c)
+-- Output:
+-- 1-1
+-- 1-1
+-- 1-1
+-- 2-2
+------------------------------------------------------------
 
 
 
