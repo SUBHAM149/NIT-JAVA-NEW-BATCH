@@ -4423,10 +4423,6 @@ Calculation:
 
 Total Rows Returned = 6
 
-
-
-
-------------------------------------------------------------------------------------------------------
  *
 ***When ever we performing inner join on t1 and t2 tables how many
  * rows are returned fastly tell me (V.V.I.M.P)
@@ -4451,8 +4447,6 @@ SQL>select * from t2;
       3
       4
       5
-
-------------------------------------------------------------------------------------------------------
 DROP TABLE  EMPLOYEES;
 DROP TABLE DEPARTMENTS;
 
@@ -4563,7 +4557,7 @@ INSERT INTO COURIER_STATUS VALUES ('C104','Delivered','22-FEB-24');
 commit;
 
 Day-20
------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                                  Self Join
                                ============
 
@@ -4585,7 +4579,6 @@ following 2 senarios. These are
 These aliasnames must be different names. These aliasnames internally behaves like
 exact tables when query execution time.
 
-------------------------------------------------------------------------------------------------------
  - 1. Display employee names and their manager names
 SELECT E1.ename AS Employee_Name,
        E2.ename AS Manager_Name
@@ -4734,9 +4727,435 @@ FROM emp CROSS JOIN dept;
 -- 1-1
 -- 2-2
 ------------------------------------------------------------
+ Day-21
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                              JOINS TASK
+                            =============
+
+Joining more than 2 tables:-
+===========================
+          
+ANSI style (or) 9i joins style:-
+===============================
+
+syntax:-
+=======
+select *
+from table1 join table2 
+on table1.key=table2.key
+       join table3
+on table2.key=table3.key
+
+
+------------------------------------------------------------------------------------------------------
+1\.Write an SQL query to display STUDENT_NAME and COURSE_NAME by joining STUDENT, FEE, 
+  and COURSE tables.Sort the results by STUDENT_ID in ascending order
+  and display only the first 6 records.[HCL FACE TO FACE INTERVIEW QUESTION]
+SQL> SELECT STUDENT_NAME,COURSE_NAME
+  2  FROM STUDENT  S JOIN FEE F
+  3  ON S.STUDENT_ID=F.STUDENT_ID
+  4  JOIN COURSE C
+  5  ON F.COURSE_FEE=C.COURSE_FEE
+  6  ORDER BY S.STUDENT_ID
+  7  FETCH FIRST 6 ROWS ONLY;
+
+STUDENT_NAME         COURSE_NAME
+-------------------- --------------------
+SURYA                JAVA
+GOWTHAM              ORACLE
+ANUSHKA              JAVA
+KIRAN                SQLSERVER
+KAVYA PAPA           ORACLE
+SHREYAS              .NET
+
+
+SQL> SELECT * FROM STUDENT;
+
+    STUDENT_ID      STUDENT_NAME
+    ----------    ---------------
+         1           SURYA
+         2           GOWTHAM
+         3           ANUSHKA
+         4           KIRAN
+         5           KAVYA PAPA
+         6           SHREYAS
+         7           RADHIKA
+         8           PREETHI
+         9           NITISH
+        10           ABHISHEK
+
+10 rows selected.
+
+
+SQL> SELECT * FROM FEE;
+
+     STUDENT_ID     COURSE_FEE
+     ----------     ----------
+         1            8000
+         2            4000
+         3            8000
+         4            3000
+         5            4000
+         6            5000
+         7            6000
+         8            4000
+         9            5000
+        10            8000
+
+10 rows selected.
+
+
+SQL> SELECT * FROM COURSE;
+
+   COURSE_FEE       COURSE_NAME
+   ----------     ---------------
+      3000          SQLSERVER
+      4000          ORACLE
+      8000          JAVA
+      6000          PHYTHON
+      5000          .NET
+
+5 rows selected.
 
 
 
+2.Write a query to display SEAT_NUMBER(use alias SEATNO),CATEGORY_NAME(use alias CATEGORYNAME)
+  of seat in stadium EDEN GARDENS and display the output in order of descending order
+  of seat number[COGNIZANT TECHNICAL ROUND INTERVIEW QUESTION]
+SQL> SELECT s.SEAT_NUMBER AS SEATNO, sc.CATEGORY_NAME AS CATEGORYNAME
+  2  FROM SEATS s
+  3  JOIN SEATCATEGORIES sc ON s.CATEGORY_ID = sc.CATEGORY_ID
+  4  JOIN STADIUM st ON s.STADIUM_ID = st.STADIUM_ID
+  5  WHERE st.STADIUM_NAME = 'EDEN GARDENS'
+  6  ORDER BY s.SEAT_NUMBER DESC;
+
+SEATNO          CATEGORYNAME
+--------------- --------------------
+A120            VIP
+A110            GENERAL
+A105            PREMIUM
+
+ Your output should have 2 columns as given below
+
+      SEATNO      CATEGORYNAME
+
+
+
+SQL> SELECT * FROM SEATS;
+
+
+	STADIUM_ID	SEAT_NUMBER	CATEGORY_ID
+        ----------     ------------    -------------
+	    1	           A105	            102
+	    1	           A110        	    103
+	    1	           A120	            101
+	    2	           B101     	    102
+            3              C120             101
+
+
+SQL> SELECT * FROM SEATCATEGORIES;
+
+
+     CATEGORY_ID      CATEGORY_NAME         PRICE
+     -----------     ---------------      ----------
+          101	          VIP               5000
+          102	          PREMIUM           3000
+          103	          GENERAL           1500
+
+
+
+
+SQL> SELECT * FROM STADIUM;
+
+
+    STADIUM_ID	    STADIUM_NAME        LOCATION         CAPACITY
+    ----------     --------------      ----------       ----------- 
+        1	    EDEN GARDENS        KOLKATA            66000
+        2	    UPPAL               HYDERABAD          55000
+        3           WANKHEDE            MUMBAI             33000
+
+
+
+------------------------------------------------------------------------------------------------------
+3.Write a query to display ename and pname from EMPLOYEE,PROJECTS tables
+                     
+                         (OR)
+
+  Write a query to display employee names and the project names they are working on
+  SQL> SELECT E.ENAME,P.PNAME FROM EMPLOYEE E
+  2  JOIN PROJECTS P ON E.EMPID=P.EMPID;
+
+ENAME      PNAME
+---------- ------------------------------
+GOWTHAM    SENTIMENT ANALYSIS
+KIRAN      MOBILE APP DEVELOPMENT
+SUBBARAO   EMPLOYEE PAYROLL
+
+
+
+SQL> SELECT * EMPLOYEE;
+
+EMPID      ENAME 
+-----    ---------    
+  1        SUBBARAO
+  2        KIRAN
+  3        GOWTHAM    
+  4        SURYA
+  5        ANUSHKA
+
+
+SQL> SELECT * FROM PROJECTS;
+
+
+  PID           PNAME                      EMPID
+--------     -------------------          --------
+  101        SENTIMENT ANALYSIS              3
+  102        ONLINE VOTING SYSTEM            
+  103        MOBILE APP DEVELOPMENT          2
+  104        EMPLOYEE PAYROLL                1
+  105        BANK ACCOUNT SYSTEM            
+
+
+
+
+4.Write a query to display all employees and all projects from employee,projects tables
+SQL> SELECT E.ENAME,P.PNAME  FROM EMPLOYEE E CROSS JOIN PROJECTS P;
+
+ENAME      PNAME
+---------- ------------------------------
+SUBBARAO   SENTIMENT ANALYSIS
+SUBBARAO   ONLINE VOTING SYSTEM
+SUBBARAO   MOBILE APP DEVELOPMENT
+SUBBARAO   EMPLOYEE PAYROLL
+SUBBARAO   BANK ACCOUNT SYSTEM
+KIRAN      SENTIMENT ANALYSIS
+KIRAN      ONLINE VOTING SYSTEM
+KIRAN      MOBILE APP DEVELOPMENT
+
+4.Write a query to display the employees who are not assigned to any project
+  from employee,projects tables
+SQL> SELECT e.ENAME, p.PNAME
+  2  FROM EMPLOYEE e
+  3  CROSS JOIN PROJECTS p;
+
+ENAME      PNAME
+---------- ------------------------------
+SUBBARAO   SENTIMENT ANALYSIS
+SUBBARAO   ONLINE VOTING SYSTEM
+SUBBARAO   MOBILE APP DEVELOPMENT
+SUBBARAO   EMPLOYEE PAYROLL
+SUBBARAO   BANK ACCOUNT SYSTEM
+KIRAN      SENTIMENT ANALYSIS
+
+
+5.Write a query to display unassigned projects from employee,projects tables
+SQL> SELECT e.ENAME
+  2  FROM EMPLOYEE e
+  3  LEFT JOIN PROJECTS p ON e.EMPID = p.EMPID
+  4  WHERE p.EMPID IS NULL;
+
+ENAME
+----------
+SURYA
+ANUSHKA
+
+6.Write a query to display all employees and their projects from employee,projects tables
+SQL> SELECT p.PNAME
+  2  FROM PROJECTS p
+  3  LEFT JOIN EMPLOYEE e ON p.EMPID = e.EMPID
+  4  WHERE p.EMPID IS NULL;
+
+PNAME
+------------------------------
+ONLINE VOTING SYSTEM
+BANK ACCOUNT SYSTEM
+
+7.Write a query to display all projects and the employees assigned to them from
+  employee,projects tables
+SQL> SELECT e.ENAME, p.PNAME
+  2  FROM EMPLOYEE e
+  3  LEFT JOIN PROJECTS p ON e.EMPID = p.EMPID;
+
+ENAME      PNAME
+---------- ------------------------------
+GOWTHAM    SENTIMENT ANALYSIS
+KIRAN      MOBILE APP DEVELOPMENT
+SUBBARAO   EMPLOYEE PAYROLL
+SURYA
+ANUSHKA
+8: All projects and the employees assigned to them
+ SELECT p.PNAME, e.ENAME
+  2  FROM PROJECTS p
+  3  LEFT JOIN EMPLOYEE e ON p.EMPID = e.EMPID;
+
+PNAME                          ENAME
+------------------------------ ----------
+SENTIMENT ANALYSIS             GOWTHAM
+ONLINE VOTING SYSTEM
+MOBILE APP DEVELOPMENT         KIRAN
+EMPLOYEE PAYROLL               SUBBARAO
+BANK ACCOUNT SYSTEM
+
+5 rows selected.
+
+SQL>
+SQL> COMMIT;
+
+
+
+------------------------------------------------------------------------------------------------------
+DROP TABLE FEE;
+DROP TABLE STUDENT;
+DROP TABLE COURSE;
+
+
+DROP TABLE SEATS;
+DROP TABLE SEATCATEGORIES;
+DROP TABLE STADIUM;
+
+DROP TABLE EMPLOYEE;
+DROP TABLE PROJECTS;
+
+
+
+
+
+CREATE TABLE STUDENT
+ (
+    STUDENT_ID NUMBER(10) PRIMARY KEY,
+    STUDENT_NAME VARCHAR2(20)
+);
+
+
+INSERT INTO STUDENT VALUES (1, 'SURYA');
+INSERT INTO STUDENT VALUES (2, 'GOWTHAM');
+INSERT INTO STUDENT VALUES (3, 'ANUSHKA');
+INSERT INTO STUDENT VALUES (4, 'KIRAN');
+INSERT INTO STUDENT VALUES (5, 'KAVYA PAPA');
+INSERT INTO STUDENT VALUES (6, 'SHREYAS');
+INSERT INTO STUDENT VALUES (7, 'RADHIKA');
+INSERT INTO STUDENT VALUES (8, 'PREETHI');
+INSERT INTO STUDENT VALUES (9, 'NITISH');
+INSERT INTO STUDENT VALUES (10,'ABHISHEK');
+
+
+
+CREATE TABLE COURSE 
+(
+    COURSE_FEE NUMBER(10) PRIMARY KEY,
+    COURSE_NAME VARCHAR2(20)
+);
+
+
+
+INSERT INTO COURSE VALUES (3000, 'SQLSERVER');
+INSERT INTO COURSE VALUES (4000, 'ORACLE');
+INSERT INTO COURSE VALUES (8000, 'JAVA');
+INSERT INTO COURSE VALUES (6000, 'PHYTHON');
+INSERT INTO COURSE VALUES (5000, '.NET');
+ 
+
+
+CREATE TABLE FEE
+(
+    STUDENT_ID NUMBER(10),
+    COURSE_FEE NUMBER(10) ,
+    FOREIGN KEY (STUDENT_ID) REFERENCES student(STUDENT_ID),
+   FOREIGN KEY(COURSE_FEE) REFERENCES COURSE(COURSE_FEE)
+);
+
+
+INSERT INTO FEE VALUES (1, 8000);  
+INSERT INTO FEE VALUES (2, 4000);  
+INSERT INTO FEE VALUES (3, 8000);  
+INSERT INTO FEE VALUES (4, 3000);  
+INSERT INTO FEE VALUES (5, 4000);  
+INSERT INTO FEE VALUES (6, 5000);  
+INSERT INTO FEE VALUES (7, 6000);  
+INSERT INTO FEE VALUES (8, 4000); 
+INSERT INTO FEE VALUES (9, 5000);  
+INSERT INTO FEE VALUES (10,8000); 
+
+
+
+
+CREATE TABLE STADIUM 
+(
+    STADIUM_ID     NUMBER(10) PRIMARY KEY,
+    STADIUM_NAME   VARCHAR2(20),
+    LOCATION       VARCHAR2(20),
+    CAPACITY      NUMBER(10)
+);
+
+
+
+INSERT INTO STADIUM VALUES (1, 'EDEN GARDENS', 'KOLKATA', 66000);
+INSERT INTO STADIUM VALUES (2, 'UPPAL', 'HYDERABAD', 55000);
+INSERT INTO STADIUM VALUES (3, 'WANKHEDE','MUMBAI',33000);
+
+
+
+
+CREATE TABLE SEATCATEGORIES 
+(
+    CATEGORY_ID    NUMBER(10) PRIMARY KEY,
+    CATEGORY_NAME  VARCHAR2(20),
+    PRICE          NUMBER(10)
+);
+
+
+ 
+
+
+INSERT INTO SEATCATEGORIES VALUES (101, 'VIP', 5000);
+INSERT INTO SEATCATEGORIES VALUES (102, 'PREMIUM', 3000);
+INSERT INTO SEATCATEGORIES VALUES (103, 'GENERAL', 1500);
+
+
+CREATE TABLE SEATS
+(
+    STADIUM_ID    NUMBER(10) REFERENCES stadium(STADIUM_ID),
+    SEAT_NUMBER   VARCHAR2(15),
+    CATEGORY_ID    NUMBER(10) REFERENCES SEATCATEGORIES(CATEGORY_ID) 
+);
+
+
+
+INSERT INTO SEATS VALUES (1, 'A105', 102);
+INSERT INTO SEATS VALUES (1, 'A110', 103);
+INSERT INTO SEATS VALUES (1, 'A120', 101);
+INSERT INTO SEATS VALUES (2, 'B101', 102);
+INSERT INTO SEATS VALUES (3, 'C120', 101);
+
+
+CREATE TABLE EMPLOYEE
+(
+    EMPID NUMBER(10) PRIMARY KEY,
+    ENAME VARCHAR2(10)
+);
+
+
+INSERT INTO EMPLOYEE VALUES (1, 'SUBBARAO');
+INSERT INTO EMPLOYEE VALUES (2, 'KIRAN');
+INSERT INTO EMPLOYEE VALUES (3, 'GOWTHAM');
+INSERT INTO EMPLOYEE VALUES (4, 'SURYA');
+INSERT INTO EMPLOYEE VALUES (5, 'ANUSHKA');
+
+
+CREATE TABLE PROJECTS (
+    PID   NUMBER(10) PRIMARY KEY,
+    PNAME VARCHAR2(30),
+    EMPID NUMBER(10) 
+);
+
+
+INSERT INTO PROJECTS VALUES (101, 'SENTIMENT ANALYSIS', 3);
+INSERT INTO PROJECTS VALUES (102, 'ONLINE VOTING SYSTEM', NULL);
+INSERT INTO PROJECTS VALUES (103, 'MOBILE APP DEVELOPMENT', 2);
+INSERT INTO PROJECTS VALUES (104, 'EMPLOYEE PAYROLL', 1);
+INSERT INTO PROJECTS VALUES (105, 'BANK ACCOUNT SYSTEM', NULL);
+
+commit;
 
 
 
