@@ -1,0 +1,310 @@
+Privileges :-
+-----------------
+
+  => privileges means permissions
+  => privileges are 2 types 
+
+ 1  system privileges
+ 2  object privileges
+ 
+ SYSTEM PRIVILEGES :-
+ -----------------------------------
+
+ => permissions on db are called system privileges
+ => system privileges are grantetd by DBA using GRANT command
+
+ Ex :- 
+ 
+ SYSTEM :-
+ ----------------
+
+   SQL>GRANT CREATE SESSION TO NARESH ; 
+   SQL>GRANT CREATE TABLE TO NARESH ; 
+
+    OR
+
+ SQL>GRANT CREATE SESSION , CREATE TABLE TO NARESH ; 
+
+   OR
+
+ SQL>GRANT CONNECT,RESOURCE TO NARESH ;
+
+    CONNECT => CREATE SESSION
+    RESOURCE => CREATE TABLE
+
+  Object Privileges :- 
+  ===============
+
+   => permissions on table are called object privileges 
+   => object  privileges are granted by owner of that object using GRANT command
+ 
+Ex :- 
+
+  => grant all permissions on emp table to naresh ?
+    
+  BATCH5253 :-
+  ------------------
+
+  SQL>GRANT ALL ON EMP TO NARESH ; 
+
+ NARESH :- 
+ ----------------
+
+  SQL>SELECT * FROM BATCHT5253.EMP ;
+
+  SQL>UPDATE BATCH5253.EMP SET SAL = 1000 WHERE EMPNO = 7369 ;
+  
+   note :- changes made by naresh are visible to batch5253 after commit
+
+ Granting specific privileges :-
+ -------------------------------------- 
+
+ SQL> GRANT SELECT,INSERT,UPDATE ON DEPT TO NARESH ; 
+
+
+ NARESH :-
+ ----------------
+
+ SQL>DELETE FROM BATCH5253.DEPT WHERE DEPTNO = 40 ;  => ERROR
+
+ REVOKE command :- 
+ ----------------------------
+
+ => command used to take back permissions from users 
+
+ Ex :- 
+
+ SQL>REVOKE ALL ON EMP FROM NARESH ; 
+
+ DB Objects :- 
+ ------------------
+
+ 1  TABLES
+ 2  VIEWS
+ 3  SYNONYMS
+ 4  MATERIALIZED VIEWS
+ 5  SEQUENCES
+ 6  INDEXES 
+
+  VIEWS :-  
+  ------------
+
+  => a  view is a subset of a table  i.e. part of a table.
+
+  => a  view is a virtual table because it doesn't store data and doesn't occupy memory
+       and it always derives data from table.
+  
+   => a view is a representation of a query
+     
+  => views are created 
+
+    1 to provide security
+    2 to reduce complexity
+ 
+ => views are 2 types 
+
+ 1  simple views 
+ 2  complex views
+
+ Simple views :- 
+ ------------------------
+
+  => if views created on single table then it is called simple view
+
+   CREATE VIEW <NAME>
+   AS  
+   SELECT statement ;
+ 
+Granting permission to create view :-
+------------------------------------------------
+
+ SYSTEM :-
+ ---------------
+
+  GRANT CREATE VIEW TO BATCH54;
+
+Ex :-
+
+BATCH54 :-
+----------------------
+
+  CREATE VIEW V1
+  AS
+  SELECT empno,ename,job,hiredate,deptno FROM emp ;
+ 
+ => oracle creates view V1 and stores query but not query output 
+
+    SELECT * FROM V1 ; 
+ 
+ => when above query send to oracle then it executes the query as follows 
+
+   SELECT * FROM (SELECT empno,ename,job,hiredate,deptno FROM emp) ;
+ 
+ Granting permissions on view to user :-
+ ------------------------------------------------------ 
+ 
+   GRANT ALL ON V1 TO NARESH ; 
+
+ NARESH :-
+-----------------
+
+  SQL>SELECT * FROM BATCH54.V1 ; 
+  SQL>UPDATE BATCH54.V1 SET JOB='MANAGER' WHERE EMPNO = 7369;
+  SQL>INSERT INTO BATCH54.V1 VALUES(888,'KKK','CLERK',SYSDATE,10);
+
+ note :- 
+
+  => changes made by naresh are visible to batch54 after commit.
+
+  ROW LEVEL SECURITY :- 
+  -------------------------------------
+
+  CREATE VIEW V2 
+  AS
+ SELECT empno,ename,job,hiredate,deptno 
+ FROM emp 
+ WHERE deptno = 20 ; 
+
+ GRANT ALL ON V2 TO NARESH ;
+
+ NARESH :-
+ ----------------
+ 
+ SQL>SELECT * FROM BATCH54.V2 ; 
+ 
+ SQL>INSERT INTO BATCH54.V2 VALUES(777,'BBB','clerk',sysdate,30);
+
+  above insert command is executed successfully even though it is violating where cond
+
+ WITH CHECK OPTION :-
+ ------------------------------------
+
+  => if view created with  "  WITH CHECK OPTION " then  any dml command through view
+       violates where cond then that dml is not accepted.
+
+   CREATE VIEW V3 
+  AS
+  SELECT empno,ename,job,hiredate,deptno 
+  FROM emp 
+  WHERE deptno = 20  
+  WITH CHECK OPTION ; 
+
+ GRANT ALL ON V3 TO NARESH ;
+
+ NARESH :-
+ ----------------
+ 
+ INSERT INTO BATCH54.V3 VALUES(666,'HHH','clerk',sysdate,30);  => ERROR
+
+ Complex views :-
+ --------------------------
+
+ => a view said to be complex view 
+
+  1 if based on multiple tables (joins)
+  2 if query contains 
+                 group by clause
+                 distinct clause
+                 aggregate operations
+                 set operations
+                 sub-queries 
+
+   => views reduces complexity i.e. with the help of views complex queries 
+        can be converted into  simple queries.
+ 
+ Ex 1 :- 
+
+   CREATE VIEW CV1
+   AS
+   SELECT e.empno,e.ename,e.sal,
+                  d.deptno,d.dname,d.loc
+    FROM emp e INNER JOIN dept d
+    ON e.deptno = d.deptno ; 
+ 
+
+    after creating view whenever user wants data from emp & dept tables then instead of
+    writing join query write the simple query as follows 
+ 
+             SELECT * FROM CV1 ; 
+
+Ex 2  :- 
+
+  CREATE VIEW CV2
+  AS
+  SELECT job,MIN(sal) as minsal,
+                       MAX(sal) as maxsal,
+                       SUM(sal) as totsal,
+                       AVG(sal) as avgsal,
+                       COUNT(*) as cnt
+   FROM emp 
+   GROUP BY job ; 
+
+   after creating view whenever we want job wise summary then execute the following simple query
+
+    SELECT * FROM CV2; 
+
+ => difference between simple and complex views ?
+
+	simple				complex 
+
+ 1  based on single table			based on multiple tables 
+
+ 2  query performs simple operations		query performs  complex operations
+					like  joins,group by and aggregate etc
+
+ 3   always updatable (allows dmls)		not updatable (doesn't allow dmls)
+	
+
+user_views :-
+--------------------
+
+  => it is a system table that stores information about views created by user
+
+   => list of views created by user ?
+
+      SELECT VIEW_NAME FROM USER_VIEWS ;
+
+   => query associated with view v1 ?
+
+      SELECT TEXT FROM USER_VIEWS WHERE VIEW_NAME='V1' ; 
+
+Droping view :-
+---------------------
+
+  DROP VIEW V1 ; 
+
+=> if we drop table what about views created on table ?
+
+ ANS :-  views are not dropped but cannot be queried 
+
+ 
+  synonyms :-
+  ==========
+
+  => a synonym is another name or alternative name for a table/view
+
+  => if tablename is lengthy then we can give a simple and short name to the table
+       called synonym and after creating synonym instead of using table name we can 
+        use synonym name in SELECT / INSERT / UPDATE / DELETE queries.
+
+           CREATE SYNONYM <name> FOR <tabname>
+
+  Granting permission to create synonym :-
+  ---------------------------------------------------------
+
+   SYSTEM :-
+   -----------------
+ 
+  SQL>GRANT CREATE SYNONYM TO BATCH54 ;
+
+ Ex :- 
+
+ SQL>CREATE SYNONYM E FOR EMP ;
+
+ after creating synonym instead of using table name use synonym name 
+
+  SQL>SELECT * FROM E ;
+  SQL>UPDATE E SET COMM=500 WHERE EMPNO=7369;
+  
+
+
