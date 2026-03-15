@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>we are calling an api , for the data</h2>
+    <h3>we are learning the api calling in js today</h3>
+    <script>
+      //   console.log("working");
+      //   console.log("Iconic 16th-century mosque with 4 grand arches, 48m tall minarets and views over the Laad Bazaar.")
+
+      let api_url = "https://jsonplaceholder.typicode.com/todos";
+      //   let response = await fetch(api_url)
+      //   console.log(response)
+      //   let data = await response.json()
+      //   console.log(data)
+
+      //   ? how to create async function
+
+      //  function functionName(para1){//body fo the function}
+      //  async function functionName(para1){//body fo the function}
+
+      //   async function fetchData(url) {
+      //     // body of the function
+      //     // ! i need to wait till i am not getting the complete response from the fetch(), dB
+      //     let response = await fetch(url);
+      //     console.log(response);
+
+      //     // ! i need to wait till i am not response is not converted completely into json , for this i need to use await keyword
+
+      //     let data = await response.json();
+      //     console.log(data);
+      //   }
+      //   fetchData(api_url);
+
+      //   async function fetchData2(url) {
+      //     let response = await fetch(url);
+      //     let data = await response.json();
+      //     console.log(data);
+      //   }
+      //   fetchData2(api_url);
+
+    //   ! async function make the async code , that execute at last 
+      async function fetchData3(url) {
+        try {
+          // ! write the logic , where u might get error
+          let response = await fetch(url);
+          let data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      fetchData3(api_url)
+    </script>
+  </body>
+</html>
