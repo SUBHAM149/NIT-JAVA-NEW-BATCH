@@ -1,0 +1,255 @@
+ 14-MAR-26
+
+  synonyms :-
+  ==========
+
+  => a synonym is another name or alternative name for a table/view
+
+  => if tablename is lengthy then we can give a simple and short name to the table
+       called synonym and after creating synonym instead of using table name we can 
+        use synonym name in SELECT / INSERT / UPDATE / DELETE queries.
+
+           CREATE SYNONYM <name> FOR <tabname>
+
+  Granting permission to create synonym :-
+  ---------------------------------------------------------
+
+   SYSTEM :-
+   -----------------
+ 
+  SQL>GRANT CREATE SYNONYM TO BATCH54 ;
+
+ Ex :- 
+
+ SQL>CREATE SYNONYM E FOR EMP ;
+
+ after creating synonym instead of using table name use synonym name 
+
+  SQL>SELECT * FROM E ;
+  SQL>UPDATE E SET COMM=500 WHERE EMPNO=7369;
+  
+ accessing tables without owner name :-
+ ----------------------------------------------------------
+
+ BATCH54 :- 
+ ------------------
+ 
+ SQL>GRANT ALL ON EMP TO NARESH ;
+
+ NARESH :-
+ ----------------
+
+ SQL>SELECT * FROM BATCH54.EMP;
+ SQL>CREATE SYNONYM EMP FOR BATCH54.EMP;
+ SQL>SELECT * FROM EMP ; 
+
+Question :-
+-----------------
+
+  SQL>CREATE SYNONYM E FOR EMP ;
+  SQL>SELECT * FROM EMP E;
+  SQL>RENAME EMP TO E ; 
+
+  => difference between synonym and alias ?
+
+	synonym				 alias 
+
+   1	permanent			not permanent
+ 
+   2	stored in db			not stored in db 
+
+   3	scope of the synonym is		scope of the  alias
+	upto the schema			is upto the query
+
+ USER_SYNONYMS :- 
+ -------------------------------
+
+ => stores information about synonyms created by user
+
+      SELECT synonym_name,table_name  FROM user_synonyms  ;
+
+Droping :-
+-----------
+ 
+  DROP SYNONYM E ;
+
+ if we drop table what about synonyms created on table ?
+
+  ANS :- synonyms are not dropped but becomes invalid
+
+
+MATERIALIZED VIEWS :-
+====================
+
+ => a m.view is also a db object that stores query output  or precomputed result.
+
+ => Queries performs complex group by ,joins and aggregate operations on table   
+      contains huge amount of data takes more time to run then create m.view
+      and store the output in m.view and whenever we want that output instead of 
+      executing query on table execute query on m.view
+ 
+ => m.views are created to improve the performance of complex operations 
+ 
+ Granting permission to create m.view :-
+ -------------------------------------------------------
+
+  SYSTEM :-
+  ----------------
+
+SQL>GRANT CREATE MATERIALIZED VIEW TO BATCH54 ;
+
+Ex :- 
+
+  SQL> CREATE MATERIALIZED VIEW MV1
+            AS
+            SELECT deptno,SUM(sal) as totsal
+            FROM emp 
+            GROUP BY deptno ;
+
+  => oracle creates m.view MV1 and stores query output  and whenever we want dept wise 
+        total sal then execute the following query 
+
+           SELECT * FROM MV1 ; 
+
+	 DEPTNO     TOTSAL
+	---------- 	   ----------
+       	 30      	   9400
+       	 10      	   8750
+       	 20     	  10875
+
+ Refreshing m.view :-
+ ================
+
+ => If base table data changes by default m.view is not updated and updating m.view is called
+      refreshing m.view
+
+           TABLE===========REFRESH===============>MV
+                                            (applying changes)
+
+  => m.view can be refreshed in 3 ways 
+
+    1   Manually
+    2   Automatically
+    3   Periodically
+ 
+ Manually :-
+ ---------------
+
+  =>  To refresh m.view manually execute the following procedure
+
+          EXECUTE DBMS_M.VIEW.REFRESH(M.VIEW NAME);
+
+ Ex :- 
+
+   step 1 :-   update base table
+
+   SQL>UPDATE emp SET sal = sal + 1000; 
+
+  step 2 :- refresh m.view
+
+   SQL>EXECUTE DBMS_MVIEW.REFRESH('MV1');
+
+  step 3 :-  display m.view 
+
+  SQL>SELECT * FROM MV1 ;
+
+    DEPTNO     TOTSAL
+    ---------        - ----------
+        30      15400
+        10      11750
+        20      15875
+
+ Automatically :-
+ =============
+ 
+  => once changes made to base table are committed then m.view is refreshed automatically
+
+Ex :-
+
+   CREATE MATERIALIZED VIEW MV2 
+   REFRESH ON COMMIT
+   AS
+   SELECT deptno,SUM(sal) as totsal
+   FROM emp 
+   GROUP BY deptno ;
+
+ SELECT * FROM MV2 ;
+
+    DEPTNO     TOTSAL
+     ---------      - ----------
+        30      15400
+        10      11750
+        20      15875
+ 
+Test :-
+---------
+
+ step 1 :-  update base table
+
+ SQL> UPDATE emp SET sal = sal - 1000 ;
+
+ step 2 :-  commit the changes 
+
+  SQL>COMMIT;
+
+ step 3 :- display m.view
+
+   SELECT * FROM MV2;
+
+    DEPTNO     TOTSAL
+    ----------       ----------
+        30          9400
+        10          8750
+        20         10875
+
+  Periodically :-
+  -------------------
+
+   => refreshing m.views based on time periods like  day,week,month,quarter,year etc
+
+   CREATE MATERIALIZED VIEW MV3
+   REFRESH FORCE
+   START WITH SYSDATE NEXT SYSDATE + 1
+   AS
+   SELECT deptno,SUM(sal) as totsal
+   FROM emp 
+   GROUP BY deptno ;
+
+ BEGIN
+     DBMS_SCHEDULER.CREATE_JOB (
+    job_name      => 'REFRESH_MV',
+    start_date    => TO_TIMESTAMP_TZ('2026/03/14','yyyy/mm/dd'),  
+    repeat_interval => 'FREQ=DAILY; BYHOUR=1,6,12,18; BYMINUTE=0', -- Run at 1 AM, 6 AM, 12 PM, 6 PM daily
+    job_class     => 'DEFAULT_JOB_CLASS',
+    job_type      => 'PLSQL_BLOCK',
+    job_action    => 'BEGIN DBMS_MVIEW.REFRESH(''MV3'',''C''); END;',  
+    comments      => 'Job to refresh materialized view MV_NAME at specific times.'
+  );
+END;
+/
+
+difference between VIEW & M.VIEW ?
+
+		VIEW			M.VIEW
+
+  1	  stores query			stores query output 
+
+  2	 doesn't data and doesn't occupy	stores data and occupies memory
+	  emory
+
+  3	 created for security			created to improve performance
+
+ USER_MVIEWS :-
+ ----------------------------
+
+  => stores m.views created by user
+
+   list of m.views ? 
+
+   SELECT MVIEW_NAME FROM USER_MVIEWS ;
+
+Droping :-
+---------------
+ 
+ DROP MATERIALIZED VIEW MV1 ;
+
