@@ -1,0 +1,253 @@
+18-03-26
+		    PL/SQL  (PROCEDURAL LANGUAGE)
+       ===============================
+
+ 
+ 
+ 1  basic programming
+ 2  conditional statements 
+ 3  loops 
+ 4  cursors
+ 5  error handling
+ 6  stored procedures
+ 7  functions
+ 8  packages
+ 9  triggers
+10 how to store images in db 
+
+Features :- 
+=========
+
+ 1 improves performance :-
+    --------------------------------
+  
+ => In pl/sql ,  sql commands can be grouped into one block and we submit that block to oracle,
+      so in pl/sql no of requests and response between user and oracle are reduced and 
+      performance is improved.
+
+ 2 supports conditional statements :-
+   ------------------------------------------------
+
+  => pl/sql supports conditional statements like IF-ELSE, so in pl/sql we can execute sql
+       commands based on conditions.
+
+         IF cond
+              UPDATE
+         ELSE
+              DELETE
+
+ 3  supports loops :-
+     ----------------------
+
+   => loops are used to execute statements repeatedly multiple times , so in pl/sql sql commands
+        can executed repeatedly multiple times.
+
+            WHILE(cond)
+            LOOP
+                update
+            END
+
+ 4 supports error handling :- 
+    -----------------------------------
+
+   =>  pl/sql supports error handling , so in pl/sql if any statement causes error then we can 
+         handle that error and we can replace system generated message with our own simple
+         message.
+
+ 5    supports modular programming :- 
+       ----------------------------------------------
+
+    =>  pl/sql supports modular programming i.e. a big pl/sql  program can  be divided into 
+          small modules with the help of procedures & functions.
+
+   => PL/SQL blocks are 2 types 
+
+ 1 Anonymous Blocks
+ 2 Named Blocks
+             procedures
+             functions
+             packages
+             triggers 
+
+Anonymous Blocks :-
+=================
+
+  => a pl/sql program without name is called anonymous block
+
+     DECLARE
+            declartion-part;       (optional)
+     BEGIN
+             statements;
+      END;
+        /      =>  compiled & executed
+
+ How to print messages :- 
+ ---------------------------------
+
+       DBMS_OUTPUT.PUT_LINE(message);
+       ----------------------  ---------------
+               package        procedure
+
+  => by default messages are not send to output , To send messages to output execute the 
+        following command
+
+      SQL>SET SERVEROUTPUT ON
+
+ Ex :- 
+
+   BEGIN
+         DBMS_OUTPUT.PUT_LINE('HELLO');
+   END;
+     /
+
+    o/p :- HELLO
+
+ How to Write PL/SQL programs  :-
+ ------------------------------------------------
+
+ 1   Editors 
+ 2   IDEs  (integrated development environment)
+
+ 		 EDITOR				IDE
+
+ coding		yes				yes
+
+compile		no				yes
+
+execute		no				yes
+
+debug		no				yes
+
+ex :-		notepad				sql developer
+
+
+ using NOTEPAD :- 
+ ------------------------
+ 
+ => open notepad and enter the following code 
+ 
+   begin
+        dbms_output.put_line('hello welcome');
+    end;
+      /
+
+  => save the program in a file as   D:\NARESH\"prog1.sql"
+
+  => go to sqlplus and compile and run the program as follows 
+
+         SQL>@D:\NARESH\"prog1.sql"   
+
+                  o/p :- hello welcome
+
+ Datatypes in PL/SQL :- 
+ ==================
+
+   1  scalar types or built-in types 
+   2  user define types 
+   3  reference types 
+
+  scalar types / built-in types :-
+  -----------------------------------------
+
+    1   NUMBER(P) / NUMBER(P,S)
+    2   CHAR / VARCHAR2 / LONG / CLOB
+    3   NCHAR/NVARCHAR2/NCLOB
+    4   DATE / TIMESTAMP 
+    5   BOOLEAN   
+    6   BFILE / BLOB
+    7   BINARY_FLOAT / BINARY_DOUBLE
+    8   BINARY_INTEGER
+  
+      1 TO 7   => allowed in  sql,pl/sql
+      8            => allowed only in pl/sql but not allowed in sql 
+  
+ Declaring variable :-
+ -------------------------
+   
+                           variablename    datatype(size) ;
+
+  Ex :-                  x     number(4);
+                           s     varchar2(10);
+                           d     date;
+                           b     boolean;
+
+Assigning value to variable :-
+ -----------------------------------------
+
+                      variablename   :=    value ;               
+
+  Ex :-             x := 1000;
+                      s := 'abc';
+                      d := sysdate;
+                      b := true;
+
+ Ex :- 
+
+  => wap to add two numbers ?
+
+   DECLARE
+         a   NUMBER(3);
+         b   NUMBER(3);
+         c   NUMBER(4);
+   BEGIN
+         a  := 100;
+         b  := 200;
+         c  :=  a+b;
+         DBMS_OUTPUT.PUT_LINE(c);
+   END;
+      /
+  
+ o/p :- 300
+
+How to input values at runtime :- 
+---------------------------------------------
+
+   => To input values at runtime use variable prefixed with "&'.
+
+          ex :-               a  :=  &a ; 
+
+                            enter value for a :-  100
+
+                                a  := 100;
+
+
+                              a  :=  &x ; 
+
+                            enter value for x :-  200
+
+                            a := 200;
+
+ 
+   DECLARE
+         a   NUMBER(3);
+         b   NUMBER(3);
+         c   NUMBER(4);
+   BEGIN
+         a  := &a;
+         b  := &b;
+         c  :=  a+b;
+         DBMS_OUTPUT.PUT_LINE(c);
+   END;
+      /
+ 
+  enter value for a :- 200
+  enter value for b :- 300
+
+   o/p :- 500
+
+ VERIFY :-
+ ------------
+
+     SQL>SET VERIFY OFF    =>  will not display old & new statements
+     SQL>SET VERIFY ON      => will display old & new statements 
+
+=> wap to input date and print day of the week ?
+ 
+     DECLARE
+            d   DATE;
+     BEGIN
+            d  :=   '&date'  ;
+            DBMS_OUTPUT.PUT_LINE(TO_CHAR(d,'day'));
+     END;
+       /
+
