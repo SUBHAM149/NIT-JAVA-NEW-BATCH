@@ -1,0 +1,116 @@
+16-mar-26
+
+ SEQUENCES :- 
+ -----------------------
+
+  => a sequence is also a db object created to generate sequence numbers 
+  => used to auto increment column values 
+
+ CREATE SEQUENCE <name>
+ [START WITH <value>]
+ [INCREMENT BY <value>]
+ [MAXVALUE <value>]
+ [MINVALUE <value>]
+ [CYCLE/NOCYCLE]
+ [CACHE <size>]  ;
+
+Ex 1  :- 
+
+ SQL>CREATE SEQUENCE S1
+           START WITH 1
+           INCREMENT BY 1
+           MAXVALUE 5;
+ 
+SQL>CREATE TABLE student(sid NUMBER(2), sname VARCHAR2(10));
+
+ use sequence s1 to generate sid for every new student ?
+
+ SQL>INSERT INTO student VALUES(s1.nextval , 'A');
+SQL>INSERT INTO student VALUES(s1.nextval , 'B');
+SQL>INSERT INTO student VALUES(s1.nextval , 'C');
+SQL>INSERT INTO student VALUES(s1.nextval , 'D');
+SQL>INSERT INTO student VALUES(s1.nextval , 'E');
+SQL>INSERT INTO student VALUES(s1.nextval , 'F);  => ERROR
+
+  SELECT * FROM student 
+  
+  sid	sname
+ 1	A
+ 2	B
+ 3	C
+ 4	D
+ 5	E
+ 
+ SELECT * FROM emp ;
+
+ Ex 2  :- 
+
+  CREATE SEQUENCE S2
+  START WITH 100
+  INCREMENT BY 1
+  MAXVALUE 9999;
+
+ use sequence s2 to generate empno for  existing employees ?
+
+  UPDATE emp SET empno =  s2.nextval ;
+
+ SELECT * FROM emp ;
+
+ EMP
+ empno
+ 100
+ 101
+ 102
+ 
+Ex 3  :- 
+
+ BILL
+ billno	 		bdate	amount
+ ssm160326/1		
+ ssm160326/2
+
+ CREATE TABLE bill
+ (
+   billno    VARCHAR2(20),
+   bdate    DATE,
+   amount  NUMBER(6)
+ );
+
+ CREATE SEQUENCE S5
+ START WITH 1
+ INCREMENT BY 1
+ MAXVALUE 99999;
+
+ use sequence S5 to generate billno for every new bill ? 
+
+  INSERT INTO bill 
+                 VALUES('SSM'||TO_CHAR(sysdate,'ddmmyy')||'/'||s5.nextval,sysdate,1000);
+
+CYCLE :-
+========
+
+  => by default sequence created with NOCYCLE.
+
+  => if sequence is NOCYCLE then it starts from start with and generates upto max and
+       after reaching max then it stops.
+
+ => if sequence is CYCLE then it starts from start with and generates upto max and 
+       after reaching max then it will reset to min.
+
+  CREATE SEQUENCE S10
+  START WITH 1
+  INCREMENT BY 1
+  MAXVALUE 5
+  MINVALUE 1
+  CYCLE 
+  CACHE 4 ;
+
+
+ SQL>SELECT S10.NEXTVAL FROM DUAL ; 
+ 
+
+Droping :- 
+=========
+
+ DROP SEQUENCE S1 
+
