@@ -1,0 +1,166 @@
+17-mar-26
+
+ INDEXES :- 
+ ========= 
+
+  => index is also a db object created to improve query performance.
+  => index makes data accessing faster.
+  => index in db is similar to index in textbook , in textbook using index a particular topic can
+       be located fastly , in db using index a particular record can be located fastly.
+  => indexes are created on columns and that column is called index key
+  => indexes created on columns 
+
+       1 which are frequently used in where clause
+       2 which are frequently used in join condition
+
+       CREATE INDEX <name> ON <tabname>( colname) ; 
+
+ Ex :-  CREATE INDEX I1 ON emp(sal) 
+
+    => after executing above command oracle creates a structure called BTREE 
+
+ EMP				    3000		
+ sal
+ 5000
+ 1000			2000			4000		
+ 3000
+ 2000		1000 *                2500 *                  4000 *                 5000 *
+ 4000                        1500 *                3000 *,*
+ 1500                        2000 *  
+ 3000
+ 2500
+	`
+ => when we submit a query , oracle uses following methods to locate the record
+
+    1  TABLE SCAN
+    2  INDEX SCAN
+
+ => in "TABLE SCAN"  oracle scans complete table i.e. each and every row.
+
+=> in " INDEX SCAN "  on avg oracle scans half of the table , so index scan is faster than
+     table scan.
+
+                  SELECT * FROM emp WHERE sal = 3000 ;     (index scan)
+                  SELECT * FROM emp WHERE sal >= 3000;    (index scan)
+                  SELECT * FROM emp WHERE sal <= 3000;    (index scan)
+
+                  SELECT * FROM emp WHERE  ename='BLAKE' ;    (table scan)
+                  SELECT * FROM emp ;                                              (table scan)
+ 
+ UNIQUE index :-
+ ==============
+
+   => a unique index doesn't allow duplicate values into the column on which index is created 
+
+                CREATE UNIQUE INDEX  I2 ON EMP(ename) ; 
+
+			   K
+
+	       G                                                      Q
+
+ ADAMS  *                JAMES *              MARTIN *              SCOTT *
+ ALLEN   *                JONES *              MILLER *               SMITH *
+ BLAKE   *
+
+  SELECT * FROM emp WHERE ename='BLAKE' ;      (index scan)
+  
+  INSERT INTO emp(empno,ename,sal) VALUES(100,'BLAKE',2000);  => ERROR
+
+  what are the different methods to enforce uniqueness ?
+
+ 
+    1  declare  primary key / unique constraint
+    2  create unique index 
+
+ NOTE :- 
+
+  => primary key / unique columns are automatically indexed by oracle.
+
+  => oracle creates unique index on primary key & unique columns 
+       and unique index doesn't allow duplicates , so primary key / unique also doesn't
+       allow duplicates.
+
+                   primary key   =   unique index  + not null
+                   unique          =    unique index 
+
+  
+  USER_INDEXES :- 
+  --------------------------
+
+   => stores indexes created by user
+
+    display list of indexes and type created on emp table ?
+
+    SELECT INDEX_NAME,INDEX_TYPE
+    FROM USER_INDEXES
+    WHERE TABLE_NAME='EMP' ; 
+
+   display index names and column names ?
+
+    SELECT INDEX_NAME,COLUMN_NAME
+    FROM USER_IND_COLUMNS
+    WHERE TABLE_NAME='EMP' ;
+ 
+  => DISPLAY   index name    column name    index type  ?
+
+   SELECT  T1.INDEX_NAME,T2.COLUMN_NAME,T1.INDEX_TYPE
+   FROM USER_INDEXES T1
+   INNER JOIN USER_IND_COLUMNS T2
+   ON T1.INDEX_NAME = T2.INDEX_NAME
+   WHERE T1.TABLE_NAME='EMP' ; 
+
+  Droping :-
+ ---------------
+
+ DROP INDEX I1 ; 
+
+ if we drop table what about indexes created on table ?
+
+ ANS :- indexes are also dropped
+
+  SERVER
+          DATABASE
+                        USER
+                                 TABLES
+                                           ROWS & COLS
+                                           CONSTRAINTS
+                                           INDEXES
+                                           TRIGGERS
+                                 VIEWS
+                                 SYNONYMS
+                                 SEQUENCES
+                                 M.VIEWS
+                                 
+
+ 		 	  	                          SQL
+
+
+	commands	clauses	         operations		 functions	 	objects 
+
+                 DDL		WHERE	          FILTERING		CHAR		 TABLES
+                 DML		ORDER BY        SORTING		NUMERIC	 VIEWS
+                 DRL		DISTINCT          DUPLICATES		DATE		 SYNONYMS
+                 TCL		FETCH               TOP - N ROWS	CONVERSION	 SEQUENCES
+                 DCL		GROUP BY         GROUPING		SPECIAL		 M.VIEWS
+			HAVING              FILTER GROUPS	ANALYTICAL	 INDEXES
+			ON                      JOINING		AGGREGATE
+			WITH                  SUB-QUERIES
+				           PIVOTING
+
+ ==========================================================================
+
+		    PL/SQL  (PROCEDURAL LANGUAGE)
+                                     ===============================
+
+ 
+ 
+ 1  basic programming
+ 2  conditional statements 
+ 3  loops 
+ 4  cursors
+ 5  error handling
+ 6  stored procedures
+ 7  functions
+ 8  packages
+ 9  triggers
+10 how to store images in db 
