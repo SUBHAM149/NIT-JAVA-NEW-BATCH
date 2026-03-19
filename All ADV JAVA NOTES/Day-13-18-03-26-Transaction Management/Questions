@@ -1,0 +1,16 @@
+1.//STUDENT REGISTRATION SYSTEM
+		//Design a Java Program using JDBC to:
+		//1.insert student data(id,name,email)
+		//2.Display all students from database
+		//Requirements:
+		//Use Statement
+		//Connect with MySql
+
+2.//Bank Transaction System
+1.DEsign a system where :
+1.Transfer money from account a->account b
+2.MustInclude transaction management
+
+
+
+
