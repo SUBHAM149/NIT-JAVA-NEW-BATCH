@@ -1,0 +1,144 @@
+DB programming with PL/SQL :- 
+---------------------------------------------
+
+=> To work with db from pl/sql  execute sql commands from pl/sql program
+=> The following commands are be executed from pl/sql program
+ 
+   1  DML  (insert,update,delete,merge,insert all)
+   2  DRL  (select)
+   3  TCL  (commit,rollback,savepoint)
+
+ SELECT stmt syntax :- 
+ ==================
+
+ SELECT  col1,col2,----  INTO  var1,var2
+ FROM tabname
+ [ WHERE cond] ; 
+
+ Ex :- 
+
+ SELECT  ename,sal  INTO  n,s
+ FROM emp 
+ WHERE empno = 7844;
+
+ => wap to input empno and print name & salary ?
+
+   DECLARE
+       vempno        NUMBER(4);
+       vename        VARCHAR2(10);
+       vsal              NUMBER(7,2);
+  BEGIN
+        vempno :=  &empno ;      
+        SELECT ename,sal INTO vename,vsal FROM emp WHERE empno = vempno;
+        DBMS_OUTPUT.PUT_LINE(vename||'   '||vsal);
+  END;
+     /
+
+ Enter value for empno: 7566
+
+ JONES   2975
+
+ => wap to input empno and calculate and print experience of the employee ?
+
+   DECLARE
+        vempno  NUMBER(4);
+        vhire       DATE;
+        vexpr      NUMBER(2);
+  BEGIN
+       vempno := &empno;
+       SELECT  hiredate INTO vhire FROM emp WHERE empno = vempno ; 
+       vexpr :=  (SYSDATE - vhire)/365 ;
+       DBMS_OUTPUT.PUT_LINE('Experience =  '||vexpr||' years');
+  END;
+    /
+
+Enter value for empno: 7844
+Experience =  45
+
+=> wap to input empno and calculate total sal ?
+
+            total sal = sal + comm 
+
+   DECLARE
+       vempno  NUMBER(4);
+       vsal         NUMBER(7,2);
+       vcomm    NUMBER(7,2);
+       vtotsal     NUMBER(7,2);
+   BEGIN
+       vempno := &empno;
+       SELECT sal,comm  INTO vsal,vcomm FROM emp WHERE empno = vempno;
+       vtotsal :=  vsal + NVL(vcomm,0);
+       DBMS_OUTPUT.PUT_LINE('Total sal = '||vtotsal);
+   END;
+     /
+
+  Conditional Statements :- 
+  ====================
+
+  1  IF-ELSE
+  2  MULIT IF 
+  3  NESTED IF
+
+  IF-ELSE :-
+  ========
+
+	 IF cond  THEN
+                      statements ;
+                 [ ELSE
+                      statements; ]
+                  END IF;
+
+ MULTI IF :- 
+ ----------------
+
+ 	IF  cond1 THEN
+                    statements ;
+                ELSIF cond2 THEN
+                    statements;
+                ELSIF cond3 THEN
+                    statements;
+                ELSE
+                     statements;
+                END IF;
+
+ NESTED IF :- 
+ -------------------
+
+ 	IF  cond THEN
+                    IF  cond THEN
+                          statements ;
+                   ELSE
+                          statements;
+                    END IF;
+                 ELSE
+                       statements;
+                 END IF;
+
+ => wap to input empno and increment sal by specific amount 
+      after increment if sal exceeds maximum sal then cancel that increment ?
+
+     DECLARE
+          vempno  NUMBER(4);
+          vamt       NUMBER(5);
+          vsal        NUMBER(7,2);
+          vmax      NUMBER(7,2);
+     BEGIN
+            vempno := &empno;    
+            vamt     := &amount;  
+            SELECT MAX(sal) INTO vmax FROM emp ;      
+            UPDATE  emp SET sal =  sal + vamt  WHERE empno = vempno;
+            SELECT sal INTO vsal FROM emp WHERE empno = vempno ; 
+            IF vsal > vmax THEN
+                 ROLLBACK;
+           ELSE
+                 COMMIT;
+           END IF;
+       END;
+           /
+
+
+
+
+
+
+
