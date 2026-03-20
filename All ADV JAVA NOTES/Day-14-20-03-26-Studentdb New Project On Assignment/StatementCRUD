@@ -1,0 +1,45 @@
+package com.sub.studentdb;
+
+import java.sql.*;
+
+public class StatementCRUD {
+    public static void main(String[] args) {
+
+        try {
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/jdbc_db_54",
+                "root",
+                "Subham@123"
+            );
+
+            Statement st = con.createStatement();
+
+//            // INSERT
+//            st.executeUpdate("INSERT INTO studentdb VALUES(102,'Mahi',23,'Paython')");
+//            System.out.println("Inserted");
+
+            // DISPLAY
+            ResultSet rs = st.executeQuery("SELECT * FROM studentdb");
+            System.out.println("\nRecords:");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + " "
+                        + rs.getString(2) + " "
+                        + rs.getInt(3) + " "
+                        + rs.getString(4));
+            }
+
+            // UPDATE
+            st.executeUpdate("UPDATE studentdb SET course='Full Stack Java' WHERE id=102");
+            System.out.println("Updated");
+//
+//            // DELETE
+//            st.executeUpdate("DELETE FROM studentdb WHERE id=101");
+//            System.out.println("Deleted");
+
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
