@@ -1,0 +1,76 @@
+package com.sub.studentdb;
+
+import java.sql.*;
+
+public class PreparedCRUD {
+    public static void main(String[] args) {
+
+        try {
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/jdbc_db_54",
+                "root",
+                "Subham@123"
+            );
+
+            // INSERT
+            PreparedStatement ps = con.prepareStatement(
+                "INSERT INTO studentdb VALUES(?,?,?,?)");
+
+            ps.setInt(1, 105);
+            ps.setString(2, "Rahul");
+            ps.setInt(3, 22);
+            ps.setString(4, "Java");
+            ps.executeUpdate();
+
+            System.out.println("Inserted (Prepared)");
+
+            // UPDATE
+            ps = con.prepareStatement("UPDATE studentdb SET age=? WHERE id=?");
+            ps.setInt(1, 25);
+            ps.setInt(2, 101);
+            ps.executeUpdate();
+
+            System.out.println("Updated");
+
+            // DELETE
+            ps = con.prepareStatement("DELETE FROM studentdb WHERE id=?");
+            ps.setInt(1, 101);
+            ps.executeUpdate();
+
+            System.out.println("Deleted");
+
+
+            // =====================
+            // BATCH INSERT
+            // =====================
+            ps = con.prepareStatement("INSERT INTO studentdb VALUES(?,?,?,?)");
+
+            ps.setInt(1, 102);
+            ps.setString(2, "Aman");
+            ps.setInt(3, 23);
+            ps.setString(4, "Python");
+            ps.addBatch();
+
+            ps.setInt(1, 103);
+            ps.setString(2, "Neha");
+            ps.setInt(3, 21);
+            ps.setString(4, "Data Science");
+            ps.addBatch();
+
+            ps.setInt(1, 104);
+            ps.setString(2, "Ravi");
+            ps.setInt(3, 22);
+            ps.setString(4, "DevOps");
+            ps.addBatch();
+
+            ps.executeBatch();
+
+            System.out.println("Batch Inserted");
+
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
