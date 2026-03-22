@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Project</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <nav>
+        <p>LOGO</p>
+        <p class="themeMode">Light Theme</p>
+      </nav>
+
+      <!-- form & user Details section -->
+      <!-- thisIsTheDemoClassNameForDemonstrationOfTheCssClassName -->
+      <article class="heroSection">
+        <button class="toggle">Toggle</button>
+
+        <section class="formSection">
+          <form>
+            <input
+              type="text"
+              placeholder="enter your userName"
+              class="userName"
+            />
+            <input
+              type="password"
+              placeholder="enter your password"
+              class="password"
+            />
+            <button>Add the User</button>
+          </form>
+        </section>
+        
+        <section class="userSection">
+          <h2>User Details</h2>
+          <section class="users"></section>
+        </section>
+      </article>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
