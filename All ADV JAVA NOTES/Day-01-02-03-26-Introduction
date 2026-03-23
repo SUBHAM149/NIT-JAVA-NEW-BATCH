@@ -1,3 +1,110 @@
+                                                                                            📘 ADVANCED JAVA INDEX
+🔹 UNIT – I: JDBC (Java Database Connectivity)
+Introduction to JDBC
+Types of Drivers
+Type 1: JDBC-ODBC Bridge
+Type 2: Native API
+Type 3: Network Protocol
+Type 4: Thin Driver
+JDBC Architecture
+Steps to Connect Java with Database
+Connection Interface
+Statement Interface
+Prepared Statement
+Callable Statement
+Result Set Interface
+CRUD Operations using JDBC
+Batch Processing
+Transaction Management
+Metadata (Database Metadata & Result Set Meta Data)
+
+
+🔹 UNIT – II: Servlets
+Introduction to Servlet
+Servlet Architecture
+Servlet Life Cycle
+Types of Servlets
+Generic Servlet
+HTTP Servlet
+Servlet API
+Handling Client Requests (GET & POST)
+Servlet Configuration
+Servlet Context
+Session Management
+Cookies
+HTTP Session
+URL Rewriting
+Request Dispatcher
+Filters in Servlet
+
+
+🔹 UNIT – III: JSP (Java Server Pages)
+Introduction to JSP
+JSP Life Cycle
+JSP vs Servlet
+JSP Elements
+Script let Tag
+Declaration Tag
+Expression Tag
+JSP Directives
+Page Directive
+Include Directive
+Tag lib Directive
+Implicit Objects in JSP
+JSP Standard Actions
+Expression Language (EL)
+JSTL (JSP Standard Tag Library)
+MVC Architecture using JSP & Servlet
+
+
+🔹 UNIT – IV: Hibernate Framework
+Introduction to Hibernate
+Advantages of Hibernate
+Hibernate Architecture
+Configuration File (hibernate.cfg.xml)
+Mapping (XML & Annotations)
+Persistent Classes
+CRUD Operations in Hibernate
+HQL (Hibernate Query Language)
+Criteria API
+Transactions in Hibernate
+Caching (First Level & Second Level)
+
+🔹 UNIT – V: Spring Framework
+Introduction to Spring
+Spring Architecture
+IOC (Inversion of Control)
+Dependency Injection (DI)
+Spring Bean Lifecycle
+Bean Configuration (XML & Annotation)
+Spring AOP (Aspect-Oriented Programming)
+Spring JDBC
+Spring MVC
+RESTful Web Services
+
+
+🔹 UNIT – VI: Web Services
+Introduction to Web Services
+SOAP Web Services
+RESTful Web Services
+JSON & XML
+API Development
+HTTP Methods (GET, POST, PUT, DELETE)
+
+
+🔹 UNIT – VII: Advanced Topics
+Java Mail API
+RMI (Remote Method Invocation)
+Multithreading in Web Applications
+Security (Authentication & Authorization)
+Logging (Log4j)
+Microservices Basics
+
+
+
+
+
+
 Introduction to Advanced Java
 
 -Advanced Java is the part of Java programming used to develop web-based and enterprise applications. It provides technologies and APIs that allow Java programs to interact with databases, web servers, and network applications.
