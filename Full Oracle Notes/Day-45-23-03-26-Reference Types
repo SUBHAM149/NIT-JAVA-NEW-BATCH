@@ -1,0 +1,197 @@
+23-mar-26 
+
+  => wap to input empno and increment sal as follows ?
+
+       if  job=CLERK  incr sal by 10%
+                  SALESMAN            15%
+                   MANAGER             20%
+                   OTHERS                5%
+
+   DECLARE
+        vempno   NUMBER(4);
+        vjob         VARCHAR2(10);
+        vpct         NUMBER(2);
+    BEGIN
+        vempno := &empno;   
+        SELECT job INTO vjob FROM emp WHERE empno = vempno;
+        IF vjob='CLERK' THEN
+            vpct := 10;
+        ELSIF vjob='SALESMAN' THEN
+            vpct := 15;
+        ELSIF vjob='MANAGER' THEN
+            vpct := 20;
+        ELSE
+            vpct := 5;
+        END IF;
+        UPDATE emp SET sal = sal + (sal*vpct/100) WHERE empno = vempno ; 
+        COMMIT;
+   END;
+       /
+
+ =>  wap to process bank transaction (W/D)  ?
+
+ ACCOUNTS
+ accno	actype	bal
+100	S	10000
+101	S	20000
+
+TRANSACTIONS
+ trid	ttype	tdate	tamt	accno
+
+CREATE SEQUENCE S10
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 9999 ;
+
+CREATE TABLE accounts
+(
+ accno  NUMBER(4) PRIMARY KEY,
+ actype  VARCHAR2(1),
+ bal   NUMBER(8,2)
+ );
+
+ INSERT INTO accounts VALUES(100,'S',10000);
+ INSERT INTO accounts VALUES(101,'S',20000);
+
+CREATE TABLE TRANSACTIONS
+(
+ trid NUMBER(6) ,
+ ttype VARCHAR2(1),  
+ tdate  DATE,
+ tamt   NUMBER(6),
+ accno  NUMBER(4) REFERENCES accounts(accno)
+);
+
+DECLARE
+   vacno   NUMBER(4);
+   vtype    VARCHAR2(1);
+   vamt     NUMBER(5);
+   vbal      NUMBER(8,2);
+BEGIN
+    vacno := &acno;
+    vtype  :=  '&type' ; 
+    vamt  := &amount;
+    IF vtype='W' THEN
+         SELECT bal INTO vbal FROM accounts WHERE accno = vacno ; 
+         IF vamt > vbal THEN
+             DBMS_OUTPUT.PUT_LINE('insufficient balance');
+         ELSE
+              UPDATE accounts SET bal = bal - vamt WHERE accno = vacno;
+              INSERT INTO transactions VALUES(S10.nextval,'W',sysdate,vamt,vacno);
+              COMMIT;
+         END IF;
+     ELSIF vtype='D' THEN
+              UPDATE accounts SET bal = bal + vamt WHERE accno = vacno;
+              INSERT INTO transactions VALUES(S10.nextval,'D',sysdate,vamt,vacno);
+              COMMIT;
+    ELSE
+             DBMS_OUTPUT.PUT_LINE('invalid transaction');
+    END IF;
+  END;
+  /
+
+Enter value for acno: 100
+Enter value for type: D
+Enter value for amount: 5000
+
+ Reference Types :- 
+ -------------------------
+
+ 1 %TYPE 
+ 2 %ROWTYPE
+
+ %TYPE :- 
+ ------------
+
+  => %type is used to refer column datatype and size
+  => used to match variable datatype & size with column datatype and size
+
+ ex :-     vempno        emp.empno%TYPE;
+             vename        emp.ename%TYPE;
+             vsal               emp.sal%TYPE;
+
+ =>  in the above example whatever datatype and size declared for sal column in emp table
+       the same type and size assigned to variable vsal.
+
+  %ROWTYPE :- 
+   -------------------
+
+   => used to refer record type 
+   => %rowtype reduces no of variables required in the program and reduces complexity
+   => a record from table can be assigned to rowtype variable
+ 
+           ex :-    e        emp%ROWYPE; 
+
+  => a row from emp table can be assigned to variable "e" 
+
+      SELECT *  INTO e 
+      FROM emp 
+      WHERE empno = 7369 ; 
+
+       e
+       empno  ename   job    	mgr   hiredate  sal   comm   deptno
+       7369     turner    sales	                       800   null	20
+
+   => from "e" individual field values are accessed by using   rowtypevar.fieldname
+
+              e.sal   =>  800
+              e.ename => turner
+
+ Ex :- 
+
+  => wap to input empno and print employee details ? 
+
+      DECLARE
+          vempno    emp.empno%TYPE;
+          r                emp%ROWTYPE;
+       BEGIN
+            vempno := &empno;
+             SELECT ename,job,sal INTO r.ename,r.job,r.sal
+             FROM emp 
+             WHERE empno = vempno;
+            DBMS_OUTPUT.PUT_LINE(' Name = '||r.ename);
+            DBMS_OUTPUT.PUT_LINE(' Salary = '||r.sal);
+            DBMS_OUTPUT.PUT_LINE(' Job = '||r.job);  
+      END;
+          /
+  
+  SELECT * INTO r FROM emp  WHERE empno = vempno  =>  ok
+
+   SELECT ename,job,sal INTO r FROM emp  WHERE empno = vempno  => ERROR
+ 
+ => wap to input sno and calculate total,avg,result and insert into result table ?
+
+  STUDENT
+  sno	sname	s1	s2	s3
+  1	A	80	90	70
+  2	B	30	60	50
+
+ RESULT 
+ sno	total	avg	result
+
+ DECLARE
+   vsno   studnet.sno%TYPE;
+   s         student%ROWTYPE;
+   r          result%ROWTYPE;
+ BEGIN
+     vsno := &sno;
+     SELECT * INTO s FROM student WHERE sno = vsno;
+     r.total := s.s1 + s.s2 + s.s3;
+     r.avg :=  r.total/3;
+     IF  s.s1>=35 AND s.s2>=35 AND s.s3>=35 THEN
+       r.result := 'PASS';
+     ELSE
+        r.result := 'FAIL';
+     END IF;
+     INSERT INTO result VALUES(vsno,r.total,r.avg,r.result);
+    COMMIT;
+ END;
+ /
+      
+s
+sno	sname	s1	s2	s3
+1	A	80	90	70
+
+ r
+ sno	total	avg	result
+                 240          80             PASS
