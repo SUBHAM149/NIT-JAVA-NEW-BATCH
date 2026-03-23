@@ -1,0 +1,36 @@
+package com.sub.callabelestatement;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class DemoFetchOperation {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection c=DriverManager.getConnection("jdbc:mysql://localhost:3306/callable_db", "root", "Subham@123");
+		
+		CallableStatement cs= c.prepareCall("{call getStudents()}");
+		ResultSet rs=cs.executeQuery();
+		System.out.println("ID      NAME      BRANCH      MOB");
+		while(rs.next()) {
+			System.out.println(
+					rs.getInt("ID") + "       " +
+					rs.getString("NAME") + "	   " +
+					rs.getString("BRANCH")+"        "+
+					rs.getInt("MOB_NUM")
+					
+			);
+		}
+
+
+	}
+
+}
+
+OUTPUT
+ID      NAME      BRANCH      MOB
+1       MONA	   CS        45789
+2       RAJA	   DS        56895
