@@ -1,0 +1,49 @@
+package com.sub.callabelestatement;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DemoUpdateOperation {
+
+    public static void main(String[] args) {
+
+        try {
+            // 1. Load Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // 2. Create Connection
+            Connection c = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/callable_db",
+                    "root",
+                    "Subham@123"
+            );
+
+            // 3. Prepare CallableStatement
+            CallableStatement cs = c.prepareCall("{call updateemp(?,?,?,?)}");
+
+            // 4. Set Values (Update Record)
+            cs.setInt(1, 200);              // id
+            cs.setString(2, "Raj Updated"); // name
+            cs.setString(3, "IT");          // dept
+            cs.setInt(4, 5000);             // salary
+
+            // 5. Execute
+            int rows = cs.executeUpdate();
+
+            // 6. Output
+            if (rows > 0) {
+                System.out.println("Record Updated Successfully ✅");
+            } else {
+                System.out.println("No Record Found ❌");
+            }
+
+            // 7. Close Connection
+            c.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
