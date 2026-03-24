@@ -6036,6 +6036,278 @@ SELECT * FROM customer_orders;
 
 
 
+Day-25
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    INLINE VIEW & ANALYTICAL FUNCTIONS & ROWID
+                   ==============================================
+
+
+1.Inline view:- Oracle 7.2 introduced Inline views.in place of tablename
+                 we are writing subquery is called inline view.
+
+
+Syntax:-
+=======
+ select * from (subquery);
+
+
+
+1.Write a query to display the employees who are getting more
+  than 30000 annsal from emp table?
+
+
+Note:-in where clause we are not allowed to use column aliasname.
+===== then those type of queries we are putting in inline view.
+      then internally column aliasname behaves like a exact table
+      column 
+
+
+               -----------------------------
+select * from( |  ename  |  sal |  annsal  |)where annsal>300000;
+               -----------------------------
+               |         |      |          |
+               -----------------------------
+
+
+
+------------------------------------------------------------------------------------------------------
+ *
+***What are analytical functions (or) window functions?[V.V.I.M.P]
+ *
+Analytical functions
+====================
+Oracle having following analytical functions. These are
+
+   1.row_number()
+
+   2.rank()
+ *
+***3.dense_rank()
+ *
+
+
+syntax:-
+=======
+
+Analyticalfunctionname()over(partition by columnname order by
+                              columnname[asc/desc])
+
+
+   in these 3 analytical functions partition by clause is optional 
+order by clause is mandatory.
+
+   These 3 analytical functions automatically assigns ranks either
+group wise or rows wise in a table.
+
+ *
+***What are the differences b/w rank,dense_rank() and row_number()?[V.V.I.M.P]
+ *
+
+   Row_number() analytical function automatically assigns different rank numbers
+when values are same whereas rank(), dense_rank() functions automatically assigns
+same rank numbers when values are same and also rank() skips next consecutive rank numbers 
+where as dense_rank() does not skips next consecutive rank numbers
+
+
+
+   
+eg:-
+=====
+ROW_NUMBER():-
+=============
+
+             ENAME         SAL         R
+            --------     -------     -----
+              SCOTT        6000        1
+              FORD         6000        2
+              JONES        5000        3
+              ALLEN        3000        4
+              SMITH        3000        5
+              MILLER       3000        6
+              MARTIN       2000        7
+              ADAMS        1000        8
+
+
+
+RANK():-
+========
+
+              ENAME         SAL        R
+            --------     -------     -----
+              SCOTT        6000        1
+              FORD         6000        1
+              JONES        5000        3
+              ALLEN        3000        4
+              SMITH        3000        4
+              MILLER       3000        4
+              MARTIN       2000        7
+              ADAMS        1000        8
+
+
+
+DENSE_RANK():-
+=============
+ 
+             ENAME         SAL         R
+            --------     -------     -----
+              SCOTT        6000        1
+              FORD         6000        1
+              JONES        5000        2
+              ALLEN        3000        3
+              SMITH        3000        3
+              MILLER       3000        3
+              MARTIN       2000        4
+              ADAMS        1000        5
+
+
+------------------------------------------------------------------------------------------------------
+```sql
+-- ============================================
+-- DENSE_RANK() ANALYTICAL FUNCTION QUERIES
+-- ============================================
+
+SET SERVEROUTPUT ON;
+
+-- ============================================
+-- 1. 2nd Highest Salary Employee (V.V.I.M.P)
+-- ============================================
+SELECT *
+FROM (
+    SELECT e.*, DENSE_RANK() OVER (ORDER BY sal DESC) rnk
+    FROM emp e
+)
+WHERE rnk = 2;
+
+
+-- ============================================
+-- 2. 3rd Highest Salary in Each Department
+-- ============================================
+SELECT *
+FROM (
+    SELECT e.*, 
+           DENSE_RANK() OVER (PARTITION BY deptno ORDER BY sal DESC) rnk
+    FROM emp e
+)
+WHERE rnk = 3;
+
+
+-- ============================================
+-- 3. 5th Highest Salary Employee
+-- ============================================
+SELECT *
+FROM (
+    SELECT e.*, DENSE_RANK() OVER (ORDER BY sal DESC) rnk
+    FROM emp e
+)
+WHERE rnk = 5;
+
+
+-- ============================================
+-- 4. Nth Highest Salary (V.V.I.M.P)
+-- ============================================
+SELECT *
+FROM (
+    SELECT e.*, DENSE_RANK() OVER (ORDER BY sal DESC) rnk
+    FROM emp e
+)
+WHERE rnk = &n;
+
+
+-- ============================================
+-- 5. Top 5 Highest Salary Employees
+-- ============================================
+SELECT *
+FROM (
+    SELECT e.*, DENSE_RANK() OVER (ORDER BY sal DESC) rnk
+    FROM emp e
+)
+WHERE rnk <= 5;
+
+------------------------------------------------------------------------------------------------------
+```sql
+-- =========================================================
+-- DELETE DUPLICATE ROWS FROM A TABLE USING ROWID
+-- =========================================================
+
+-- Concept:
+-- ROWID is a unique identifier for each row in a table.
+-- We keep one row (minimum ROWID) and delete remaining duplicates.
+
+-- =========================================================
+-- 1. DELETE DUPLICATES BASED ON ALL COLUMNS
+-- =========================================================
+DELETE FROM emp
+WHERE ROWID NOT IN (
+    SELECT MIN(ROWID)
+    FROM emp
+    GROUP BY empno, ename, job, mgr, hiredate, sal, comm, deptno
+);
+
+-- =========================================================
+-- 2. DELETE DUPLICATES BASED ON SPECIFIC COLUMNS
+-- (Example: duplicate salaries)
+-- =========================================================
+DELETE FROM emp
+WHERE ROWID NOT IN (
+    SELECT MIN(ROWID)
+    FROM emp
+    GROUP BY sal
+);
+
+-- =========================================================
+-- 3. DELETE DUPLICATES BASED ON NAME (ENAME)
+-- =========================================================
+DELETE FROM emp
+WHERE ROWID NOT IN (
+    SELECT MIN(ROWID)
+    FROM emp
+    GROUP BY ename
+);
+
+-- =========================================================
+-- COMMIT CHANGES
+-- =========================================================
+COMMIT;
+
+-- =========================================================
+-- END OF FILE
+-- =========================================================
+```
+
+SQL> SELECT * FROM TEST;
+          
+         DEPTNO
+       ----------
+           10
+           10
+           10
+           20
+           20
+           20
+           30
+           30
+           40
+           50
+
+          (OR)
+
+SQL> SELECT * FROM EMP111;
+
+      EMPNO        ENAME
+     -------    ----------
+         1        SURYA
+         2        ANUSHKA
+         3        ANUSHKA
+         4        GOWTHAM
+         5        SURYA
+         6        SATYA
+
+   
+          
+
+
+
+
 
 
 
