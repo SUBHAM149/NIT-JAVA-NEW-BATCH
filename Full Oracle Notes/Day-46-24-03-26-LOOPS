@@ -1,0 +1,209 @@
+24-mar-26
+
+LOOPS :-
+=======
+
+ 1  simple loop
+ 2  while loop 
+ 3  for loop
+
+ simple loop :-
+ -------------------
+
+   LOOP                                                  LOOP
+         statements;                                        statements;
+         EXIT WHEN cond;                             if  cond  then
+   END LOOP;                                                    exit;
+                                                                    end if;
+                                                                END LOOP;
+
+  if cond  = false loop continues
+  if cond = true loop terminates 
+
+ WHILE loop :-
+ -------------------
+
+ WHILE(cond)
+ LOOP
+     statements;
+ END LOOP;
+
+ if cond = true loop continues
+ if cond = false loop terminates 
+
+ FOR loop :-
+------------------
+
+ FOR  var  IN low..upp
+ LOOP
+   statements ;
+ END LOOP;
+
+Ex :- 
+
+   FOR i  IN 1..10                FOR(i=1;i<=10;i++)
+   LOOP
+        statements;
+   END LOOP;
+
+=> loop variable "i" declared implicitly  as number type
+=> by default "i" value is incremented by 1 
+=> "i" is read only variable
+=> scope of the "i" is upto the for loop
+
+ Ex :- 
+
+   => write a prog to print numbers from 1 to 10 ?
+
+ simple loop :-
+ -----------------
+
+  DECLARE
+      x   NUMBER(2)  := 1 ;
+  BEGIN
+     LOOP
+        DBMS_OUTPUT.PUT_LINE(x);
+        x := x+1;
+        EXIT WHEN x > 10;
+   END LOOP;
+ END;
+    /
+
+while loop :-
+----------------
+
+DECLARE
+   x  NUMBER(2) := 1;
+BEGIN
+   WHILE(x<=10)
+   LOOP
+       DBMS_OUTPUT.PUT_LINE(x);
+       x := x +1;
+   END LOOP;
+ END;
+   /
+
+FOR loop :-
+----------------
+
+ BEGIN
+      FOR  x  IN  1..10
+      LOOP
+         DBMS_OUTPUT.PUT_LINE(x);
+      END LOOP;
+ END;
+   / 
+
+=> wap to print 2026 calendar ? 
+
+   01-jan-26	?
+   02-jan-26	?
+
+   DECLARE
+         d1   DATE;
+         d2   DATE;
+   BEGIN
+         d1 := '01-JAN-24' ;
+         d2 := '31-DEC-24';
+         WHILE(d1 <= d2)
+         LOOP
+                DBMS_OUTPUT.PUT_LINE(d1||'      '||TO_CHAR(d1,'day'));
+                d1 := d1+1;
+          END LOOP;
+   END;
+   /
+
+ => wap to print sundays between two given dates ? 
+
+   DECLARE
+         d1   DATE;
+         d2   DATE;
+   BEGIN
+         d1 := '01-JAN-26' ;
+         d2 := '31-DEC-26';
+         WHILE(d1 <= d2)
+         LOOP
+                IF TO_CHAR(d1,'fmday') = 'sunday' THEN
+                    DBMS_OUTPUT.PUT_LINE(d1||'      '||TO_CHAR(d1,'day'));
+              END IF;
+                d1 := d1+1;
+          END LOOP;
+   END;
+   /
+
+DECLARE
+         d1   DATE;
+         d2   DATE;
+         cnt   NUMBER := 0;
+   BEGIN
+         d1 := '01-MAR-26' ;
+         d2 := '31-MAR-26';
+         d1 := NEXT_DAY(d1-1,'sunday');
+         WHILE(d1 <= d2)
+         LOOP
+               DBMS_OUTPUT.PUT_LINE(d1||'      '||TO_CHAR(d1,'day'));
+                cnt := cnt + 1;
+                d1 := d1+7;
+          END LOOP;
+          DBMS_OUTPUT.PUT_LINE('No of sundays = '||cnt);
+   END;
+   /
+
+  => wap to inset emi dates into the table ?
+
+        loan            :-              house loan
+       tenure          :-              20 years
+      emi date       :-               every 5th 
+
+  EMI_DATES 
+  DATEID		AMOUNT
+  05-APR-26	?
+  05-MAY-26	?
+
+CREATE TABLE EMI_DATES
+(
+  DATEID   DATE ,
+  AMOUNT  NUMBER
+ );
+
+ DECLARE
+       d1   DATE ;
+       d2   DATE;
+BEGIN
+        d1  :=  LAST_DAY(SYSDATE)+5 ;
+        d2  :=  ADD_MONTHS(d1,240);
+        WHILE(d1<=d2)
+        LOOP
+            INSERT INTO EMI_DATES VALUES(d1,null);
+            d1 := ADD_MONTHS(d1,1);
+      END LOOP;
+           COMMIT;
+  END;
+    /
+
+ => wap to input number and print whether it is prime or not ?
+SET SERVEROUTPUT ON;
+
+DECLARE
+    n NUMBER := &num;   -- Input number
+    i NUMBER;
+    flag NUMBER := 0;
+BEGIN
+    IF n <= 1 THEN
+        DBMS_OUTPUT.PUT_LINE('Not a Prime Number');
+    ELSE
+        FOR i IN 2..n-1 LOOP
+            IF MOD(n, i) = 0 THEN
+                flag := 1;
+                EXIT;
+            END IF;
+        END LOOP;
+
+        IF flag = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('Prime Number');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('Not a Prime Number');
+        END IF;
+    END IF;
+END;
+/
