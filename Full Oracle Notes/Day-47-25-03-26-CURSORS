@@ -1,0 +1,187 @@
+25-mar-26 
+
+ =>  wap to input string and print following pattern ?
+
+         input :-  NARESH 
+
+        output :- 
+
+         N
+         A
+         R
+         E
+         S
+         H
+
+      DECLARE
+          s1  VARCHAR2(20);
+      BEGIN
+          s1 := '&string';
+          FOR x in 1..LENGTH(s1)
+          LOOP
+              DBMS_OUTPUT.PUT_LINE(SUBSTR(s1,x,1));
+          END LOOP;
+     END;
+        /
+
+     DECLARE
+          s1  VARCHAR2(20);
+          b   NUMBER;
+      BEGIN
+          s1 := '&string';
+          b := LENGTH(s1);
+          FOR x in 1..b
+          LOOP
+              DBMS_OUTPUT.PUT_LINE(SUBSTR(s1,x,1));
+          END LOOP;
+     END;
+        /
+
+  => wap to input string and print following pattern ?
+
+     input  :-  NARESH
+ 
+     output :- 
+ 
+    N
+    NA
+    NAR
+    NARE
+    NARES
+    NARESH
+
+       DECLARE
+          s1  VARCHAR2(20);
+      BEGIN
+          s1 := '&string';
+          FOR x in 1..LENGTH(s1)
+          LOOP
+              DBMS_OUTPUT.PUT_LINE(SUBSTR(s1,1,x));
+          END LOOP;
+     END;
+        /
+
+  => wap to input string and print reverse ? 
+       and check whether string is palindrome or not ?
+
+   DECLARE
+     s1   VARCHAR2(20);
+     s2   VARCHAR2(20);
+  BEGIN
+      s1  := '&string';         
+      FOR x  IN 1..LENGTH(s1)
+      LOOP
+          s2 :=  s2||SUBSTR(s1,-x,1);
+      END LOOP;
+      DBMS_OUTPUT.PUT_LINE(s2);
+      IF s1 = s2 THEN
+           DBMS_OUTPUT.PUT_LINE('palindrome');
+      ELSE
+           DBMS_OUTPUT.PUT_LINE('not a palindrome');
+      END IF;
+  END;
+  /
+ 
+=> wap to print prime numbers upto 20 ? 
+
+    DECLARE   
+       b  BOOLEAN ;
+   BEGIN
+   FOR num IN 1..20
+ LOOP
+       b := FALSE;
+      FOR x  IN  2..num/2
+      LOOP
+             IF MOD(num,x) =0 THEN
+                       b := TRUE;
+                       exit;
+             END IF;
+       END LOOP;
+      IF b=FALSE THEN
+           DBMS_OUTPUT.PUT_LINE(num);
+       END IF;
+ END LOOP;
+   END;
+ /
+ 
+ CURSORS :- 
+ ===========
+
+ =>  CURSORs are used to process multiple rows in pl/sql programs
+ => using CURSOR we can access row-by-row
+ => from pl/sql program if we submit a query to oracle, it goes to db and
+      gets the data and copies that data into temporary memory area called
+      cursor allocated in  instance. In pl/sql progrm we can give name to the cursor
+      and access row-by-row from cursor and process the row.
+ => follow below steps to use cursor 
+
+    1  DECLARE
+    2  OPEN
+    3  FETCH
+    4  CLOSE
+
+ DECLARE :-
+ ------------------
+
+     CURSOR <name> IS SELECT statement ;
+
+  Ex :-  CURSOR C1 IS SELECT ename,sal FROM  emp ; 
+
+OPEN :- 
+------------
+
+            OPEN  <cursor-name>;
+            
+   EX :-    OPEN C1;
+
+  => from pl/sql program select stmt submitted to oracle 
+  => oracle executes the query and data returned by query is copied to cursor
+  => c1 points to cursor
+
+ FETCH :- 
+ --------------
+
+ => "FETCH" statement is used to fetch one by one record from cursor
+
+           FETCH <cursor-name>  INTO variables; 
+
+Ex :-   FETCH C1 INTO  vename,vsal;
+
+ =>  a fetch stmt fetched one row at a time but to process multiple rows fetch stmt should be
+       executed multiple times , so fetch stmt should be in  a loop.
+
+ CLOSE :-
+ ---------------
+ 
+               CLOSE C1 ;
+
+
+ cursor attributes :- 
+ ================
+
+   %FOUND 	=> retursn true if fetch is successful
+   %NOTFOUND       => returns true if fetch is unsuccessful
+   %ROWCOUNT     => returns no of rows fetched successfully
+
+ C1%FOUND
+ C1%NOTFOUND
+ C1%ROWCOUNT
+
+Ex :- 
+
+  => wap to print all employee names and salaries ? 
+
+         DECLARE
+             CURSOR C1 IS SELECT  ename,sal FROM emp ;
+             vename emp.ename%TYPE;
+             vsal  emp.sal%TYPE;
+         BEGIN
+              OPEN C1;
+        LOOP
+              FETCH C1 INTO  vename,vsal;
+              EXIT WHEN C1%NOTFOUND; 
+              DBMS_OUTPUT.PUT_LINE(vename||'   '||vsal);
+         END LOOP;
+             CLOSE C1;
+       END;
+         /
