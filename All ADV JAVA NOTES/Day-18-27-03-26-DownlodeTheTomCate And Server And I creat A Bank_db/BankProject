@@ -1,0 +1,299 @@
+package com.jdbc.bank;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class BankProject {
+
+    static final String URL = "jdbc:mysql://localhost:3306/bank_db";
+    static final String USER = "root";
+    static final String PASS = "Subham@123";
+
+    public static void main(String[] args) throws Exception {
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(URL, USER, PASS);
+        Scanner sc = new Scanner(System.in);
+
+        int loggedAcc = -1;
+
+        while (true) {
+
+            if (loggedAcc == -1) {
+                System.out.println("\n==== BANK MENU ====");
+                System.out.println("1. Create Account");
+                System.out.println("2. Login");
+                System.out.println("3. Exit");
+                System.out.print("Enter choice: ");
+
+                int ch = sc.nextInt();
+
+                switch (ch) {
+
+                    // ✅ CREATE ACCOUNT
+                    case 1:
+                        CallableStatement cs1 = con.prepareCall("{call create_account(?,?,?,?,?,?,?,?)}");
+
+                        sc.nextLine(); // clear buffer
+
+                        System.out.print("Name: ");
+                        cs1.setString(1, sc.nextLine());
+
+                        System.out.print("Mobile: ");
+                        cs1.setString(2, sc.nextLine());
+
+                        System.out.print("Email: ");
+                        cs1.setString(3, sc.nextLine());
+
+                        System.out.print("PAN: ");
+                        cs1.setString(4, sc.nextLine());
+
+                        System.out.print("Aadhar: ");
+                        cs1.setString(5, sc.nextLine());
+
+                        System.out.print("Address: ");
+                        cs1.setString(6, sc.nextLine());
+
+                        System.out.print("Balance: ");
+                        cs1.setDouble(7, sc.nextDouble());
+
+                        System.out.print("PIN: ");
+                        cs1.setInt(8, sc.nextInt());
+
+                        ResultSet rs1 = cs1.executeQuery();
+                        while (rs1.next()) {
+                            System.out.println(rs1.getString(1));
+                        }
+                        break;
+
+                    // 🔐 LOGIN
+                    case 2:
+                        System.out.print("Account No: ");
+                        int acc = sc.nextInt();
+
+                        System.out.print("PIN: ");
+                        int pin = sc.nextInt();
+
+                        PreparedStatement ps = con.prepareStatement(
+                                "SELECT * FROM account WHERE acc_no=? AND pin=?");
+                        ps.setInt(1, acc);
+                        ps.setInt(2, pin);
+
+                        ResultSet rs = ps.executeQuery();
+
+                        if (rs.next()) {
+                            loggedAcc = acc;
+                            System.out.println("✅ Login Successful!");
+                        } else {
+                            System.out.println("❌ Invalid Credentials!");
+                        }
+                        break;
+
+                    case 3:
+                        System.exit(0);
+                }
+
+            } else {
+                // 🏦 USER DASHBOARD
+                System.out.println("\n==== USER DASHBOARD ====");
+                System.out.println("1. Check Balance");
+                System.out.println("2. Deposit");
+                System.out.println("3. Withdraw");
+                System.out.println("4. Transfer Money");
+                System.out.println("5. My Transactions");
+                System.out.println("6. Update Profile");
+                System.out.println("7. Logout");
+                System.out.print("Enter choice: ");
+
+                int ch = sc.nextInt();
+
+                switch (ch) {
+
+                    // 💰 CHECK BALANCE
+                    case 1:
+                        PreparedStatement bal = con.prepareStatement(
+                                "SELECT balance FROM account WHERE acc_no=?");
+                        bal.setInt(1, loggedAcc);
+                        ResultSet r1 = bal.executeQuery();
+                        if (r1.next()) {
+                            System.out.println("Balance: " + r1.getDouble(1));
+                        }
+                        break;
+
+                    // 💵 DEPOSIT
+                    case 2:
+                        System.out.print("Enter amount: ");
+                        double dep = sc.nextDouble();
+
+                        PreparedStatement depst = con.prepareStatement(
+                                "UPDATE account SET balance = balance + ? WHERE acc_no=?");
+                        depst.setDouble(1, dep);
+                        depst.setInt(2, loggedAcc);
+                        depst.executeUpdate();
+
+                        System.out.println("✅ Deposited!");
+                        break;
+
+                    // 💸 WITHDRAW
+                    case 3:
+                        System.out.print("Enter amount: ");
+                        double wd = sc.nextDouble();
+
+                        PreparedStatement chk = con.prepareStatement(
+                                "SELECT balance FROM account WHERE acc_no=?");
+                        chk.setInt(1, loggedAcc);
+                        ResultSet r2 = chk.executeQuery();
+
+                        if (r2.next() && r2.getDouble(1) >= wd) {
+                            PreparedStatement wdst = con.prepareStatement(
+                                    "UPDATE account SET balance = balance - ? WHERE acc_no=?");
+                            wdst.setDouble(1, wd);
+                            wdst.setInt(2, loggedAcc);
+                            wdst.executeUpdate();
+
+                            System.out.println("✅ Withdraw Successful!");
+                        } else {
+                            System.out.println("❌ Insufficient Balance!");
+                        }
+                        break;
+
+                    // 🔥 TRANSFER
+                    case 4:
+                        CallableStatement cs2 = con.prepareCall("{call transfer_money(?,?,?)}");
+
+                        System.out.print("Receiver Acc No: ");
+                        int rec = sc.nextInt();
+
+                        System.out.print("Amount: ");
+                        double amt = sc.nextDouble();
+
+                        cs2.setInt(1, loggedAcc);
+                        cs2.setInt(2, rec);
+                        cs2.setDouble(3, amt);
+
+                        ResultSet r3 = cs2.executeQuery();
+                        while (r3.next()) {
+                            System.out.println(r3.getString(1));
+                        }
+                        break;
+
+                    // 📄 MY TRANSACTIONS
+                    case 5:
+                        PreparedStatement pst = con.prepareStatement(
+                                "SELECT * FROM transactions WHERE from_acc=? OR to_acc=?");
+                        pst.setInt(1, loggedAcc);
+                        pst.setInt(2, loggedAcc);
+
+                        ResultSet r4 = pst.executeQuery();
+
+                        System.out.println("ID | FROM -> TO | AMOUNT");
+
+                        while (r4.next()) {
+                            System.out.println(
+                                    r4.getInt("txn_id") + " | " +
+                                    r4.getInt("from_acc") + " -> " +
+                                    r4.getInt("to_acc") + " | " +
+                                    r4.getDouble("amount")
+                            );
+                        }
+                        break;
+
+                    // ✏️ UPDATE PROFILE
+                    case 6:
+                        System.out.println("\n--- UPDATE PROFILE ---");
+                        System.out.println("1. Update Name");
+                        System.out.println("2. Update Mobile");
+                        System.out.println("3. Update Email");
+                        System.out.println("4. Update Address");
+                        System.out.println("5. Update PIN");
+                        System.out.print("Enter choice: ");
+
+                        int up = sc.nextInt();
+                        sc.nextLine(); // clear buffer
+
+                        switch (up) {
+
+                            // 👤 UPDATE NAME
+                            case 1:
+                                System.out.print("Enter New Name: ");
+                                String name = sc.nextLine();
+
+                                PreparedStatement ps0 = con.prepareStatement(
+                                        "UPDATE account SET name=? WHERE acc_no=?");
+                                ps0.setString(1, name);
+                                ps0.setInt(2, loggedAcc);
+                                ps0.executeUpdate();
+
+                                System.out.println("✅ Name Updated!");
+                                break;
+
+                            // 📱 UPDATE MOBILE
+                            case 2:
+                                System.out.print("Enter New Mobile: ");
+                                String mob = sc.nextLine();
+
+                                PreparedStatement ps1 = con.prepareStatement(
+                                        "UPDATE account SET mobile=? WHERE acc_no=?");
+                                ps1.setString(1, mob);
+                                ps1.setInt(2, loggedAcc);
+                                ps1.executeUpdate();
+
+                                System.out.println("✅ Mobile Updated!");
+                                break;
+
+                            // 📧 UPDATE EMAIL
+                            case 3:
+                                System.out.print("Enter New Email: ");
+                                String email = sc.nextLine();
+
+                                PreparedStatement ps2 = con.prepareStatement(
+                                        "UPDATE account SET email=? WHERE acc_no=?");
+                                ps2.setString(1, email);
+                                ps2.setInt(2, loggedAcc);
+                                ps2.executeUpdate();
+
+                                System.out.println("✅ Email Updated!");
+                                break;
+
+                            // 🏠 UPDATE ADDRESS
+                            case 4:
+                                System.out.print("Enter New Address: ");
+                                String addr = sc.nextLine();
+
+                                PreparedStatement ps3 = con.prepareStatement(
+                                        "UPDATE account SET address=? WHERE acc_no=?");
+                                ps3.setString(1, addr);
+                                ps3.setInt(2, loggedAcc);
+                                ps3.executeUpdate();
+
+                                System.out.println("✅ Address Updated!");
+                                break;
+
+                            // 🔐 UPDATE PIN
+                            case 5:
+                                System.out.print("Enter New PIN: ");
+                                int newPin = sc.nextInt();
+
+                                PreparedStatement ps4 = con.prepareStatement(
+                                        "UPDATE account SET pin=? WHERE acc_no=?");
+                                ps4.setInt(1, newPin);
+                                ps4.setInt(2, loggedAcc);
+                                ps4.executeUpdate();
+
+                                System.out.println("✅ PIN Updated!");
+                                break;
+
+                            default:
+                                System.out.println("❌ Invalid choice!");
+                        }
+                        break;
+                    // 🚪 LOGOUT
+                    case 7:
+                        loggedAcc = -1;
+                        System.out.println("🔓 Logged Out!");
+                        break;
+                }
+            }
+        }
+    }
+}
