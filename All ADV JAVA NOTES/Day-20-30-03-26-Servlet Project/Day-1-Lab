@@ -1,0 +1,170 @@
+package com.sub.day1;
+import java.sql.*;
+import java.util.Scanner;
+
+public class Lab1 {
+
+    static final String URL = "jdbc:mysql://localhost:3306/lab_db";
+    static final String USER = "root";
+    static final String PASSWORD = "Subham@123"; // change if needed
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            // Load Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Create Connection
+            Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            int choice;
+
+            do {
+            	
+                System.out.println("\n===== EMPLOYEE MENU =====");
+                System.out.println("1. Insert Employee");
+                System.out.println("2. Retrieve All Employees");
+                System.out.println("3. Employees name starts with 'S'");
+                System.out.println("4. Salary between 10000 and 20000");
+                System.out.println("5. Update Salary by ID");
+                System.out.println("6. Delete Employee with Max Salary");
+                System.out.println("7. Delete Employee name ends with 'a'");
+                System.out.println("8. Exit");
+
+                System.out.print("Enter choice: ");
+                choice = sc.nextInt();
+
+                switch (choice) {
+
+                    case 1:
+                        System.out.print("Enter ID: ");
+                        int id = sc.nextInt();
+                        sc.nextLine();
+
+                        System.out.print("Enter Name: ");
+                        String name = sc.nextLine();
+
+                        System.out.print("Enter Salary: ");
+                        double salary = sc.nextDouble();
+                        sc.nextLine();
+
+                        System.out.print("Enter Address: ");
+                        String address = sc.nextLine();
+
+                        System.out.print("Enter Email: ");
+                        String email = sc.nextLine();
+
+                        System.out.print("Enter Phone: ");
+                        String phone = sc.nextLine();
+
+                        String insert = "INSERT INTO Employee_Info VALUES (?, ?, ?, ?, ?, ?)";
+                        PreparedStatement ps = con.prepareStatement(insert);
+
+                        ps.setInt(1, id);
+                        ps.setString(2, name);
+                        ps.setDouble(3, salary);
+                        ps.setString(4, address);
+                        ps.setString(5, email);
+                        ps.setString(6, phone);
+
+                        ps.executeUpdate();
+                        System.out.println("✅ Employee Inserted!");
+                        break;
+
+                    case 2:
+                    	ResultSet rs1 = con.createStatement()
+                        .executeQuery("SELECT * FROM Employee_Info");
+
+                // ✅ Table Header
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                System.out.printf("%-5s %-20s %-10s %-15s %-25s %-15s\n",
+                        "ID", "NAME", "SALARY", "ADDRESS", "EMAIL", "PHONE");
+                System.out.println("----------------------------------------------------------------------------------------------------");
+
+                // ✅ Table Data
+                while (rs1.next()) {
+                    System.out.printf("%-5d %-20s %-10.2f %-15s %-25s %-15s\n",
+                            rs1.getInt("empId"),
+                            rs1.getString("empName"),
+                            rs1.getDouble("empSalary"),
+                            rs1.getString("empAddress"),
+                            rs1.getString("empMailId"),
+                            rs1.getString("empPhNo")
+                    );
+                }
+
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                break;
+
+                    case 3:
+                        ResultSet rs2 = con.createStatement()
+                                .executeQuery("SELECT * FROM Employee_Info WHERE empName LIKE 'S%'");
+
+                        while (rs2.next()) {
+                            System.out.println(rs2.getInt(1) + " | " + rs2.getString(2));
+                        }
+                        break;
+
+                    case 4:
+                        ResultSet rs3 = con.createStatement()
+                                .executeQuery("SELECT * FROM Employee_Info WHERE empSalary BETWEEN 10000 AND 20000");
+
+                        while (rs3.next()) {
+                            System.out.println(rs3.getInt(1) + " | " + rs3.getString(2) + " | " + rs3.getDouble(3));
+                        }
+                        break;
+
+                    case 5:
+                        System.out.print("Enter Employee ID: ");
+                        int uid = sc.nextInt();
+
+                        System.out.print("Enter New Salary: ");
+                        double newSalary = sc.nextDouble();
+
+                        String update = "UPDATE Employee_Info SET empSalary=? WHERE empId=?";
+                        PreparedStatement ps2 = con.prepareStatement(update);
+
+                        ps2.setDouble(1, newSalary);
+                        ps2.setInt(2, uid);
+
+                        int rows = ps2.executeUpdate();
+                        if (rows > 0)
+                            System.out.println("✅ Salary Updated!");
+                        else
+                            System.out.println("❌ Employee Not Found!");
+                        break;
+
+                    case 6:
+                    	String deleteMax = 
+                    	"DELETE FROM Employee_Info WHERE empSalary = " +
+                    	"(SELECT maxSal FROM (SELECT MAX(empSalary) AS maxSal FROM Employee_Info) AS temp)";
+
+                    	int d1 = con.createStatement().executeUpdate(deleteMax);
+                    	System.out.println("Deleted Rows: " + d1);
+
+                    case 7:
+                        String deleteA = "DELETE FROM Employee_Info WHERE empName LIKE '%a'";
+                        int d2 = con.createStatement().executeUpdate(deleteA);
+                        System.out.println("Deleted Rows: " + d2);
+                        break;
+
+                    case 8:
+                        System.out.println("Thank You!");
+                        break;
+
+                    default:
+                        System.out.println("Invalid Choice!");
+                }
+
+            } while (choice != 8);
+
+            con.close();
+            sc.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
