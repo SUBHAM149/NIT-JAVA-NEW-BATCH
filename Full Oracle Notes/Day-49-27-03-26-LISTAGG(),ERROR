@@ -1,0 +1,115 @@
+27-mar-26 
+
+  LISTAGG() :- 
+  ===========
+
+   => function used to concatenate column values 
+
+                LISTAGG(colname,seperator) WITHIN GROUP (ORDER BY ----)
+
+ex :- 
+
+      SELECT
+      LISTAGG(ename,',') WITHIN GROUP (ORDER BY hiredate ASC) as names
+      FROM emp ;
+
+    o/p :-  SMITH,ALLEN,WARD,JONES,BLAKE,CLARK,TURNER,MARTIN,KING,FORD,JAMES,MILLER,SCOTT,ADAMS
+  
+  => display dept wise employee list ?
+
+       SELECT deptno,
+      LISTAGG(ename,',') WITHIN GROUP (ORDER BY hiredate ASC) as names
+      FROM emp
+      GROUP BY deptno 
+
+         10	 CLARK,KING,MILLER
+         20	 SMITH,JONES,FORD,SCOTT,ADAMS
+         30	 ALLEN,WARD,BLAKE,TURNER,MARTIN,JAMES
+   
+=>  wap to  calculate all students  total,avg,result and insert into result table ?
+
+  STUDENT
+  sno	sname	s1	s2	s3
+  1	A	80	90	70
+  2	B	30	60	50
+
+ RESULT 
+ sno	total	avg	result
+
+  DECLARE
+     CURSOR C1 IS SELECT  sno,s1,s2,s3 FROM student;
+     r   result%ROWTYPE;
+  BEGIN
+     FOR  s  IN C1
+     LOOP
+         r.total := s.s1 + s.s2 + s.s3;
+         r.avg :=  r.total/3 ; 
+         IF s.s1>=35 AND s.s2>=35 AND s.s3>=35 THEN
+                r.result := 'PASS';
+         ELSE
+                r.result := 'FAIL';
+         END IF;
+         INSERT INTO result VALUES(s.sno,r.total,r.avg,r.result);
+     END LOOP;
+         COMMIT;
+  END;
+    /
+
+ 
+ C1
+  sno	s1	s2	s3
+  1	80	90	70
+  2	30	60	50
+
+ r
+ sno	total	avg	result
+                240            80            PASS  
+
+=> wap to increment salary based on pct in emp_hike table ?
+       
+ EMP_HIKE
+ empno	 pct
+ 7369	20
+ 7499	10
+ 7521	30
+ 7566	15
+
+   BEGIN
+    FOR  r  IN (SELECT empno,pct FROM emp_hike)
+   LOOP
+       UPDATE emp SET sal = sal + (sal*r.pct/100) WHERE empno = r.empno;
+   END LOOP;
+   COMMIT;
+   END;
+   /
+
+  =>  wap to print following output ?
+
+  10	ACCOUNTS
+
+   ---	----	--
+   ---	---	--
+   ----	---	----
+
+  20	RESEARCH
+
+  ---	----	---
+  ----	----	----
+  ----	----	----
+
+ BEGIN
+    FOR d  IN (SELECT deptno,dname FROM dept)
+    LOOP
+        DBMS_OUTPUT.PUT_LINE(d.deptno||'  '||d.dname);
+        FOR e IN (SELECT empno,ename,sal FROM emp WHERE deptno = d.deptno)
+        LOOP
+             DBMS_OUTPUT.PUT_LINE(e.empno||' '||e.ename||' '||e.sal);
+        END LOOP;
+   END LOOP;
+END;
+ /
+
+ ===========================================================================
+
+  
+ /
