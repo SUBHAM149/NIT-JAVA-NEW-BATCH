@@ -1,0 +1,180 @@
+26-mar-26
+
+  using while loop :- 
+  --------------------------
+
+     DECLARE
+             CURSOR C1 IS SELECT  ename,sal FROM emp ;
+             vename emp.ename%TYPE;
+             vsal  emp.sal%TYPE;
+         BEGIN
+              OPEN C1;
+              FETCH C1 INTO  vename,vsal;
+              WHILE(C1%FOUND)
+        LOOP 
+              DBMS_OUTPUT.PUT_LINE(vename||'   '||vsal);
+              FETCH C1 INTO  vename,vsal;
+         END LOOP;
+             CLOSE C1;
+       END;
+         /
+
+CURSOR FOR loop  :- 
+-------------------------------
+
+   FOR  var  IN  <CURSOR-NAME>
+  LOOP
+    statements ; 
+ END LOOP;
+
+ Ex :- 
+
+  FOR r IN C1                                  
+  LOOP                           
+   statements ; 
+ END LOOP;
+
+ => loop is executed no of times depends on no of rows in cursor.
+
+ => adv of  cursor for loop is opening ,fetching and closing is not required and these
+       operations performed implicitly.
+
+ => every time loop executes a record is fetched from cursor and assigned to variable "r"
+
+ => loop variable "r" is also declared implicitly as rowtype
+
+  Ex :- 
+
+    DECLARE
+       CURSOR C1 IS SELECT  ename,sal FROM emp ;
+    BEGIN
+        FOR r IN C1
+       LOOP
+             DBMS_OUTPUT.PUT_LINE(r.ename||'   '||r.sal);
+       END LOOP;
+  END;
+     /
+
+ inline cursor :- 
+ -------------------
+
+  =>   if we write SELECT statement in for loop  then it is called inline cursor
+  =>   Iterates over the results of a SELECT statement embedded directly in the for loop.
+
+   BEGIN
+        FOR r IN (SELECT ename,sal FROM emp) 
+       LOOP
+             DBMS_OUTPUT.PUT_LINE(r.ename||'   '||r.sal);
+       END LOOP;
+  END;
+     /
+
+=> wap to calculate total sal without using sum function ? 
+ 
+    DECLARE
+        t  NUMBER := 0 ;
+    BEGIN
+       FOR r  IN (SELECT sal FROM emp) 
+      LOOP
+           t :=  t + r.sal;
+      END LOOP;
+      DBMS_OUTPUT.PUT_LINE('Total Sal = '||t);
+   END;
+     /
+
+  => wap to find max sal without using max function ?
+
+     DECLARE
+         m  NUMBER := 0;
+     BEGIN
+         FOR r IN (SELECT sal FROM emp)
+         LOOP
+             IF r.sal > m THEN
+                 m := r.sal;
+             END IF;
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE(m);
+    END;
+      /
+
+     DECLARE
+       CURSOR C1 IS SELECT sal FROM emp ORDER BY sal DESC ;
+       m   NUMBER;
+    BEGIN
+        OPEN C1;
+        FETCH C1 INTO m;
+        DBMS_OUTPUT.PUT_LINE(m);
+        CLOSE C1;
+   END;
+     /
+
+=> wap  to find min sal ? 
+
+     DECLARE
+         CURSOR C1 IS SELECT sal FROM emp;
+         m  NUMBER ;
+         vsal  NUMBER;
+     BEGIN
+         OPEN C1;
+         FETCH C1 INTO m;
+      LOOP
+         FETCH  C1 INTO vsal;
+         EXIT WHEN C1%NOTFOUND;
+         IF vsal < m THEN
+             m := vsal;
+        END IF;
+     END LOOP;
+     DBMS_OUTPUT.PUT_LINE(m);
+     CLOSE C1;
+   END;
+     /
+
+   DECLARE
+         CURSOR C1 IS SELECT sal FROM emp;
+         m  NUMBER ;
+         vsal  NUMBER;
+     BEGIN
+         OPEN C1;
+         FETCH C1 INTO m;
+         CLOSE C1;
+         FOR r IN C1
+      LOOP
+            IF r.sal < m THEN
+                 m := r.sal;
+            END IF;
+       END LOOP;
+       DBMS_OUTPUT.PUT_LINE(m);
+   END;
+       /
+
+     DECLARE
+       CURSOR C1 IS SELECT sal FROM emp ORDER BY sal ASC ;
+       m   NUMBER;
+    BEGIN
+        OPEN C1;
+        FETCH C1 INTO m;
+        DBMS_OUTPUT.PUT_LINE(m);
+        CLOSE C1;
+   END;
+     /
+
+=>  wap to print employee names as follows ?
+          
+            smith,allen,ward,jones,martin,---------------------------
+
+      DECLARE
+         s   VARCHAR2(1000);
+     BEGIN
+         FOR r  IN (SELECT ename FROM emp)
+         LOOP
+               s := s||r.ename||',' ;     
+         END LOOP;
+         DBMS_OUTPUT.PUT_LINE(SUBSTR(s,1,LENGTH(s)-1));
+       END;
+           /
+
+ 
+
+ after executing the program how many rows inserted into empt table ? 
+
+ ANS :-  the first row that satsifies the condition
