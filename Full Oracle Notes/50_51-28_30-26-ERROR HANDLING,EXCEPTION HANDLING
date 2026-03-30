@@ -1,0 +1,262 @@
+28-mar-26
+ERROR HANDLING / EXCEPTION HANDLING :- 
+   ======================================
+
+   1 syntax errors
+   2 logical errors 
+   3 runtime errors
+
+ => errors that are raised during program execution are called runtime errors 
+ 
+  ex :-     DECLARE
+                   a  NUMBER(3) ;
+             BEGIN
+                  a := &a;         => 1000    => runtime error
+                DBMS_OUTPUT.PUT_LINE(a);
+             END;
+               / 
+    
+   => if stmt causes runtime error then execution is terminated abnormally and oracle displays
+        error message , To end the program normally and to replace oracle error message with
+        our own simple and user friendly message then we need to handle that runtime error.
+
+  => To handle runtime error then include a block called  EXCEPTION block
+
+       DECLARE
+             declaration-part;
+        BEGIN
+             execution-part;        => stmts causes exception
+        EXCEPTION
+             error handling -part   => stmt handles exception
+        END;
+           /
+ 
+ => exceptions are 2 types 
+
+ 1  system defined 
+ 2  user defined 
+
+30-mar-26
+
+ SYSTEM DEFINED :- 
+ =================
+
+ => errors raised by oracle are called system defined errors 
+
+ 1  zero_divide		=>    raised when we try to divide a number with 0
+ 2  value_error                          =>     raised when value exceeds variable size
+ 3  invalid_number		=>    raised when invalid calculation performed
+ 4  no_data_found 	                =>     raised when data not found in the table
+ 5  too_many_rows                   =>     raised when select stmt fetches more than one row
+ 6  dup_val_on_index               =>     raised when we try to insert duplicate value into primary key column
+ 7  cursor_already_open           =>    raised when we try to open cursor which is already opened
+
+ EXCEPTION
+    WHEN ZERO_DIVIDE THEN
+         statements;
+    WHEN VALUE_ERROR THEN
+         statements;
+    WHEN others THEN
+          statements;
+ END;
+  /
+
+  Ex 1 :- 
+
+  DECLARE
+     a  NUMBER(3);
+     b  NUMBER(3);
+     c  NUMBER(3);
+ BEGIN
+     a := &a;
+     b := &b;
+     c := a/b;
+     DBMS_OUTPUT.PUT_LINE(c);
+ EXCEPTION
+    WHEN ZERO_DIVIDE THEN
+        DBMS_OUTPUT.PUT_LINE('divisor cannot be zero');
+   WHEN VALUE_ERROR THEN
+       DBMS_OUTPUT.PUT_LINE('value exceeding size');
+ END;
+  /
+
+Test :- 
+
+ Enter value for a: 10
+ Enter value for b: 0
+ divisor cannot be zero
+
+Enter value for a: 10
+Enter value for b: 222222
+value exceeding size
+
+
+Ex  2  :- 
+
+ => wap to input empno and print  employee details ?
+
+     DECLARE
+        veno  emp.empno%TYPE;
+        r        emp%ROWTYPE;
+    BEGIN
+       veno := &empno;
+       SELECT * INTO r FROM emp WHERE empno = veno;
+       DBMS_OUTPUT.PUT_LINE(' Name = '||r.ename);
+       DBMS_OUTPUT.PUT_LINE(' Salary = '||r.sal);
+  EXCEPTION
+       WHEN NO_DATA_FOUND THEN
+             DBMS_OUTPUT.PUT_LINE('invalid empno');
+       WHEN VALUE_ERROR THEN
+            DBMS_OUTPUT.PUT_LINE('value exceeding size');
+       WHEN OTHERS THEN
+           DBMS_OUTPUT.PUT_LINE('unknown error');
+ END;
+  /
+
+    
+Enter value for empno: 9090
+invalid empno
+
+ SQLCODE , SQLERRM :- 
+ ====================
+
+   SQLCODE  => returns error code
+   SQLERRM  => returns error message
+
+  => sqlcode is useful to handle errors that are not having names
+
+ Ex :- 
+
+ CREATE TABLE emp55
+ (
+  empno NUMBER(4) PRIMARY KEY,
+  ename VARCHAR2(10) NOT NULL,
+  sal  NUMBER(8) CHECK(sal>=5000)
+  );
+
+ wap to insert data into emp55 table ?
+
+ DECLARE
+     veno  emp55.empno%TYPE;
+     vname  emp55.ename%TYPE;
+     vsal  emp55.sal%TYPE;
+ BEGIN
+      veno := &empno;
+      vname := '&ename' ;
+      vsal  := &sal;
+      INSERT INTO emp55 VALUES(veno,vname,vsal);
+      COMMIT;
+  EXCEPTION
+        WHEN  DUP_VAL_ON_INDEX THEN
+               DBMS_OUTPUT.PUT_LINE('empno should not be duplicate');
+        WHEN OTHERS THEN
+                IF SQLCODE = -02290 THEN
+                    DBMS_OUTPUT.PUT_LINE('sal >= 5000');
+               END IF;
+ END;
+  /
+
+USER DEFINED EXCEPTIONS :- 
+============================
+
+ => exceptions raised by user are called user defined exceptions 
+ => user must raise exception to stop program execution based on some condition
+ => the following built-ins are used to raise exception
+
+     1   RAISE stmt
+     2   RAISE_APPLICATION_ERROR
+
+ using RAISE stmt :- 
+ ================
+
+      RAISE  <exception-name> ; 
+
+Ex  :- 
+
+      RAISE  abc ;
+
+  => exception "abc" must be declared in declaration part
+
+         abc   EXCEPTION ;
+
+ 
+   DECLARE
+     a  NUMBER(3);
+     b  NUMBER(3);
+     c  NUMBER(3);
+     ONE_DIVIDE   EXCEPTION;
+ BEGIN
+     a := &a;
+     b := &b;
+     IF b=1 THEN
+          RAISE ONE_DIVIDE;
+      END IF;
+     c := a/b;
+     DBMS_OUTPUT.PUT_LINE(c);
+ EXCEPTION
+    WHEN ZERO_DIVIDE THEN
+        DBMS_OUTPUT.PUT_LINE('divisor cannot be zero');
+   WHEN ONE_DIVIDE THEN
+       DBMS_OUTPUT.PUT_LINE('divisor cannot be one');
+   WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE(SQLERRM);
+  END;
+ /
+
+using RAISE_APPLICATION_ERROR :-
+---------------------------------------------------------
+
+        RAISE_APPLICATION_ERROR(error code , error msg);
+
+              error code  =>  -20001 to -20999
+   
+ Ex :- 
+
+   => wap to input empno and increment sal but sunday updates are  not allowed ? 
+
+     DECLARE
+        veno  emp.empno%TYPE;
+        vamt  NUMBER(5);
+    BEGIN
+        veno := &empno;
+        vamt := &amount; 
+         IF  TO_CHAR(sysdate,'fmday') = 'sunday' THEN 
+                   RAISE_APPLICATION_ERROR(-20001,'sunday not allowed');
+         END IF;
+        UPDATE emp SET sal = sal + vamt WHERE empno = veno;
+        COMMIT;
+  END;
+     /
+
+
+difference between raise & raise_application_error  ?
+
+  1   in raise exception is raised by using name
+       in raise_application_error exception is raised by using error code
+
+ 2    to raise exception and to handle exception then use raise statement
+       to raise exception and do not want to handle it then use raise_application_error 
+
+ =>  
+
+   EMPT
+   empno	 sal
+
+  DECLARE
+      CURSOR C1 IS SELECT empno,sal FROM emp;
+      veno emp.empno%TYPE;
+      vsal emp.sal%TYPE;
+      ABC EXCEPTION;
+ BEGIN
+      OPEN C1;
+  LOOP
+      FETCH C1 INTO veno,vsal;
+      EXIT WHEN C1%NOTFOUND;
+      IF vsal > 2000 THEN
+             RAISE  ABC;
+      END IF;
+  END LOOP;
+  EXCEPTION 
+      WHEN ABC THEN
+            INSERT INTO EMPT VALUES(veno,vsal);
+ END;
