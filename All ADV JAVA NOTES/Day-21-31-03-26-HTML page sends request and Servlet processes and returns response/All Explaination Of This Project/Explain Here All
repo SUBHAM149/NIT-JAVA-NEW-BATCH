@@ -1,0 +1,108 @@
+# Java Servlet Project Explanation (ServletProject_1)
+
+## 🔷 Project Overview
+
+This is a **Maven-based Java Servlet Web Application**.
+It demonstrates how a client (browser) sends a request and the servlet processes it and sends a response back.
+
+---
+
+## 🔷 Project Structure
+
+ServletProject_1
+│
+├── src/main/java
+│   └── com.sub.nit
+│       └── MyServlet.java (Servlet Class)
+│
+├── src/main/webapp
+│   ├── META-INF
+│   ├── WEB-INF
+│   │   ├── lib
+│   │   └── web.xml (Servlet Configuration)
+│   └── index.html (Frontend Page)
+│
+├── target (Compiled Files)
+├── pom.xml (Maven Configuration)
+
+---
+
+## 🔷 Components Explanation
+
+### 1. MyServlet.java
+
+* Located in: src/main/java/com.sub.nit
+* This is the **main servlet class**
+* It extends HttpServlet
+* Contains service() method to handle requests
+
+Example:
+System.out.println("I am in Service Method");
+
+* It processes request and sends response using PrintWriter
+
+---
+
+### 2. index.html
+
+* Located in: src/main/webapp
+* This is the **first webpage (UI)**
+* Opens when project runs
+
+---
+
+### 3. web.xml
+
+* Located in: WEB-INF
+* Used for **servlet mapping**
+
+Example: <servlet> <servlet-name>my</servlet-name> <servlet-class>com.sub.nit.MyServlet</servlet-class> </servlet>
+
+<servlet-mapping>
+    <servlet-name>my</servlet-name>
+    <url-pattern>/test</url-pattern>
+</servlet-mapping>
+
+* Connects browser request → servlet class
+
+---
+
+### 4. pom.xml
+
+* Maven configuration file
+* Contains dependencies like Servlet API
+
+---
+
+## 🔷 Working Flow of Project
+
+1. User runs the project on server (Tomcat)
+2. index.html page opens in browser
+3. User sends request (via URL or link)
+4. web.xml maps request to MyServlet
+5. service() method executes
+6. Servlet processes request
+7. Response is sent back to browser
+
+---
+
+## 🔷 Key Concepts Used
+
+* Servlet API
+* HttpServlet
+* Request & Response handling
+* PrintWriter
+* Web.xml mapping
+* Maven project structure
+
+---
+
+## 🔷 Interview Explanation
+
+“This is a Maven-based Java Servlet project. It contains frontend HTML and backend servlet class. The web.xml file maps URL requests to the servlet. When a user sends a request, the servlet processes it using the service() method and returns a response to the browser, demonstrating the request-response lifecycle.”
+
+---
+
+## 🔷 One-Line Summary
+
+This project shows how a browser request is handled by a servlet and a response is returned to the client.
