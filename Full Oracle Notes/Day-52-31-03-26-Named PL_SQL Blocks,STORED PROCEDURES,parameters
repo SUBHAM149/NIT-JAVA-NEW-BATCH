@@ -1,0 +1,171 @@
+ after executing the program how many rows inserted into empt table ? 
+
+ ANS :-  the first row that satsifies the condition
+
+ =========================================================================
+
+ Named PL_SQL Blocks :- 
+ ====================
+
+ 1  procedures
+ 2  functions 
+ 3  packages
+ 4  triggers 
+
+ sub-programs :-
+ ----------------------
+
+ 1  procedures
+ 2  functions 
+
+ Advantages :- 
+ -------------------
+ 
+1  modular programming :-
+   -----------------------------------
+
+  => with the help of procedures & functions a big pl/sql program can be divided into small modules
+
+ 2  supports  reusability :-
+  --------------------------------
+
+  => proc & func are created with name , so they can be called from another program.
+
+3  invoked from front-end :-
+    ----------------------------------
+
+  => proc & func can be called from front-end applications like java,.net,python etc 
+       because proc & func are stored in db, so application which are connected to db
+       can call proc & func.
+
+ 4   improves performance :-
+     ------------------------------------
+
+   =>  proc & func improves performance because one time compilation i.e. when we 
+         create a procedure program is compiled and stored in db, whenever we call procedure
+         only execution is repeated but not compilation , so this improves performance.
+
+  STORED PROCEDURES :- 
+  ======================
+
+  => a procedure is a named PL/SQL block that accepts some input performs some action
+        on db and may or may not returns a value.
+
+  => procedures are created to perform one or more dml operations on tables 
+
+  CREATE OR REPLACE PROCEDURE <name>
+  (
+       parameters if ny
+   )
+   IS
+        <declaration-part>;
+   BEGIN
+          statements;
+   END;
+    /
+
+ parameters :- 
+ -------------------
+
+ => we can declare parameters and we can pass values to parameters 
+ => parameters are 3 types 
+
+    1  IN   (DEFAULT)
+    2  OUT 
+   3   IN OUT
+
+ => "IN" parameter always receives value
+ => "OUT" parameter always sends value 
+ => "IN OUT" receives and sends 
+  
+               java application			procedure
+ 	
+	A    ----------------------------------------->	X (IN)
+	
+	B    <------------------------------------------	Y (OUT)
+
+	C    ------------------------------------------->	Z ( IN OUT)
+                       <---------------------------------------------
+          
+          syn :-  parametername    type    datatype 
+
+  Ex 1 :-   procedure without parameters
+
+   => create a procedure to increment all employee salaries by 1000 ?
+
+   CREATE OR REPLACE PROCEDURE raise_salary
+   IS
+   BEGIN
+          UPDATE emp SET sal =sal + 1000 ;
+          COMMIT;
+   END;
+      /
+
+  procedure created ( compiled + stored in db)
+
+ Execution :-
+ =========
+
+ 1  sql prompt 
+ 2  another pl/sql program 
+ 3  front-end applications 
+
+ From sql prompt :-
+ -----------------------------
+ 
+ SQL>EXECUTE  raise_salary ; 
+
+Ex 2 :-  procedure with IN parameters 
+
+ => create a procedure to increment specific employee sal by specific amount ?
+
+   CREATE  OR REPLACE PROCEDURE raise_salary 
+   ( 
+        peno  IN   NUMBER,
+        pamt  IN   NUMBER
+   )
+   IS
+   BEGIN
+        UPDATE emp SET sal = sal + pamt WHERE empno = peno ; 
+        COMMIT;
+   END;
+     /
+
+ Execution :- 
+ ----------------
+
+  SQL>EXECUTE raise_salary (7369,1000);
+
+  Ex 3 :- procedure with OUT parameter 
+
+  => create a procedure to increment specific employee sal by specific amount
+       after increment send the updated sal to calling program ?
+
+    CREATE OR REPLACE PROCEDURE raise_salary
+    (
+          peno  IN   emp.empno%TYPE,
+          pamt  IN  NUMBER,
+          pnewsal OUT emp.sal%TYPE
+    )
+    IS
+    BEGIN
+         UPDATE emp SET sal =sal +  pamt WHERE empno = peno;
+         COMMIT;
+         SELECT sal INTO pnewsal FROM emp WHERE empno = peno;
+   END;
+     /
+
+Execution :- 
+
+ SQL> VARIABLE K NUMBER
+ SQL> EXECUTE raise_salary(7369,1000,:K);
+ SQL> PRINT :K
+
+         K
+    ----------
+      3800
+ 
+ 
+ => variables declared at sql prompt are called global variables or bind variables 
+ => bind variables are prefixed with  :  operator
+
