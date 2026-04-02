@@ -1,0 +1,226 @@
+1-apr-26 
+
+ Declaring parameter with default value :- 
+ ===============================
+ 
+ => a parameter can be declared with default value as follows 
+
+                    pamt  IN   NUMBER  DEFAULT  500
+
+ => at the time of calling procedure if we don't pass value to the parameter then oracle assigns
+      default value.
+ 
+Ex :- 
+
+  CREATE OR  REPLACE PROCEDURE raise_salary
+  (
+      peno  IN  emp.empno%TYPE,
+      pamt  IN  NUMBER  DEFAULT 500,
+      pnewsal OUT emp.sal%TYPE
+  )
+  IS
+  BEGIN
+      UPDATE emp SET sal = sal  + pamt  WHERE empno = peno;
+      COMMIT;
+      SELECT sal INTO  pnewsal FROM emp WHERE empno = peno;
+ END;
+  /
+
+Execution :- 
+
+ SQL>VARIABLE K NUMBER
+ SQL>EXECUTE raise_salary(7369,1000,:K);      /* positional association */ 
+ SQL> PRINT :K
+
+ SQL>EXECUTE raise_salary(peno=>7369,pamt=>1000,pnewsal=>:K);   /*named association */
+ SQL>EXECUTE raise_salary(pamt=>1000,peno=>7369,pnewsal=>:K);  
+ 
+ SQL>EXECUTE raise_salary(peno=>7369,pnewsal=>:K);  
+
+
+=>  create a procedure to issue book ? 
+
+  AUTHOR
+  authorid    authorname   
+
+ MEMBER
+ member_id    name   addr
+
+ BOOK
+ book_id     title      authorid     no_of_copies
+1000          DBMS  100            5
+
+ BOOK_ISSUE
+ book_id    member_id    doi       dor
+                                   
+ BOOK_RETURN
+ book_id   member_id    dor      actual_return_date      amount
+
+   
+CREATE TABLE book
+(
+  book_id   NUMBER(4) PRIMARY KEY,
+  title         VARCHAR2(20) NOT NULL,
+  authorid   NUMBER(4),
+  no_of_copied  NUMBER(3)
+ );
+
+ INSERT INTO book VALUES(1000,'DBMS',100,5);
+
+CREATE TABLE book_issue
+(
+  book_id  NUMBER(4)  REFERENCES book(book_id),
+  member_id  NUMBER(4) ,
+  doi  DATE,
+  dor  DATE
+ );
+
+procedure to issue book to student :-
+----------------------------------------------------
+
+ CREATE OR REPLACE PROCEDURE issue_book
+ (
+     pbookid  IN NUMBER,
+     pmemid  IN  NUMBER
+ )
+ IS
+   x   NUMBER;
+ BEGIN
+     SELECT  no_of_copies INTO x  FROM book  WHERE  book_id = pbookid;
+     IF x = 0 THEN
+         RAISE_APPLICATION_ERROR(-20001,'book not available');
+   END IF;
+   INSERT INTO book_issue VALUES(pbookid,pmemid,SYSDATE,SYSDATE+7);
+   UPDATE book SET no_of_copies = no_of_copies - 1 WHERE book_id = pbookid ;
+   COMMIT;
+ END;
+ /
+
+ Execute :-
+ ------------
+
+  SQL>EXECUTE   ISSUE_BOOK(1000,1);
+
+
+ => create procedure  to return book to the library ?
+
+=> crreate  a procedure for money withdrawl ?
+
+ACCOUNTS
+ accno	actype	bal
+100	S	10000
+101	S	20000
+
+TRANSACTIONS
+ trid	ttype	tdate	tamt	accno
+
+CREATE SEQUENCE S10
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 9999 ;
+  
+  CREATE OR REPLACE PROCEDURE  debit
+  (
+     pacno  IN  NUMBER,
+     pamt  IN NUMBER, 
+     pnewbal OUT  NUMBER
+  )
+  IS
+     vbal  NUMBER;
+  BEGIN
+      SELECT bal INTO vbal FROM accounts WHERE accno = pacno;
+      IF  pamt > vbal THEN
+          RAISE_APPLICATION_ERROR(-20001,'insufficient balance');
+     END IF;
+     UPDATE accounts SET bal = bal - pamt WHERE accno = pacno;
+     INSERT INTO transactions VALUES(s10.nextval,'W',sysdate,pamt,pacno);
+     COMMIT;
+     SELECT bal INTO pnewbal FROM accounts WHERE accno = pacno;
+  END;
+    /
+
+Execution :-
+---------------
+
+ SQL>VARIABLE  X  NUMBER
+ SQL> EXECUTE DEBIT(100,1000,:X);
+ SQL> PRINT :X
+
+  USER DEFINE FUNCTIONS :- 
+  =========================
+
+  => functions created by user are called user define functions.
+
+  => a function is also a named PL/SQL block that accepts some input performs some
+       calculation and must return a value.
+ 
+ => functions are created 
+ 
+        1 for calculations
+        2 to fetch data from table
+
+  CREATE OR REPLACE
+          FUNCTION <name>(parameters if any)  RETURN <type>
+  IS
+     declaration-part;
+  BEGIN
+        statements;
+        RETURN expr; 
+ END;
+  /
+
+Ex  :- 
+
+  CREATE OR REPLACE 
+       FUNCTION calc(a NUMBER,b NUMBER,op CHAR)  RETURN NUMBER
+  IS
+  BEGIN
+      IF  op = '+' THEN 
+            RETURN (a+b);
+     ELSIF op='-' THEN
+           RETURN(a-b);
+    ELSIF op='*' THEN
+          RETURN(a*b);
+    ELSE
+          RETURN(a/b);
+     END IF;
+  END;
+  /
+
+Execution :- 
+
+ 1 sql commands
+ 2 another pl/sql prog
+ 3 front-end
+
+ SQL commands :- 
+ ---------------------
+
+SQL>SELECT calc(10,20,'*') FROM DUAL ;
+
+CALC(10,20,'*')
+---------------
+            200
+
+ => create a function to check whether year is leap year or not ?
+
+  CREATE OR REPLACE 
+      FUNCTION IS_LEAP(y  NUMBER) RETURN  VARCHAR2
+ IS
+   d  DATE;
+ BEGIN
+     d :=  '29-FEB-'||y;
+     RETURN 'leap year';
+  EXCEPTION
+    WHEN OTHERS THEN
+           RETURN 'not a leap year';
+ END;
+ /
+
+ SELECT IS_LEAP(2024) FROM DUAL ;
+
+leap year
+
+SQL> SELECT IS_LEAP(2025) FROM DUAL ;
+
+not a leap year
