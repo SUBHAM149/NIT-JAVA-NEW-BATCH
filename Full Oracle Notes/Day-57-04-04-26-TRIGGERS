@@ -1,0 +1,115 @@
+4-apr-26
+
+ TRIGGERS :- 
+ ==========
+
+ => a trigger is also a named pl/sql block like procedure but executed implicitly by oracle
+      whenever user performs dml operations
+
+ => triggers are created 
+
+     1  to control dmls 
+     2  to enforce complex rules and validations
+     3  to audit day-to-day operations on tables 
+
+  CREATE OR REPLACE TRIGGER <name>
+  BEFORE / AFTER  INSERT OR UPDATE OR DELETE
+  ON <tabname>
+  [FOR EACH ROW]
+  [
+      DECLARE
+           declaration-part
+  ]
+ BEGIN
+        statements 
+ END
+
+ BEFORE triggers :-
+ ----------------------------
+
+  => if trigger is before then oracle executes the trigger before executing dml
+
+ 1   trigger
+ 2   dml
+ 
+ AFTER triggers :-
+ ----------------------
+
+  => if trigger is after then oracle executes the trigger after executing dml
+
+ 1 dml
+ 2 trigger
+
+Trigger levels :- 
+ ---------------------
+
+1  statement level / table level   (default)
+2  row level 
+
+ => statement level triggers are executed once per the statement
+ => row level triggers are executed once per the row affected by dml
+ => for row level create trigger with FOR EACH ROW option
+
+Ex 1  :- 
+
+ => create trigger to not to allow dmls on emp table on sunday ?
+
+   CREATE OR REPLACE TRIGGER TRG1
+   BEFORE INSERT OR UPDATE OR DELETE
+   ON emp 
+   BEGIN
+           IF  TO_CHAR(sysdate,'dy') = 'sun'  THEN
+               RAISE_APPLICATION_ERROR(-20001,'sunday not alowed');
+         END IF;
+   END;
+    / 
+  
+Testing :- 
+
+ SQL>UPDATE EMP SET SAL = SAL + 1000 WHERE EMPNO=7844;  => ERROR
+
+Ex 2 :- 
+ 
+ => create trigger to not to allow dmls on emp table as follows ?
+
+       MON -  FRI       <10AM  AND >4PM
+       SAT                  <10AM  AND >2PM
+       SUN                 ------------------------
+ 
+  CREATE OR REPLACE TRIGGER TRG2
+  BEFORE INSERT OR UPDATE OR DELETE
+  ON emp
+  BEGIN
+         IF  TO_CHAR(sysdate,'d')  BETWEEN 2 AND 6 THEN
+              IF  TO_CHAR(sysdate,'hh24') < 10  OR  TO_CHAR(sysdate,'hh24') >= 16 THEN
+                        RAISE_APPLICATION_ERROR(-20001,'only between 10am and 4pm');
+             END IF;
+        ELSIF TO_CHAR(sysdate,'d') = 7 THEN
+             IF  TO_CHAR(sysdate,'hh24') < 10  OR  TO_CHAR(sysdate,'hh24') >= 14 THEN
+                        RAISE_APPLICATION_ERROR(-20001,'only between 10am and 2pm');
+             END IF;
+        ELSE
+                  RAISE_APPLICATION_ERROR(-20001,'sunday not allowed');
+       END IF;
+   END;
+     /
+ 
+Testing :- 
+-------------
+
+ UPDATE EMP SET SAL = SAL+1000 WHERE EMPNO = 7844 ;
+  
+ERROR
+ORA-20001: only between 10am and 2pm
+
+Ex 3  :- 
+----------
+
+  => create trigger to not to allow to update empno ? 
+
+   CREATE OR REPLACE TRIGGER TRG3
+   BEFORE UPDATE  OF EMPNO,HIREDATE
+   ON emp 
+   BEGIN
+           RAISE_APPLICATION_ERROR(-20002,'cannot update empno and hiredate');
+   END;
