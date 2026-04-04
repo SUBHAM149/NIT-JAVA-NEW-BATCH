@@ -1,0 +1,237 @@
+3-apr-26 
+
+=>  package contains 2 parts 
+
+ 1  package specification 
+ 2  package body 
+
+  PACKAGE SPECIFICATION :- 
+  =========================
+
+  =>  package specification contains declarations of procedures & functions
+
+  CREATE OR REPLACE PACKAGE <name>
+  AS
+    procedure <name>(parameters);
+    function <name>(parameters) return <type>;
+   ---------------------
+ END;
+  /
+
+ PACKAGE BODY :-
+ ==============
+
+  => package body contains definition  of procedures & functions 
+
+ CREATE OR REPLACE PACKAGE BODY  <name>
+ AS
+  procedure <name>(parameters)
+  is
+     variables;
+  begin
+           statements;
+  end <name>;
+  function <name>(parameters)  return <type>
+  is
+    variables;
+  begin
+          statements
+          return expr;
+  end <name>;
+  ---------------------
+
+ END;
+ /
+  
+ Ex :- 
+
+ Ex 1 :- 
+
+ => create a package to implement the following actions ?
+
+   1  to hire employee  (proc)  
+   2  to fire employee   (proc)
+   3  to update salary   (proc)
+   4  to calculate experience  (func)
+   5  to return top N employees based on salary (func)
+
+specification :-
+---------------------
+
+  CREATE OR REPLACE PACKAGE hr
+  AS
+   PROCEDURE  hire(e NUMBER,n VARCHAR2,j VARCHAR2,s NUMBER,d NUMBER);
+   PROCEDURE fire(e NUMBER);  
+   PROCEDURE updateSal(e NUMBER,pct NUMBER);
+   FUNCTION getExpr(e NUMBER)  RETURN NUMBER;
+   FUNCTION getTopN(n NUMBER)  RETURN SYS_REFCURSOR;
+  END;
+    /
+
+ body :-
+ -----------
+
+ CREATE OR REPLACE PACKAGE BODY  hr
+ AS
+ PROCEDURE  hire(e NUMBER,n VARCHAR2,j VARCHAR2,s NUMBER,d NUMBER)
+ IS
+ BEGIN
+      INSERT INTO emp(empno,ename,job,sal,hiredate,deptno) VALUES(e,n,j,s,sysdate,d);
+      COMMIT;
+ END hire;
+  PROCEDURE fire(e NUMBER)
+  IS
+  BEGIN
+       DELETE FROM emp WHERE empno = e;
+       COMMIT;
+  END fire;
+  PROCEDURE updateSal(e NUMBER,pct NUMBER)
+  IS
+  BEGIN
+      UPDATE emp SET sal = sal + (sal*pct/100) WHERE empno = e ;
+      COMMIT;
+   END updateSal;
+   FUNCTION getExpr(e NUMBER)  RETURN NUMBER
+   IS
+     vhire   DATE;
+     vexpr  NUMBER(2);
+  BEGIN
+      SELECT hiredate INTO vhire  FROM emp WHERE empno = e;
+      vexpr :=   (SYSDATE - vhire)/365 ; 
+      RETURN vexpr;
+  END getExpr;
+  FUNCTION getTopN(n NUMBER)  RETURN SYS_REFCURSOR
+  IS
+      C1   SYS_REFCURSOR;
+   BEGIN
+         OPEN C1 FOR SELECT empno,ename,sal
+                                  FROM emp
+                                  ORDER BY sal DESC
+                                  FETCH FIRST n ROWS ONLY ;
+         RETURN C1;
+  END getTopN;
+ END;
+  /
+
+Execution :- 
+---------------
+
+1   EXECUTE hr.hire(100,'A','clerk',3000,20);
+2   EXECUTE hr.updateSal(100,20);
+3   SELECT hr.getExpr(7844)  FROM DUAL ;  => 45
+4   SELECT hr.getTopN(5) FROM DUAL
+
+
+Ex 2 :- 
+
+ACCOUNTS
+ accno	actype	bal
+
+TRANSACTIONS
+ trid	ttype	tdate	tamt	accno
+
+CREATE SEQUENCE S10
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 9999 ;
+
+create package to implement the following bank transactions ?
+
+ 1  account opening  (proc)
+ 2  account closing   (proc)
+ 3  balance enquiry  (func)
+ 4  money deposit    (proc)
+ 5  money withdrawl  (proc)
+ 6  money transfer  (proc)
+ 7  statement between two givens dates   (func)
+ 8  latest N transactions   (func)
+
+ CREATE OR REPLACE PACKAGE bank
+ AS
+    PROCEDURE open_acct(t  VARCHAR2,b  NUMBER);
+    PROCEDURE  close_acct(a NUMBER);
+    FUNCTION getBal(a  NUMBER) RETURN NUMBER;  
+    PROCEDURE credit(a NUMBER,amt NUMBER);
+    PROCEDURE debit(a NUMBER,amt NUMBER);
+    PROCEDURE transfer(s NUMBER, t NUMBER,amt NUMBER);
+    FUNCTION getTrans(a NUMBER,s DATE,e DATE) RETURN SYS_REFCURSOR;
+    FUNCTION getTrans(a NUMBER,n NUMBER) RETURN SYS_REFCURSOR;
+  END;
+    /
+
+
+CREATE OR REPLACE PACKAGE BODY bank
+AS
+ PROCEDURE open_acct(t  VARCHAR2,b  NUMBER)
+ IS
+  vacno NUMBER;
+ BEGIN
+     SELECT MAX(accno) INTO vacno FROM accounts ; 
+     INSERT INTO accounts VALUES(NVL(vacno,0)+1,t,b);
+    COMMIT;
+END open_acct;
+PROCEDURE close_acct(a NUMBER)
+IS
+BEGIN
+   DELETE FROM accounts WHERE accno = a;
+   COMMIT;
+END close_acct;
+FUNCTION getBal(a  NUMBER) RETURN NUMBER
+IS
+ vbal  NUMBER;
+BEGIN
+   SELECT bal INTO vbal FROM accounts WHERE accno = a;
+   RETURN vbal;
+END getBal;
+PROCEDURE credit(a NUMBER,amt NUMBER)
+IS
+BEGIN
+     UPDATE accounts SET bal = bal + amt WHERE accno = a;
+     INSERT INTO transactions VALUES(s10.nextval,'D',sysdate,amt,a);
+     COMMIT;
+END credit;
+PROCEDURE debit(a NUMBER,amt NUMBER)
+IS
+  vbal  NUMBER;
+BEGIN
+      vbal :=  getBal(a);
+      IF amt > vbal THEN
+          RAISE_APPLICATION_ERROR(-20001,'insufficient balance');
+     END IF;
+     UPDATE accounts SET bal = bal - amt WHERE accno = a;
+     INSERT INTO transactions VALUES(s10.nextval,'W',sysdate,amt,a);
+     COMMIT;
+END debit;
+PROCEDURE transfer(s NUMBER, t NUMBER,amt NUMBER)
+IS
+BEGIN
+       debit(s,amt);
+       credit(t,amt);
+END transfer;
+ FUNCTION getTrans(a NUMBER,s DATE,e DATE) RETURN SYS_REFCURSOR
+ IS
+   C1   SYS_REFCURSOR;
+BEGIN
+    OPEN C1 FOR   SELECT *
+                               FROM transactions
+                                WHERE accno =  a
+                                AND
+                                 tdate BETWEEN s AND e ;
+   RETURN C1;
+ END getTrans;
+  FUNCTION getTrans(a NUMBER,n NUMBER) RETURN SYS_REFCURSOR
+ IS
+   C1   SYS_REFCURSOR;
+BEGIN
+    OPEN C1 FOR    SELECT *
+                                FROM transactions
+                                WHERE accno = a
+                                ORDER BY tdate  DESC
+                                FETCH FIRST n ROWS ONLY ;   
+   RETURN C1;
+ END getTrans;
+ END;
+ /
+   
+
+     /
