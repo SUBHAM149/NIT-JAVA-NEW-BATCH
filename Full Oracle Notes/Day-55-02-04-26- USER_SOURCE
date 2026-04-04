@@ -1,0 +1,149 @@
+2-apr-26
+
+ =>  create a function to calculate total amount of particular order ?
+
+   orders					products
+   ordid	prodid	qty			prodid	pname	price
+  1000	100	2			100	A	1000
+  1000	101	3			101	B	500
+  1000	102	1			102	C	1500
+  1001	100	2
+
+                               input :-   ordid  =  1000
+                              output     amount =  5000
+
+  CREATE OR REPLACE FUNCTION getOrdAmt
+  (
+     pordid  IN  NUMBER
+  )  RETURN  NUMBER
+  IS
+    CURSOR C1 IS   SELECT  o.prodid,o.qty,p.price
+                                 FROM orders o INNER JOIN products p
+                                 ON o.prodid = p.prodid
+                                 WHERE o.ordid = pordid;
+    total   NUMBER := 0;
+ BEGIN
+    FOR r  IN C1
+    LOOP
+       total  :=  total + (r.qty * r.price);
+    END LOOP;
+    RETURN total;
+  END;
+  /
+
+C1
+ prodid	qty	price
+ 100	2	1000  
+ 101	3	500    
+ 102	1	1500	=> r 
+
+
+ Execution :-
+ ----------------
+ 
+ SELECT  getOrdAmt(1000) FROM DUAL ;    => 5000
+
+ SELECT  getOrdAmt(1001) FROM DUAL  ;  =>  2000
+ 
+=> difference between procedures & functions ?
+
+	 PROCEDURE				FUNCTIONS 
+
+1	may or may not returns a value			must return a value 
+
+2	can return multiple values			always returns one value
+
+3	returns values using out parameter		returns value using return stmt
+
+4	cannot be executed from sql commands   	 can be executed from sql commands
+ 
+ 5	procedures can contain dmls commands		if function contain dml command
+						then it cannot be executed from
+						sql commands
+
+ 6	created to perform one or more action		created for calculations
+                 like insert,update,delete
+ 
+ 7	create procedure to update balance		create function to get balance
+
+
+ USER_SOURCE :- 
+ -------------------------
+
+  => system defined table that stores procedures & functions created by user
+
+     USER_SOURCE
+     NAME		TYPE		LINE	   TEXT
+     IS_LEAP	FUNC		1	    FUNCTION IS_LEAP(y  NUMBER) RETURN  VARCHAR2
+     IS_LEAP	FUNC		2	    IS
+                                                                   3                       d  DATE;
+				4	   BEGIN
+ 
+  => list of procedures & functions created by user ?
+
+      SELECT  DISTINCTT  NAME,TYPE  FROM USER_SOURCE ;
+
+  => display DEBIT procedure code ?
+
+   SELECT TEXT FROM USER_SOURCE WHERE NAME='DEBIT' ;
+
+ Droping :- 
+ ---------------
+ 
+ DROP PROCEDURE  raise_salary ;
+ 
+ DROP FUNCTION calc ;
+
+ =========================================================================
+
+  PACKAGES :- 
+   ===========  
+
+   => a package is a collection of procedures & functions 
+   => related procedures & functions can be grouped into one program called package.
+   
+   
+     SERVER
+            DATABASE
+                       USER
+                                   PROCEDURES  (standalone procedures)
+                                   FUNCTIONS       (standalone functions)
+                                   PACKAGE
+                                           PROCEDURES
+                                           FUNCTIONS
+
+ Advantages :- 
+ --------------------
+   
+  1  easy to manage :- 
+    ---------------------------
+  
+    => because related procedures & functions available in single package , so manaing is easy
+
+2   supports overloading :-
+     ------------------------------
+
+   => standalone proc / func doesn't support overloading but package supports overloading 
+         i.e. in package we can define two or more proc / func with same name and 
+         with different parameters.
+
+3  supports hiding :- 
+     ------------------------
+
+  => standalone proc & func are public i.e they can be invoked from any where but in package
+       we can declare proc / func public and private , public members can be called from 
+        any where but private members can be called within package.
+
+ 4   improves performance :-
+     --------------------------------------
+
+  => when application program calls a proc/func in a package then oracle not only loads 
+       requested member but entire package loaded into memory and  next request will not got to
+      db and reduces no of requests going to db and improves performance.
+
+ 
+
+
+ Testing :- 
+ 
+ SQL>UPDATE emp SET empno = 9999 WHERE empno = 7369  ;    => ERROR
