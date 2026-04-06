@@ -1,0 +1,212 @@
+6-apr-26
+
+ :NEW , :OLD variables :- 
+ ===================
+
+ => these two variables are called bind variables  and rowtype variables
+ => the data affected by dmls are copied to :NEW, :OLD variables
+ => the record user is trying to insert is copied to :NEW variable
+ => the record user is trying to delete is copied to :OLD variable
+ => the record user is trying to update is copied to both :NEW & :OLD variables 
+ => these two variables are allowed only in row level triggers but not allowed in stmt level triggers 
+
+
+    INSERT INTO emp VALUES(100,'A','clerk',---,sysdate,3000,200,20)  => :NEW
+ 
+    DELETE FROM emp WHERE empno = 7844   =>  :OLD
+
+    UPDATE emp SET sal = 5000 WHERE empno = 7369;    =>    :OLD
+						    empno	sal
+						    7369	4300
+
+						   :NEW
+						   empno	sal
+						   7369	5000
+
+ Ex :- 
+
+  => create trigger to not to allow the user to decrement salary ? 
+
+    CREATE OR REPLACE TRIGGER TRG4
+    BEFORE UPDATE
+    ON emp 
+    FOR EACH ROW
+    BEGIN
+              IF  :NEW.SAL < :OLD.SAL THEN
+                    RAISE_APPLICATION_ERROR(-20001,'sal cannot be decremented');
+             END IF;
+   END;
+ /
+
+Testing :- 
+
+ SQL>update emp set sal = 3000 where empno = 7369 ;    =>  :OLD
+						 empno	sal
+						 7369	4300
+
+						:NEW
+						 empno	sal
+						7369	3000
+ 
+     1 data copied to :new,:old variables
+     2 executes trigger
+     3 execute update
+   
+  =>  create trigger to insert details into emp_resign whenever employee resigns ?
+
+ EMP_RESIGN
+ empno	ename	hiredate	dor
+  
+ CREATE TABLE emp_resign 
+ (
+    empno  NUMBER(4) ,
+    ename VARCHAR2(10),
+    hiredate DATE,
+     dor  DATE
+  );
+
+ CREATE OR REPLACE TRIGGER TRG5
+ AFTER DELETE
+ ON emp
+ FOR EACH ROW
+ BEGIN
+     INSERT INTO emp_resign VALUES(:OLD.empno,:OLD.ename,:OLD.hiredate,SYSDATE);
+ END;
+  /
+
+ 
+Testing :-
+------------
+
+ DELETE FROM emp WHERE 	empno = 7369 ;   =>   :OLD
+
+ 1  row is copied to :old 
+ 2  delete command is executed
+ 3  trigger is executed 
+ 
+ DELETE FROM emp WHERE empno IN (7499,7521);
+
+ 1  7499 row is copied to :old 
+ 2  delete command is executed
+ 3  trigger is executed 
+
+ 1  7521 row is copied to :old 
+ 2  delete command is executed
+ 3  trigger is executed 
+
+ Auditing :- 
+ ---------------
+
+   => Auditing means monitoring day-to-day activities on tables
+   => Triggers are created for auditing
+   
+  EMP_AUDIT
+  uname	 operation	    optime      new_empno   new_ename   new_sal    old_empno   old_ename  old_sal
+   
+CREATE TABLE emp_audit
+(
+   uname  VARCHAR2(10),
+   operation VARCHAR2(10),
+   optime     DATE,
+   new_empno NUMBER(4),
+   new_ename  VARCHAR2(10),
+   new_sal   NUMBER(7,2),
+   old_empno NUMBER(4),
+   old_ename  VARCHAR2(10),
+   old_sal   NUMBER(7,2)
+  );
+
+ => create trigger to insert details into emp_audit table whenever user insert/update/delete ?
+
+  CREATE OR REPLACE TRIGGER TRG6
+  AFTER  INSERT OR UPDATE OR DELETE
+  ON emp
+  FOR EACH ROW
+  DECLARE
+            OP   VARCHAR2(10);
+  BEGIN
+        IF  INSERTING THEN
+              OP := 'INSERT' ;
+        ELSIF DELETING THEN
+              OP := 'DELETE';
+        ELSE
+              OP := 'UPDATE';
+         END IF;
+         INSERT INTO emp_audit 
+            VALUES(user,OP,SYSDATE,:new.empno,:new.ename,:new.sal,:old.empno,:old.ename,:old.sal);
+ END;
+   /
+ 
+
+Testing :-
+
+ SQL>INSERT INTO emp(empno,ename,sal) VALUES(999,'KKK',3000);
+ SQL>UPDATE emp SET sal = 5000 WHERE empno = 999;
+ SQL>DELETE FROM emP WHERE empno = 999 ; 
+
+ SELECT * FROM emp_audit ;
+
+ psuedo columns :-
+ -------------------------
+
+ SYSDATE
+ SYSTIMESTAMP
+ ROWID
+ ROWNUM
+ USER
+ LEVEL
+
+  how many triggers can be created on table ?
+
+ ans :- 12 
+
+ what is the order of execution of triggers ?
+
+ ans :-  
+
+  before stmt
+  before row
+  after row
+  after stmt 
+
+  USER_TRIGGERS :- 
+  =================
+ 
+ => list of triggers created by user ?
+ 
+      SELECT TRIGGER_NAME,
+                 TRIGGER_TYPE,
+                 TRIGGERING_EVENT
+     FROM USER_TRIGGERS
+     WHERE TABLE_NAME='EMP' ;
+
+  TRG1	BEFORE STATEMENT		INSERT OR UPDATE OR DELETE
+  TRG2	BEFORE STATEMENT 		INSERT OR UPDATE OR DELETE
+  TRG5	AFTER EACH ROW			DELETE
+  TRG3	BEFORE STATEMENT		UPDATE  
+ TRG4	BEFORE EACH ROW		UPDATE
+  TRG6	AFTER EACH ROW			INSERT OR UPDATE OR DELETE
+
+Droping triggers :-
+--------------------------
+
+ DROP TRIGGER TRG1 ; 
+
+  if we drop table what about triggers created on table ?
+ 
+  ANS :-  triggers are also dropped 
+
+  SERVER
+         DATABASE
+                     USER
+                             TABLES
+                                   ROWS & COLS
+                                   CONSTRAINTS
+                                   INDEXES
+                                   TRIGGERS
+                            SYNONYMS
+                            VIEWS
+                            SEQUENCES
+                             PROCEDURES
+                             FUNCTIONS
+                             PACKAGES
