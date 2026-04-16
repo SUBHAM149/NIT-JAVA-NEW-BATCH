@@ -156,7 +156,7 @@ If servlet not working:
 
 The Mazor Things Of Servlet Project
 -----------------------------------
-*In The Servlet Projetc If You See The Program Structure png not web.xml file and pom.xml file OR IF You see Here In the file i added you Create Initialy And Past IT.
+*In the Servlet project structure (as shown in the PNG), the web.xml and pom.xml files may not be visible. In such cases you see in the folder there is files, you need to create these files manually and add the required content.
 
 
 
