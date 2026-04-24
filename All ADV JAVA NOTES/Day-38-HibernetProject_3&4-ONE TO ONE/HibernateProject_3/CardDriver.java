@@ -1,6 +1,6 @@
 package com.nit.dao;
 
-import com.nit.dto.PanCard;
+import com.nit.dto.PanCard;                           
 import com.nit.dto.Person;
 
 import jakarta.persistence.EntityManager;
