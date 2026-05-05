@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Login Page</title>
+
+  <!-- INTERNAL CSS -->
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(135deg,#c7c5ff,#ecebff);
+    }
+
+    .container{
+      width:900px;
+      height:500px;
+      background:#fff;
+      border-radius:20px;
+      display:flex;
+      overflow:hidden;
+      box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .left{
+      width:50%;
+      padding:50px;
+    }
+
+    .left h2{
+      font-size:28px;
+      margin-bottom:10px;
+    }
+
+    .subtitle{
+      font-size:14px;
+      color:#777;
+      margin-bottom:30px;
+    }
+
+    .input-box input{
+      width:100%;
+      padding:14px;
+      margin-bottom:20px;
+      border:none;
+      border-radius:10px;
+      background:#f2f2ff;
+      font-size:14px;
+      outline:none;
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      background:#6c63ff;
+      border:none;
+      color:white;
+      font-size:16px;
+      border-radius:10px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#574bdb;
+    }
+
+    .or{
+      text-align:center;
+      margin:25px 0 15px;
+      font-size:14px;
+      color:#555;
+    }
+
+    .social{
+      padding:12px;
+      border-radius:10px;
+      text-align:center;
+      margin-bottom:12px;
+      cursor:pointer;
+      font-size:14px;
+      border:1px solid #ddd;
+      transition:0.3s;
+    }
+
+    .social:hover{
+      background:#f3f3ff;
+    }
+
+    .right{
+      width:50%;
+      background:linear-gradient(135deg,#6c63ff,#8a84ff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .right img{
+      width:70%;
+      border-radius:20px;
+    }
+
+    @media(max-width:768px){
+      .container{
+        width:95%;
+        height:auto;
+        flex-direction:column;
+      }
+      .left,.right{
+        width:100%;
+      }
+      .right{
+        padding:30px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- LEFT LOGIN -->
+    <div class="left">
+      <h2>LOGIN</h2>
+      <p class="subtitle">How to get started lorem ipsum dolor at?</p>
+
+      <div class="input-box">
+        <input type="text" id="username" placeholder="Username" />
+      </div>
+
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Password" />
+      </div>
+
+      <button onclick="login()">Login Now</button>
+
+      <p class="or">Login with Others</p>
+
+      <div class="social">Login with Google</div>
+      <div class="social">Login with Facebook</div>
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="right">
+      <img src="image.png" alt="Login Image" />
+    </div>
+  </div>
+
+  <!-- INTERNAL JAVASCRIPT -->
+  <script>
+    function login(){
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if(user === '' || pass === ''){
+        alert('Please fill all fields');
+      }else{
+        alert('Login Successful!');
+      }
+    }
+  </script>
+
+</body>
+</html>
