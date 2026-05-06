@@ -77,5 +77,58 @@ Ans-Classes are loaded at runtime.
 Ans-Distributed: Works over network
 Support: Using RMI, sockets, and APIs
 
-10.
+10.How does Java achieve "Architecture Neutrality"?
+Ans-By using bytecode that runs on JVM, not on hardware.
+
+11.What Does Compiled and Interpreted mean In Java?
+Ans-Compiled → source to bytecode And Interpreted → bytecode runs on JVM.
+
+12.How Does automatic garbage collection contribute to reliability?
+Ans-Removes unused memory automatically, preventing errors and crashes.
+
+13.Whta is Bytecode and Why it is Important?
+Ans-Bytecode: Intermediate code
+Importance: Enables platform independence (runs on JVM)
+
+14.Why is Java often called "Write once, Run Anywhere"?
+Ans-Same bytecode runs on any system using JVM.
+
+15.How do Features like JIT Improve Java's performance?
+Ans-JIT compiles bytecode into native code at runtime → faster execution.
+
+3.Java Editions
+---------------
+1.What Are the different Edition On Java?
+Ans-Java SE – Java Standard Edition
+    Java EE – Java Enterprise Edition
+    Java ME – Java Micro Edition
+
+2.What is java SE Used for?
+Ans-Used for developing core applications (desktop, basic programs).
+
+3.What is Java EE(Jakarta EE), AND what does it include?
+Ans-Enterprise platform for web apps; includes Servlets, JSP, JDBC, EJB.
+
+4.What is Java ME Used for?
+Ans-Used for mobile and embedded devices.
+
+5.What is JavaFX, and when is it used?
+Ans-JavaFX: GUI framework
+Used for: Building rich desktop applications.
+
+6.What is the difference between Java SE AND Java EE?
+Ans-Java SE: Core Java (basic apps)
+Java EE: Enterprise Java (web & large-scale apps)**.
+
+7.Can YOU build web applications with standard Edition?
+Ans-No, Java SE alone is not enough (needs Java EE/Jakarta EE).
+
+8.Which edition would you chose for enterprise-level applications and why?
+Ans-Java EE (Jakarta EE) – supports large-scale, web & enterprise features.
+
+9.What tools or API are include in Java EE?
+Ans-Servlets, JSP, JDBC, EJB, JPA, JMS.
+
+10.What happened to Java EE WHEN oracle handed IT OVER eclipse FOUNDATION?
+Ans-Renamed to Jakarta EE and continued development under Eclipse.
 
