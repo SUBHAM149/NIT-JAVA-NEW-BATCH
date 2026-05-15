@@ -19,3 +19,10 @@ public class Main {
         std.display();
     }
 }
+
+OUTPUT
+------
+Student ID is : 101
+Student Name is : Subham
+Student Fees is : 25000.0
+Student Course is : Full Stack Java
