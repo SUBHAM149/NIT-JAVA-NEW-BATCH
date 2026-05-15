@@ -20,3 +20,10 @@ public class Main {
 	}
 
 }
+
+OUTPUT
+------
+Emp ID is: 101
+Emp NAME is: Subham
+Emp SALARY is: 50000.0
+Emp DEPARTMENT is: Devloper
