@@ -196,3 +196,343 @@ s = new Student(); // ERROR
 Meaning:
 object contents can change
 reference variable cannot point to new object
+
+
+
+
+
+                                                                               8. COMMENTS IN JAVA
+                                                                              -----------------------
+Interview Questions
+---------------------
+
+1. What are the types of comments in Java?
+Ans- In Java, there are 3 types of comments:
+	1. Single-line comment(//)
+	2. Multi-line comment(/* */)
+	3. Documentation comment(/**  */)
+
+2. Difference between single-line and multi-line comments.
+Ans-
+| Single-line Comment    | Multi-line Comment                  |
+| ---------------------- | ----------------------------------- |
+| Starts with `//`       | Starts with `/*` and ends with `*/` |
+| Used for one line only | Used for multiple lines             |
+| Short explanation      | Long explanation                    |
+
+3. Can comments be nested?
+Ans-
+Single-line comments can be used inside multi-line comments as text.
+
+But multi-line comments cannot be nested inside another multi-line comment.
+
+4. Are comments compiled into bytecode?
+Ans-No, comments are not compiled into bytecode.
+
+5. What is the purpose of comments in coding standards or documentation?
+Ans-
+Comments are used to:
+
+explain code logic
+improve readability
+help other developers understand code
+describe purpose of classes and methods
+generate documentation using Javadoc
+make code maintenance easier
+
+
+		                            Variables in Java (Instance, Static, Local)
+                              ------------------------------------------------
+
+1. What are the types of variables in Java?
+Ans- 
+There are 3 types of variables in Java:
+Instance variables
+Static variables
+Local variables
+
+2. Difference between instance, static, and local variables.
+Ans-
+| Feature       | Instance Variable            | Static Variable            | Local Variable                  |
+| ------------- | ---------------------------- | -------------------------- | ------------------------------- |
+| Declared      | Inside class, outside method | Inside class with `static` | Inside method/block/constructor |
+| Belongs to    | Object                       | Class                      | Method/block                    |
+| Memory        | Heap                         | Method Area/Class Area     | Stack                           |
+| Default value | Yes                          | Yes                        | No                              |
+| Access        | Through object               | Through class name         | Directly inside method          |
+| Lifetime      | Until object exists          | Until class is loaded      | Until method/block executes     |
+
+
+3. Can we declare variables inside a method as static?
+Ans-No, we cannot declare a local variable as static.
+Reason: static belongs to class level, but local variables belong to method/block level.
+
+4. Scope and lifetime of instance variables, static variable, local variables?
+Ans-
+Instance Variable
+Scope: Accessible inside the class through object.
+Lifetime: Exists as long as the object exists.
+
+Static Variable
+Scope: Accessible inside class and through class name.
+Lifetime: Exists from class loading until program ends or class unloads.
+
+Local Variable
+Scope: Only inside the method/block where it is declared.
+Lifetime: Created when method/block starts and destroyed when method/block ends.
+
+5. How are static variables shared among objects?
+Ans- Static variables have only one copy in memory.
+All objects share the same static variable.
+
+
+6. Default values of instance, static, and local variables .?
+Ans-
+Instance and static variables get default values.
+Data Type	Default Value
+byte		0
+short		0
+int		0
+long		0L
+float		0.0f
+double		0.0d
+char		\u0000
+boolean		false
+Object/String	null
+
+Local variables do not get default values. Otherwise Error
+
+7. Can a variable shadow another variable?
+Ans- Yes, a variable can shadow another variable.
+
+Variable shadowing means a local variable has the same name as an instance or static variable.
+
+8. How do instance, static variables, differ from local variables in memory allocation?
+Ans-
+| Variable Type     | Memory Allocation          |
+| ----------------- | -------------------------- |
+| Instance variable | Heap memory, inside object |
+| Static variable   | Method Area/Class Area     |
+| Local variable    | Stack memory               |
+
+9. What is the difference between class-level and object-level variables?
+Ans-
+Class-level variable:
+A class-level variable is a static variable.
+It belongs to the class.
+e.g.: static int count;
+Only one copy exists.
+
+Object-level variable:
+An object-level variable is an instance variable.
+It belongs to each object.
+e.g.: int id;
+Each object gets a separate copy.
+
+10. What happens if we try to access a local variable in Java without initializing it?
+Ans-local variables do not get default values.
+So if you try to use a local variable without initialization, you get a compile-time error.
+
+
+
+Programs:
+1. Write a program to demonstrate the difference between instance and static variables.
+Ans:
+class Student {
+
+    int id;                 // instance variable
+    static String college;  // static variable
+
+    void display() {
+        System.out.println(id + " " + college);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Student.college = "ABC College";
+
+        Student s1 = new Student();
+        s1.id = 101;
+
+        Student s2 = new Student();
+        s2.id = 102;
+
+        s1.display();
+        s2.display();
+    }
+}
+
+2. Show how modifying a static variable affects all objects of a class.
+Ans-
+class Student {
+
+    int id;
+    static String college = "ABC College";
+
+    void display() {
+        System.out.println(id + " " + college);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Student s1 = new Student();
+        s1.id = 101;
+
+        Student s2 = new Student();
+        s2.id = 102;
+
+        s1.display();
+        s2.display();
+
+        Student.college = "XYZ College";
+
+        s1.display();
+        s2.display();
+    }
+}
+Output:
+101 ABC College
+102 ABC College
+101 XYZ College
+102 XYZ College
+
+3. Write a method to demonstrate local variable scope.
+Ans-
+class Main {
+
+    static void show() {
+
+        int x = 10; // local variable
+
+        System.out.println(x);
+    }
+
+    public static void main(String[] args) {
+
+        show();
+
+        // System.out.println(x); // Error
+    }
+}
+Output: 10
+
+4. Create a program where variable shadowing occurs and explain the output.
+Ans-
+class Main {
+
+    int x = 100; // instance variable
+
+    void show() {
+
+        int x = 50; // local variable shadows instance variable
+
+        System.out.println(x);
+        System.out.println(this.x);
+    }
+
+    public static void main(String[] args) {
+
+        Main m = new Main();
+
+        m.show();
+    }
+}
+Output:
+50
+100
+
+5. Write a program to count the number of objects created using a static variable?
+Ans-
+class Student {
+
+    static int count = 0;
+
+    Student() {
+        count++;
+    }
+
+    static void displayCount() {
+        System.out.println("Number of objects created: " + count);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Student s1 = new Student();
+        Student s2 = new Student();
+        Student s3 = new Student();
+
+        Student.displayCount();
+    }
+}
+Output:
+Number of objects created: 3
+
+6. Predict the output: program using local variables inside loops and methods.
+Ans-
+class Test {
+
+    public static void main(String[] args) {
+
+        for(int i = 1; i <= 3; i++) {
+
+            int x = i * 10;
+
+            System.out.println(x);
+        }
+    }
+}
+Output:
+10
+20
+30
+
+7. write a program demonstrating instance variable initialization and default values.
+Ans-
+class Demo {
+
+    int a;
+    boolean b;
+    String s;
+
+    void display() {
+
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(s);
+    }
+
+    public static void main(String[] args) {
+
+        Demo d = new Demo();
+
+        d.display();
+    }
+}
+Output:
+0
+false
+null
+
+8. Create a program to show that local variables must be initialized before use.
+Ans-
+class Test {
+
+    public static void main(String[] args) {
+
+        int x;
+
+        // System.out.println(x); // ERROR
+
+        x = 100;
+
+        System.out.println(x);
+    }
+}
+Output: 100
+
