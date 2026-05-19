@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+
+xmlns:xsi=
+"http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!-- Bean Definition Of Engine -->
+
+<bean
+class="com.nit.beans.Engine"
+id="eId">
+
+<constructor-arg value="8523"/>
+
+<constructor-arg value="Petrol Engine"/>
+
+<constructor-arg value="50000"/>
+
+</bean>
+
+
+<!-- Bean Definition Of Car -->
+
+<bean
+class="com.nit.beans.Car"
+id="cId">
+
+<constructor-arg value="BMW"/>
+
+<constructor-arg value="X5"/>
+
+<constructor-arg value="750000"/>
+
+<constructor-arg value="BLACK"/>
+
+<constructor-arg ref="eId"/>
+
+</bean>
+
+</beans>
