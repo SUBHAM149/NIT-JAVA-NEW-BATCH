@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+
+xmlns:xsi=
+"http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!-- Department Bean -->
+
+<bean
+id="dept"
+class="com.nit.beans.Department">
+
+<constructor-arg value="101"/>
+
+<constructor-arg value="IT"/>
+
+<constructor-arg value="Hyderabad"/>
+
+</bean>
+
+
+<!-- Employee Bean -->
+
+<bean
+id="emp"
+class="com.nit.beans.Employee">
+
+<property
+name="e_id"
+value="5001"/>
+
+<property
+name="e_name"
+value="Subham"/>
+
+<property
+name="e_salary"
+value="55000"/>
+
+<property
+name="department"
+ref="dept"/>
+
+</bean>
+
+</beans>
