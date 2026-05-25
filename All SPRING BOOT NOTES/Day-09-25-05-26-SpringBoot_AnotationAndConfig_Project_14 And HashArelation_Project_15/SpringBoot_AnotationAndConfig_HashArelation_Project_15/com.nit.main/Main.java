@@ -17,3 +17,6 @@ public class Main {
 		System.out.println(st);
 	}
 }
+OUTPUT
+------
+Student [sid=101, sname=SUBHAM, course=JAVA, adress=Adress [city=Balasore, state=Odisha]]
