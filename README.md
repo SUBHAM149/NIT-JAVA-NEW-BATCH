@@ -86,21 +86,52 @@ Tools & DevOps:
 <h2>📁 Repository Structure</h2>
 
 <pre>
-Java-FullStack-Frontend-Notes/
+NIT-JAVA-NEW-BATCH/
 │
-├── Frontend/
-│   ├── HTML/
-│   ├── CSS/
-│   └── JavaScript/
+├── 📁 ALL FRONT-END NOTES
+│   ├── HTML
+│   ├── CSS
+│   ├── JavaScript
+│   └── React
 │
-├── Core-Java/
-├── Advanced-Java/
-├── JDBC/
-├── Servlets-JSP/
-├── Spring/
-├── Spring-Boot/
-├── MySQL/
-├── Interview-Questions/
+├── 📁 ALL JAVA NOTES
+│   ├── Core Java
+│   ├── OOPs
+│   ├── Collections
+│   ├── Exception Handling
+│   └── Multithreading
+│
+├── 📁 ALL ADV JAVA NOTES
+│   ├── JDBC
+│   ├── Servlets
+│   ├── JSP
+│   └── MVC
+│
+├── 📁 ALL SPRING BOOT NOTES
+│   ├── Spring Core
+│   ├── Spring MVC
+│   ├── Spring Boot
+│   ├── REST API
+│   └── Hibernate
+│
+├── 📁 FULL ORACLE NOTES
+│   ├── SQL
+│   ├── Joins
+│   ├── PL SQL
+│   └── Procedures
+│
+├── 📁 ALL REACT NOTES
+│   ├── Components
+│   ├── Hooks
+│   ├── Routing
+│   └── Projects
+│
+├── 📁 PLACEMENT ALL FILES
+│   ├── Interview Questions
+│   ├── Resume
+│   ├── Aptitude
+│   └── Coding Programs
+│
 └── README.md
 </pre>
 
@@ -134,11 +165,16 @@ git clone https://github.com/SUBHAM149/Java-FullStack-Frontend-Notes.git
 
 <h2>👨‍🏫 Trainers</h2>
 
-<p>
-  ☕ <b>Java Full Stack Trainer:</b> Ravi Sankar Sir<br/>
-  🖥️ <b>Frontend Trainer:</b> Gagan Sir<br/>
-  🏫 <b>Institute:</b> Naresh i Technologies
-</p>
+| Subject              | Trainer              |
+| -------------------- | -------------------- |
+| Core Java            | Ravi Sankar Sir      |
+| Advanced Java        | Miss Raj Kumari Bala |
+| Spring Framework     | Miss Raj Kumari Bala |
+| Spring Boot          | Miss Raj Kumari Bala |
+| React JS             | Sudhakar Sharma Sir  |
+| Oracle SQL           | Vijaya Kumar Sir     |
+| Frontend Development | Gagan Sir            |
+
 
 <hr/>
 
