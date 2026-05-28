@@ -28,3 +28,10 @@ public class Main {
 	}
 
 }
+OUTPUT
+------
+Student bean created
+Student is studing java
+Total Price is:2500.0
+This class is having student databse access.
+This is a Controller Class.
