@@ -20,5 +20,8 @@ public class Main {
 		
 	
 	}
-
+OUTTPUT
+-------
+Doctor [doctorId=101, doctorName=Dr.Rajesh, specialization=Cardiologist]
+Patient [patientId=501, patientName=Rahul, disease=Fever]
 }
