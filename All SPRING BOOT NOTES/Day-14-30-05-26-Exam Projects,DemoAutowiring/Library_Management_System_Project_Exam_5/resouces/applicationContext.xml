@@ -1,0 +1,52 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<bean id="librarian"
+      class="com.nit.beans.Librarian">
+
+    <property name="librarianId" value="1"/>
+    <property name="librarianName" value="Rajesh"/>
+    <property name="experience" value="10"/>
+</bean>
+
+<bean id="library"
+      class="com.nit.beans.Library">
+
+    <property name="libraryId" value="101"/>
+    <property name="libraryName" value="Central Library"/>
+    <property name="address" value="Hyderabad"/>
+
+    <property name="librarian" ref="librarian"/>
+
+    <property name="books">
+        <list>
+            <value>Java</value>
+            <value>Spring</value>
+            <value>Python</value>
+        </list>
+    </property>
+
+    <property name="categories">
+        <set>
+            <value>Programming</value>
+            <value>Database</value>
+            <value>Networking</value>
+        </set>
+    </property>
+
+    <property name="categoryCount">
+        <map>
+            <entry key="Programming" value="50"/>
+            <entry key="Database" value="30"/>
+            <entry key="Networking" value="20"/>
+        </map>
+    </property>
+
+</bean>
+
+
+</beans>
