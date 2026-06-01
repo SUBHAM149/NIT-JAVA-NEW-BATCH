@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="eid" class="com.nit.beans.Engine">
+        <property name="e_name" value="Petrol Engine"/>
+        <property name="price" value="20000"/>
+        
+    </bean>
+
+    <bean id="cid" class="com.nit.beans.Car">
+        <property name="c_name" value="BMW"/>
+        <property name="c_mum" value="258632"/>
+        <property name="engine" ref="eid"/>
+    </bean>
+
+</beans>
