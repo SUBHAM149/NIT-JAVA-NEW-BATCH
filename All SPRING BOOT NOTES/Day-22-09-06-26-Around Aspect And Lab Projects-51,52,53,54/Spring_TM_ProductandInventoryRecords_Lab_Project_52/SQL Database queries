@@ -1,0 +1,14 @@
+USE spring_jdbc_lab;
+CREATE TABLE product(
+    productId INT PRIMARY KEY,
+    productName VARCHAR(30),
+    category VARCHAR(30),
+    price DOUBLE
+);
+
+CREATE TABLE inventory(
+    inventoryId INT PRIMARY KEY,
+    productId INT,
+    quantity INT,
+    warehouseLocation VARCHAR(30)
+);
