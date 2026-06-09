@@ -1,34 +1,19 @@
 package com.nit.beans;
 
-public class BedAllocation {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-	private int allocationId;
-	private int patientId;
-	private String wardName;
-	private int bedNumber;
+@Repository
+public class BedAllocationDAO {
 
+	@Autowired
+	private JdbcTemplate template;
 
-	public BedAllocation(int allocationId, int patientId, String wardName, int bedNumber) {
+	public void saveBed(BedAllocation bed) {
 
-		this.allocationId = allocationId;
-		this.patientId = patientId;
-		this.wardName = wardName;
-		this.bedNumber = bedNumber;
-	}
+		String query = "INSERT INTO bedallocation VALUES(?,?,?,?)";
 
-	public int getAllocationId() {
-		return allocationId;
-	}
-
-	public int getPatientId() {
-		return patientId;
-	}
-
-	public String getWardName() {
-		return wardName;
-	}
-
-	public int getBedNumber() {
-		return bedNumber;
+		template.update(query, bed.getAllocationId(), bed.getPatientId(), bed.getWardName(), bed.getBedNumber());
 	}
 }
