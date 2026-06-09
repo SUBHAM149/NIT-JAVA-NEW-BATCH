@@ -1,0 +1,15 @@
+CREATE SCHEMA `spring_jdbc_lab` ;
+USE spring_jdbc_lab
+CREATE TABLE employee(
+    empId INT PRIMARY KEY,
+    empName VARCHAR(30),
+    department VARCHAR(30),
+    salary DOUBLE
+);
+
+CREATE TABLE salary(
+    salaryId INT PRIMARY KEY,
+    empId INT,
+    amount DOUBLE,
+    month VARCHAR(20)
+);
