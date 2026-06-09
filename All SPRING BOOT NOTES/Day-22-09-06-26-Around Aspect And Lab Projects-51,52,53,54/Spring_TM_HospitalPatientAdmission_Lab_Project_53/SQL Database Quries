@@ -1,0 +1,14 @@
+USE spring_jdbc_lab;
+CREATE TABLE patient(
+    patientId INT PRIMARY KEY,
+    patientName VARCHAR(30),
+    disease VARCHAR(30),
+    admissionDate VARCHAR(20)
+);
+
+CREATE TABLE bedallocation(
+    allocationId INT PRIMARY KEY,
+    patientId INT,
+    wardName VARCHAR(30),
+    bedNumber INT
+);
