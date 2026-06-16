@@ -1,0 +1,29 @@
+Create Database
+CREATE DATABASE shoppingdb;
+
+USE shoppingdb;
+Create Product Table
+CREATE TABLE product
+(
+    productId INT PRIMARY KEY,
+    productName VARCHAR(50),
+    price DOUBLE,
+    stock INT
+);
+Create Orders Table
+CREATE TABLE orders
+(
+    orderId INT PRIMARY KEY,
+    customerId INT,
+    productId INT,
+    quantity INT,
+    totalAmount DOUBLE
+);
+Insert Sample Data into Product Table
+INSERT INTO product
+VALUES
+(1,'Laptop',50000,10),
+(2,'Mobile',25000,20),
+(3,'Headphone',2000,50),
+(4,'Keyboard',1500,30),
+(5,'Mouse',800,40);
