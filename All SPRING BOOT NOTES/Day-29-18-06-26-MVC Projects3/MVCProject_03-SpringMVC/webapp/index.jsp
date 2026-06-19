@@ -8,6 +8,9 @@
 </head>
 <body>
 <h1>Welcome To Spring MVC Project 3</h1>
-<a href="home">Get Home Page</a>
+<a href="home">Get Home Page</a><br>
+<a href="profile">Get Profile Page</a><br>
+<a href="welcome">Get WelCome</a><br>
+<a href="register">Register Here</a>
 </body>
 </html>
