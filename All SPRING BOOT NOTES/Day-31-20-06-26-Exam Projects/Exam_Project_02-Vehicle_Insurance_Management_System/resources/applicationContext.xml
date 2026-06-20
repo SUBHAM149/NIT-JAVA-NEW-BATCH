@@ -1,0 +1,22 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="insurance" class="com.nit.beans.Insurance">
+
+		<constructor-arg value="P101" />
+		<constructor-arg value="LIC" />
+		<constructor-arg value="25000" />
+
+	</bean>
+
+	<bean id="vehicle" class="com.nit.beans.Vehicle">
+
+		<constructor-arg value="AP39AB1234" />
+		<constructor-arg value="Honda City" />
+		<constructor-arg value="Subham" />
+		<constructor-arg ref="insurance" />
+
+	</bean>
+</beans>
