@@ -1,0 +1,20 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+		<bean id="partner" class="com.nit.beans.DeliveryPartner">
+			<constructor-arg value="DP101" />
+			<constructor-arg value="Ravi" />
+			<constructor-arg value="9876543210" />
+		</bean>
+
+		<bean id="order" class="com.nit.beans.Order">
+			<constructor-arg ref="partner" />
+
+			<property name="orderId" value="1001" />
+			<property name="productName" value="Laptop" />
+			<property name="orderAmount" value="55000" />
+		</bean>
+</beans>
