@@ -88,6 +88,11 @@ Tools & DevOps:
 <pre>
 NIT-JAVA-NEW-BATCH/
 │
+├──📁 ALL CRT NOTES
+|   ├── CC AND AVG
+|   └── Minimum
+|
+|
 ├── 📁 ALL FRONT-END NOTES
 │   ├── HTML
 │   ├── CSS
