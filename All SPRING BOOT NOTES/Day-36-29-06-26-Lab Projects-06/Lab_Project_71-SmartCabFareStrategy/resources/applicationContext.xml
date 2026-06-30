@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Mini -->
+
+	<bean id="mini" class="com.nit.MiniFare">
+
+		<property name="baseFare" value="100" />
+
+		<property name="perKmCharge" value="10" />
+
+	</bean>
+
+	<!-- Sedan -->
+
+	<bean id="sedan" class="com.nit.SedanFare">
+
+		<property name="luxuryCharge" value="200" />
+
+		<property name="perKmCharge" value="15" />
+
+	</bean>
+
+	<!-- SUV -->
+
+	<bean id="suv" class="com.nit.SUVFare">
+
+		<property name="nightCharge" value="300" />
+
+		<property name="perKmCharge" value="20" />
+
+	</bean>
+
+	<!-- Alias -->
+
+	<alias name="mini" alias="economyRide" />
+
+	<alias name="sedan" alias="premiumRide" />
+
+	<alias name="suv" alias="familyRide" />
+
+</beans>
