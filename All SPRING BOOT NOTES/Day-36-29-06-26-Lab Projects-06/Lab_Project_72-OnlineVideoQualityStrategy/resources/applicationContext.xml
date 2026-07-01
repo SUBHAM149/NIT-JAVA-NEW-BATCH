@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Low Quality -->
+
+	<bean id="lowQuality" class="com.nit.LowQualityStreaming">
+
+		<property name="resolution" value="480" />
+		<property name="bandwidth" value="5" />
+
+	</bean>
+
+	<alias name="lowQuality" alias="basicStream" />
+
+	<!-- HD -->
+
+	<bean id="hdQuality" class="com.nit.HDStreaming">
+
+		<property name="frameRate" value="60" />
+		<property name="bandwidth" value="15" />
+
+	</bean>
+
+	<alias name="hdQuality" alias="hdStream" />
+
+	<!-- Ultra HD -->
+
+	<bean id="ultraQuality" class="com.nit.UltraHDStreaming">
+
+		<property name="dolbySupport" value="true" />
+		<property name="bandwidth" value="35" />
+
+	</bean>
+
+	<alias name="ultraQuality" alias="ultraStream" />
+
+</beans>
