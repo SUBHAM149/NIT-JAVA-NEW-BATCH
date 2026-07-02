@@ -1,0 +1,35 @@
+{
+  "users": [
+    {
+      "user_id": "john_nareshit",
+      "user_name": "Johnson",
+      "password": "john123",
+      "email": "john@msn.com",
+      "id": "tTyvtj1zbB8"
+    },
+    {
+      "user_id": "rakesh_nit",
+      "user_name": "Rakesh",
+      "password": "rak",
+      "email": "rakesh@gmail.com",
+      "id": "FAjRyv2vgNk"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "361RvI1NZ9U",
+      "title": "Javascript Workshop",
+      "description": "State Management",
+      "date": "2026-07-09",
+      "user_id": "rakesh_nit"
+    },
+    {
+      "title": "demo",
+      "description": "sample",
+      "date": "2026-07-09",
+      "user_id": "john_nareshit",
+      "id": "9QEAVOhc94Y"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
