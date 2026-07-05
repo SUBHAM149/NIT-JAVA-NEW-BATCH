@@ -1,0 +1,4 @@
+|- Bean Autowire 
+   |- byName
+   |- byType
+   |- constructor
