@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="student" class="com.sub.day11.Student">
+		<property name="data">
+			<list>
+				<value>Prashant</value>
+				<value>Tanjiro</value>
+				<value>Sachin</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="course" class="com.sub.day11.Course">
+		<property name="courseName">
+			<set>
+				<value>JAVA</value>
+				<value>Python</value>
+				<value>Spring Framework</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="duration" class="com.sub.day11.Duration">
+		<property name="value">
+			<map>
+				<entry key="java" value="3"></entry>
+				<entry key="python" value="2"></entry>
+				<entry key="GenAI" value="2"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="courseDetail" class="com.sub.day11.CourseDetail">
+		<property name="duration">
+			<list>
+				<ref bean="duration" />
+			</list>
+		</property>
+		<property name="detail">
+			<map>
+				<entry key-ref="student" value-ref="course"></entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="sources" class="com.sub.day11.CompanyResource">
+		<property name="database">
+			<props>
+				<prop key="username">system</prop>
+				<prop key="password">manager</prop>
+				<prop key="driverName">oracle.jdbc.driver.OracleDriver</prop>
+				<prop key="url">jdbc:oracle:thin:@localhost:1521:xe</prop>
+			</props>
+		</property>
+	</bean>
+</beans>
