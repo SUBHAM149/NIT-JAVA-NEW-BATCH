@@ -1,0 +1,6 @@
+******** Spring Collection Injection ********
+Student List : Student [data=[Prashant, Tanjiro, Sachin]]
+Course Set : Course [courseName=[JAVA, Python, Spring Framework]]
+Duration Map : Duration [value={java=3, python=2, GenAI=2}]
+Course Detail : CourseDetail [duration=[Duration [value={java=3, python=2, GenAI=2}]], detail={Student [data=[Prashant, Tanjiro, Sachin]]=Course [courseName=[JAVA, Python, Spring Framework]]}]
+Database Properties : CompanyResource [database={password=manager, driverName=oracle.jdbc.driver.OracleDriver, url=jdbc:oracle:thin:@localhost:1521:xe, username=system}]
