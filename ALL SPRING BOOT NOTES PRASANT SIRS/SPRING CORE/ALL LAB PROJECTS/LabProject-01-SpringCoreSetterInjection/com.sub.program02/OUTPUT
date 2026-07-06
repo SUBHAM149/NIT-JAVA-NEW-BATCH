@@ -1,0 +1,8 @@
+Address Object Created
+City Setter Called
+Pincode Setter Called
+Employee Object Created
+Name Setter Called
+ID Setter Called
+Address Reference Setter Called
+Employee [name=Rahul, id=101, address=Address [city=Hyderabad, pincode=500001]]
