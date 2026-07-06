@@ -1,0 +1,8 @@
+Hello World!
+Traditional way 
+Parameterized constructor called
+Student [name=prashant, id=101, address=hyd, resume=Resume [experience=1, domain=java]]
+====================
+By spring way
+Parameterized constructor called
+Student [name=prashant, id=101, address=hyd, resume=Resume [experience=1, domain=java]]
