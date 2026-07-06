@@ -1,0 +1,2 @@
+2 param
+Robot [chip=Chip [producer=Intel, power=55555], sensor=Sensor [reflectionTime=1, isActivate=true]]
