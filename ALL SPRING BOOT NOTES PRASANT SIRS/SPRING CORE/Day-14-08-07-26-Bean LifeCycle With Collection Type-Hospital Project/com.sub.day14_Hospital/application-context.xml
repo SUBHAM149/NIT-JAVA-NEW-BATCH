@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="hospital1" class="com.sub.day14_Hospital.Hospital" init-method="init"
+		destroy-method="destroy">
+		<property name="hospitalName" value="Appolo"></property>
+		<property name="contactPerson" value="abc"></property>
+		<property name="contactNumber" value="12341414"></property>
+		<property name="treatment">
+			<list>
+				<value>ENT</value>
+				<value>Cardic</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="hospital2" class="com.sub.day14_Hospital.Hospital" init-method="init"
+		destroy-method="destroy" autowire-candidate="false">
+		<property name="hospitalName" value="Yashoda"></property>
+		<property name="contactPerson" value="def"></property>
+		<property name="contactNumber" value="54523523"></property>
+		<property name="treatment">
+			<list>
+				<value>Gastro</value>
+				<value>Neuro</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="hospital3" class="com.sub.day14_Hospital.Hospital" init-method="init"
+		destroy-method="destroy" autowire-candidate="false">
+		<property name="hospitalName" value="Aster-Prime"></property>
+		<property name="contactPerson" value="xyz"></property>
+		<property name="contactNumber" value="123123"></property>
+		<property name="treatment">
+			<list>
+				<value>Genral</value>
+				<value>Dental</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="hospitalService" class="com.sub.day14_Hospital.HospitalService"
+		autowire="byType">
+	</bean>
+</beans>
