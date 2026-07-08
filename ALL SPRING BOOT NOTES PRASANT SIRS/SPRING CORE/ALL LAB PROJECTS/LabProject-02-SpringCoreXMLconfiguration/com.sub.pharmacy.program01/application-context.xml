@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="medicineInventory"
+          class="com.sub.pharmacy.program01.MedicineInventory">
+
+        <property name="pharmacyName" value="Apollo Online Pharmacy"/>
+
+        <property name="medicineStock">
+            <map>
+
+                <entry key="Paracetamol" value="250"/>
+                <entry key="Dolo650" value="180"/>
+                <entry key="Azithromycin" value="90"/>
+                <entry key="Vitamin C" value="300"/>
+                <entry key="Insulin" value="40"/>
+
+            </map>
+        </property>
+
+    </bean>
+
+</beans>
