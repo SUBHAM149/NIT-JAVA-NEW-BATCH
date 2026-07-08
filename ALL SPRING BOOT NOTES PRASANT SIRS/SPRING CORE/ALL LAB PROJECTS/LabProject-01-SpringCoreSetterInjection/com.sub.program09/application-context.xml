@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="library" class="com.sub.program09.Library">
+
+    <property name="books">
+
+        <list>
+
+            <value>Java Programming</value>
+            <value>Spring Framework</value>
+            <value>Java Programming</value>
+
+        </list>
+
+    </property>
+
+    <property name="members">
+
+        <set>
+
+            <value>abc@gmail.com</value>
+            <value>xyz@gmail.com</value>
+            <value>abc@gmail.com</value>
+
+        </set>
+
+    </property>
+
+    <property name="copies">
+
+        <map>
+
+            <entry key="ISBN101" value="5"/>
+            <entry key="ISBN102" value="3"/>
+            <entry key="ISBN103" value="7"/>
+
+        </map>
+
+    </property>
+
+</bean>
+
+</beans>
