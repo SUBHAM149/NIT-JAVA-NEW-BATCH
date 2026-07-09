@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Doctor Bean -->
+
+    <bean id="doctor"
+          class="com.sub.doctorandpatient.Doctor">
+
+        <property name="doctorId" value="D101"/>
+        <property name="doctorName" value="Dr. Meera"/>
+        <property name="specialization" value="General Medicine"/>
+
+    </bean>
+
+    <!-- Patient Bean -->
+
+    <bean id="patient"
+          class="com.sub.doctorandpatient.Patient"
+          autowire="byType">
+
+        <property name="patientId" value="101"/>
+        <property name="patientName" value="Rahul"/>
+        <property name="disease" value="Dengue"/>
+
+    </bean>
+
+</beans>
