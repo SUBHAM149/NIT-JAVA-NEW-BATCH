@@ -1,0 +1,8 @@
+Vehicle Details
+-------------------------
+Vehicle Id        : 101
+Vehicle Name      : Tata Nexon
+Manufacturer      : Tata Motors (ID : 201, Country : India)
+Features          : [ABS, Airbags, Sunroof, Touch Screen]
+Fuel Types        : [Petrol, Diesel, Electric]
+Service Schedule  : {First Service=5000 KM, Second Service=10000 KM, Third Service=20000 KM}
