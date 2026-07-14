@@ -1,0 +1,4 @@
+|- About the deployment flow 
+|- About the circular dependency 
+|- @Required annotation
+|- BeanPostProccessor
