@@ -1,0 +1,384 @@
+SpringCore_Day18_EmployeeDepartment
+-----------------------------------------
+Department.java
+-----------------
+package com.nit.beans;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Department {
+
+    private int departmentId;
+    private String departmentName;
+    private String departmentLocation;
+
+}
+
+Employee.java
+-------------------
+package com.nit.beans;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+
+    private int employeeId;
+    private String employeeName;
+    private double employeeSalary;
+    private Department department;
+
+}
+
+Test.java
+---------------------
+package com.nit.main;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.nit.beans.Employee;
+
+public class Test {
+
+    public static void main(String[] args) {
+
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        Employee emp = context.getBean("employee", Employee.class);
+
+        System.out.println(emp);
+
+    }
+
+}
+
+pom.xml
+---------------
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.nit</groupId>
+    <artifactId>SpringCore_Day18_EmployeeDepartment</artifactId>
+    <version>1.0</version>
+
+    <dependencies>
+
+        <!-- Spring Core -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.2.8</version>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.38</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
+
+----------------------------
+TASK-1 : Setter Injection
+----------------------------
+applicationContext.xml
+------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Department Bean -->
+
+    <bean id="department" class="com.nit.beans.Department">
+
+        <property name="departmentId" value="101"/>
+        <property name="departmentName" value="Development"/>
+        <property name="departmentLocation" value="Hyderabad"/>
+
+    </bean>
+
+    <!-- Employee Bean -->
+
+    <bean id="employee" class="com.nit.beans.Employee">
+
+        <property name="employeeId" value="1"/>
+        <property name="employeeName" value="Subham"/>
+        <property name="employeeSalary" value="65000"/>
+
+        <property name="department" ref="department"/>
+
+    </bean>
+
+</beans>
+-------------------------
+Output
+--------------------------
+Employee(employeeId=1,
+employeeName=Subham,
+employeeSalary=65000.0,
+department=Department(departmentId=101,
+departmentName=Development,
+departmentLocation=Hyderabad))
+
+
+
+TASK-2 : Constructor Injection
+---------------------------------
+applicationContext.xml
+---------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="department" class="com.nit.beans.Department">
+
+        <constructor-arg value="101"/>
+        <constructor-arg value="Development"/>
+        <constructor-arg value="Hyderabad"/>
+
+    </bean>
+
+    <bean id="employee" class="com.nit.beans.Employee">
+
+        <constructor-arg value="1"/>
+        <constructor-arg value="Subham"/>
+        <constructor-arg value="65000"/>
+
+        <constructor-arg ref="department"/>
+
+    </bean>
+
+</beans>
+----------------------
+Output
+----------------------
+Employee(employeeId=1,
+employeeName=Subham,
+employeeSalary=65000.0,
+department=Department(departmentId=101,
+departmentName=Development,
+departmentLocation=Hyderabad))
+
+-------------------------------
+TASK-3 : Autowire byName
+-------------------------------
+Only applicationContext.xml changes.
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="department"
+          class="com.nit.beans.Department">
+
+        <property name="departmentId" value="101"/>
+        <property name="departmentName" value="Development"/>
+        <property name="departmentLocation" value="Hyderabad"/>
+
+    </bean>
+
+    <bean id="employee"
+          class="com.nit.beans.Employee"
+          autowire="byName">
+
+        <property name="employeeId" value="1"/>
+        <property name="employeeName" value="Subham"/>
+        <property name="employeeSalary" value="65000"/>
+
+    </bean>
+
+</beans>
+----------
+OUTPUT
+----------
+Employee Id       : 1
+Employee Name     : Subham
+Employee Salary   : 65000.0
+
+Department Id     : 101
+Department Name   : Development
+Department Location : Hyderabad
+
+
+--------------------------
+TASK-4 : Autowire byType
+----------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="deptBean"
+          class="com.nit.beans.Department">
+
+        <property name="departmentId" value="101"/>
+        <property name="departmentName" value="Development"/>
+        <property name="departmentLocation" value="Hyderabad"/>
+
+    </bean>
+
+    <bean id="employee"
+          class="com.nit.beans.Employee"
+          autowire="byType">
+
+        <property name="employeeId" value="1"/>
+        <property name="employeeName" value="Subham"/>
+        <property name="employeeSalary" value="65000"/>
+
+    </bean>
+
+</beans>
+-----------
+Output
+-------------
+Employee(employeeId=1,
+employeeName=Subham,
+employeeSalary=65000.0,
+department=Department(departmentId=101,
+departmentName=Development,
+departmentLocation=Hyderabad))
+
+
+
+Practice Question 1 – Custom Annotation for Book Details
+----------------------------------------------------------
+1. BookInfo.java (Custom Annotation)
+---------------------------------------
+package com.day18;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+public @interface BookInfo {
+
+    String title();
+    String author();
+    double price();
+
+}
+2. Book.java
+---------------------
+package com.day18;
+
+@BookInfo(
+    title = "Harry Potter",
+    author = "J. K. Rowling",
+    price = 1445.50
+)
+public class Book {
+
+}
+3. Test.java
+--------------------------
+package com.day18;
+
+public class Test {
+
+    public static void main(String[] args) {
+
+        Class<Book> cls = Book.class;
+
+        BookInfo info = cls.getAnnotation(BookInfo.class);
+
+        System.out.println("Title  : " + info.title());
+        System.out.println("Author : " + info.author());
+        System.out.println("Price  : " + info.price());
+
+    }
+
+}
+Output
+----------------
+Title  : Harry Potter
+Author : J. K. Rowling
+Price  : 1445.5
+
+
+Practice Question 2 – Custom Annotation for Vehicle Details
+--------------------------------------------------------------
+1. VehicleInfo.java (Custom Annotation)
+----------------------------------------
+package com.day18;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+public @interface VehicleInfo {
+
+    String brand();
+    String model();
+    int manufactureYear();
+
+}
+2. Vehicle.java
+---------------------
+package com.day18;
+
+@VehicleInfo(
+    brand = "Toyota",
+    model = "Innova",
+    manufactureYear = 2022
+)
+public class Vehicle {
+
+}
+3. Test.java
+-------------------
+package com.day18;
+
+public class Test {
+
+    public static void main(String[] args) {
+
+        Class<Vehicle> cls = Vehicle.class;
+
+        VehicleInfo info = cls.getAnnotation(VehicleInfo.class);
+
+        System.out.println("Brand : " + info.brand());
+        System.out.println("Model : " + info.model());
+        System.out.println("Year  : " + info.manufactureYear());
+
+    }
+
+}
+Output
+----------------
+Brand : Toyota
+Model : Innova
+Year  : 2022
