@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+
+<title>Employee List</title>
+
+<style>
+table {
+	width: 90%;
+	margin: auto;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+
+th {
+	background: blue;
+	color: white;
+}
+
+a {
+	text-decoration: none;
+	padding: 6px 12px;
+	background: green;
+	color: white;
+}
+
+.delete {
+	background: red;
+}
+</style>
+
+</head>
+
+<body>
+
+	<h2 align="center">Employee List</h2>
+
+	<table>
+
+		<tr>
+
+			<th>ID</th>
+			<th>Name</th>
+			<th>Department</th>
+			<th>Email</th>
+			<th>Mobile</th>
+			<th>Action</th>
+
+		</tr>
+
+		<tr th:each="emp : ${employees}">
+
+			<td th:text="${emp.id}"></td>
+
+			<td th:text="${emp.name}"></td>
+
+			<td th:text="${emp.department}"></td>
+
+			<td th:text="${emp.email}"></td>
+
+			<td th:text="${emp.mob_num}"></td>
+
+			<td><a th:href="@{/employee/edit/{id}(id=${emp.id})}">Edit</a> <a
+				class="delete" th:href="@{/employee/delete/{id}(id=${emp.id})}">
+					Delete </a></td>
+
+		</tr>
+
+	</table>
+
+	<br>
+
+	<center>
+
+		<a th:href="@{/employee/add}">Add Employee</a>
+        <a th:href="@{/}">🏠 Back to Home</a>
+	</center>
+
+</body>
+
+</html>
