@@ -1,0 +1,11 @@
+package com.nit.autowiring;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Patient {
+
+    public void treatment() {
+        System.out.println("Patient is under treatment");
+    }
+}
