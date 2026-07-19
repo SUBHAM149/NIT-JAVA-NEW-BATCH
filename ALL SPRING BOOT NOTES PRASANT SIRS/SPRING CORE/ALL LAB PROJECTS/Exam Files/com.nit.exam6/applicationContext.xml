@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+     <!-- Customer Bean -->
+    <bean id="customer" class="com.nit.exam6.Customer">
+
+        <property name="customerId" value="101"/>
+        <property name="customerName" value="Subham Behera"/>
+        <property name="accountNumber" value="1234567890"/>
+        <property name="accountType" value="Savings"/>
+        <property name="balance" value="50000"/>
+        <property name="mobileNumber" value="9876543210"/>
+
+    </bean>
+
+    <!-- Bank Bean -->
+    <bean id="bank"
+          class="com.nit.exam6.Bank"
+          autowire="byName">
+
+        <property name="bankId" value="1"/>
+        <property name="bankName" value="State Bank of India"/>
+        <property name="branch" value="Hyderabad"/>
+        <property name="IFSCCode" value="SBIN0001234"/>
+        <property name="managerName" value="Ramesh Kumar"/>
+
+    </bean>
+
+    
+
+</beans>
