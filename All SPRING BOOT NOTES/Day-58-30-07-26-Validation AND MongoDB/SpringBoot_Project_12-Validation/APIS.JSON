@@ -1,0 +1,71 @@
+REST API Endpoints
+-------------------
+Method	URL	                                    Description
+POST	http://localhost:8080/student/save	    Save Student
+GET	http://localhost:8080/student/all	    Get All Students
+GET	http://localhost:8080/student/{id}	    Get Student By ID
+PUT	http://localhost:8080/student/update/{id}   Update Student
+DELETE	http://localhost:8080/student/delete/{id}   Delete Student
+
+1. Save Student (POST)
+-----------------------
+URL
+POST http://localhost:8080/student/save
+
+Valid JSON
+{
+    "name": "Subham Behera",
+    "email": "subham@gmail.com",
+    "mobile": "9876543210"
+}
+
+Invalid Data If we input its Showing That.
+
+{
+    "name":"A",
+    "email":"abc",
+    "mobile":"12345"
+}
+That The Message.
+
+{
+    "name": "Name should contain 3 to 20 characters",
+    "mobile": "Enter Valid Mobile Number",
+    "email": "Invalid Email"
+}
+
+2. Get All Students (GET)
+-------------------------
+URL
+GET http://localhost:8080/student/all
+
+No JSON Body Required
+
+3. Get Student By Id (GET)
+---------------------------
+URL
+GET http://localhost:8080/student/1
+
+No JSON Body Required
+
+4. Update Student (PUT)
+-----------------------
+URL
+PUT http://localhost:8080/student/update/1
+
+Valid JSON
+{
+    "name": "Rahul Kumar",
+    "email": "rahul@gmail.com",
+    "mobile": "9876543210"
+}
+
+5. Delete Student (DELETE)
+---------------------------
+URL
+
+DELETE http://localhost:8080/student/delete/1
+
+
+
+https://cloud.mongodb.com/v2/6a6b334ad016be082d78f65b#/security/network/accessList
