@@ -1,0 +1,170 @@
+Postman APIs
+----------------------------------------------
+1. Student APIs
+----------------------------------------------
+Save Student
+-------------
+POST
+http://localhost:8080/student/save
+Request Body
+{
+    "name":"Rahul",
+    "course":"Java",
+    "fee":25000
+}
+-----------------------------------------------
+2. Employee APIs
+-----------------------------------------------
+Save Employee
+--------------------
+POST
+
+http://localhost:8080/employee/save
+
+Body
+
+{
+    "employeeName":"Amit",
+    "department":"IT",
+    "salary":50000
+}
+Get All Employees
+------------------
+GET
+http://localhost:8080/employee/all
+
+Get Employee By ID
+-------------------
+GET
+http://localhost:8080/employee/1
+
+Update Employee
+-------------------
+PUT
+http://localhost:8080/employee/update/1
+Body
+
+{
+    "employeeName":"Rahul",
+    "department":"HR",
+    "salary":65000
+}
+Delete Employee
+------------------
+DELETE
+http://localhost:8080/employee/delete/1
+
+
+-----------------------------------------------
+3. BOOK APIs
+-----------------------------------------------
+Save Book
+-----------------
+POST
+http://localhost:8080/book/save
+Request Body
+{
+    "bookName":"Spring Boot",
+    "authorName":"Rod Johnson",
+    "price":700
+}
+
+Get All Books
+-----------------
+GET
+http://localhost:8080/book/all
+
+Get Book By Id
+----------------
+GET
+http://localhost:8080/book/1
+
+Update Book
+----------------
+PUT
+http://localhost:8080/book/update/1
+Request Body
+{
+    "bookName":"Hibernate",
+    "authorName":"Gavin King",
+    "price":900
+}
+
+Delete Book
+----------------
+DELETE
+http://localhost:8080/book/delete/1
+
+
+-----------------------------------------------
+4. LAPTOP APIs
+-----------------------------------------------
+Save Laptop
+----------------
+POST
+http://localhost:8080/laptop/save
+Body
+{
+    "brand":"Dell",
+    "processor":"Intel i7",
+    "price":85000
+}
+
+Get All Laptops
+-----------------
+GET
+http://localhost:8080/laptop/all
+
+Get Laptop By Id
+--------------------
+GET
+http://localhost:8080/laptop/1
+
+Update Laptop
+------------------
+PUT
+http://localhost:8080/laptop/update/1
+Body
+{
+    "brand":"HP",
+    "processor":"Intel i5",
+    "price":65000
+}
+
+Delete Laptop
+-----------------
+DELETE
+http://localhost:8080/laptop/delete/1
+
+
+-----------------------------------------------
+5. PRODUCT APIs
+-----------------------------------------------
+Save Product
+-----------------
+POST
+http://localhost:8080/product/save
+{
+    "productName":"Laptop",
+    "category":"Electronics",
+    "price":65000
+}
+
+Get Product By Id
+-------------------
+GET
+http://localhost:8080/product/1
+
+Get All Products
+-------------------
+GET
+http://localhost:8080/product/all
+
+Delete Product
+------------------
+DELETE
+http://localhost:8080/product/delete/1
+
+
+
+
