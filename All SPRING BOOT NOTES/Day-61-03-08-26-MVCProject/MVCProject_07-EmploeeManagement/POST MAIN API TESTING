@@ -1,0 +1,63 @@
+Test URLs
+Get All Data
+GET
+http://localhost:8080/api/employees
+
+Response:
+
+[
+  {
+    "id":1,
+    "ename":"John",
+    "email":"john@gmail.com",
+    "salary":50000,
+    "department":"IT"
+  },
+  {
+    "id":2,
+    "ename":"David",
+    "email":"david@gmail.com",
+    "salary":60000,
+    "department":"HR"
+  }
+]
+Get Single Employee
+GET
+http://localhost:8080/api/employees/1
+
+Response:
+
+{
+ "id":1,
+ "ename":"John",
+ "email":"john@gmail.com",
+ "salary":50000,
+ "department":"IT"
+}
+Save Employee
+POST
+http://localhost:8080/api/employees
+
+Body:
+
+{
+ "ename":"Alex",
+ "email":"alex@gmail.com",
+ "salary":45000,
+ "department":"JAVA"
+}
+Update Employee
+PUT
+http://localhost:8080/api/employees/1
+
+Body:
+
+{
+ "ename":"Alex Kumar",
+ "email":"alex@gmail.com",
+ "salary":70000,
+ "department":"Development"
+}
+Delete Employee
+DELETE
+http://localhost:8080/api/employees/1
