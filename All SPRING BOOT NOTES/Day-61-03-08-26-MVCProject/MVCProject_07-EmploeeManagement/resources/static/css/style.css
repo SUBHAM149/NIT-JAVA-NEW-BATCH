@@ -1,0 +1,76 @@
+body {
+    background-color: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
+
+
+.container {
+    margin-top: 40px;
+}
+
+
+h1, h2 {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+
+.table {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+.table th {
+    text-align: center;
+}
+
+
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.btn {
+    border-radius: 5px;
+}
+
+
+.form-control {
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+
+.alert {
+    border-radius: 8px;
+}
+
+
+.text-danger {
+    font-size: 14px;
+}
+
+
+.home-box {
+    margin-top: 100px;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+}
+
+
+.home-box h1 {
+    color: #0d6efd;
+}
