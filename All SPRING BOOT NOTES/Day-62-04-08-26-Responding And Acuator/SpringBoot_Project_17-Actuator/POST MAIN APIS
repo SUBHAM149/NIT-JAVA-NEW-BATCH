@@ -1,0 +1,57 @@
+1. Actuator Home
+
+Method: GET
+
+http://localhost:8080/actuator
+2. Health
+
+Method: GET
+
+http://localhost:8080/actuator/health
+3. Info
+
+Method: GET
+
+http://localhost:8080/actuator/info
+4. Beans
+
+Method: GET
+
+http://localhost:8080/actuator/beans
+5. Mappings
+
+Method: GET
+
+http://localhost:8080/actuator/mappings
+6. Metrics
+
+Method: GET
+
+http://localhost:8080/actuator/metrics
+7. Environment
+
+Method: GET
+
+http://localhost:8080/actuator/env
+Steps in Postman
+Open Postman.
+Select GET.
+Enter the URL, for example:
+http://localhost:8080/actuator/health
+Click Send.
+
+You will receive a JSON response.
+
+Example Response (/actuator/health)
+{
+    "status": "UP"
+}
+Example Response (/actuator/info)
+{
+    "app": {
+        "name": "Spring Boot Actuator Demo",
+        "version": "1.0",
+        "description": "Demo Project for Spring Boot Actuator",
+        "developer": "Subham"
+    }
+}
