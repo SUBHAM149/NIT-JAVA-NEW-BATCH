@@ -1,0 +1,145 @@
+1. Save Product
+
+Method: POST
+
+URL
+
+http://localhost:8080/product/save
+
+Headers
+
+Content-Type: application/json
+
+Body (raw → JSON)
+
+{
+    "id": 1,
+    "name": "Laptop",
+    "price": 55000
+}
+Response
+{
+    "status": 201,
+    "message": "Product Saved Successfully",
+    "data": {
+        "id": 1,
+        "name": "Laptop",
+        "price": 55000.0
+    }
+}
+2. Get All Products
+
+Method: GET
+
+URL
+
+http://localhost:8080/product/all
+Response
+{
+    "status": 200,
+    "message": "Products Retrieved Successfully",
+    "data": [
+        {
+            "id": 1,
+            "name": "Laptop",
+            "price": 55000.0
+        },
+        {
+            "id": 2,
+            "name": "Mobile",
+            "price": 25000.0
+        }
+    ]
+}
+3. Get Product By Id
+
+Method: GET
+
+URL
+
+http://localhost:8080/product/1
+Response
+{
+    "status": 200,
+    "message": "Product Found Successfully",
+    "data": {
+        "id": 1,
+        "name": "Laptop",
+        "price": 55000.0
+    }
+}
+4. Update Product
+
+Method: PUT
+
+URL
+
+http://localhost:8080/product/update/1
+
+Headers
+
+Content-Type: application/json
+
+Body (raw → JSON)
+
+{
+    "name": "Gaming Laptop",
+    "price": 65000
+}
+Response
+{
+    "status": 200,
+    "message": "Product Updated Successfully",
+    "data": {
+        "id": 1,
+        "name": "Gaming Laptop",
+        "price": 65000.0
+    }
+}
+5. Delete Product
+
+Method: DELETE
+
+URL
+
+http://localhost:8080/product/delete/1
+Response
+{
+    "status": 200,
+    "message": "Product Deleted Successfully...",
+    "data": null
+}
+Test Data
+
+Save these products one by one.
+
+Product 1
+{
+    "id": 1,
+    "name": "Laptop",
+    "price": 55000
+}
+Product 2
+{
+    "id": 2,
+    "name": "Mobile",
+    "price": 25000
+}
+Product 3
+{
+    "id": 3,
+    "name": "Keyboard",
+    "price": 1500
+}
+Product 4
+{
+    "id": 4,
+    "name": "Mouse",
+    "price": 800
+}
+Product 5
+{
+    "id": 5,
+    "name": "Monitor",
+    "price": 12000
+}
