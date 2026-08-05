@@ -1,0 +1,214 @@
+🏦 Smart Bank REST API Documentation
+
+Base URL
+
+http://localhost:8080
+
+API Base Path
+
+/api/accounts
+1. Create New Account
+Method
+POST
+URL
+http://localhost:8080/api/accounts
+Headers
+Content-Type : application/json
+Request Body
+{
+    "accountHolderName": "Rahul Kumar",
+    "accountType": "SAVINGS",
+    "balance": 25000,
+    "email": "rahul@gmail.com",
+    "mobile": "9876543210"
+}
+Response
+{
+    "accountId": 3,
+    "accountHolderName": "Rahul Kumar",
+    "accountType": "SAVINGS",
+    "balance": 25000,
+    "email": "rahul@gmail.com",
+    "mobile": "9876543210"
+}
+2. Get All Accounts
+Method
+GET
+URL
+http://localhost:8080/api/accounts
+Response
+[
+    {
+        "accountId":1,
+        "accountHolderName":"Subham Behera",
+        "accountType":"SAVINGS",
+        "balance":50000,
+        "email":"subham@gmail.com",
+        "mobile":"9876543210"
+    },
+    {
+        "accountId":2,
+        "accountHolderName":"RajBala Kumari",
+        "accountType":"SAVINGS",
+        "balance":10000,
+        "email":"rajbala253@gmail.com",
+        "mobile":"7896356235"
+    }
+]
+3. Get Account By ID
+Method
+GET
+URL
+
+Example:
+
+http://localhost:8080/api/accounts/1
+Response
+{
+    "accountId":1,
+    "accountHolderName":"Subham Behera",
+    "accountType":"SAVINGS",
+    "balance":50000,
+    "email":"subham@gmail.com",
+    "mobile":"9876543210"
+}
+4. Update Account Details
+Method
+PUT
+URL
+http://localhost:8080/api/accounts/1
+Headers
+Content-Type : application/json
+Request Body
+{
+    "accountHolderName":"Subham Updated",
+    "accountType":"CURRENT",
+    "balance":70000,
+    "email":"subhamupdated@gmail.com",
+    "mobile":"9999999999"
+}
+Response
+{
+    "accountId":1,
+    "accountHolderName":"Subham Updated",
+    "accountType":"CURRENT",
+    "balance":70000,
+    "email":"subhamupdated@gmail.com",
+    "mobile":"9999999999"
+}
+5. Delete Account
+Method
+DELETE
+URL
+http://localhost:8080/api/accounts/1
+Response
+Account deleted successfully
+6. Deposit Money
+Method
+PUT
+URL
+http://localhost:8080/api/accounts/deposit/1/5000
+Meaning
+Account ID = 1
+Deposit Amount = 5000
+Response
+{
+    "accountId":1,
+    "accountHolderName":"Subham Behera",
+    "balance":55000
+}
+7. Withdraw Money
+Method
+PUT
+URL
+http://localhost:8080/api/accounts/withdraw/1/2000
+Meaning
+Account ID = 1
+Withdraw Amount = 2000
+Response
+{
+    "accountId":1,
+    "accountHolderName":"Subham Behera",
+    "balance":53000
+}
+8. Transfer Money ⭐
+Method
+PUT
+URL
+http://localhost:8080/api/accounts/transfer
+Headers
+Content-Type : application/json
+Request Body
+{
+    "senderId":1,
+    "receiverId":2,
+    "amount":5000
+}
+Response
+Money transferred successfully
+Example
+
+Before:
+
+Account 1 = 50000
+Account 2 = 10000
+
+After:
+
+Account 1 = 45000
+Account 2 = 15000
+9. Get Accounts By Account Type
+Method
+GET
+URL
+http://localhost:8080/api/accounts/type/SAVINGS
+Response
+[
+    {
+        "accountId":1,
+        "accountHolderName":"Subham Behera",
+        "accountType":"SAVINGS",
+        "balance":50000,
+        "email":"subham@gmail.com",
+        "mobile":"9876543210"
+    }
+]
+10. Swagger UI
+
+Open in browser:
+
+http://localhost:8080/swagger-ui/index.html
+
+You will see:
+
+Bank Management API
+
+POST     /api/accounts
+GET      /api/accounts
+GET      /api/accounts/{id}
+PUT      /api/accounts/{id}
+DELETE   /api/accounts/{id}
+
+PUT      /api/accounts/deposit/{id}/{amount}
+
+PUT      /api/accounts/withdraw/{id}/{amount}
+
+PUT      /api/accounts/transfer
+
+GET      /api/accounts/type/{accountType}
+Postman Testing Order
+
+Use this sequence:
+
+No	API	Method
+1	Create Account	POST
+2	Get All Accounts	GET
+3	Get Account By ID	GET
+4	Update Account	PUT
+5	Deposit Money	PUT
+6	Withdraw Money	PUT
+7	Transfer Money	PUT
+8	Search Account	GET
+9	Delete Account	DELETE
+
+Your Smart Bank REST API project is fully tested. ✅
