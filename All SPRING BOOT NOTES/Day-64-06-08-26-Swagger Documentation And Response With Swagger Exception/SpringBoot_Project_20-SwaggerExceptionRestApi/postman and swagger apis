@@ -1,0 +1,148 @@
+For your Customer Management CRUD Project (Spring Boot + JPA + MySQL + Swagger), these are all APIs available in Swagger and Postman.
+
+Swagger URL:
+-------------------
+http://localhost:8080/swagger-ui/index.html
+Customer Management API
+
+Base URL:
+
+http://localhost:8080/api/customers
+1) Save Customer (CREATE)
+----------------------------
+Method
+POST
+URL
+http://localhost:8080/api/customers
+Request Body
+{
+  "name": "Subham Behera",
+  "location": "Hyderabad",
+  "mobnum": "9876543210"
+}
+Response
+{
+  "id": 1,
+  "name": "Subham Behera",
+  "location": "Hyderabad",
+  "mobnum": "9876543210"
+}
+Swagger
+POST /api/customers
+2) Get All Customers (READ)
+------------------------------
+Method
+GET
+URL
+http://localhost:8080/api/customers
+Response
+[
+  {
+    "id": 1,
+    "name": "Subham Behera",
+    "location": "Hyderabad",
+    "mobnum": "9876543210"
+  },
+  {
+    "id": 2,
+    "name": "Rahul Sharma",
+    "location": "Bangalore",
+    "mobnum": "9123456780"
+  }
+]
+Swagger
+GET /api/customers
+3) Get Customer By ID
+--------------------------
+Method
+GET
+URL
+http://localhost:8080/api/customers/1
+Path Variable
+id = 1
+Response
+{
+  "id": 1,
+  "name": "Subham Behera",
+  "location": "Hyderabad",
+  "mobnum": "9876543210"
+}
+Swagger
+GET /api/customers/{id}
+4) Update Customer
+-------------------------
+Method
+PUT
+URL
+http://localhost:8080/api/customers/1
+Request Body
+{
+  "name": "Subham Updated",
+  "location": "Bangalore",
+  "mobnum": "9999999999"
+}
+Response
+{
+  "id": 1,
+  "name": "Subham Updated",
+  "location": "Bangalore",
+  "mobnum": "9999999999"
+}
+Swagger
+PUT /api/customers/{id}
+5) Delete Customer
+----------------------------
+Method
+DELETE
+URL
+http://localhost:8080/api/customers/1
+Response
+Customer Deleted Successfully...
+
+Swagger
+---------------------
+DELETE /api/customers/{id}
+Swagger UI View
+
+After running your project:
+
+http://localhost:8080/swagger-ui/index.html
+
+You will see:
+
+Customer Management API
+
+▼ POST
+   /api/customers
+   Save Customer
+
+
+▼ GET
+   /api/customers
+   Get All Customers
+
+
+▼ GET
+   /api/customers/{id}
+   Get Customer By ID
+
+
+▼ PUT
+   /api/customers/{id}
+   Update Customer
+
+
+▼ DELETE
+   /api/customers/{id}
+   Delete Customer
+   
+Postman Collection
+---------------------------
+Operation	Method	URL
+Save Customer	POST	/api/customers
+Get All Customers	GET	/api/customers
+Get Customer By Id	GET	/api/customers/1
+Update Customer	PUT	/api/customers/1
+Delete Customer	DELETE	/api/customers/1
+
+Your complete CRUD + Swagger API documentation is ready. ✅
