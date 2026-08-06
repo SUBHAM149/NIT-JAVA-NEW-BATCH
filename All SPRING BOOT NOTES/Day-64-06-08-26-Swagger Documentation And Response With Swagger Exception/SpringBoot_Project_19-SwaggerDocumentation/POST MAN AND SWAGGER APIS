@@ -1,0 +1,118 @@
+Here are the CRUD APIs for your Order project that work in both Swagger and Postman.
+
+Assume your application is running on:
+
+http://localhost:8080
+1. Save Order (POST)
+----------------------
+URL
+POST http://localhost:8080/orders
+JSON Body
+{
+    "name":"Laptop",
+    "cost":55000,
+    "description":"Dell Inspiron 15"
+}
+Response
+{
+    "id":1,
+    "name":"Laptop",
+    "cost":55000.0,
+    "description":"Dell Inspiron 15"
+}
+2. Get All Orders (GET)
+------------------------
+URL
+GET http://localhost:8080/orders
+Response
+[
+    {
+        "id":1,
+        "name":"Laptop",
+        "cost":55000,
+        "description":"Dell Inspiron 15"
+    },
+    {
+        "id":2,
+        "name":"Mobile",
+        "cost":25000,
+        "description":"Samsung"
+    }
+]
+3. Get Order By ID (GET)
+--------------------------
+URL
+GET http://localhost:8080/orders/1
+Response
+{
+    "id":1,
+    "name":"Laptop",
+    "cost":55000,
+    "description":"Dell Inspiron 15"
+}
+4. Update Order (PUT)
+------------------------
+URL
+PUT http://localhost:8080/orders/1
+JSON Body
+{
+    "name":"Gaming Laptop",
+    "cost":75000,
+    "description":"HP Victus"
+}
+Response
+{
+    "id":1,
+    "name":"Gaming Laptop",
+    "cost":75000,
+    "description":"HP Victus"
+}
+5. Delete Order (DELETE)
+-------------------------
+URL
+DELETE http://localhost:8080/orders/1
+Response
+Order Deleted Successfully...
+
+Swagger APIs
+-----------------------------
+Open:
+
+http://localhost:8080/swagger-ui/index.html
+
+or
+
+http://localhost:8080/swagger-ui.html
+
+You will see:
+
+Method	URL	Description
+POST	/orders	Save Order
+GET	/orders	Get All Orders
+GET	/orders/{id}	Get Order By ID
+PUT	/orders/{id}	Update Order
+DELETE	/orders/{id}	Delete Order
+
+Postman Collection
+-----------------------
+Method	URL	Body Required
+POST	http://localhost:8080/orders	✅ Yes (JSON)
+GET	http://localhost:8080/orders	❌ No
+GET	http://localhost:8080/orders/1	❌ No
+PUT	http://localhost:8080/orders/1	✅ Yes (JSON)
+DELETE	http://localhost:8080/orders/1	❌ No
+
+JSON for POST
+{
+    "name":"Laptop",
+    "cost":55000,
+    "description":"Dell Inspiron"
+}
+JSON for PUT
+{
+    "name":"Gaming Laptop",
+    "cost":75000,
+    "description":"HP Victus"
+}
+
+These same endpoints can be tested in Swagger UI (using Try it out) or in Postman by selecting the appropriate HTTP method and URL.
