@@ -1,0 +1,568 @@
+/* ==========================================
+            GLOBAL STYLES
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:linear-gradient(135deg,#eef4ff,#f8fbff);
+
+    min-height:100vh;
+
+    color:#333;
+
+}
+
+
+/* ==========================================
+              NAVBAR
+========================================== */
+
+.navbar{
+
+    padding:15px 0;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+.navbar-brand{
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+.navbar-brand i{
+
+    color:#ffc107;
+
+    margin-right:8px;
+
+}
+
+.navbar-nav .nav-link{
+
+    color:#fff !important;
+
+    margin-left:15px;
+
+    transition:.3s;
+
+}
+
+.navbar-nav .nav-link:hover{
+
+    color:#ffc107 !important;
+
+}
+
+.navbar .btn{
+
+    border-radius:30px;
+
+}
+
+
+/* ==========================================
+           PAGE HEADER
+========================================== */
+
+.page-header{
+
+    padding:60px 0;
+
+    text-align:center;
+
+}
+
+.page-header h1{
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+.page-header p{
+
+    font-size:18px;
+
+    color:#666;
+
+}
+
+
+/* ==========================================
+            FORM CARD
+========================================== */
+
+.card{
+
+    border-radius:20px;
+
+}
+
+.card-header{
+
+    border-radius:20px 20px 0 0 !important;
+
+    padding:20px;
+
+}
+
+.card-body{
+
+    padding:35px;
+
+}
+
+
+/* ==========================================
+              FORM
+========================================== */
+
+.form-label{
+
+    font-weight:600;
+
+}
+
+.form-control,
+.form-select{
+
+    border-radius:12px;
+
+    padding:12px;
+
+    border:1px solid #ced4da;
+
+    transition:.3s;
+
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:#0d6efd;
+
+    box-shadow:0 0 10px rgba(13,110,253,.2);
+
+}
+
+
+/* ==========================================
+              BUTTONS
+========================================== */
+
+.btn{
+
+    border-radius:30px;
+
+    padding:10px 25px;
+
+    transition:.3s;
+
+    font-weight:600;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+/* ==========================================
+            MESSAGE AREA
+========================================== */
+
+#message{
+
+    font-weight:600;
+
+    font-size:16px;
+
+}
+/* ==========================================
+          RIGHT INFORMATION CARD
+========================================== */
+
+.card{
+
+    transition:all .4s ease;
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.18);
+
+}
+
+
+/* ==========================================
+            BANK IMAGE
+========================================== */
+
+.card-img-top{
+
+    height:260px;
+
+    object-fit:cover;
+
+    transition:.5s;
+
+}
+
+.card-img-top:hover{
+
+    transform:scale(1.05);
+
+}
+
+
+/* ==========================================
+          INFORMATION SECTION
+========================================== */
+
+.card-body h3{
+
+    font-weight:700;
+
+}
+
+.card-body h5{
+
+    margin-top:20px;
+
+    margin-bottom:15px;
+
+    font-weight:600;
+
+}
+
+.card-body p{
+
+    color:#666;
+
+    line-height:1.8;
+
+}
+
+
+/* ==========================================
+            LIST GROUP
+========================================== */
+
+.list-group-item{
+
+    border:none;
+
+    padding:12px 0;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.list-group-item:hover{
+
+    padding-left:12px;
+
+    color:#0d6efd;
+
+}
+
+.list-group-item i{
+
+    margin-right:10px;
+
+}
+
+
+/* ==========================================
+          CUSTOMER GUIDELINES
+========================================== */
+
+.text-muted{
+
+    color:#6c757d !important;
+
+}
+
+
+/* ==========================================
+          HORIZONTAL LINE
+========================================== */
+
+hr{
+
+    opacity:.25;
+
+}
+
+
+/* ==========================================
+         INPUT PLACEHOLDER
+========================================== */
+
+::placeholder{
+
+    color:#adb5bd;
+
+}
+
+
+/* ==========================================
+         FORM ANIMATION
+========================================== */
+
+.card{
+
+    animation:fadeIn .8s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+        BUTTON ANIMATION
+========================================== */
+
+.btn-primary{
+
+    box-shadow:0 10px 20px rgba(13,110,253,.25);
+
+}
+
+.btn-primary:hover{
+
+    box-shadow:0 15px 25px rgba(13,110,253,.35);
+
+}
+
+.btn-secondary:hover{
+
+    box-shadow:0 12px 20px rgba(108,117,125,.25);
+
+}
+/* ==========================================
+                FOOTER
+========================================== */
+
+footer{
+
+    background:#111827;
+
+    color:#ffffff;
+
+}
+
+footer h4{
+
+    font-weight:700;
+
+}
+
+footer p{
+
+    color:#d1d5db;
+
+}
+
+footer .btn{
+
+    border-radius:30px;
+
+    transition:.3s;
+
+}
+
+footer .btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+footer hr{
+
+    opacity:.25;
+
+}
+
+/* ==========================================
+            SUCCESS MESSAGE
+========================================== */
+
+.alert-success{
+
+    border-radius:12px;
+
+    border:none;
+
+    background:#d1e7dd;
+
+    color:#0f5132;
+
+}
+
+.alert-danger{
+
+    border-radius:12px;
+
+    border:none;
+
+    background:#f8d7da;
+
+    color:#842029;
+
+}
+
+/* ==========================================
+              SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f1f1f1;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#0d6efd;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#084298;
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .page-header{
+
+        padding:40px 0;
+
+    }
+
+    .card{
+
+        margin-bottom:25px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .page-header h1{
+
+        font-size:32px;
+
+    }
+
+    .card-body{
+
+        padding:25px;
+
+    }
+
+    .navbar-nav{
+
+        text-align:center;
+
+        margin-top:15px;
+
+    }
+
+    footer{
+
+        text-align:center;
+
+    }
+
+    footer .btn{
+
+        margin-top:15px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .page-header h1{
+
+        font-size:28px;
+
+    }
+
+    .btn{
+
+        width:100%;
+
+        margin-bottom:10px;
+
+    }
+
+    .card-img-top{
+
+        height:200px;
+
+    }
+
+}
+
+/* ==========================================
+            END OF FILE
+========================================== */
