@@ -1,0 +1,595 @@
+/* ==========================================
+            GLOBAL STYLES
+========================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    background:linear-gradient(135deg,#f0fff4,#ffffff);
+
+    min-height:100vh;
+
+    color:#333;
+
+}
+
+
+/* ==========================================
+              NAVBAR
+========================================== */
+
+.navbar{
+
+    padding:15px 0;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+
+}
+
+
+.navbar-brand{
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+
+.navbar-brand i{
+
+    color:#ffc107;
+
+    margin-right:8px;
+
+}
+
+
+.navbar-nav .nav-link{
+
+    color:white !important;
+
+    margin-left:15px;
+
+    transition:.3s;
+
+}
+
+
+.navbar-nav .nav-link:hover{
+
+    color:#ffc107 !important;
+
+}
+
+
+.navbar .btn{
+
+    border-radius:30px;
+
+}
+
+
+
+/* ==========================================
+              PAGE HEADER
+========================================== */
+
+.page-header{
+
+    padding:60px 0;
+
+    text-align:center;
+
+}
+
+
+.page-header h1{
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+
+.page-header p{
+
+    font-size:18px;
+
+    color:#666;
+
+}
+
+
+
+/* ==========================================
+              FORM CARD
+========================================== */
+
+.card{
+
+    border-radius:20px;
+
+    transition:.4s;
+
+}
+
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+
+}
+
+
+.card-header{
+
+    padding:20px;
+
+    border-radius:20px 20px 0 0 !important;
+
+}
+
+
+
+.card-body{
+
+    padding:35px;
+
+}
+
+
+
+/* ==========================================
+              INPUTS
+========================================== */
+
+.form-label{
+
+    font-weight:600;
+
+}
+
+
+.form-control{
+
+    padding:13px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+
+
+.form-control:focus{
+
+    border-color:#198754;
+
+    box-shadow:0 0 12px rgba(25,135,84,.25);
+
+}
+
+
+
+/* ==========================================
+              BUTTONS
+========================================== */
+
+.btn{
+
+    border-radius:30px;
+
+    padding:10px 25px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+
+.btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+.btn-success:hover{
+
+    box-shadow:0 10px 25px rgba(25,135,84,.35);
+
+}
+/* ==========================================
+          INFORMATION CARD
+========================================== */
+
+
+.card-img-top{
+
+    height:260px;
+
+    object-fit:cover;
+
+    transition:.5s;
+
+}
+
+
+.card-img-top:hover{
+
+    transform:scale(1.05);
+
+}
+
+
+/* ==========================================
+              LIST ITEMS
+========================================== */
+
+
+.list-group-item{
+
+    border:none;
+
+    padding:12px 0;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+
+
+.list-group-item:hover{
+
+    padding-left:12px;
+
+    color:#198754;
+
+}
+
+
+
+.list-group-item i{
+
+    margin-right:10px;
+
+}
+
+
+/* ==========================================
+          TEXT STYLING
+========================================== */
+
+
+.card-body h3{
+
+    font-weight:700;
+
+}
+
+
+
+.card-body h5{
+
+    font-weight:600;
+
+    margin-top:20px;
+
+}
+
+
+
+.card-body p{
+
+    line-height:1.8;
+
+}
+
+
+/* ==========================================
+          MESSAGE AREA
+========================================== */
+
+
+#message{
+
+    font-weight:600;
+
+    font-size:16px;
+
+}
+
+
+
+.alert-success{
+
+    border-radius:12px;
+
+    border:none;
+
+}
+
+
+
+.alert-danger{
+
+    border-radius:12px;
+
+    border:none;
+
+}
+
+
+
+/* ==========================================
+            ANIMATION
+========================================== */
+
+
+.card{
+
+    animation:slideUp .8s ease;
+
+}
+
+
+
+@keyframes slideUp{
+
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+
+/* ==========================================
+          ICON ANIMATION
+========================================== */
+
+
+.card-body i{
+
+    transition:.4s;
+
+}
+
+
+
+.card:hover .card-body i{
+
+    transform:scale(1.15);
+
+}
+/* ==========================================
+                FOOTER
+========================================== */
+
+
+footer{
+
+    background:#111827;
+
+    color:white;
+
+    margin-top:50px;
+
+}
+
+
+
+footer h4{
+
+    font-weight:700;
+
+}
+
+
+
+footer p{
+
+    color:#d1d5db;
+
+    line-height:1.8;
+
+}
+
+
+
+footer .btn{
+
+    border-radius:30px;
+
+    transition:.3s;
+
+}
+
+
+
+footer .btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+
+/* ==========================================
+              SCROLLBAR
+========================================== */
+
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+
+::-webkit-scrollbar-track{
+
+    background:#f1f1f1;
+
+}
+
+
+::-webkit-scrollbar-thumb{
+
+    background:#198754;
+
+    border-radius:10px;
+
+}
+
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#146c43;
+
+}
+
+
+
+/* ==========================================
+            RESPONSIVE DESIGN
+========================================== */
+
+
+@media(max-width:992px){
+
+
+    .navbar-nav{
+
+        text-align:center;
+
+        margin-top:15px;
+
+    }
+
+
+    .card{
+
+        margin-bottom:25px;
+
+    }
+
+
+}
+
+
+
+@media(max-width:768px){
+
+
+    .page-header h1{
+
+        font-size:32px;
+
+    }
+
+
+
+    .card-body{
+
+        padding:25px;
+
+    }
+
+
+
+    footer{
+
+        text-align:center;
+
+    }
+
+
+
+    footer .btn{
+
+        margin-top:10px;
+
+    }
+
+
+}
+
+
+
+@media(max-width:576px){
+
+
+    .page-header h1{
+
+        font-size:28px;
+
+    }
+
+
+
+    .btn{
+
+        width:100%;
+
+        margin-bottom:10px;
+
+    }
+
+
+
+    .card-img-top{
+
+        height:200px;
+
+    }
+
+
+}
+
+
+/* ==========================================
+              END OF FILE
+========================================== */
