@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Banking System</title>
+
+<!-- Bootstrap CSS -->
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- Font Awesome -->
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<!-- Google Fonts -->
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+
+<link rel="stylesheet" href="css/index.css">
+
+</head>
+
+<body>
+
+	<!-- ================= NAVBAR ================= -->
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+
+		<div class="container">
+
+			<a class="navbar-brand fw-bold" href="index.html"> <i
+				class="fa-solid fa-building-columns"></i> Smart Bank
+
+			</a>
+
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+				<span class="navbar-toggler-icon"></span>
+
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarNav">
+
+				<ul class="navbar-nav ms-auto">
+
+					<li class="nav-item"><a class="nav-link active"
+						href="index.html"> Home </a></li>
+
+					<li class="nav-item"><a class="nav-link" href="create.html">
+
+							Create Account </a></li>
+
+					<li class="nav-item"><a class="nav-link" href="accounts.html">
+
+							Accounts </a></li>
+
+					<li class="nav-item"><a class="nav-link" href="deposit.html">
+
+							Deposit </a></li>
+
+					<li class="nav-item"><a class="nav-link" href="withdraw.html">
+
+							Withdraw </a></li>
+
+					<li class="nav-item"><a class="nav-link" href="transfer.html">
+
+							Transfer </a></li>
+
+					<li class="nav-item ms-2"><a class="btn btn-warning"
+						href="http://localhost:8080/swagger-ui/index.html" target="_blank">
+
+							Swagger </a></li>
+
+				</ul>
+
+			</div>
+
+		</div>
+
+	</nav>
+	<!-- ================= HERO SECTION ================= -->
+
+	<section class="hero py-5">
+
+		<div class="container">
+
+			<div class="row align-items-center">
+
+				<!-- Left Side -->
+
+				<div class="col-lg-6">
+
+					<span class="badge bg-primary fs-6 mb-3"> Secure • Fast •
+						Reliable Banking </span>
+
+					<h1 class="display-4 fw-bold mt-3">
+
+						Welcome to <span class="text-primary"> Smart Bank </span>
+
+					</h1>
+
+					<p class="lead text-muted mt-4">Experience secure and modern
+						banking with our Spring Boot Banking Management System. Create
+						accounts, deposit money, withdraw funds, transfer money, and
+						manage customer accounts anytime, anywhere.</p>
+
+					<div class="mt-4">
+
+						<a href="create.html" class="btn btn-primary btn-lg me-3"> <i
+							class="fa-solid fa-user-plus"></i> Create Account
+
+						</a> <a href="accounts.html" class="btn btn-outline-primary btn-lg">
+
+							<i class="fa-solid fa-users"></i> View Accounts
+
+						</a>
+
+					</div>
+
+				</div>
+
+				<!-- Right Side -->
+
+				<div class="col-lg-6 text-center">
+
+					<img
+						src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900"
+						alt="Banking" class="img-fluid rounded shadow-lg hero-image">
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+	<!-- ================= DASHBOARD STATISTICS ================= -->
+
+	<section class="py-5 bg-light">
+
+		<div class="container">
+
+			<div class="text-center mb-5">
+
+				<h2 class="fw-bold">Banking Dashboard</h2>
+
+				<p class="text-muted">Manage all banking operations from one
+					place.</p>
+
+			</div>
+
+			<div class="row g-4">
+
+				<!-- Total Accounts -->
+
+				<div class="col-lg-3 col-md-6">
+
+					<div class="card border-0 shadow dashboard-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-users fa-3x text-primary mb-3"></i>
+
+							<h3 id="totalAccounts">0</h3>
+
+							<h5>Total Accounts</h5>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Deposit -->
+
+				<div class="col-lg-3 col-md-6">
+
+					<div class="card border-0 shadow dashboard-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-piggy-bank fa-3x text-success mb-3"></i>
+
+							<h3>Deposit</h3>
+
+							<p class="text-muted">Deposit money securely.</p>
+
+							<a href="deposit.html" class="btn btn-success"> Deposit </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Withdraw -->
+
+				<div class="col-lg-3 col-md-6">
+
+					<div class="card border-0 shadow dashboard-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-wallet fa-3x text-danger mb-3"></i>
+
+							<h3>Withdraw</h3>
+
+							<p class="text-muted">Withdraw your balance.</p>
+
+							<a href="withdraw.html" class="btn btn-danger"> Withdraw </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Transfer -->
+
+				<div class="col-lg-3 col-md-6">
+
+					<div class="card border-0 shadow dashboard-card">
+
+						<div class="card-body text-center">
+
+							<i
+								class="fa-solid fa-money-bill-transfer fa-3x text-warning mb-3"></i>
+
+							<h3>Transfer</h3>
+
+							<p class="text-muted">Transfer money instantly.</p>
+
+							<a href="transfer.html" class="btn btn-warning"> Transfer </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+	<!-- ================= SERVICES SECTION ================= -->
+
+	<section class="services py-5">
+
+		<div class="container">
+
+			<div class="text-center mb-5">
+
+				<h2 class="fw-bold">Our Banking Services</h2>
+
+				<p class="text-muted">Choose any banking service to continue.</p>
+
+			</div>
+
+			<div class="row g-4">
+
+				<!-- Create Account -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow service-card border-0">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-user-plus fa-4x text-primary mb-4"></i>
+
+							<h4>Create Account</h4>
+
+							<p class="text-muted">Open a new savings or current account
+								in just a few steps.</p>
+
+							<a href="create.html" class="btn btn-primary"> Open </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- View Accounts -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow service-card border-0">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-users fa-4x text-success mb-4"></i>
+
+							<h4>View Accounts</h4>
+
+							<p class="text-muted">View, search and manage all customer
+								accounts.</p>
+
+							<a href="accounts.html" class="btn btn-success"> View </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Deposit -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow service-card border-0">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-piggy-bank fa-4x text-info mb-4"></i>
+
+							<h4>Deposit Money</h4>
+
+							<p class="text-muted">Deposit money securely into any
+								registered account.</p>
+
+							<a href="deposit.html" class="btn btn-info text-white">
+
+								Deposit </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Withdraw -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow service-card border-0">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-wallet fa-4x text-danger mb-4"></i>
+
+							<h4>Withdraw Money</h4>
+
+							<p class="text-muted">Withdraw available balance safely and
+								instantly.</p>
+
+							<a href="withdraw.html" class="btn btn-danger"> Withdraw </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Transfer -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow service-card border-0">
+
+						<div class="card-body text-center">
+
+							<i
+								class="fa-solid fa-money-bill-transfer fa-4x text-warning mb-4"></i>
+
+							<h4>Transfer Money</h4>
+
+							<p class="text-muted">Transfer money between bank accounts
+								instantly.</p>
+
+							<a href="transfer.html" class="btn btn-warning"> Transfer </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Swagger -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow service-card border-0">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-code fa-4x text-secondary mb-4"></i>
+
+							<h4>Swagger API</h4>
+
+							<p class="text-muted">Test and explore all REST APIs using
+								Swagger UI.</p>
+
+							<a href="http://localhost:8080/swagger-ui/index.html"
+								target="_blank" class="btn btn-secondary"> Open Swagger </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+	<!-- ================= ABOUT SECTION ================= -->
+
+	<section class="about py-5 bg-light">
+
+		<div class="container">
+
+			<div class="row align-items-center">
+
+				<!-- Left Side Image -->
+
+				<div class="col-lg-6 mb-4">
+
+					<img
+						src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900"
+						alt="Smart Banking" class="img-fluid rounded shadow-lg">
+
+				</div>
+
+				<!-- Right Side Content -->
+
+				<div class="col-lg-6">
+
+					<span class="badge bg-success mb-3"> About Smart Bank </span>
+
+					<h2 class="fw-bold mb-4">Secure Banking for Everyone</h2>
+
+					<p class="text-muted">Smart Bank is a modern banking management
+						platform developed using Spring Boot REST API, MySQL, Swagger
+						(OpenAPI), Bootstrap, HTML, CSS, and JavaScript. It provides a
+						secure, reliable, and user-friendly banking experience for
+						managing customer accounts, deposits, withdrawals, and money
+						transfers.</p>
+
+					<div class="row mt-4">
+
+						<div class="col-6 mb-3">
+
+							<h5>
+
+								<i class="fa-solid fa-shield-halved text-primary"></i> Secure
+								Banking
+
+							</h5>
+
+							<p class="text-muted small">Advanced security for every
+								transaction.</p>
+
+						</div>
+
+						<div class="col-6 mb-3">
+
+							<h5>
+
+								<i class="fa-solid fa-mobile-screen text-success"></i> Mobile
+								Friendly
+
+							</h5>
+
+							<p class="text-muted small">Fully responsive on all devices.
+
+							</p>
+
+						</div>
+
+						<div class="col-6 mb-3">
+
+							<h5>
+
+								<i class="fa-solid fa-money-bill-transfer text-warning"></i>
+
+								Instant Transfer
+
+							</h5>
+
+							<p class="text-muted small">Fast and secure money transfers.
+
+							</p>
+
+						</div>
+
+						<div class="col-6 mb-3">
+
+							<h5>
+
+								<i class="fa-solid fa-headset text-danger"></i> 24 × 7 Support
+
+							</h5>
+
+							<p class="text-muted small">Customer support whenever you
+								need it.</p>
+
+						</div>
+
+					</div>
+
+					<a href="create.html" class="btn btn-primary btn-lg mt-3"> <i
+						class="fa-solid fa-user-plus"></i> Open an Account
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+	<!-- ================= WHY CHOOSE US ================= -->
+
+	<section class="py-5">
+
+		<div class="container">
+
+			<div class="text-center mb-5">
+
+				<h2 class="fw-bold">Why Choose Smart Bank?</h2>
+
+				<p class="text-muted">We provide secure, fast, and reliable
+					banking services with modern technology.</p>
+
+			</div>
+
+			<div class="row g-4">
+
+				<!-- Feature 1 -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow border-0 feature-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-lock fa-3x text-primary mb-3"></i>
+
+							<h4>100% Secure</h4>
+
+							<p class="text-muted">Your money and personal information are
+								protected using secure banking practices.</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Feature 2 -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow border-0 feature-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-bolt fa-3x text-warning mb-3"></i>
+
+							<h4>Fast Transactions</h4>
+
+							<p class="text-muted">Deposit, withdraw and transfer money
+								within seconds.</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Feature 3 -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow border-0 feature-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-globe fa-3x text-success mb-3"></i>
+
+							<h4>24×7 Online Access</h4>
+
+							<p class="text-muted">Access your banking services anytime,
+								anywhere.</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Feature 4 -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow border-0 feature-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-mobile-screen-button fa-3x text-info mb-3"></i>
+
+							<h4>Responsive Design</h4>
+
+							<p class="text-muted">Works perfectly on desktop, tablet and
+								mobile devices.</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Feature 5 -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow border-0 feature-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-user-shield fa-3x text-danger mb-3"></i>
+
+							<h4>Customer Privacy</h4>
+
+							<p class="text-muted">Your account information remains
+								private and secure.</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Feature 6 -->
+
+				<div class="col-lg-4 col-md-6">
+
+					<div class="card h-100 shadow border-0 feature-card">
+
+						<div class="card-body text-center">
+
+							<i class="fa-solid fa-headset fa-3x text-secondary mb-3"></i>
+
+							<h4>24×7 Support</h4>
+
+							<p class="text-muted">Our support team is available whenever
+								you need assistance.</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- ================= ACHIEVEMENTS ================= -->
+
+	<section class="bg-primary text-white py-5">
+
+		<div class="container">
+
+			<div class="row text-center">
+
+				<div class="col-lg-3 col-md-6 mb-4">
+
+					<h1 class="fw-bold">10K+</h1>
+
+					<p>Happy Customers</p>
+
+				</div>
+
+				<div class="col-lg-3 col-md-6 mb-4">
+
+					<h1 class="fw-bold">50K+</h1>
+
+					<p>Transactions</p>
+
+				</div>
+
+				<div class="col-lg-3 col-md-6 mb-4">
+
+					<h1 class="fw-bold">99.9%</h1>
+
+					<p>Secure Banking</p>
+
+				</div>
+
+				<div class="col-lg-3 col-md-6 mb-4">
+
+					<h1 class="fw-bold">24×7</h1>
+
+					<p>Customer Support</p>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+	<!-- ================= FOOTER ================= -->
+
+	<footer class="bg-dark text-white pt-5 pb-3">
+
+		<div class="container">
+
+			<div class="row">
+
+				<!-- Company -->
+
+				<div class="col-lg-4 col-md-6 mb-4">
+
+					<h3 class="fw-bold">
+
+						<i class="fa-solid fa-building-columns"></i> Smart Bank
+
+					</h3>
+
+					<p class="mt-3 text-light">Smart Bank is a secure and modern
+						banking management system developed using Spring Boot REST API,
+						MySQL, Bootstrap and Swagger.</p>
+
+					<div class="mt-4">
+
+						<a href="#" class="text-white fs-4 me-3"> <i
+							class="fab fa-facebook"></i>
+
+						</a> <a href="#" class="text-white fs-4 me-3"> <i
+							class="fab fa-twitter"></i>
+
+						</a> <a href="#" class="text-white fs-4 me-3"> <i
+							class="fab fa-instagram"></i>
+
+						</a> <a href="#" class="text-white fs-4"> <i
+							class="fab fa-linkedin"></i>
+
+						</a>
+
+					</div>
+
+				</div>
+
+				<!-- Quick Links -->
+
+				<div class="col-lg-2 col-md-6 mb-4">
+
+					<h5>Quick Links</h5>
+
+					<ul class="list-unstyled mt-3">
+
+						<li class="mb-2"><a href="index.html"
+							class="text-decoration-none text-light"> Home </a></li>
+
+						<li class="mb-2"><a href="create.html"
+							class="text-decoration-none text-light"> Create Account </a></li>
+
+						<li class="mb-2"><a href="accounts.html"
+							class="text-decoration-none text-light"> Accounts </a></li>
+
+						<li class="mb-2"><a href="transfer.html"
+							class="text-decoration-none text-light"> Transfer Money </a></li>
+
+						<li><a href="http://localhost:8080/swagger-ui/index.html"
+							target="_blank" class="text-decoration-none text-light">
+
+								Swagger </a></li>
+
+					</ul>
+
+				</div>
+
+				<!-- Banking Services -->
+
+				<div class="col-lg-3 col-md-6 mb-4">
+
+					<h5>Banking Services</h5>
+
+					<ul class="list-unstyled mt-3">
+
+						<li class="mb-2"><i class="fa-solid fa-check text-success"></i>
+
+							Create Account</li>
+
+						<li class="mb-2"><i class="fa-solid fa-check text-success"></i>
+
+							Deposit Money</li>
+
+						<li class="mb-2"><i class="fa-solid fa-check text-success"></i>
+
+							Withdraw Money</li>
+
+						<li class="mb-2"><i class="fa-solid fa-check text-success"></i>
+
+							Transfer Money</li>
+
+						<li><i class="fa-solid fa-check text-success"></i> REST API
+							Documentation</li>
+
+					</ul>
+
+				</div>
+
+				<!-- Contact -->
+
+				<div class="col-lg-3 col-md-6 mb-4">
+
+					<h5>Contact Us</h5>
+
+					<p class="mt-3">
+
+						<i class="fa-solid fa-location-dot text-warning"></i> Hyderabad,
+						Telangana, India
+
+					</p>
+
+					<p>
+
+						<i class="fa-solid fa-envelope text-warning"></i>
+
+						support@smartbank.com
+
+					</p>
+
+					<p>
+
+						<i class="fa-solid fa-phone text-warning"></i> +91 9876543210
+
+					</p>
+
+					<p>
+
+						<i class="fa-solid fa-clock text-warning"></i> Mon - Sat : 9:00 AM
+						- 6:00 PM
+
+					</p>
+
+				</div>
+
+			</div>
+
+			<hr class="border-light">
+
+			<div class="row align-items-center">
+
+				<div class="col-md-6">
+
+					<p class="mb-0">© 2026 Smart Bank. All Rights Reserved.</p>
+
+				</div>
+
+				<div class="col-md-6 text-md-end">
+
+					<a href="#" class="btn btn-outline-light"> <i
+						class="fa-solid fa-arrow-up"></i> Back to Top
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</footer>
+	<!-- Bootstrap JS -->
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Custom JavaScript -->
+
+	<script src="js/index.js"></script>
+
+</body>
+
+</html>
+
