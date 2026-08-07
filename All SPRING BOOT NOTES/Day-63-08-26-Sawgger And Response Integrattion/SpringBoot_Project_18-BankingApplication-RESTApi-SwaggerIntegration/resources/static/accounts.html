@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>View Bank Accounts</title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="css/accounts.css">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold"
+           href="index.html">
+
+            <i class="fa-solid fa-building-columns"></i>
+
+            Smart Bank
+
+        </a>
+
+        <button class="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbar">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse"
+             id="navbar">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="index.html">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="create.html">
+
+                        Create
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link active"
+                       href="accounts.html">
+
+                        Accounts
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="deposit.html">
+
+                        Deposit
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="withdraw.html">
+
+                        Withdraw
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="transfer.html">
+
+                        Transfer
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item ms-2">
+
+                    <a href="http://localhost:8080/swagger-ui/index.html"
+                       target="_blank"
+                       class="btn btn-warning">
+
+                        Swagger
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- ================= PAGE HEADER ================= -->
+
+<section class="py-5">
+
+    <div class="container text-center">
+
+        <h1 class="fw-bold">
+
+            <i class="fa-solid fa-users text-primary"></i>
+
+            Customer Accounts
+
+        </h1>
+
+        <p class="text-muted">
+
+            View, Search and Manage Bank Accounts
+
+        </p>
+
+    </div>
+
+</section>
+
+<div class="container">
+<!-- ================= SEARCH & ACTION PANEL ================= -->
+
+<div class="card shadow-lg border-0 rounded-4 mb-4">
+
+    <div class="card-body">
+
+        <div class="row g-3 align-items-end">
+
+            <!-- Search -->
+
+            <div class="col-lg-5">
+
+                <label class="form-label fw-bold">
+
+                    Search Account by ID
+
+                </label>
+
+                <input
+                    type="number"
+                    id="searchId"
+                    class="form-control"
+                    placeholder="Enter Account ID">
+
+            </div>
+
+            <!-- Search Button -->
+
+            <div class="col-lg-2 d-grid">
+
+                <button
+                    class="btn btn-primary"
+                    id="searchBtn">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    Search
+
+                </button>
+
+            </div>
+
+            <!-- Refresh -->
+
+            <div class="col-lg-2 d-grid">
+
+                <button
+                    class="btn btn-success"
+                    id="refreshBtn">
+
+                    <i class="fa-solid fa-rotate"></i>
+
+                    Refresh
+
+                </button>
+
+            </div>
+
+            <!-- Create -->
+
+            <div class="col-lg-3 d-grid">
+
+                <a href="create.html"
+                   class="btn btn-warning">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    Create Account
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= DASHBOARD INFO ================= -->
+
+<div class="row mb-4">
+
+    <div class="col-md-4">
+
+        <div class="card border-0 shadow text-center">
+
+            <div class="card-body">
+
+                <i class="fa-solid fa-users fa-3x text-primary mb-3"></i>
+
+                <h2 id="totalAccounts">
+
+                    0
+
+                </h2>
+
+                <h5>
+
+                    Total Accounts
+
+                </h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card border-0 shadow text-center">
+
+            <div class="card-body">
+
+                <i class="fa-solid fa-building-columns fa-3x text-success mb-3"></i>
+
+                <h2>
+
+                    Smart Bank
+
+                </h2>
+
+                <h5>
+
+                    Banking System
+
+                </h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card border-0 shadow text-center">
+
+            <div class="card-body">
+
+                <i class="fa-solid fa-circle-check fa-3x text-warning mb-3"></i>
+
+                <h2>
+
+                    REST API
+
+                </h2>
+
+                <h5>
+
+                    Connected
+
+                </h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= ACCOUNTS TABLE ================= -->
+
+<div class="card shadow-lg border-0 rounded-4 mb-5">
+
+    <div class="card-header bg-primary text-white">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3 class="mb-0">
+
+                <i class="fa-solid fa-users"></i>
+
+                Customer Account List
+
+            </h3>
+
+            <button
+                class="btn btn-light btn-sm"
+                id="loadAccountsBtn">
+
+                <i class="fa-solid fa-arrows-rotate"></i>
+
+                Reload
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover table-bordered align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Account Holder</th>
+
+                        <th>Email</th>
+
+                        <th>Mobile</th>
+
+                        <th>Account Type</th>
+
+                        <th>Balance</th>
+
+                        <th width="220">
+
+                            Actions
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="accountTableBody">
+
+                    <!-- Dynamic Data Will Come Here -->
+
+                    <tr>
+
+                        <td colspan="7"
+                            class="text-center text-muted">
+
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+
+                            Loading Accounts...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal fade"
+     id="viewAccountModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+
+                <h4 class="modal-title">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Account Details
+
+                </h4>
+
+                <button
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal">
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <table class="table table-bordered">
+
+                    <tbody>
+
+                        <tr>
+
+                            <th width="30%">
+
+                                Account ID
+
+                            </th>
+
+                            <td id="viewId"></td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Account Holder
+
+                            </th>
+
+                            <td id="viewName"></td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Email
+
+                            </th>
+
+                            <td id="viewEmail"></td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Mobile
+
+                            </th>
+
+                            <td id="viewMobile"></td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Account Type
+
+                            </th>
+
+                            <td id="viewType"></td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Balance
+
+                            </th>
+
+                            <td id="viewBalance"></td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-dark text-white mt-5">
+
+    <div class="container py-4">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-6">
+
+                <h4>
+
+                    <i class="fa-solid fa-building-columns"></i>
+
+                    Smart Bank
+
+                </h4>
+
+                <p class="mb-0">
+
+                    Secure Banking Management System using
+                    Spring Boot REST API, MySQL & Bootstrap.
+
+                </p>
+
+            </div>
+
+            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+
+                <a href="index.html"
+                   class="btn btn-outline-light me-2">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Home
+
+                </a>
+
+                <a href="create.html"
+                   class="btn btn-warning">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    New Account
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+
+            <p class="mb-0">
+
+                © 2026 Smart Bank Management System.
+                All Rights Reserved.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+
+<script src="js/accounts.js"></script>
+
+</body>
+
+</html>
