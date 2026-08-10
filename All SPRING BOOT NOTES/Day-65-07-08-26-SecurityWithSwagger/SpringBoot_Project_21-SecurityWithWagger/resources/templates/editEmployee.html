@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Edit Employee</title>
+
+
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background: #f4f4f4;
+}
+
+.container {
+	width: 400px;
+	margin: 50px auto;
+	background: white;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px gray;
+}
+
+h2 {
+	text-align: center;
+	color: #333;
+}
+
+input {
+	width: 100%;
+	padding: 10px;
+	margin: 8px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+button {
+	width: 100%;
+	padding: 12px;
+	background: green;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button:hover {
+	background: darkgreen;
+}
+
+a {
+	display: block;
+	text-align: center;
+	margin-top: 15px;
+	text-decoration: none;
+}
+
+.error {
+	color: red;
+	font-size: 14px;
+}
+</style>
+
+
+</head>
+
+
+<body>
+
+
+	<div class="container">
+
+
+		<h2>Edit Employee</h2>
+
+
+
+
+		<form th:action="@{/employees/update}" th:object="${employee}"
+			method="post">
+
+
+
+			<!-- Hidden ID -->
+
+			<input type="hidden" th:field="*{id}"> <label>
+				Employee Name </label> <input type="text" th:field="*{name}"
+				placeholder="Enter name">
+
+
+			<p class="error" th:errors="*{name}"></p>
+
+
+
+
+
+
+			<label> Department </label> <input type="text"
+				th:field="*{department}" placeholder="Enter department">
+
+
+			<p class="error" th:errors="*{department}"></p>
+
+
+
+
+
+
+
+			<label> Salary </label> <input type="number" th:field="*{salary}"
+				placeholder="Enter salary">
+
+
+			<p class="error" th:errors="*{salary}"></p>
+
+
+
+
+
+
+			<button type="submit">Update Employee</button>
+
+
+
+
+		</form>
+
+
+
+
+		<a href="/employees"> Back to Employee List </a>
+
+
+
+	</div>
+
+
+</body>
+
+
+</html>
