@@ -174,11 +174,11 @@ git clone https://github.com/SUBHAM149/Java-FullStack-Frontend-Notes.git
 | -------------------- | -------------------- |
 | Core Java            | Ravi Sankar Sir      |
 | Advanced Java        | Miss Raj Kumari Bala |
-| Spring Framework     | Miss Raj Kumari Bala |
-| Spring Boot          | Miss Raj Kumari Bala |
+| Spring Framework     | Raj Kumari Bala Mam And Prasant Sir |
+| Spring Boot          | Raj Kumari Bala Mam And Prasant Sir |
 | React JS             | Sudhakar Sharma Sir  |
 | Oracle SQL           | Vijaya Kumar Sir     |
-| Frontend Development | Gagan Sir            |
+| Frontend Development | Prasad & Siva Kumar & Gagan Sir            |
 
 
 <hr/>
