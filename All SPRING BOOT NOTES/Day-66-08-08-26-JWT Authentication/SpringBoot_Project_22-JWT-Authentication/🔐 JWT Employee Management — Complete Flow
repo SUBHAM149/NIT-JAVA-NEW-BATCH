@@ -1,0 +1,206 @@
+🔐 JWT Employee Management — Complete Flow
+-------------------------------------------------------------
+Start MySQL
+-----------------------
+Start MySQL first.
+Create the database only once:
+
+CREATE DATABASE jwt_employee_db;
+Your application.properties:
+---------------------------------
+spring.application.name=jwt-employee-management
+
+spring.datasource.url=jdbc:mysql://localhost:3306/jwt_employee_db
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+server.port=8080
+
+Replace root password if necessary.
+
+Start Spring Boot
+-----------------------------
+Run:
+JwtApplication.java
+
+Wait for:
+Tomcat started on port 8080
+Started JwtApplication
+Now the application is running.
+
+
+STEP 1 — REGISTER new USER
+---------------------------
+This is done when creating a new account.
+Postman
+
+Method
+POST
+URL
+http://localhost:8080/auth/register
+
+Authorization
+No Auth
+Body
+
+Select:
+Body → raw → JSON
+Send:
+
+{
+    "username": "subham",
+    "password": "12345"
+}
+
+Expected response
+User registered successfully
+
+Now the user exists in the users table.
+
+
+
+STEP 2- LOGIN THE EXIT USER
+-----------------------------
+METHOD POST 
+URL----http://localhost:8080/auth/login
+
+BODY-JSON PEST IT USERNAME AND PASSWORD
+----------------------------------------
+PAST IT
+{
+    "username": "subham",
+    "password": "12345"
+}
+THEN CLICK SEND
+
+IT SHOULD GIVE LIKE THAT
+---------------------------
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9..."
+}
+
+STEP-3 FOR DOING OPERATIONS
+------------------------------
+AFTER GETTING TOKEN COPY THEN DO
+
+METHOD GET 
+URL--http://localhost:8080/employees
+
+GO TO Authorization → Bearer Token
+Paste your token WHICH EXACT YOU GET NOT PEST (""):
+-----------------
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdWJoYW0i...
+
+THEN ADD MANULY DATA IN YOUR DATA BASE 
+THEN CLICK SEND YOU GET 
+[
+    {
+        "id": 1,
+        "name": "Rahul Das",
+        "department": "CSE",
+        "salary": 20000.0,
+        "email": "rahul12@gmail.com"
+    }
+]
+
+
+
+Then you can perform CRUD
+----------------------------
+1.Add Employee
+----------------
+POST http://localhost:8080/employees
+
+Authorization → Bearer Token → same JWT
+
+Body:
+
+{
+    "name": "Amit Kumar",
+    "department": "Java",
+    "salary": 35000,
+    "email": "amit@gmail.com"
+}
+
+2.View All
+-------------------
+GET http://localhost:8080/employees
+
+3.View One
+--------------------
+GET http://localhost:8080/employees/1
+
+4.Update
+----------------
+PUT http://localhost:8080/employees/1
+
+Body:
+
+{
+    "name": "Rahul Das Updated",
+    "department": "Java Full Stack",
+    "salary": 45000,
+    "email": "rahulupdated@gmail.com"
+}
+5.Delete
+---------------
+DELETE http://localhost:8080/employees/1
+
+
+✅ PERFECT ORDER FOR YOUR PROJECT
+┌───────────────────────────────┐
+│       START APPLICATION       │
+└───────────────┬───────────────┘
+                ↓
+        MySQL + Spring Boot
+                ↓
+┌───────────────────────────────┐
+│ REGISTER USER                 │
+│ POST /auth/register           │
+│ First time only               │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ LOGIN                         │
+│ POST /auth/login              │
+│ No Auth                       │
+└───────────────┬───────────────┘
+                ↓
+             JWT TOKEN
+                ↓
+┌───────────────────────────────┐
+│ AUTHORIZE                     │
+│ Bearer Token                  │
+│ Paste JWT                     │
+└───────────────┬───────────────┘
+                ↓
+        EMPLOYEE CRUD
+                ↓
+       ┌──────────────┐
+       │ POST         │
+       │ Add Employee │
+       └──────┬───────┘
+              ↓
+       ┌──────────────┐
+       │ GET          │
+       │ View All     │
+       └──────┬───────┘
+              ↓
+       ┌──────────────┐
+       │ GET /{id}    │
+       │ View One     │
+       └──────┬───────┘
+              ↓
+       ┌──────────────┐
+       │ PUT /{id}    │
+       │ Update       │
+       └──────┬───────┘
+              ↓
+       ┌──────────────┐
+       │ DELETE /{id} │
+       │ Delete       │
+       └──────────────┘
