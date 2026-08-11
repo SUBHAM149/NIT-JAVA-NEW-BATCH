@@ -1,0 +1,105 @@
+1. POST API
+
+Method:
+POST
+URL:
+
+http://localhost:8080/api/employees
+Postman
+
+Select:
+
+POST → Body → raw → JSON
+
+Send:
+
+{
+    "name": "Subham",
+    "department": "IT",
+    "email": "subham@gmail.com",
+    "salary": 50000
+}
+
+Header:
+
+Content-Type: application/json
+Expected Response
+{
+    "id": 1,
+    "name": "Subham",
+    "department": "IT",
+    "email": "subham@gmail.com",
+    "salary": 50000
+}
+2. Swagger POST API
+
+Open:
+
+http://localhost:8080/swagger-ui/index.html
+
+Then:
+
+Employee Management
+        ↓
+POST /api/employees
+        ↓
+Try it out
+        ↓
+Request body
+
+Enter:
+
+{
+    "name": "Subham",
+    "department": "IT",
+    "email": "subham@gmail.com",
+    "salary": 50000
+}
+
+Click:
+
+Execute
+
+Swagger will call:
+
+POST http://localhost:8080/api/employees
+3. All Swagger APIs
+
+After creating the employee, you can test:
+
+POST    /api/employees
+        Create Employee
+
+GET     /api/employees
+        Get All Employees
+
+GET     /api/employees/{id}
+        Get Employee By ID
+
+PUT     /api/employees/{id}
+        Update Employee
+
+DELETE  /api/employees/{id}
+        Delete Employee
+Example IDs
+
+Get employee:
+
+GET http://localhost:8080/api/employees/1
+
+Update employee:
+
+PUT http://localhost:8080/api/employees/1
+
+Body:
+
+{
+    "name": "Subham Behera",
+    "department": "Java",
+    "email": "subham@gmail.com",
+    "salary": 60000
+}
+
+Delete employee:
+
+DELETE http://localhost:8080/api/employees/1
