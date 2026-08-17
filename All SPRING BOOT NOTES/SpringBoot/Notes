@@ -1,0 +1,3030 @@
+Session 12: Spring Boot Overview
+---------------------------------
+What is Spring Boot?
+
+Spring Boot is an extension of the Spring Framework that makes developing Spring applications much easier.
+
+Traditional Spring Problem
+
+Suppose you want to create a web application.
+
+In Spring Framework you need to:
+
+Download many JAR files
+Configure XML
+Configure DispatcherServlet
+Configure ViewResolver
+Configure Tomcat
+Configure Database
+Configure Bean classes
+
+This takes a lot of time.
+
+Spring Boot Solution
+
+Spring Boot automatically does most of the configuration.
+
+You only write business logic.
+
+Think like this
+
+Without Spring Boot
+
+Imagine building a house.
+
+You buy
+
+Cement
+Bricks
+Sand
+Steel
+Paint
+Doors
+Windows
+
+Then build everything yourself.
+
+Very time consuming.
+
+With Spring Boot
+
+You buy a ready-made furnished apartment.
+
+Everything is already arranged.
+
+You just move in.
+
+Spring Boot is that ready-made apartment.
+
+Why was Spring Boot introduced?
+
+Because developers were wasting too much time configuring projects instead of writing code.
+
+Spring Boot reduces:
+
+XML Configuration
+Manual configuration
+Dependency management
+Server setup
+Boilerplate code
+
+Features of Spring Boot
+
+✔ Auto Configuration
+
+✔ Embedded Tomcat
+
+✔ Starter Dependencies
+
+✔ Production Ready
+
+✔ No XML Configuration
+
+✔ Faster Development
+
+Difference Between Spring and Spring Boot
+Spring Framework	Spring Boot
+Lots of configuration	Almost zero configuration
+External Tomcat required	Embedded Tomcat
+Need many dependencies	Starter dependencies
+XML configuration	Mostly annotations
+Slower development	Faster development
+More setup	Minimal setup
+Example
+Spring
+
+You configure everything manually.
+
+DispatcherServlet
+ViewResolver
+Tomcat
+Datasource
+Beans
+Spring Boot
+
+Just
+
+@SpringBootApplication
+
+public class DemoApplication{
+
+}
+
+Run it.
+
+Everything starts automatically.
+
+Interview Question
+Why do we use Spring Boot?
+
+Answer:
+
+Spring Boot reduces configuration, provides auto configuration, embedded server, starter dependencies and helps develop applications quickly.
+
+Session 13: Spring Boot Starters
+What is a Starter?
+
+A Starter is a collection of required libraries.
+
+Instead of adding 15 dependencies individually, we add one starter.
+
+Example
+
+Suppose you want to make tea.
+
+Instead of buying
+
+Sugar
+Tea leaves
+Milk
+Cardamom
+Ginger
+
+Someone gives you a Tea Kit.
+
+That Tea Kit is Starter.
+
+Example
+
+Without Starter
+
+spring-core
+spring-web
+spring-context
+spring-beans
+spring-aop
+spring-expression
+
+Many dependencies.
+
+With Starter
+
+<dependency>
+
+<groupId>org.springframework.boot</groupId>
+
+<artifactId>spring-boot-starter-web</artifactId>
+
+</dependency>
+
+Done.
+
+Spring downloads everything automatically.
+
+Common Starters
+1. spring-boot-starter-web
+
+Used for Web Applications
+
+Contains
+
+Spring MVC
+Jackson
+Validation
+Embedded Tomcat
+2. spring-boot-starter-data-jpa
+
+Used for Database
+
+Contains
+
+Hibernate
+JPA
+Spring Data JPA
+3. spring-boot-starter-security
+
+Used for Login Security.
+
+4. spring-boot-starter-test
+
+Used for Testing.
+
+5. spring-boot-starter-thymeleaf
+
+Used for HTML pages.
+
+What is Auto Configuration?
+
+This is the biggest feature of Spring Boot.
+
+Spring Boot checks
+
+"What libraries are present?"
+
+Then it automatically configures them.
+
+Example
+
+You add
+
+spring-boot-starter-web
+
+Spring Boot sees
+
+"Oh!
+
+Web project."
+
+Automatically creates
+
+✔ DispatcherServlet
+
+✔ Tomcat
+
+✔ Jackson
+
+✔ MVC Configuration
+
+No need to write code.
+
+Another Example
+
+You add
+
+mysql connector
+
+Spring Boot understands
+
+"Oh!
+
+Database project."
+
+It prepares database configuration.
+
+Real Life Example
+
+You insert a SIM card into a phone.
+
+Phone automatically
+
+Detects Network
+Sets Internet
+Sets Time
+
+You don't configure manually.
+
+This is Auto Configuration.
+
+Interview Question
+
+How does Spring Boot know what to configure?
+
+Answer:
+
+It checks the dependencies available in the project and automatically configures the required beans using auto-configuration.
+
+Session 14: Application Setup
+Main Class
+
+Every Spring Boot project has one main class.
+
+Example
+
+@SpringBootApplication
+
+public class DemoApplication {
+
+public static void main(String[] args) {
+
+SpringApplication.run(DemoApplication.class,args);
+
+}
+
+}
+What is @SpringBootApplication?
+
+It combines three annotations.
+
+@Configuration
+
+Marks configuration class.
+
+@EnableAutoConfiguration
+
+Enables Auto Configuration.
+
+@ComponentScan
+
+Scans all components.
+
+Instead of writing three annotations,
+
+Spring Boot provides one annotation.
+
+@SpringBootApplication
+What happens inside SpringApplication.run()?
+SpringApplication.run(DemoApplication.class,args);
+
+This starts the whole application.
+
+Internally it performs these steps:
+
+Step 1
+
+Creates Spring Container.
+
+Step 2
+
+Scans components.
+
+@Component
+
+@Service
+
+@Repository
+
+@Controller
+Step 3
+
+Creates Beans.
+
+Step 4
+
+Performs Dependency Injection.
+
+Step 5
+
+Loads application.properties.
+
+Step 6
+
+Starts Embedded Tomcat (for web applications).
+
+Step 7
+
+Makes the application ready to accept requests.
+
+Flow
+
+main()
+
+↓
+
+SpringApplication.run()
+
+↓
+
+Create IOC Container
+
+↓
+
+Component Scan
+
+↓
+
+Create Beans
+
+↓
+
+Dependency Injection
+
+↓
+
+Load Properties
+
+↓
+
+Start Tomcat
+
+↓
+
+Application Ready
+Role of Main Class
+
+The Main Class is the entry point of the application. It starts the Spring Boot application and initializes the Spring container.
+
+Interview Question
+
+Why should the main class be in the root package?
+
+Answer:
+
+Because @ComponentScan scans the current package and all its sub-packages. Keeping the main class in the root package ensures all controllers, services, repositories, and other components are detected automatically.
+
+Session 15: Runners in Spring Boot
+
+Sometimes we want some code to execute immediately after the application starts.
+
+Spring Boot provides two interfaces.
+
+1. CommandLineRunner
+
+Runs after the application starts.
+
+Example
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyRunner implements CommandLineRunner {
+
+    @Override
+    public void run(String... args) {
+        System.out.println("Application Started!");
+    }
+}
+
+Output:
+
+Application Started!
+2. ApplicationRunner
+
+Works like CommandLineRunner but receives an ApplicationArguments object, which makes it easier to access named and unnamed command-line arguments.
+
+Example
+
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyAppRunner implements ApplicationRunner {
+
+    @Override
+    public void run(ApplicationArguments args) {
+        System.out.println("Application Started!");
+    }
+}
+Difference
+CommandLineRunner	ApplicationRunner
+Gets String... args	Gets ApplicationArguments
+Simpler	Better argument handling
+Mostly used	Used when command-line arguments need parsing
+Real-world Uses
+Insert default admin user.
+Load initial data.
+Print startup messages.
+Check database connection.
+Initialize cache.
+Session 16: Logging & Banner Customization
+What is Logging?
+
+Logging means recording what happens in the application while it is running.
+
+Instead of using:
+
+System.out.println("Saved");
+
+we use a logging framework.
+
+Why Logging?
+Debug issues
+Monitor application
+Record errors
+Track user activity
+What is Logback?
+
+Spring Boot uses Logback as its default logging framework.
+
+No extra setup is required.
+
+Example
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Demo {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(Demo.class);
+
+    public void save() {
+
+        logger.info("Employee Saved");
+
+        logger.warn("Low Memory");
+
+        logger.error("Database Error");
+    }
+}
+Log Levels
+Level	Purpose
+TRACE	Very detailed information
+DEBUG	Debugging during development
+INFO	Normal application events
+WARN	Warning messages
+ERROR	Errors or failures
+Banner Customization
+
+When a Spring Boot application starts, it displays a Spring Boot logo in the console.
+
+Example:
+
+  .   ____          _            __ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \\ \\ \\
+( ( )\\___ | '_ | '_| | '_ \\/ _` | \\ \\ \\
+ \\\\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+How to Customize the Banner
+Create a file named:
+banner.txt
+Place it inside:
+src/main/resources
+Add your text or ASCII art:
+***************************
+ Welcome to Employee App
+***************************
+Run the application.
+
+Your custom banner will appear instead of the default one.
+
+Summary
+Spring Boot simplifies Spring development with auto-configuration and embedded servers.
+Starter dependencies group commonly used libraries into a single dependency.
+Auto-configuration automatically configures beans based on project dependencies.
+SpringApplication.run() starts the Spring container, loads configurations, and (for web apps) launches the embedded Tomcat server.
+CommandLineRunner and ApplicationRunner execute code immediately after startup.
+Logback is the default logging framework in Spring Boot, supporting different log levels.
+Banner customization lets you display your own startup banner using a banner.txt file.
+
+------------------------------------------------------------------------------------------------------
+Develop a SpringBoot Rest API CRUD operations Project(For Employee Management System)
+
+:-
+1.Get All employees:->localhost:8080/employees
+
+2.Get employee based on id:->localhost:8080/employee/1
+
+3.Create employee:->localhost:8080/employee/add
+
+4.Update employee details:->localhost:8080/employee/update/1
+
+5.Delete employee based on id:->localhost:8080/employee/delete/1
+
+----------------------------------------------------------------------------------------------
+15/07/2026
+
+SpringBoot with MVC and Thyemleaf Project:-
+
+**Develop a SpringBoot and MVC Web Project with the help of thymeleaf.
+Generate Api for different different operations:-
+Generate these following API's:-
+1.Save Employee
+2.Get Employee
+3.Get All Employee
+4.Edit Employee
+5.Delete Employee
+
+with frontend page.
+
+Day-2
+------
+Spring Boot:-Spring Boot is a Java Framework that makes it esier to
+create and run Java Apllication.
+
+It simplifies the the configuration and setup process,allowing
+developers to focus more on writing code for their application.
+
+->Spring Boot is a Module of Spring FrameWork.
+
+->It facilitates Rapid Application Development.
+
+->Spring Boot is an open source Java Framework used to create a 
+web appln.
+
+->it is developed by  Pivotal Team.
+
+->It is a combination of Spring Framework and Embeded servers.
+
+->The main goal of Spring Boot is is to reduce development,unit test,
+and integration test time and in Spring Boot there is no requirement
+for XML configuration.
+
+
+**Spring Boot follows a layered architecture:-
+->It consists of 4 layers:-
+1.Presentation layer:-It handles HTTP requests,authentication
+and JSON conversion.
+
+2.Business layer:-Contains Business logic,validation and
+authorization.
+
+
+3.Persistence Layer:-Manages database interactions using ORM 
+frameworks like Spring Data JPA.
+
+4.Database Layer:-Stores application data using relational
+database and NoSql database.
+-----------------------------------------------------------------
+Spring Boot Annotations:-
+SpringBoot provides so many annotations.
+->That simplify Java Enterprise application development.
+->Here are few examples:-
+1.@SpringBootApplication -> it combines @Configuration,
+@EnableAutoConfiguration,@ComponentScan
+->This annotation is Entry Point for Spring Boot
+
+2.@ComponentScan:-Scan the package for @Component,@Service to
+auto register the beans
+3.@Configuration:-Marks the class as a source of bean definitions
+4.@Bean :-Declares a bean manually in a @Configuration class
+5.@Autowired:-Automatically injects dependent beans
+6.@Service:-Specialization of @Component for service layer class
+7.@Repository:-DAO layer classes
+8.@Controller :-Used for Spring MVC controllers
+9.@RestController :-Combination of @Controller and @ResponseBody for
+RESTful services.
+-----------------------------------------------------------------
+Spring Boot Data JPA:-it simplifies working with relational
+databases using Java.
+eliminating much boilerplate code
+->We will use application.properties to write all database configuration.
+->and we have entity class also with@Entity annotation.
+->We have JpaRepository also which will have all CRUD Operation
+methods.
+----------------------------------------------------------------------------------------
+SPRING MVC WITH SPRING BOOT:-SPRING MVC IS A WEB FRAMEWORK BUILT ON THE CORE OF THE
+SPRING FRAMEWORK.
+IT HELPS DEVELOP WEB APPLN BY BY SEPARATING THE LOGIC INTO THREE LAYERS:-
+1.MODEL
+2.VIEW
+3.CONTROLLER
+->SPRING BOOT MAKES IT EASY TO CREATE SPRING MVC APPS BY AUTO-CONFIGURING EVERYTHING.
+->BENEFITS OF SPRING BOOT FOR MVC:-
+1.NO web.xml required
+2.Embeded server
+3.Auto-configuration
+4.Easy REST Api and web app development
+--------------------------------------------------------------------------------------
+SPRING SECURITY:-SPRING SECURITY IS A POWERFUL AND CUSTOMIZABLE AUTHENTICATION 
+AND ACCESS CONTROL FRAMEWORK FOR JAVA APPLN,EASILY SPRING BASED APPN.
+->IT PROVIDES :-
+1.AUTHENTICATION
+2.AUTHERIZATION
+3.PROTECTION AGAINST COMMON SECURITY THREATS
+->WE HAVE ANNOTATIONS LIKE @ENABLEWEBSECURITY,@CONFIGURATION,@BEAN
+->BY DEFAULT ALL ENDPOINTS ARE SECURED IN SPRINGBOOT
+->YOU GET A DEFAULT LOGIN FORM
+----------------------------------------------------------------------------------------
+WEB SERVICES:-Web Services are a way for two different applications to communicate 
+over the web using standard protocols.
+Char:-
+1.Platform Independent(Windows,Linux)
+2.Language Independent(Java client can talk to Python Server)
+3.Uses Standard protocols like HTTP,XML,JSON
+
+Types of Web Services:-
+1.SOAP:-Simple Object Access Protocol
+->USES XML to encode messages
+->Follow strict standards
+->Protocol Based
+->Slower and more complex
+->Used in enterprise appln(Banking,telecom)
+
+2.REST:-Representational State Transfer
+->Uses HTTP methods(GEt,POST,PUT,DELETE)
+->SEND/RECEIVE JSON OR XML(bUT USUALLY JSON)
+->LIGHTWEIGHT AND FASTER THEN SOAP
+->IT IS COMMONLY USED IN WEB AND MOBILE APPLN
+->A REST API IS A WEB SERVICE THAT FOLLOWS REST ARCHITECTURE PRINCIPLES.
+->IT ALLOWS SYSTEM TO COMMUNICATE OVER HTTP BY EXPOSING RESOURCES(DATA) VIA STANDARD METHOD.
+------------------------------------------------------------------------------
+SpringBoot Rest API CRUD operations(For Employee Management System)
+
+:-
+1.Get All students:->localhost:8080/students
+
+2.Get student based on id:->localhost:8080/student/1
+
+3.Create Student:->localhost:8080/student/add
+
+4.Update Student details:->localhost:8080/student/update/1
+
+5.Delete student based on id:->localhost:8080/student/delete/1
+-------------------------------------------------------------------------
+WHAT IS GIT?
+->GIT IS A DISTRIBUTED VERSION CONTROL SYSTEM THAT HELPS DEVELOPERS.
+->TO TRACK THE CODE CHANGES OVER TIME
+->COLLABORATE WITH TERMS
+->MANAGE DIFFERENET FEATURES USING BRANCHES.
+
+1.REPOSITOTY:-
+->A PROJECT  FOLDER TRACKED BY GIT.
+->WE CAN HAVE LOCAL REPO AND REMOTE REPO.
+2.COMMIT:-
+
+Session 20: Custom Query Methods (Spring Data JPA)
+What is a Custom Query Method?
+
+A Custom Query Method is a method that we create ourselves inside the Repository interface to search data according to our requirements.
+Instead of writing SQL queries manually, Spring Data JPA creates the query automatically from the method name.
+This is called Query Derivation.
+
+
+Real-Life Example
+Imagine a college database.
+You want to find:
+Student by Name
+Student by Email
+Student by Age
+Students whose marks are greater than 80
+
+CRUDRepository cannot do all these searches.
+So we create Custom Query Methods.
+
+
+Why do we need Custom Query Methods?
+Suppose our Student table contains:
+
+Id	Name	Email	Age
+1	Rahul	rahul@gmail.com	22
+2	Priya	priya@gmail.com	20
+3	Amit	amit@gmail.com	23
+
+Now we want
+Find Rahul only.
+CRUDRepository has
+
+findAll()
+save()
+delete()
+
+But it does NOT have
+findByName()
+So we create our own method.
+
+How Spring understands the method?
+Spring reads the method name.
+
+Example
+findByName()
+Spring understands
+SELECT * FROM Student
+WHERE name=?
+
+No SQL is written by us.
+Spring generates it automatically.
+This is called Query Derivation.
+
+
+Structure
+
+find
+   ↓
+By
+   ↓
+Field Name
+
+Example
+
+findByName
+
+means
+
+Find student where name matches.
+
+Common Custom Query Methods
+1. findByName()
+Student findByName(String name);
+
+Generated SQL
+SELECT * FROM student
+WHERE name=?
+
+2. findByEmail()
+Student findByEmail(String email);
+
+SQL
+SELECT *
+FROM student
+WHERE email=?
+
+3. findByAge()
+List<Student> findByAge(int age);
+
+SQL
+SELECT *
+FROM student
+WHERE age=?
+
+4. findByCity()
+List<Student> findByCity(String city);
+
+
+ Query Derivation Rules
+Spring follows a naming convention.
+findBy
+readBy
+getBy
+existsBy
+countBy
+deleteBy
+All are valid.
+
+
+Example
+
+findByEmail()
+existsByEmail()
+countByAge()
+deleteByName()
+
+Spring creates queries automatically.
+Different Keywords
+Equal
+findByName(String name)
+
+SQL
+WHERE name='Rahul'
+AND
+findByNameAndAge(String name,int age)
+
+SQL
+WHERE name='Rahul'
+AND age=22
+OR
+findByNameOrCity(String name,String city)
+
+SQL
+WHERE name='Rahul'
+OR city='Delhi'
+Greater Than
+findByAgeGreaterThan(int age)
+
+SQL
+WHERE age>20
+Less Than
+findByAgeLessThan(int age)
+Between
+findByAgeBetween(int start,int end)
+
+
+
+Session 17: ORM & Persistence Layer Basics
+Topic 1: Why ORM Frameworks?
+What is ORM?
+ORM = Object Relational Mapping
+ORM is a technique that connects Java Objects with Database Tables.
+Instead of writing SQL queries manually, we simply work with Java objects.
+Without ORM
+Suppose you want to save an employee.
+You have to write:
+INSERT INTO employee(id,name,salary)
+VALUES(1,'Rahul',50000);
+Then execute it using JDBC.
+This requires:
+Connection
+Statement
+SQL Query
+Closing connection
+Lots of code.
+
+With ORM
+Simply write
+Employee emp = new Employee(1,"Rahul",50000);
+
+repository.save(emp);
+ORM automatically generates the SQL.
+You don't write SQL.
+
+Why do we need ORM?
+Problem with JDBC
+Imagine an Employee table.
+id
+name
+salary
+1
+Rahul
+50000
+
+To insert data using JDBC you need
+SQL Query
+Connection
+PreparedStatement
+Execute
+Close Connection
+Lots of repeated code.
+
+ORM solves this problem.
+It automatically
+creates SQL
+opens connection
+executes query
+converts rows into Java objects
+Developer only writes Java code.
+
+Advantages of ORM
+1. Less Code
+Instead of
+INSERT...
+Write
+repository.save(emp);
+
+2. Easy Maintenance
+Database changes are easier.
+No need to edit hundreds of SQL queries.
+
+3. Object-Oriented
+You work with
+Employee
+Customer
+Product
+instead of tables.
+
+4. Database Independent
+Today
+MySQL
+Tomorrow
+Oracle
+Almost no Java code changes.
+
+5. Faster Development
+Developer focuses on business logic.
+
+Disadvantages
+Slightly slower than raw JDBC for complex queries.
+Learning annotations takes time.
+Very complex SQL may still need native queries.
+
+Topic 2: JPA Introduction
+What is JPA?
+JPA = Java Persistence API
+It is a Specification (rules).
+It tells ORM frameworks how to save Java objects.
+Think of JPA as:
+"A rule book."
+It is not software.
+
+Then who actually works?
+Hibernate.
+Hibernate follows JPA rules.
+Example
+Java Code
+     ↓
+JPA Rules
+     ↓
+Hibernate
+     ↓
+Database
+
+What is Persistence?
+Persistence means
+Saving data permanently.
+Example
+Employee emp = new Employee();
+Currently it is in RAM.
+After
+save(emp);
+it is stored in database permanently.
+That is Persistence.
+
+Common JPA Annotations
+@Entity
+Makes class a table.
+@Entity
+public class Employee
+{
+}
+
+@Table
+Changes table name.
+@Table(name="emp")
+
+@Id
+Primary Key.
+@Id
+private int id;
+
+@Column
+Maps variable to column.
+@Column(name="salary")
+private double salary;
+
+Session 17 Summary
+ORM maps Java Objects to Database Tables.
+ORM removes manual SQL writing.
+JPA is a specification.
+Hibernate implements JPA.
+Persistence means storing data permanently.
+
+Session 18: CRUDRepository Overview
+What is CRUDRepository?
+It is a predefined Spring Data JPA interface.
+It already contains CRUD methods.
+You simply extend it.
+public interface EmployeeRepository
+extends CrudRepository<Employee,Integer>
+{
+}
+No implementation required.
+Spring creates it automatically.
+
+Generic Parameters
+CrudRepository<Employee,Integer>
+Employee → Entity
+Integer → Primary Key datatype
+
+Predefined Methods
+1. save()
+Used to Insert and Update.
+repo.save(emp);
+If ID doesn't exist → Insert
+If ID already exists → Update
+
+2. findById()
+Returns one record.
+repo.findById(1);
+Returns
+Optional<Employee>
+because data may or may not exist.
+
+3. findAll()
+Returns all records.
+repo.findAll();
+
+4. delete()
+Delete object.
+repo.delete(emp);
+
+5. deleteById()
+repo.deleteById(1);
+Deletes employee with ID 1.
+
+6. existsById()
+Checks record exists or not.
+repo.existsById(1);
+Returns
+true
+false
+
+7. count()
+Counts total rows.
+repo.count();
+Suppose
+10 employees
+Output
+10
+
+Session 18 Summary
+CRUDRepository provides ready-made CRUD methods.
+No SQL required.
+Spring automatically implements these methods.
+
+Session 19: JpaRepository Features
+What is JpaRepository?
+JpaRepository extends
+CrudRepository
+        ↑
+PagingAndSortingRepository
+        ↑
+JpaRepository
+So it has
+CRUD
+Paging
+Sorting
+More JPA features
+
+Paging
+Imagine database has
+1000 employees.
+Showing all at once is slow.
+Instead
+Show
+10 per page.
+Page 1
+
+1-10
+
+Page 2
+
+11-20
+
+Page 3
+
+21-30
+
+Pageable Interface
+Pageable pageable =
+PageRequest.of(0,5);
+Meaning
+Page Number = 0
+Records = 5
+
+repo.findAll(pageable);
+Returns first 5 employees.
+
+Sorting
+Sort data.
+Example
+Salary
+10000
+50000
+30000
+After sorting
+10000
+30000
+50000
+
+Sort sort =
+Sort.by("salary");
+
+repo.findAll(sort);
+
+Descending
+Sort.by("salary").descending();
+
+Ascending
+Sort.by("salary").ascending();
+
+Custom Finder Methods
+Instead of SQL
+Just write
+findByName()
+Spring generates SQL automatically.
+
+Example
+findBySalary()
+becomes
+select *
+from employee
+where salary=?
+
+Session 19 Summary
+JpaRepository extends CrudRepository.
+Supports paging.
+Supports sorting.
+Supports custom finder methods.
+
+Session 20: Custom Query Methods
+Spring creates SQL from method names.
+This is called Query Derivation.
+
+findByName()
+List<Employee>
+findByName(String name);
+Generated SQL
+SELECT *
+FROM employee
+WHERE name=?
+
+findByEmail()
+findByEmail(String email)
+Generated SQL
+SELECT *
+FROM employee
+WHERE email=?
+
+More Examples
+findBySalary()
+↓
+WHERE salary=?
+
+findByDepartment()
+↓
+WHERE department=?
+
+Query Derivation Rules
+Spring understands keywords like
+findBy
+
+And
+
+Or
+
+Between
+
+LessThan
+
+GreaterThan
+
+Like
+
+StartingWith
+
+EndingWith
+
+Containing
+
+OrderBy
+Example
+findByNameAndEmail()
+Generated SQL
+WHERE
+name=?
+AND
+email=?
+
+Session 20 Summary
+Method names generate SQL automatically.
+No need to write SQL.
+Follow Spring's naming rules.
+
+Session 21: JPQL & Native Queries
+Sometimes derived query methods are not enough.
+Then use @Query.
+
+JPQL
+JPQL = Java Persistence Query Language
+It works with Entity Class names and fields, not table names.
+Example Entity
+@Entity
+class Employee
+{
+    private String name;
+}
+JPQL
+@Query("SELECT e FROM Employee e")
+Notice:
+Employee = Entity class name
+name = Java field name
+
+Native SQL
+Works with actual database table and column names.
+@Query(
+value="SELECT * FROM employee",
+nativeQuery=true)
+Here
+employee
+is the database table.
+
+Named Parameters
+Instead of
+WHERE name=?
+Use
+@Query("SELECT e FROM Employee e WHERE e.name=:name")
+Repository method:
+List<Employee> findByName(
+    @Param("name") String name
+);
+Spring replaces :name with the method argument.
+
+JPQL vs Native SQL
+JPQL
+Native SQL
+Uses Entity class
+Uses Table name
+Database independent
+Database specific
+Portable
+Less portable
+
+
+Session 21 Summary
+Use @Query for custom queries.
+JPQL uses entity classes and fields.
+Native SQL uses database tables and columns.
+Named parameters make queries clearer.
+
+Session 22: Embedded Database Setup (H2)
+What is H2 Database?
+H2 is a lightweight in-memory database.
+It is mainly used for
+Practice
+Testing
+Learning
+Small projects
+No separate installation is required.
+
+Why H2?
+Instead of installing MySQL,
+Spring Boot starts H2 automatically.
+Very useful while learning JPA.
+
+H2 Configuration
+Add dependency:
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+</dependency>
+
+In application.properties:
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.h2.console.enabled=true
+
+Schema Auto-Creation
+When your entity is:
+@Entity
+public class Employee
+{
+}
+Hibernate automatically creates the table.
+No need to manually write:
+CREATE TABLE Employee...
+This happens because of:
+spring.jpa.hibernate.ddl-auto=update
+Common values:
+create → Creates new tables every startup (old data lost).
+update → Updates schema without deleting existing data.
+create-drop → Creates on startup, drops on shutdown.
+validate → Checks schema only; does not create or update.
+
+Session 22 Summary
+H2 is an embedded database.
+Great for development and testing.
+Hibernate can automatically create/update tables.
+
+Session 23: MySQL Integration
+Why MySQL?
+For real applications, data should be stored permanently.
+Unlike H2 (memory), MySQL stores data on disk.
+
+Step 1: Add MySQL Driver
+Add dependency:
+<dependency>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+</dependency>
+
+Step 2: Configure application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/employeedb
+spring.datasource.username=root
+spring.datasource.password=your_password
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+What do these properties mean?
+spring.datasource.url → Database location and name.
+spring.datasource.username → MySQL username.
+spring.datasource.password → MySQL password.
+spring.jpa.hibernate.ddl-auto=update → Automatically updates tables based on entities.
+spring.jpa.show-sql=true → Displays generated SQL in the console.
+spring.jpa.properties.hibernate.format_sql=true → Prints SQL in a readable format.
+
+How Spring Boot Connects to MySQL
+Java Entity
+      ↓
+Repository
+      ↓
+Spring Data JPA
+      ↓
+Hibernate
+      ↓
+MySQL Driver
+      ↓
+MySQL Database
+
+Final Revision (Sessions 17–23)
+Session
+Main Topic
+Key Idea
+17
+ORM & JPA
+ORM maps Java objects to database tables; JPA is the specification used by Hibernate.
+18
+CRUDRepository
+Provides ready-made CRUD methods like save(), findAll(), findById(), and delete().
+19
+JpaRepository
+Extends CRUD with paging, sorting, and more advanced JPA features.
+20
+Custom Query Methods
+Spring generates SQL automatically from method names like findByName().
+21
+JPQL & Native Queries
+@Query allows custom queries using JPQL or native SQL with named parameters.
+22
+H2 Database
+Embedded database for learning and testing with automatic schema creation.
+23
+MySQL Integration
+Configure MySQL driver and properties to connect a Spring Boot application to a real database.
+
+
+Session 21: JPQL & Native Queries
+Topic: @Query Annotation and Named Parameters
+
+This session is one of the most important topics in Spring Data JPA because sometimes the predefined methods (findAll(), save(), deleteById()) and custom methods (findByName()) are not enough.
+In such cases, we write our own SQL or JPQL queries using the @Query annotation.
+
+1. What is JPQL?
+JPQL = Java Persistence Query Language
+JPQL is a query language provided by JPA.
+It looks similar to SQL but works with Java Entity classes instead of database tables.
+
+SQL
+SELECT * FROM employee;
+
+Here,
+employee → Table name
+
+JPQL
+SELECT e FROM Employee e
+Here,
+Employee → Entity Class
+e → Object of Employee
+
+
+JPQL always uses Entity class names and field names.
+
+
+Real-Life Example
+
+Suppose you have a Student class.
+
+@Entity
+public class Student
+{
+   private int id;
+   private String name;
+}
+
+JPQl
+SELECT s FROM Student s
+Not
+SELECT * FROM student
+Because JPQL works on Java objects.
+
+
+
+Difference Between SQL and JPQL
+SQL	                 JPQL
+Works on Tables 	Works on Entity Classes
+Uses Column names	Uses Variable names
+Database specific	Database independent
+Faster	                Portable
+Example
+
+
+
+Table
+
+employee
+-------------------------
+id
+name
+salary
+
+Entity
+
+class Employee
+{
+int id;
+String name;
+double salary;
+}
+
+SQL
+SELECT * FROM employee
+JPQL
+SELECT e FROM Employee e
+
+
+
+
+
+Why JPQL?
+Suppose you want
+Employee salary >50000
+Employee by city
+Employee by department
+
+
+Predefined methods become lengthy.
+So we write JPQL.
+
+
+
+2. What is @Query Annotation?
+
+@Query lets us write our own query.
+
+Without @Query
+findByName(String name)
+
+With @Query
+@Query("SELECT e FROM Employee e WHERE e.name=?1")
+
+
+You can write your own conditions.
+Syntax
+@Query("JPQL Query")
+ReturnType methodName(parameters);
+
+
+Example
+@Query("SELECT e FROM Employee e")
+List<Employee> getEmployees();
+Repository
+
+@Repository
+public interface EmployeeRepository
+extends JpaRepository<Employee,Integer>
+{
+
+}
+
+
+Add @Query
+@Repository
+public interface EmployeeRepository
+extends JpaRepository<Employee,Integer>
+{
+
+@Query("SELECT e FROM Employee e")
+List<Employee> getEmployees();
+
+}
+
+
+How it Works
+
+Method Called
+
+↓
+
+@Query Executes
+
+↓
+
+Database
+
+↓
+
+Returns Objects
+
+↓
+
+Spring Boot
+
+3. Selecting All Records
+@Query("SELECT e FROM Employee e")
+List<Employee> getAllEmployees();
+Equivalent SQL
+
+
+
+SELECT * FROM employee;
+4. Fetch Employee By Name
+@Query("SELECT e FROM Employee e WHERE e.name=?1")
+List<Employee> getEmployeeByName(String name);
+
+
+Calling
+repo.getEmployeeByName("Raj");
+
+
+
+Generated query
+SELECT * FROM employee
+WHERE name='Raj';
+
+5. Fetch Salary Greater Than
+@Query("SELECT e FROM Employee e WHERE e.salary>?1")
+List<Employee> getSalary(double salary);
+
+
+Calling
+repo.getSalary(30000);
+
+6. Multiple Conditions
+@Query("SELECT e FROM Employee e WHERE e.name=?1 AND e.salary>?2")
+List<Employee> getData(String name,double salary);
+
+Calling
+repo.getData("Rahul",30000);
+
+What is ?1 ?
+
+
+
+Suppose
+method(String name)
+Then
+?1
+means first parameter.
+
+
+
+Example
+method(String name,double salary)
+name
+
+↓
+
+?1
+
+salary
+
+↓
+
+?2
+Example
+@Query("SELECT e FROM Employee e WHERE e.name=?1 AND e.salary>?2")
+?1 → name
+?2 → salary
+
+
+
+7. Named Parameters:-
+
+Instead of using
+?1
+?2
+?3
+
+we can use meaningful names.
+Example
+
+@Query("SELECT e FROM Employee e WHERE e.name=:name")
+Notice
+:name
+Instead of
+?1
+Use @Param
+
+@Query("SELECT e FROM Employee e WHERE e.name=:name")
+List<Employee> getByName(@Param("name") String name);
+
+
+
+Calling
+repo.getByName("Raj");
+Why Named Parameters?
+
+
+
+Suppose
+
+method(String name,
+String city,
+double salary)
+
+Instead of remembering
+
+?1
+
+?2
+
+?3
+
+Use
+
+:name
+
+:city
+
+:salary
+
+Much easier to read.
+
+Example
+
+@Query("SELECT e FROM Employee e WHERE e.name=:name AND e.salary>:salary")
+List<Employee> getData(
+@Param("name") String name,
+@Param("salary") double salary);
+Named Parameter Flow
+Method
+
+↓
+
+@Param
+
+↓
+
+:name
+
+↓
+
+JPQL
+
+↓
+
+Database
+
+
+
+8. Native Query:---------
+
+Sometimes you want to write actual SQL.
+Use
+nativeQuery=true
+Example
+@Query(value="SELECT * FROM employee",
+nativeQuery=true)
+List<Employee> getEmployees();
+
+
+
+Now SQL executes directly.
+
+Native Query Example
+@Query(value="SELECT * FROM employee WHERE salary>?",
+nativeQuery=true)
+List<Employee> getSalary(double salary);
+
+
+Difference Between JPQL and Native Query
+JPQL	            Native SQL
+Uses Entity Class	Uses Table
+Uses Variables   	Uses Columns
+Independent              Database
+
+
+Interview Questions
+1. What is JPQL?
+
+Answer: JPQL (Java Persistence Query Language) is a query language that works with entity classes and their fields, not directly with database tables.
+
+2. What is the purpose of @Query?
+
+Answer: It allows us to write custom JPQL or SQL queries inside a repository when predefined query methods are not enough.
+
+3. What is the difference between JPQL and Native Query?
+JPQL: Uses entity class names and field names, database-independent.
+Native Query: Uses actual table and column names, database-specific.
+4. What is @Param used for?
+
+Answer: @Param binds a method parameter to a named parameter (:name, :salary) used inside a JPQL query.
+
+5. Which is better: ?1 or :name?
+
+Answer: :name (named parameters) is generally preferred because it makes queries easier to read and maintain.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Session 22: Embedded Database Setup (H2 Database)
+
+What is an Embedded Database?
+An Embedded Database is a database that runs inside your Spring Boot application.
+It does not need to be installed separately like MySQL
+When you start the Spring Boot application, the database starts automatically.
+When the application stops, the database also stops (unless configured to save data).
+Examples of Embedded Databases
+H2 ✅ (Most Popular)
+HSQLDB
+Apache Derby
+Spring Boot mostly uses H2.
+
+
+
+Why do we use H2 Database?
+Imagine you are learning Spring Boot.
+If you use MySQL every time, you need to:
+Install MySQL
+Start MySQL Server
+Create Database
+Create Tables
+Configure Username & Password
+
+
+
+This takes time.
+Instead, use H2.
+It starts automatically.
+So developers use H2 for:
+Learning
+Practice
+Testing
+Small Projects
+Real Life Example
+
+
+Suppose you are learning to drive a car.
+You first practice in a simulator.
+After learning, you drive a real car.
+Similarly,
+H2 = Practice Database
+MySQL = Real Database
+
+
+
+Advantages of H2
+
+✅ Very Fast
+
+✅ Lightweight
+
+✅ No Installation Required
+
+✅ Starts Automatically
+
+✅ Good for Testing
+
+✅ Easy Configuration
+
+Disadvantages
+
+❌ Data is temporary (by default)
+
+❌ Not suitable for large applications
+
+❌ Production applications use MySQL, Oracle, PostgreSQL, etc.
+
+
+
+
+What is H2 Configuration?
+
+Configuration means telling Spring Boot:
+Which database to use
+Database URL
+Username
+Password
+
+This is done in application.properties.
+
+Example:
+
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.h2.console.enabled=true
+
+spring.jpa.hibernate.ddl-auto=update
+
+
+
+What is Schema?
+
+Schema means the structure of the database.
+It includes:
+Database
+Tables
+Columns
+Data Types
+Example
+
+
+Employee Table
+
+ID	Name	Salary
+1	Rahul	50000
+
+This table structure is called a Schema.
+
+
+What is Schema Auto-Creation?
+
+Normally we create tables manually.
+Example:
+CREATE TABLE Employee(
+id INT,
+name VARCHAR(30),
+salary DOUBLE
+);
+
+But Spring Boot + Hibernate can create the table automatically.
+This feature is called Schema Auto-Creation.
+
+
+1. none
+
+Spring does nothing.
+
+2. create
+
+Deletes old table and creates a new one every time.
+
+3. create-drop
+
+Creates tables when application starts.
+
+Deletes them when application stops.
+
+4. update ✅ (Most Used)
+
+Keeps existing data.
+
+Adds new columns if needed.
+
+
+Interview Questions
+1. What is H2 Database?
+H2 is an embedded, lightweight, in-memory database used for development and testing.
+
+2. Why do we use H2?
+Because it requires no installation, starts automatically, and is easy to use for learning and testing.
+
+3. What is Schema?
+Schema is the structure of a database that contains tables, columns, and relationships.
+
+4. What is ddl-auto=update?
+It automatically creates or updates database tables based on the entity classes without deleting existing data.
+
+5. Which database is generally used in production?
+MySQL, PostgreSQL, Oracle, or SQL Server are commonly used in production instead of H2.
+-------------------------------------------------------------------------------------------------------------------------------
+Session 23: MySQL Integration
+Topics Covered
+MySQL Driver Setup
+application.properties Configuration
+
+What is MySQL?
+MySQL is a Relational Database Management System (RDBMS) used to store application data permanently.
+Unlike H2, MySQL stores data even after the application stops.
+
+
+
+Real-Life Example
+Imagine you have a notebook.
+H2 Database → Writing on a whiteboard (erased after use).
+MySQL Database → Writing in a notebook (saved permanently).
+
+So,
+
+H2 = Temporary Storage
+MySQL = Permanent Storage
+
+
+
+Why do we use MySQL?
+Suppose you build an Employee Management System.
+Employees' information should not disappear when the application is restarted.
+So we use MySQL.
+
+Examples:
+
+Banking System
+Hospital Management
+College Management
+Shopping Websites
+Employee Management
+
+All use databases like MySQL.
+
+
+
+Advantages of MySQL
+
+✅ Free and Open Source
+
+✅ Stores data permanently
+
+✅ Fast
+
+✅ Secure
+
+✅ Supports millions of records
+
+✅ Used in real-world applications
+
+
+
+Difference Between H2 and MySQL
+H2 Database	MySQL Database
+Embedded	Separate Database Server
+Temporary (default)	Permanent
+Used for Testing	Used for Real Projects
+No Installation	Installation Required
+Small Applications	Large Applications
+
+
+
+What is MySQL Driver?
+Spring Boot cannot communicate directly with MySQL.
+It needs a translator.
+This translator is called the MySQL JDBC Driver
+
+Spring Boot ↔ MySQL Driver ↔ MySQL Database
+
+Session 24: Entity Relationships
+What is Entity Relationship?
+An Entity Relationship means one table is connected to another table.
+Just like in real life, people are connected to other people.
+
+Example
+One Person → One Passport
+One Customer → Many Orders
+One Student → Many Courses
+Many Students → Many Teachers
+
+The same concept is used in databases.
+
+
+Why do we need Relationships?
+Suppose you have two tables.
+
+Student Table
+Id	Name
+1	Raj
+2	Amit
+Laptop Table
+Id	Brand
+101	Dell
+102	HP
+
+How do we know Raj owns Dell?
+Without relationships, we can't connect them.
+Relationships solve this problem.
+
+
+Types of Relationships
+There are 4 major relationships in JPA.
+
+1. OneToOne
+2. OneToMany
+3. ManyToOne
+4. ManyToMany
+
+Let's understand each one.
+
+1. OneToOne Relationship
+Meaning
+One object is connected to exactly one object.
+
+Real-life Example
+Person  -------- Passport
+One person → One passport
+One passport → One person
+
+
+What is Foreign Key?
+A Foreign Key is a column that stores the primary key of another table.
+Example
+Student
+-----------------
+id
+name
+passport_id
+
+passport_id points to Passport table.
+
+2. OneToMany Relationship
+Meaning
+One parent has many children.
+Example
+One Customer
+
+↓
+
+Many Orders
+
+3. ManyToOne Relationship
+This is the opposite of OneToMany.
+Many employees belong to one department.
+Employee
+
+↓
+
+Department
+
+
+Many Employees
+
+↓
+
+One Department
+
+
+4. ManyToMany Relationship
+This is the most common interview question.
+Meaning
+Many students join many courses.
+
+
+Example
+Student A
+
+↓
+Java
+Python
+
+Student B
+
+↓
+Java
+Spring Boot
+
+Java has many students.
+Students have many courses.
+So,
+Many
+
+↓
+Many
+
+Annotation:-@ManyToMany
+
+
+-----------------------------------------------------------------------
+Summary of Relationships
+Relationship	Meaning	Example	Annotation
+OneToOne	One ↔ One	Person → Passport	@OneToOne
+OneToMany	One → Many	Customer → Orders	@OneToMany
+ManyToOne	Many → One	Employees → Department	@ManyToOne
+ManyToMany	Many ↔ Many	Students ↔ Courses	@ManyToMany
+-----------------------------------------------------------------------------------
+What is Cascade?
+
+Cascade means:
+"When the parent is affected, automatically affect the child too."
+With Cascade:
+Save Student
+↓
+Passport also saved automatically
+
+Types of Cascade
+1. ALL
+Everything happens automatically.
+Save
+Update
+Delete
+Merge
+Refresh
+cascade = CascadeType.ALL
+
+2. PERSIST
+Only save child.
+CascadeType.PERSIST
+3. REMOVE
+Delete child when parent is deleted.
+CascadeType.REMOVE
+
+Delete Student
+
+↓
+
+Delete Passport
+
+4. MERGE
+Updates child automatically.
+
+5. REFRESH
+Reload latest data from database.
+----------------------------------------------------------------------------------------
+ Fetch Types
+What is Fetch?
+Fetch means
+When should related data be loaded from the database?
+
+
+There are two types.
+1. EAGER Fetch
+Loads parent and child immediately.
+
+
+Example
+Student student = repo.findById(1).get();
+Database loads
+
+Student
++
+Passport
+at the same time.
+fetch = FetchType.EAGER
+
+
+2. LAZY Fetch
+Loads only the parent first.
+Student only
+Passport loads only when needed.
+fetch = FetchType.LAZY
+
+Example
+Student
+↓
+Later
+↓
+Passport
+
+This improves performance because unnecessary data is not loaded.
+
+Difference Between EAGER and LAZY
+Feature	     EAGER	                              LAZY
+Data        loadedImmediately		               Only when accessed
+Performance Can be slower if lots of related data	Usually faster and more efficient
+Use when Related data is always required 	Related data is optional or large
+---------------------------------------------------------------------------
+Session 25: Transactions & Rollbacks (Spring Boot)
+This session has 3 important topics:
+
+ACID Concepts
+Transaction Management (@Transactional)
+Propagation & Isolation Levels
+1. What is a Transaction?
+A transaction is a group of database operations that execute as one unit.
+
+👉 If all operations succeed, the transaction is Committed.
+👉 If any operation fails, all previous operations are Rolled Back.
+
+Example
+Suppose ₹1000 is transferred from Account A to Account B.
+
+Steps
+Deduct ₹1000 from Account A.
+Add ₹1000 to Account B.
+
+If the first step succeeds but the second fails, the money should not disappear.
+So Spring rolls back the first operation.
+
+2. ACID Properties
+A → Atomicity (All or Nothing)
+Either all operations happen or none happen.
+Example:
+Insert Student ✅
+Insert Address ❌
+Result:
+Student is also removed.
+
+
+C → Consistency
+Database should always remain correct and valid.
+Example:
+Before transfer:
+A = ₹5000
+B = ₹3000
+Total = ₹8000
+
+After transfer:
+A = ₹4000
+B = ₹4000
+Total is still ₹8000.
+
+
+I → Isolation
+Multiple users can perform transactions at the same time without interfering with each other.
+Example:
+User A transfers money.
+User B checks balance.
+Isolation ensures User B doesn't see incomplete changes.
+
+D → Durability
+Once data is committed, it is permanently saved.
+Even if the server crashes after commit, the data remains stored.
+
+3. Commit
+Commit means save changes permanently.
+
+Insert Employee
+Insert Address
+Commit
+Result:
+Both records are saved.
+
+4. Rollback
+Rollback means undo all changes if something goes wrong.
+
+Insert Employee ✔
+Insert Address ❌
+Rollback
+Result:
+Employee record is also removed.
+
+5. Spring Transaction Management
+Spring manages transactions using the @Transactional annotation.
+@Transactional
+public void saveData() {
+    // database operations
+}
+If an exception occurs, Spring rolls back the transaction (by default for unchecked exceptions).
+
+
+
+6. Propagation (Very Important)
+Propagation decides what happens if one transactional method calls another transactional method.
+
+
+REQUIRED (Default)
+Uses the existing transaction if there is one; otherwise creates a new one.
+@Transactional(propagation = Propagation.REQUIRED)
+
+REQUIRES_NEW
+Always starts a new transaction.
+@Transactional(propagation = Propagation.REQUIRES_NEW)
+
+SUPPORTS
+Uses the current transaction if available; otherwise runs without one.
+
+
+7. Isolation Levels
+Isolation controls how transactions behave when multiple users access the database simultaneously.
+Isolation Level	Meaning
+READ_UNCOMMITTED	Can read uncommitted data (dirty reads possible)
+READ_COMMITTED	Reads only committed data
+REPEATABLE_READ	Same row gives consistent values during a transaction
+SERIALIZABLE	Highest isolation; safest but slowest
+
+Example:
+Two users edit the same employee salary.
+Isolation helps prevent inconsistent results.
+
+Interview Questions
+1. What is a transaction?
+A group of database operations executed as a single unit.
+2. What is rollback?
+Undoing all database changes when an error occurs.
+3. Which annotation is used for transaction management?
+@Transactional
+4. What are ACID properties?
+Atomicity, Consistency, Isolation, Durability.
+5. What is the default propagation in Spring?
+Propagation.REQUIRED.
+6. What is the difference between Commit and Rollback?
+Commit	Rollback
+Saves changes permanently	Undoes all changes
+Happens when no error occurs	Happens when an error occurs
+------------------------------------------------------------------------------
+Session 26: Profiles in Spring Boot
+Topics Covered
+What are Profiles?
+Why do we use Profiles?
+Types of Profiles
+application.properties
+application-dev.properties
+application-prod.properties
+Activating Profiles
+Simple Spring Boot Project
+
+1. What is a Profile?
+A Profile in Spring Boot allows us to use different configurations for different environments.
+For example:
+Development (DEV)
+Testing (TEST)
+Production (PROD)
+Instead of changing the same configuration file every time, Spring Boot automatically loads the correct configuration based on the active profile.
+
+
+2. Why do we use Profiles?
+Suppose you have three databases.
+
+Environment	Database
+Development	H2
+Testing	MySQL
+Production	Oracle
+Without Profiles:
+Change database details manually every time.
+With Profiles:
+Just change the active profile.
+Spring loads the correct configuration automatically.
+
+
+3. Environment-Specific Setup
+Imagine you are developing an Employee project.
+
+Development
+Developer Computer
+↓
+H2 Database
+
+Testing
+Testing Server
+↓
+MySQL Database
+
+Production
+Live Server
+↓
+Oracle Database
+
+One application can work with all these environments using Profiles.
+
+4. Project Structure
+src/main/resources
+application.properties
+application-dev.properties
+application-test.properties
+application-prod.properties
+
+5. application.properties
+This file tells Spring which profile is active.
+spring.profiles.active=dev
+Spring will load
+application-dev.properties
+
+6. application-dev.properties
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.username=sa
+spring.datasource.password=
+This configuration is used only for the Development environment.
+
+7. application-test.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/testdb
+spring.datasource.username=root
+spring.datasource.password=root
+This configuration is used only for the Testing environment.
+
+8. application-prod.properties
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=admin
+spring.datasource.password=admin
+This configuration is used only for the Production environment.
+
+9. Switching Profiles
+If you want to use Development:
+spring.profiles.active=dev
+
+If you want Testing:
+spring.profiles.active=test
+
+If you want Production:
+spring.profiles.active=prod
+
+No code changes are required.
+
+10. Using @Profile Annotation
+The @Profile annotation tells Spring to create a bean only when a specific profile is active.
+
+
+Advantages of Profiles
+Different configurations for different environments.
+No need to edit the same configuration file repeatedly.
+Easy to switch between databases.
+Makes deployment safer and easier.
+Keeps sensitive production settings separate from development settings.
+
+
+Interview Questions
+1. What is a Profile in Spring Boot?
+A Profile is a feature that allows different configurations for different environments such as Development, Testing, and Production.
+2. Which property activates a profile?
+spring.profiles.active=dev
+3. Which annotation is used for profile-specific beans?
+@Profile("dev")
+4. Can one project have multiple profile configuration files?
+Yes.
+
+Example:
+
+application-dev.properties
+
+application-test.properties
+
+application-prod.properties
+
+
+5. Why are Profiles used?
+To manage environment-specific configurations.
+To switch databases or other settings without changing application code.
+Session 27: Data Validation in Spring Boot
+Topic: Bean Validation API, @NotNull, @Email, @Pattern
+
+What is Data Validation?
+Data Validation means checking whether the data entered by the user is correct before saving it into the database.
+
+For example:
+Name should not be empty.
+Email should be in proper format.
+Mobile number should contain only 10 digits.
+Age should not be negative.
+Without validation, wrong data can be stored in the database.
+
+
+Real-Life Example
+Imagine a bank account opening form.
+
+The bank will check:
+Is the customer's name entered?
+Is the Aadhaar number valid?
+Is the mobile number 10 digits?
+Is the email valid?
+Only after validation is the account created.
+Spring Boot does exactly the same.
+
+
+Why Validation?
+Without validation:
+Name = ""
+Email = abc
+Phone = 123
+This wrong data gets stored.
+
+With validation:
+Name Required
+Invalid Email
+Phone must contain 10 digits
+
+Database remains clean.
+Bean Validation API
+Spring Boot uses Bean Validation API.
+
+It provides annotations like
+@NotNull
+@NotBlank
+@NotEmpty
+@Email
+@Pattern
+@Size
+@Min
+@Max
+
+These annotations are placed on Entity or DTO fields.
+Spring automatically checks them.
+
+Common Validation Annotations
+Annotation	Purpose
+@NotNull	Value should not be null
+@NotBlank	String should not be null or empty or spaces
+@NotEmpty	Collection/String should not be empty
+@Email	Valid email format
+@Pattern	Matches Regular Expression
+@Size	Minimum and Maximum length
+@Min	Minimum number
+@Max	Maximum number
+
+
+Interview Questions
+1. What is Bean Validation
+Bean Validation is a Java specification used to validate object fields using annotations such as @NotNull, @Email, and @Pattern.
+
+2. Why do we use @Valid?
+@Valid triggers validation on the request object before the controller method executes.
+
+3. Difference between @NotNull, @NotEmpty, and @NotBlank?
+Annotation	Accepts null	Accepts empty ""	Accepts spaces " "
+@NotNull	❌	✅	✅
+@NotEmpty	❌	❌	✅
+@NotBlank	❌	❌	❌
+4. What is @Pattern?
+It validates input using a regular expression (regex), such as checking that a phone number contains exactly 10 digits.
+
+5. What is @Email?
+It validates that the provided string is in a valid email format.
+-----------------------------------------------------------------------
+----------------------------------------------------------------------
+Session 28: MongoDB with Spring Boot (NoSQL Database)
+Goal: Learn what MongoDB is, how it differs from MySQL, and build a simple Spring Boot CRUD project using MongoDB.
+
+What is MongoDB?
+MongoDB is a NoSQL (Not Only SQL) database.
+Unlike MySQL, it does not store data in tables and rows.
+Instead, it stores data in collections and documents.
+
+Real-Life Example
+MySQL
+
+Imagine a school register.
+
+ID	Name	Course
+1	Raj	Java
+2	Priya	Python
+This is a table.
+
+MongoDB
+MongoDB stores data like JSON objects.
+
+{
+   "id":1,
+   "name":"Raj",
+   "course":"Java"
+}
+
+Each object is called a Document.
+
+Many documents together form a Collection.
+
+
+Why MongoDB?
+MongoDB is used because:
+No fixed schema
+Faster for large data
+Stores JSON-like documents
+Easy to change data structure
+Good for web and mobile applications
+
+
+SQL vs MongoDB
+MySQL	        MongoDB
+Database	Database
+Table	        Collection
+Row	        Document
+Column	        Field
+Primary Key	_id
+SQL Queries	MongoDB Queries
+Example
+MySQL Table
+id	name	city
+1	Raj	Hyderabad
+MongoDB Document
+{
+ "_id":1,
+ "name":"Raj",
+ "city":"Hyderabad"
+}
+
+
+MongoDB Structure
+Database
+      │
+      ▼
+Collection
+      │
+      ▼
+Documents
+      │
+      ▼
+Fields
+
+Example
+
+StudentDB
+      │
+      ▼
+students
+      │
+      ├── Document 1
+      ├── Document 2
+      └── Document 3
+Installing MongoDB
+
+Download and install:
+
+MongoDB Community Server
+MongoDB Compass (GUI)
+
+After installation, start the MongoDB service.
+Default Port
+27017
+
+
+MongoDB Annotations
+Annotation	Purpose
+@Document	Represents a MongoDB collection
+@Id	Primary key of the document
+@Field	Maps a Java field to a MongoDB field (optional)
+
+
+MySQL vs MongoDB in Spring Boot
+MySQL    	MongoDB
+@Entity  	@Document
+@Table   	Collection
+JpaRepository	MongoRepository
+@GeneratedValue	MongoDB auto-generates ObjectId
+Uses SQL	Uses JSON-like BSON documents
+
+Advantages of MongoDB
+Flexible schema
+Fast read/write performance
+Easy to scale horizontally
+Stores nested objects and arrays
+Ideal for large and changing datasets
+
+Disadvantages of MongoDB
+No joins like relational databases (although lookups are possible)
+Less suitable for complex relational data
+Transactions are supported but relational databases are often preferred for heavily transactional systems
+
+
+
+Interview Questions
+1. What is MongoDB?
+MongoDB is a NoSQL document-oriented database that stores data as JSON-like BSON documents instead of rows and tables.
+
+2. What is the difference between @Entity and @Document?
+@Entity is used with relational databases like MySQL.
+@Document is used with MongoDB collections.
+
+3. Which repository interface is used in MongoDB?
+MongoRepository.
+Example:
+public interface StudentRepository
+        extends MongoRepository<Student, String> {
+}
+
+4. What is the default MongoDB port?
+27017
+
+5. What is a Document?
+A Document is a JSON-like record stored inside a MongoDB collection.
+Example:
+
+{
+  "name":"Raj",
+  "course":"Java"
+}
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Session 29: Exception Handling in Repository Layer
+Topic: Custom DB Exception Classes & Global Exception Handling
+
+What is Exception Handling?
+An Exception is an unexpected error that occurs while running a program.
+Exception Handling is the process of handling these errors gracefully instead of crashing the application.
+
+Real-Life Example
+Imagine you go to an ATM.
+Situation 1:
+You enter the wrong PIN.
+ATM doesn't stop working.
+Instead, it shows:
+Invalid PIN
+
+Situation 2:
+Insufficient Balance
+ATM displays
+Insufficient Balance
+Instead of
+Machine Error
+This is called Exception Handling.
+Spring Boot works the same way.
+
+
+Why Do We Need Exception Handling?
+Suppose the user requests a student that doesn't exist.
+Without exception handling:
+500 Internal Server Error
+The user doesn't know what went wrong.
+
+With exception handling:
+Student Not Found
+Much better!
+
+
+
+Types of Exceptions
+1. Checked Exception
+Checked at compile time.
+Examples
+IOException
+SQLException
+
+2. Unchecked Exception
+Occurs during runtime.
+Examples
+NullPointerException
+ArithmeticException
+ArrayIndexOutOfBoundsException
+
+Exception Flow
+Client
+   │
+   ▼
+Controller
+   │
+   ▼
+Service
+   │
+   ▼
+Repository
+   │
+   │ Student Found
+   │──────────────► Database
+   │
+   │ Student Not Found
+   ▼
+Custom Exception
+   │
+   ▼
+Global Exception Handler
+   │
+   ▼
+Error Response
+
+
+
+What is a Custom Exception?
+A Custom Exception is an exception class created by the programmer to represent a specific business error.
+Instead of showing
+NoSuchElementException
+we show
+Student Not Found
+
+Global Exception Handler
+Instead of writing try-catch in every controller, Spring Boot provides Global Exception Handling.
+We use
+@ControllerAdvice
+
+
+What is @ControllerAdvice?
+@ControllerAdvice is a Spring annotation that handles exceptions for all controllers in one central place.
+Instead of writing exception handling in every controller, we write it only once.
+
+What is @ExceptionHandler?
+It tells Spring:
+"Whenever this exception occurs, call this method."
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+Session 30: Repository Testing
+
+Unit Testing JPA Repositories using H2 Database (Spring Boot)
+This session teaches you how to test your Repository layer without using MySQL.
+Instead of MySQL, we use H2 Database, which is an in-memory database.
+
+
+Why?
+Very fast
+No need to install MySQL
+Every test starts with a fresh database
+Used in almost every Spring Boot project
+
+What is Repository Testing?
+Repository Testing means checking whether your Repository methods are working correctly.
+For example:
+save()
+findById()
+findAll()
+deleteById()
+existsById()
+Custom Query Methods
+
+We test only the Repository layer.
+We do NOT test
+Controller
+Service
+APIs
+Real Life Example
+
+
+Imagine an ATM.
+You insert money.
+The ATM stores the information into the database.
+How do we know the data is actually stored?
+We test the Repository.
+Similarly,
+If we search an employee,
+Repository should return the employee.
+
+
+Understanding @DataJpaTest:-
+
+@DataJpaTest
+This annotation ✔ Loads only JPA components
+Loads
+
+Entity
+Repository
+Hibernate
+
+Does NOT load
+Controller
+Service
+Therefore testing becomes fast.
+
+
+What is H2?
+H2 is a lightweight Java database.
+
+There are two modes:
+
+1. In-Memory (Most Common for Testing)
+jdbc:h2:mem:testdb
+Database is created when tests start.
+Data is deleted after tests finish.
+Fast and ideal for unit tests.
+2. File-Based
+jdbc:h2:file:C:/data/testdb
+Data is stored in a file.
+Remains even after the application stops.
+
+
+Common JUnit Assertions
+Assertion	Purpose
+assertEquals(expected, actual)	Checks if two values are equal.
+assertNotNull(value)	Checks that a value is not null.
+assertNull(value)	Checks that a value is null.
+assertTrue(condition)	Checks that a condition is true.
+assertFalse(condition)	Checks that a condition is false.
+
+
+1. What is Repository Testing?
+Testing the Repository layer to verify database operations like save, find, update, and delete work correctly.
+
+2. Why use H2 Database?
+Because it is fast, lightweight, runs in memory, and doesn't require installing MySQL.
+
+3. What does @DataJpaTest do?
+It loads only JPA-related components (entities, repositories, Hibernate) for fast repository testing.
+
+4. Why not use MySQL in unit tests?
+Using H2 makes tests independent of an external database, faster, and repeatable.
+
+5. Can we test custom query methods?
+Yes. You can save sample data and verify methods like findByName() return the expected results.
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+Session 31: Logging SQL Queries
+Show SQL and Hibernate Logs | Performance Tips
+In this session, you'll learn:
+
+How to see the SQL queries generated by Hibernate.
+How to enable Hibernate logs.
+How to analyze queries for better performance.
+Common performance optimization tips
+
+
+Why Do We Need SQL Logging?
+When we use Spring Data JPA, we usually write code like:
+employeeRepository.findAll();
+But internally, Hibernate converts this into an SQL query.
+
+Example:
+SELECT * FROM employee;
+By enabling SQL logging, we can see these queries in the console.
+
+Benefits
+Understand what Hibernate is doing.
+Debug database problems.
+Verify custom queries.
+Improve application performance.
+Real-Life Example
+
+Imagine ordering food through an app.
+You place an order:
+Order Pizza
+The app sends a request to the restaurant:
+Prepare Pizza
+
+You don't normally see this communication.
+Similarly:
+
+Java Code
+      ↓
+Hibernate
+      ↓
+SQL Query
+      ↓
+Database
+
+SQL logging lets you see the communication between Hibernate and the database.
+
+
+
+  Step 5: Enable SQL Logging
+application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/employee_db
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.hibernate.ddl-auto=update
+
+# Show SQL queries
+spring.jpa.show-sql=true
+
+# Format SQL nicely
+spring.jpa.properties.hibernate.format_sql=true
+------------------------------------------------------------------------------------------------
+
+Performance Tips
+1. Fetch Only Required Data
+
+❌ Bad
+
+repository.findAll();
+If there are 1,00,000 records, all of them will be loaded.
+
+✅ Better
+Page<Employee> page =
+repository.findAll(PageRequest.of(0,10));
+Loads only 10 records at a time.
+
+2. Use Pagination
+Pageable pageable =
+PageRequest.of(0,5);
+
+repository.findAll(pageable);
+
+Benefits:
+
+Faster queries
+Lower memory usage
+Better user experience
+
+3. Use Appropriate Fetch Type
+@OneToMany(fetch = FetchType.LAZY)
+LAZY
+Loads related data only when needed.
+Better for large relationships.
+
+EAGER
+Loads related data immediately.
+Can be slower if there is a lot of related data.
+
+4. Use Custom Queries
+Instead of loading everything:
+List<Employee> findBySalaryGreaterThan(double salary);
+Only matching records are fetched.
+
+5. Avoid Unnecessary Database Calls
+
+❌ Bad
+
+repository.findById(1);
+
+repository.findById(1);
+
+repository.findById(1);
+
+Three SQL queries are executed.
+
+✅ Better
+
+Employee emp =
+repository.findById(1).get();
+
+System.out.println(emp.getName());
+System.out.println(emp.getSalary());
+Only one SQL query is executed.
+
+Interview Questions
+1. What is SQL logging?
+SQL logging displays the SQL statements generated by Hibernate in the console, making it easier to debug and optimize database operations.
+
+2. Which property enables SQL logging?
+spring.jpa.show-sql=true
+
+3. Which property formats SQL output?
+spring.jpa.properties.hibernate.format_sql=true
+
+4. How can you see the values bound to SQL parameters?
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.orm.jdbc.bind=TRACE
+
+5. What are some common JPA performance optimization techniques?
+
+Use pagination (Pageable)
+Prefer LAZY loading when appropriate
+Write efficient custom queries
+Avoid repeated database calls
+Add indexes to frequently searched columns
+Retrieve only the required columns
+
+
+
+
