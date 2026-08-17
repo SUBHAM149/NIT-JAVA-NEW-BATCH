@@ -1,0 +1,7 @@
+GET http://localhost:8081/doctors/101 
+
+{
+    "id": 101,
+    "name": "Subham",
+    "specialization": "Ortho"
+}
