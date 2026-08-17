@@ -1,0 +1,13 @@
+GET http://localhost:8082/patients/2
+
+
+{
+    "id": 2,
+    "name": "Rahul",
+    "doctorId": 102,
+    "doctor": {
+        "id": 102,
+        "name": "Rahul",
+        "specialization": "Cardiologist"
+    }
+}
