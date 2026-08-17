@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sub.nit</groupId>
-	<artifactId>MicroService_Project-01-PatientService</artifactId>
+	<artifactId>MicroService_Project-01-DoctorService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
