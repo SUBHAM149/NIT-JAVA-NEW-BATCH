@@ -4,10 +4,13 @@ application.properties
 spring.application.name=STUDENT-SERVICE-2
 server.port=8081
 spring.cloud.discovery.client.simple.instances.COURSE-SERVICE[0].uri=http://localhost:8080
+
+-------
 API
 -------
 http://localhost:8080/course
 
+-----------
 pom.xml
 -----------
 <?xml version="1.0" encoding="UTF-8"?>
