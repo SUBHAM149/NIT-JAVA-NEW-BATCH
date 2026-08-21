@@ -8,7 +8,7 @@ spring.cloud.discovery.client.simple.instances.COURSE-SERVICE[0].uri=http://loca
 -------
 API
 -------
-http://localhost:8080/course
+http://localhost:8081/student2
 
 -----------
 pom.xml
