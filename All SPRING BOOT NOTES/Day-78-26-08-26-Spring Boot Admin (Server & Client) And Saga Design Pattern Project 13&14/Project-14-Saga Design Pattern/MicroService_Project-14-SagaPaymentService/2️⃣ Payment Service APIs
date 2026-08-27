@@ -1,0 +1,102 @@
+2️⃣ Payment Service APIs
+API 5 — Process Payment
+
+POST
+
+http://localhost:8082/payments
+
+Body:
+
+{
+    "orderId": 1,
+    "amount": 50000
+}
+
+Response:
+
+{
+    "id": 1,
+    "orderId": 1,
+    "amount": 50000.0,
+    "status": "SUCCESS"
+}
+API 6 — Failed Payment
+
+You can test the failure scenario using:
+
+POST
+
+http://localhost:8082/payments
+
+Body:
+
+{
+    "orderId": 2,
+    "amount": 0
+}
+
+Response:
+
+{
+    "id": 2,
+    "orderId": 2,
+    "amount": 0.0,
+    "status": "FAILED"
+}
+
+Our simple logic is:
+
+amount > 0  → SUCCESS
+amount <= 0 → FAILED
+API 7 — Get All Payments
+
+GET
+
+http://localhost:8082/payments
+
+Response:
+
+[
+    {
+        "id": 1,
+        "orderId": 1,
+        "amount": 50000.0,
+        "status": "SUCCESS"
+    },
+    {
+        "id": 2,
+        "orderId": 2,
+        "amount": 0.0,
+        "status": "FAILED"
+    }
+]
+API 8 — Get Payment By ID
+
+GET
+
+http://localhost:8082/payments/1
+
+Response:
+
+{
+    "id": 1,
+    "orderId": 1,
+    "amount": 50000.0,
+    "status": "SUCCESS"
+}
+API 9 — Refund Payment
+
+This is important for the Saga compensation.
+
+PUT
+
+http://localhost:8082/payments/1/refund
+
+Response:
+
+{
+    "id": 1,
+    "orderId": 1,
+    "amount": 50000.0,
+    "status": "REFUNDED"
+}
