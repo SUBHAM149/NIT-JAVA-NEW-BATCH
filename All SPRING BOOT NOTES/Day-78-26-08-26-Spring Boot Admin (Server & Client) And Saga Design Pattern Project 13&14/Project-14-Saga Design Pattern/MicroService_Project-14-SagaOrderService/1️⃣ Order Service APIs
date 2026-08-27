@@ -1,0 +1,82 @@
+1️⃣ Order Service APIs
+API 1 — Create Order
+
+POST
+
+http://localhost:8081/orders
+
+Body:
+
+{
+    "productName": "Laptop",
+    "amount": 50000
+}
+
+Response:
+
+{
+    "id": 1,
+    "productName": "Laptop",
+    "amount": 50000.0,
+    "status": "PAID"
+}
+What happens?
+POST /orders
+     ↓
+Order created
+     ↓
+Order Service calls Payment Service
+     ↓
+Payment SUCCESS
+     ↓
+Order status = PAID
+API 2 — Get All Orders
+
+GET
+
+http://localhost:8081/orders
+
+Response:
+
+[
+    {
+        "id": 1,
+        "productName": "Laptop",
+        "amount": 50000.0,
+        "status": "PAID"
+    },
+    {
+        "id": 2,
+        "productName": "Mobile",
+        "amount": 20000.0,
+        "status": "PAID"
+    }
+]
+API 3 — Get Order By ID
+
+GET
+
+http://localhost:8081/orders/1
+
+Response:
+
+{
+    "id": 1,
+    "productName": "Laptop",
+    "amount": 50000.0,
+    "status": "PAID"
+}
+API 4 — Update Order Status
+
+PUT
+
+http://localhost:8081/orders/1/status?status=CANCELLED
+
+Response:
+
+{
+    "id": 1,
+    "productName": "Laptop",
+    "amount": 50000.0,
+    "status": "CANCELLED"
+}
