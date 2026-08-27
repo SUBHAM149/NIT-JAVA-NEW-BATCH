@@ -1,0 +1,134 @@
+🔄 Complete Saga Example
+
+Now let's see where Saga actually happens.
+
+Scenario 1 — Success
+
+Send:
+
+POST http://localhost:8081/orders
+{
+    "productName": "Laptop",
+    "amount": 50000
+}
+
+Flow:
+
+             Customer
+                │
+                ▼
+       Order Service :8081
+                │
+                ▼
+          Create Order
+                │
+                ▼
+            CREATED
+                │
+                │ REST
+                ▼
+      Payment Service :8082
+                │
+                ▼
+          Process Payment
+                │
+                ▼
+             SUCCESS
+                │
+                ▼
+       Order Service :8081
+                │
+                ▼
+              PAID
+❌ Scenario 2 — Payment Failure
+
+Send:
+
+POST http://localhost:8081/orders
+{
+    "productName": "Mobile",
+    "amount": 0
+}
+
+Flow:
+
+Order Service
+      │
+      ▼
+Order CREATED
+      │
+      ▼
+Payment Service
+      │
+      ▼
+Payment FAILED ❌
+      │
+      ▼
+Compensation
+      │
+      ▼
+Order CANCELLED
+
+Response:
+
+{
+    "id": 2,
+    "productName": "Mobile",
+    "amount": 0.0,
+    "status": "CANCELLED"
+}
+🔁 Scenario 3 — Refund
+
+If payment was successful:
+
+Payment
+   │
+   ▼
+SUCCESS
+   │
+   ▼
+Something goes wrong
+   │
+   ▼
+REFUND
+
+Call:
+
+PUT http://localhost:8082/payments/1/refund
+
+Result:
+
+SUCCESS → REFUNDED
+📋 All APIs Together
+| # | Service | Method | URL                     | Purpose             |
+| - | ------- | ------ | ----------------------- | ------------------- |
+| 1 | Order   | POST   | `/orders`               | Create order + Saga |
+| 2 | Order   | GET    | `/orders`               | Get all orders      |
+| 3 | Order   | GET    | `/orders/{id}`          | Get order           |
+| 4 | Order   | PUT    | `/orders/{id}/status`   | Update order        |
+| 5 | Payment | POST   | `/payments`             | Process payment     |
+| 6 | Payment | POST   | `/payments`             | Test failed payment |
+| 7 | Payment | GET    | `/payments`             | Get all payments    |
+| 8 | Payment | GET    | `/payments/{id}`        | Get payment         |
+| 9 | Payment | PUT    | `/payments/{id}/refund` | Refund payment      |
+
+
+So you have 9 APIs across 2 microservices.
+
+⭐ Most important API
+
+For demonstrating Saga to your teacher/interviewer, use:
+
+POST http://localhost:8081/orders
+
+because this single API demonstrates:
+
+Order Service
+     ↓
+Payment Service
+     ↓
+SUCCESS / FAILED
+     ↓
+PAID / CANCELLED
+
+That's the core of your MicroService_Project-14-Saga project.
