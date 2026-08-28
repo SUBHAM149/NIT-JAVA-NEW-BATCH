@@ -1,0 +1,56 @@
+MicroService-Project-15
+-----------------------
+API 1 — Auth Login
+
+Method: POST
+
+http://localhost:8080/auth/login?username=subham&password=1234
+
+Postman:
+
+Method: POST
+URL: http://localhost:8080/auth/login
+Params:
+username = subham
+password = 1234
+
+Expected response: a JWT token.
+
+API 2 — Product Hello
+
+Method: GET
+
+http://localhost:8081/product/hello
+
+Authorization:
+
+Bearer Token → paste JWT from API 1
+
+Expected response:
+
+Welcome to Product Service
+API 3 — Get Products
+
+Method: GET
+
+http://localhost:8081/product/products
+
+Authorization:
+
+Bearer Token → paste JWT from API 1
+
+Expected response:
+
+Product list
+Test order
+1. POST  localhost:8080/auth/login
+             ↓
+          Get JWT
+             ↓
+2. GET   localhost:8081/product/hello
+             ↓
+3. GET   localhost:8081/product/products
+
+For API 2 and API 3, use the same JWT token returned by API 1.
+
+If API 1 works but API 2/3 gives 401, send me your SecurityFilter.java and SecurityConfig.java; those are the files we need to fix.
