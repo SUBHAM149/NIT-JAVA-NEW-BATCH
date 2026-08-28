@@ -1,0 +1,360 @@
+🔐 JWT Security API Flow
+
+Your APIs are:
+
+#	Method	API	JWT
+| # | Method | API              | JWT    |
+| - | ------ | ---------------- | -----  |
+| 1 | POST   | `/auth/register` | ❌ No  |
+| 2 | POST   | `/auth/login`    | ❌ No  |
+| 3 | GET    | `/user/hello`    | ✅ Yes |
+| 4 | GET    | `/user/profile`  | ✅ Yes |
+
+
+Base URL:
+
+http://localhost:8080
+1️⃣ Register User
+API
+POST http://localhost:8080/auth/register
+Authorization
+No Auth
+Body
+
+Select:
+
+Body
+→ raw
+→ JSON
+
+Send:
+
+{
+    "username": "Raj",
+    "email": "raj@gmail.com",
+    "password": "12345"
+}
+Response
+User registered successfully
+What happens internally?
+Postman
+   ↓
+/auth/register
+   ↓
+AuthController
+   ↓
+AuthService
+   ↓
+Check email
+   ↓
+existsByEmail()
+   ↓
+BCrypt encrypt password
+   ↓
+UserRepository
+   ↓
+MySQL
+
+Your database will contain something like:
+
+id | username | email         | password
+------------------------------------------------
+1  | Raj      | raj@gmail.com | $2a$10$......
+
+⚠️ The password is not stored as 12345. BCrypt encrypts it.
+
+2️⃣ Login
+
+After registration, login.
+
+API
+POST http://localhost:8080/auth/login?email=raj@gmail.com&password=12345
+Authorization
+No Auth
+Body
+
+No body required.
+
+Response
+
+You will receive a long string:
+
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWpAZ21haWwuY29tIiwiaWF0Ijox...
+
+This is your JWT token.
+
+🔑 What happens during Login?
+Postman
+   ↓
+POST /auth/login
+   ↓
+AuthController
+   ↓
+AuthService
+   ↓
+AuthenticationManager
+   ↓
+CustomUserDetailsService
+   ↓
+UserRepository
+   ↓
+Find user by email
+   ↓
+BCrypt checks password
+   ↓
+Password correct
+   ↓
+JwtService
+   ↓
+Generate JWT
+   ↓
+Return JWT to Postman
+3️⃣ Copy JWT Token
+
+Copy the complete token returned from login.
+
+Example:
+
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYWpAZ21haWwuY29tIiwiaWF0Ijox...
+
+Keep it.
+
+You will use it for protected APIs.
+
+4️⃣ Test Protected API Without JWT
+
+Now test:
+
+GET http://localhost:8080/user/hello
+Authorization
+No Auth
+Expected response
+401 Unauthorized
+
+This proves that the API is protected.
+
+5️⃣ Test /user/hello With JWT
+
+Now:
+
+GET http://localhost:8080/user/hello
+
+Go to:
+
+Authorization
+→ Type: Bearer Token
+
+Paste your JWT:
+
+eyJhbGciOiJIUzI1NiJ9....
+
+Postman automatically sends:
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9....
+Response
+Hello raj@gmail.com, you are authenticated using JWT!
+6️⃣ What Happens Internally?
+
+This is where your JwtAuthenticationFilter works.
+
+Postman
+   │
+   │ Authorization: Bearer JWT
+   ▼
+JwtAuthenticationFilter
+   │
+   ▼
+Extract JWT
+   │
+   ▼
+JwtService
+   │
+   ▼
+Validate JWT
+   │
+   ▼
+Extract Email
+   │
+   ▼
+CustomUserDetailsService
+   │
+   ▼
+Find User
+   │
+   ▼
+SecurityContext
+   │
+   ▼
+UserController
+   │
+   ▼
+200 OK
+7️⃣ User Profile API
+
+You also have:
+
+GET http://localhost:8080/user/profile
+Authorization
+Bearer Token
+
+Paste the same JWT.
+
+Response
+Welcome to your profile. Logged in as: raj@gmail.com
+8️⃣ Test Invalid JWT
+
+Change one character in your token.
+
+For example:
+
+eyJhbGciOiJIUzI1NiJ9........XXXX
+
+Call:
+
+GET http://localhost:8080/user/hello
+
+You should get:
+
+401 Unauthorized
+
+because the JWT signature is invalid.
+
+9️⃣ Test Expired JWT
+
+Your JwtService currently has:
+
+private final long EXPIRATION_TIME =
+        1000 * 60 * 60;
+
+That means:
+
+1000 ms × 60 × 60
+       ↓
+1 hour
+
+So your JWT expires after 1 hour.
+
+After expiration:
+
+GET /user/hello
+       ↓
+JWT expired
+       ↓
+401 Unauthorized
+🔟 Complete Postman Testing Order
+
+Follow this exact order:
+
+API 1 — Register
+POST
+http://localhost:8080/auth/register
+
+Body:
+
+{
+    "username": "Raj",
+    "email": "raj@gmail.com",
+    "password": "12345"
+}
+
+Expected:
+
+User registered successfully
+API 2 — Login
+POST
+http://localhost:8080/auth/login?email=raj@gmail.com&password=12345
+
+Expected:
+
+JWT TOKEN
+
+Copy it.
+
+API 3 — Hello WITHOUT JWT
+GET
+http://localhost:8080/user/hello
+
+Expected:
+
+401 Unauthorized
+API 4 — Hello WITH JWT
+GET
+http://localhost:8080/user/hello
+
+Authorization:
+
+Bearer Token
+
+Paste JWT.
+
+Expected:
+
+Hello raj@gmail.com, you are authenticated using JWT!
+API 5 — Profile WITH JWT
+GET
+http://localhost:8080/user/profile
+
+Authorization:
+
+Bearer Token
+
+Expected:
+
+Welcome to your profile. Logged in as: raj@gmail.com
+🔥 Your Complete Project Architecture
+                         CLIENT
+                           │
+                           │
+                       POSTMAN
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+             ▼                           ▼
+       /auth/register                /auth/login
+             │                           │
+             ▼                           ▼
+      AuthController              AuthController
+             │                           │
+             ▼                           ▼
+        AuthService                  AuthService
+             │                           │
+             ▼                           ▼
+       UserRepository          AuthenticationManager
+             │                           │
+             ▼                           ▼
+           MySQL              CustomUserDetailsService
+                                         │
+                                         ▼
+                                  UserRepository
+                                         │
+                                         ▼
+                                   Password Check
+                                         │
+                                         ▼
+                                     JwtService
+                                         │
+                                         ▼
+                                    JWT TOKEN
+                                         │
+                                         ▼
+                                      POSTMAN
+                                         │
+                                         │ Bearer JWT
+                                         ▼
+                              JwtAuthenticationFilter
+                                         │
+                                         ▼
+                                    JwtService
+                                         │
+                                         ▼
+                                  Validate Token
+                                         │
+                                         ▼
+                                SecurityContext
+                                         │
+                                         ▼
+                                  UserController
+                                         │
+                              ┌──────────┴──────────┐
+                              ▼                     ▼
+                       /user/hello           /user/profile
