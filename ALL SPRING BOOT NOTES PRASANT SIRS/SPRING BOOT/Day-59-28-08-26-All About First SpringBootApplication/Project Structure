@@ -1,0 +1,20 @@
+Demo004
+│
+├── src/main/java
+│   ├── com.example.demo
+│   │   └── Demo004Application.java
+│   │
+│   └── com.example.demo.FirstApp
+│       ├── Robot.java
+│       └── Sensor.java
+│
+├── src/main/resources
+│   └── application.properties
+│
+├── src/test/java
+├── JRE System Library
+├── Maven Dependencies
+├── target
+├── mvnw
+├── mvnw.cmd
+└── pom.xml
