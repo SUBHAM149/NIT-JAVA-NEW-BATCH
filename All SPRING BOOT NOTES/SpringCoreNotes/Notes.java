@@ -1,13 +1,14 @@
 # SPRING FRAMEWORK – COMPLETE NOTES (ONE FILE)
-
+------------------------------------------------
+    
 ## 1. Introduction to Spring Framework
-
+------------------------------------------
+    
 ### What is Spring Framework?
-
 Spring Framework is a lightweight, open-source Java framework used for developing enterprise applications. It provides support for Dependency Injection (DI), Inversion of Control (IoC), transaction management, security, and web application development.
 
 ### Features of Spring
-
+--------------------------
 1. Lightweight Framework
 2. Dependency Injection (DI)
 3. Inversion of Control (IoC)
